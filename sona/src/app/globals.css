@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+body {
+    background-color: #1f1f1f;   
+    @apply font-[Raleway]
+}
