@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import images from "../../assets/wallpapers";
+import images from "../../../assets/wallpapers";
 
 const Background = () => {
   // Get an array of image keys
@@ -13,14 +13,18 @@ const Background = () => {
   const randomImageKey = imageKeys[randomIndex];
   if (randomImageKey && images[randomImageKey]) {
     return (
-      <div className="mt-[4.1rem] w-full absolute top-0 left-0 sm:overflow-hidden ">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <Image
           src={images[randomImageKey]}
           alt={randomImageKey}
-          className="object-cover w-full h-full sm:object-contain"
+          layout="fill"
+          objectFit="cover"
+          className="object-cover"
         />
       </div>
     );
+  } else {
+    return null; // Return null if no valid image
   }
 };
 

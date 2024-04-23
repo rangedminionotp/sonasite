@@ -3,10 +3,11 @@
     "title": "Maven of the Strings",
     "bgstory":"Sona is Demacia's foremost virtuoso of the stringed etwahl, speaking only through her graceful chords and vibrant arias. This genteel manner has endeared her to the highborn, though others suspect her spellbinding melodies to actually emanate magic—a Demacian taboo. Silent to outsiders but somehow understood by close companions, Sona plucks her harmonies not only to soothe injured allies, but also to strike down unsuspecting enemies.",
     "role": ["Support"],
-    "op.gg": "https://www.op.gg/champions/sona/build",
-    "u.gg": "https://u.gg/lol/champions/sona/build",
-    "probuilds.net": "https://www.probuilds.net/champions/details/sona",
+    "opgg": "https://www.op.gg/champions/sona/build",
+    "ugg": "https://u.gg/lol/champions/sona/build",
+    "probuildsnet": "https://www.probuilds.net/champions/details/sona",
     "reddit": "https://www.reddit.com/r/sonamains/",
-    "discord": "https://discord.com/invite/ZYf5KTPxxr" 
+    "discord": "https://discord.com/invite/ZYf5KTPxxr",
+    "wiki": "https://leagueoflegends.fandom.com/wiki/Sona/LoL"
  
 }

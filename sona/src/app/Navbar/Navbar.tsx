@@ -22,12 +22,17 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
-          Abilities
+          <Link to="abilities" smooth={true} duration={200}>
+            Abilities
+          </Link>
         </li>
       </ul>
 
       {/* hamburger */}
-      <div onClick={handleClick} className="md:hidden z-10">
+      <div
+        onClick={handleClick}
+        className="md:hidden z-10 hover:cursor-pointer"
+      >
         {!nav ? <FaBars /> : <FaTimes />}
       </div>
 
@@ -39,8 +44,21 @@ const Navbar = () => {
             : "absolute top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center"
         }
       >
-        <li className="py-6 text-4xl">Intro</li>
-        <li className="py-6 text-4xl">Abilities</li>
+        <li className="py-6 text-4xl hover:cursor-pointer hover:bg-[#636161] hover:bg-opacity-70">
+          <Link to="intro" onClick={handleClick} smooth={true} duration={200}>
+            Intro
+          </Link>
+        </li>
+        <li className="py-6 text-4xl hover:cursor-pointer hover:bg-[#636161] hover:bg-opacity-70">
+          <Link
+            to="abilities"
+            onClick={handleClick}
+            smooth={true}
+            duration={200}
+          >
+            Abilities
+          </Link>
+        </li>
       </ul>
     </div>
   );
