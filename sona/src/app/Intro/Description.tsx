@@ -7,7 +7,7 @@ const Description = () => {
       <div className="text-8xl font-bold text-[#FFD700] drop-shadow-lg sm: text-md">
         {data.name.toUpperCase()}
       </div>
-      <div className="text-5xl font-bold text-white italic drop-shadow-lg sm: text-md">
+      <div className="text-5xl font-bold text-white italic drop-shadow-lg sm:text-md">
         {data.title.toUpperCase()}
       </div>
       <div className="relative">
