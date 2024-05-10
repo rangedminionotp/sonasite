@@ -26,6 +26,9 @@ const Navbar = () => {
             Abilities
           </Link>
         </li>
+        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
+          Skins
+        </li>
       </ul>
 
       {/* hamburger */}
@@ -44,12 +47,12 @@ const Navbar = () => {
             : "absolute top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center"
         }
       >
-        <li className="py-6 text-4xl hover:cursor-pointer hover:bg-[#636161] hover:bg-opacity-70">
+        <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
           <Link to="intro" onClick={handleClick} smooth={true} duration={200}>
             Intro
           </Link>
         </li>
-        <li className="py-6 text-4xl hover:cursor-pointer hover:bg-[#636161] hover:bg-opacity-70">
+        <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
           <Link
             to="abilities"
             onClick={handleClick}
@@ -58,6 +61,9 @@ const Navbar = () => {
           >
             Abilities
           </Link>
+        </li>
+        <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
+          Skins
         </li>
       </ul>
     </div>
