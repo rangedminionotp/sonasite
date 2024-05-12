@@ -11,6 +11,7 @@ import AbilitiesContext from "./SharedContext";
 import { SonaService } from "../graphql/fetchdata/service";
 import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
+
 const Abilities = () => {
   // boolean to see if user click on abilities expansion
   const [divVisibility, setDivVisibility] = React.useState({
@@ -23,7 +24,11 @@ const Abilities = () => {
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
   const [fetchedData, setFetchedData] = React.useState(null);
   const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
-
+  const [breadCrumb, setBreabcrumb] = React.useState({
+    overview: true,
+    playerTip: false,
+    addTip: false,
+  });
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,7 +61,14 @@ const Abilities = () => {
 
   return (
     <AbilitiesContext.Provider
-      value={{ divVisibility, setDivVisibility, fetchedData, fetchedRawDataQ }}
+      value={{
+        divVisibility,
+        setDivVisibility,
+        fetchedData,
+        fetchedRawDataQ,
+        breadCrumb,
+        setBreabcrumb,
+      }}
     >
       <div name="abilities" className="w-full h-screen relative">
         <Background />

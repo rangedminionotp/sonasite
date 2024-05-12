@@ -43,7 +43,7 @@ export class SonaPassive{
 @ArgsType()
 export class SonaRawStatsQ {
     @Field() 
-    totaldamage!: string
+    totaldamage!: string[]
     @Field()
     auraduration!: string[] 
     @Field()
