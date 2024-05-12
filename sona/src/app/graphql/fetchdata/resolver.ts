@@ -10,4 +10,8 @@ export class SonaResolver {
     ): Promise<SonaOverview> {
         return new SonaService().FetchVersion()
     }
+
+    async fetchAbilityRawdataQ(): Promise<SonaOverview>{
+        return new SonaService().FetchRawQ()
+    }
 }

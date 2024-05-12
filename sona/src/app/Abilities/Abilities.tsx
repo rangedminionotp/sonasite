@@ -22,6 +22,8 @@ const Abilities = () => {
   });
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
   const [fetchedData, setFetchedData] = React.useState(null);
+  const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,9 +39,24 @@ const Abilities = () => {
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    const fetchRawData = async () => {
+      try {
+        const sonaService = new SonaService();
+        const data = await sonaService.FetchRawQ();
+        setFetchedRawDataQ(data);
+        console.log("data", data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRawData();
+  }, []);
+
   return (
     <AbilitiesContext.Provider
-      value={{ divVisibility, setDivVisibility, fetchedData }}
+      value={{ divVisibility, setDivVisibility, fetchedData, fetchedRawDataQ }}
     >
       <div name="abilities" className="w-full h-screen relative">
         <Background />

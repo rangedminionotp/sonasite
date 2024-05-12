@@ -5,6 +5,6 @@ export async function GET(request) {
   const res = await fetch('https://raw.communitydragon.org/latest/game/data/characters/sona/sona.bin.json', {
     next: { revalidate: 100000}, 
   })
-  const data = await res.json() 
+  const data = await res.json()   
   return Response.json(data)
 }
