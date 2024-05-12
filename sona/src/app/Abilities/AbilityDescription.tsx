@@ -1,6 +1,12 @@
 import React from "react";
 import AbilitiesContext from "./SharedContext";
 import magicDamage from "./MagicDamage";
+import { FaBars, FaTimes } from "react-icons/fa";
+import Q from "../../../assets/abilities/Hymn_of_Valor.webp";
+import W from "../../../assets/abilities/Aria_of_Perseverance.webp";
+import E from "../../../assets/abilities/Song_of_Celerity.webp";
+import Image from "next/image";
+
 const resolveSpellText = (spellText, variables) => {
   // Loop through each variable and replace placeholders in the spell text
   for (const [key, value] of Object.entries(variables)) {
@@ -22,7 +28,7 @@ const resolveSpellText = (spellText, variables) => {
           if (innerIndex % 2 === 1) {
             // Matching text wrapped in span for magic damage
             return (
-              <span className="text-blue-500" key={innerIndex}>
+              <span className="text-blue-500 font-bold" key={innerIndex}>
                 {innerPart}
               </span>
             );
@@ -50,34 +56,68 @@ const resolveSpellText = (spellText, variables) => {
   return parsedText;
 };
 const AbilityDescription = () => {
+  const abilities = [Q, W, E];
   const { divVisibility, setDivVisibility, fetchedData, fetchedRawDataQ } =
     React.useContext(AbilitiesContext);
 
+  const toggleVisibility = (divIndex) => {
+    setDivVisibility((prevState) => ({
+      ...prevState,
+      [`div${divIndex}`]: !prevState[`div${divIndex}`],
+    }));
+  };
+
   return (
-    <div>
+    <div name="overview">
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => (
           <div
             className={
               !divVisibility[`div${index}`]
                 ? "hidden"
-                : "top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90"
+                : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80 absolute"
             }
           >
-            <div className="text-4xl font-bold text-[#FFD700] drop-shadow-lg sm: text-md">
-              {fetchedData && ability.name}
+            <div
+              className="text-6xl text-white"
+              onClick={() => toggleVisibility(index)}
+            >
+              <FaTimes className="h-12 w-12" />{" "}
+              {/* Adjust the height and width as needed */}
             </div>
-            <div className="text-5xl font-bold text-white italic drop-shadow-lg sm:text-md">
+            <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
+              {fetchedData && ability.name}
+              <Image
+                src={abilities[index]}
+                className="object-cover border border-gray-300"
+              />
+              <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
+                Cooldown: [
+                {fetchedData &&
+                  fetchedRawDataQ &&
+                  fetchedRawDataQ.cooldown &&
+                  fetchedRawDataQ.cooldown.join(" / ")}{" "}
+                ]
+              </div>
+              <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
+                Mana Cost: [
+                {fetchedData &&
+                  fetchedRawDataQ &&
+                  fetchedRawDataQ.manaCost &&
+                  fetchedRawDataQ.manaCost.join(" / ")}{" "}
+                ]
+              </div>
+            </div>
+            <div className="text-4xl font-bold italic text-white drop-shadow-lg sm:text-md border-b-2 border-gray-300 pb-2">
               {fetchedData && ability.description}
             </div>
-            <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md">
+            <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
               {fetchedData &&
                 fetchedRawDataQ &&
                 resolveSpellText(ability.tooltip, fetchedRawDataQ)}
             </div>
           </div>
-        ))}
-      <div></div>
+        ))}{" "}
     </div>
   );
 };

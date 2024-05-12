@@ -62,21 +62,23 @@ export class SonaService {
       const TotalStaccatoDamagePath:number = sonaQPath['mSpellCalculations']['TotalStaccatoDamage']['mFormulaParts'][1]['mCoefficient']
       const convertedTotalStacc:string = decimalToPercentage(TotalStaccatoDamagePath, 2)
       
-      const cooldownPath:string[]= sonaQPath['cooldownTime']
-      const manaPath:string[] = sonaQPath['mana']
+      const cooldownPath:string[]= sonaQPath['cooldownTime'].slice(1, -1);
+      const manaPath:string[] = sonaQPath['mana'].slice(0, -1);
       const auraPath:string[] = sonaQPath['mDataValues'][5]['mValues']
-      const damageActivePath :string[]= sonaQPath['mDataValues'][0]['mValues'] 
-      const damageMelodyPath :string[]= sonaQPath['mDataValues'][1]['mValues'] 
+  const damageActivePath: string[] = sonaQPath['mDataValues'][0]['mValues'].slice(1, -1);
+  const damageMelodyPath: string[] = sonaQPath['mDataValues'][1]['mValues'].slice(1, -1);
       const onhitdurationPath: string[] = sonaQPath['mDataValues'][3]['mValues'] 
       const totalonhitdamage: string[] = []
+            const totaldamage:string[] = []
+
       const OnhitradioPath: string = sonaQPath['mDataValues'][8]['mValues'][0]
       const convertedOnhitradio:string = decimalToPercentage(OnhitradioPath, 2)
-      for (const item of damageMelodyPath) {
-        totalonhitdamage.push(`${item} + ${convertedOnhitradio}`)
-      } 
+      totalonhitdamage.push(`${damageMelodyPath.map((item, index) => item + ' / ').join('')}(+ ${convertedOnhitradio})`);
+      totaldamage.push(`${damageActivePath.map((item, index) => item + ' / ').join('')}(+ ${convertedTotalDmg})`);
 
+      
       let sonaRawStatsQ: SonaRawStatsQ = {
-        'totaldamage': convertedTotalDmg,
+        'totaldamage': totaldamage,
         'totalstaccatodamage': convertedTotalStacc,
         'cooldown': cooldownPath, 
         'manaCost': manaPath,
