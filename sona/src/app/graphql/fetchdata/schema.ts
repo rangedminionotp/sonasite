@@ -37,10 +37,30 @@ export class SonaPassive{
     description!:string
 }
 
-// maybe not hardcode variable names...? ._. 
-@ArgsType()
-export class SonaRawStats {
-    @Field()
-    totaldamage!: string 
+// maybe not hardcode variable names...? ._.
+// k hardcode for now...
 
-}
+@ArgsType()
+export class SonaRawStatsQ {
+    @Field() 
+    totaldamage!: string
+    @Field()
+    auraduration!: string[] 
+    @Field()
+    totalstaccatodamage!:string
+    @Field()
+    onhitduration!: string[] 
+    @Field()
+    damageActive!: string[]
+    @Field()
+    damageMelody!: string[]
+    @Field()
+    manaCost!: string[]
+    @Field()
+    cooldown!: string[]  
+    @Field()
+    onhitradio!: string
+    @Field()
+    totalonhitdamage!: string[]
+} 
+ 
