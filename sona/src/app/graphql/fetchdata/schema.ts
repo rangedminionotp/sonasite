@@ -62,5 +62,7 @@ export class SonaRawStatsQ {
     onhitradio!: string
     @Field()
     totalonhitdamage!: string[]
+    @Field()
+    spellmodifierdescriptionappend!: string
 } 
  

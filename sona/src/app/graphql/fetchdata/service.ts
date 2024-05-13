@@ -87,7 +87,8 @@ export class SonaService {
         'damageMelody': damageMelodyPath,
         'onhitduration': onhitdurationPath[0],
         'onhitradio':convertedOnhitradio,
-        'totalonhitdamage': totalonhitdamage
+        'totalonhitdamage': totalonhitdamage,
+        'spellmodifierdescriptionappend': ""
       }
       return sonaRawStatsQ
     }

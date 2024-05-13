@@ -5,17 +5,25 @@ import Typography from "@mui/joy/Typography";
 import AbilitiesContext from "../SharedContext";
 const AbilityBreadcrumb = () => {
   const breadcrumbList = ["Overview", "Player Tips", "Add Tips", "Tutorials"];
-  const { breadCrumb, setBreabcrumb } = React.useContext(AbilitiesContext);
-  const switchBreadcrumb = (index: number) => {
-    setBreabcrumb((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+  const { breadCrumbs, setBreadcrumbs } = React.useContext(AbilitiesContext);
+  const switchBreadcrumbs = (index: number) => {
+    setBreadcrumbs((prevState) => {
+      const breadcrumbPrev = [...prevState];
+      // for some reason !breadcrumbPrev[index].active doesnt work :thinking:
+      breadcrumbPrev[0].active = false;
+      breadcrumbPrev[index].active = true;
+      return breadcrumbPrev;
+    });
   };
   return (
     <Breadcrumbs aria-label="breadcrumbs" separator=" ♡ " size="lg">
-      {breadcrumbList.map((index: number, item: string) => (
-        <Link key={item} color="neutral" href="#basics">
+      {breadcrumbList.map((item, index) => (
+        <Link
+          key={item}
+          color="neutral"
+          href="#basics"
+          onClick={() => switchBreadcrumbs(index)}
+        >
           {item}
         </Link>
       ))}
