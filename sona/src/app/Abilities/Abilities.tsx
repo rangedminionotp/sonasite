@@ -24,6 +24,8 @@ const Abilities = () => {
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
   const [fetchedData, setFetchedData] = React.useState(null);
   const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
+  const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
+  const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
     { label: "Player Tip", active: false },
@@ -36,7 +38,6 @@ const Abilities = () => {
         const sonaService = new SonaService();
         const data = await sonaService.FetchVersion();
         setFetchedData(data);
-        console.log("data", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -46,18 +47,46 @@ const Abilities = () => {
   }, []);
 
   React.useEffect(() => {
-    const fetchRawData = async () => {
+    const fetchRawDataQ = async () => {
       try {
         const sonaService = new SonaService();
         const data = await sonaService.FetchRawQ();
         setFetchedRawDataQ(data);
-        console.log("data", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchRawData();
+    fetchRawDataQ();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchRawDataW = async () => {
+      try {
+        const sonaService = new SonaService();
+        const data = await sonaService.FetchRawW();
+        setFetchedRawDataW(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRawDataW();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchRawDataE = async () => {
+      try {
+        const sonaService = new SonaService();
+        const data = await sonaService.FetchRawE();
+        console.log(data);
+        setFetchedRawDataE(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRawDataE();
   }, []);
 
   return (
@@ -67,6 +96,9 @@ const Abilities = () => {
         setAbilityVisibility,
         fetchedData,
         fetchedRawDataQ,
+        fetchedRawDataW,
+        fetchedRawDataE,
+        setFetchedRawDataW,
         breadcrumbs,
         setBreadcrumbs,
       }}

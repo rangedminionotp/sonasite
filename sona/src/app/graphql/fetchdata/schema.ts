@@ -65,4 +65,64 @@ export class SonaRawStatsQ {
     @Field()
     spellmodifierdescriptionappend!: string
 } 
- 
+
+@ArgsType()
+export class SonaRawStatsW {
+    @Field()
+    totalheal!: string[]
+    Field()
+    baseHeal!: string[]
+    @Field()
+    healRatio!: string
+    @Field()
+    totalshield!: string[]
+    @Field()
+    baseShield!: string[]
+    @Field()
+    shieldRatio!:string 
+    @Field()
+    accelerandoshieldbreakpoint!: string[]
+    @Field()
+    totaldiminuendoweakenpercent!: string
+    @Field()
+    diminuendoduration!: string
+    @Field()
+    manaCost!: string[]
+    // cant find w cd in raw data json wutttt have to hardcode...
+    @Field()
+    cooldown!: string[]
+    @Field()
+    auraduration!: string 
+    @Field()
+    shieldduration!: string
+    @Field()
+    spellmodifierdescriptionappend!: string
+}
+
+@ArgsType()
+export class SonaRawStatsE {
+    @Field()
+    totalselfmovementspeed!: string
+    @Field()
+    selfMSBaseRatio!:string
+    @Field()
+    selfmovementspeeddurationmin!: string
+    @Field()
+    selfmovementspeeddurationmax!: string
+    @Field()
+    totalallymovementspeed!: string[]
+    @Field()
+    allymovementspeedduration!: string
+    @Field()
+    totaltempomovespeedslow!: string
+    @Field()
+    tempoduration!: string
+    @Field()
+    manaCost!: string[]
+    @Field()
+    cooldown!: string[]
+    @Field()
+    spellmodifierdescriptionappend!: string
+    @Field()
+    auraduration!:string
+}

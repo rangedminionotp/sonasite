@@ -15,8 +15,8 @@ const Background = () => {
     return (
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <Image
+          alt={""}
           src={images[randomImageKey]}
-          alt={randomImageKey}
           layout="fill"
           objectFit="cover"
           className="object-cover"

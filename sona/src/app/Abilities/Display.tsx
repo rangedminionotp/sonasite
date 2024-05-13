@@ -30,16 +30,40 @@ const Display = () => {
   const abilities = [Q, W, E];
   return (
     <div className="flex space-x-6">
-      <div name={`passive-icon`} key={`passive-icon`} className="mb-10">
-        <Image src={passive} className="object-cover border border-gray-300" />
+      <div
+        name={`passive-icon`}
+        // key={`passive-icon`}
+        className="mb-10"
+      >
+        <Image
+          src={passive}
+          alt={""}
+          className="object-cover border border-gray-300"
+        />
       </div>
       {abilities.map((index, image) => (
-        <div name={`${image}-icon`} key={`${image}-icon`} className="mb-10">
-          <Image src={index} className="object-cover border border-gray-300" />
+        <div
+          name={`${image}-icon`}
+          // key={`${image}-icon`}
+          className="mb-10"
+        >
+          <Image
+            src={index}
+            alt={""}
+            className="object-cover border border-gray-300"
+          />
         </div>
       ))}
-      <div name={`R-icon`} key={`R-icon`} className="mb-10">
-        <Image src={R} className="object-cover border border-gray-300" />
+      <div
+        name={`R-icon`}
+        // key={`R-icon`}
+        className="mb-10"
+      >
+        <Image
+          src={R}
+          alt={""}
+          className="object-cover border border-gray-300"
+        />
       </div>
     </div>
   );

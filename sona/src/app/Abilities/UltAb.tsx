@@ -17,8 +17,13 @@ const UltAb = () => {
   };
   return (
     <div className="flex space-x-6">
-      <div name={`R-icon`} key={`R-icon`} className="hover:cursor-pointer">
+      <div
+        name={`R-icon`}
+        // key={`R-popup-icon`}
+        className="hover:cursor-pointer"
+      >
         <Image
+          alt={""}
           src={R}
           width={80}
           height={80}

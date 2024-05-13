@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "test": "jest --runInBand --forceExit",
     "test:silent": "jest --runInBand --forceExit --silent",
     "test:watch": "jest --runInBand --forceExit --watchAll"
@@ -54,5 +54,20 @@
     "postcss": "^8",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.3.3"
+  },
+   "eslintConfig": {
+    "extends": [
+      "next/core-web-vitals",
+      "typescript"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 13
+    },
+    "rules": {
+      "indent": [
+        "warn",
+        2
+      ]
+    }
   }
 }

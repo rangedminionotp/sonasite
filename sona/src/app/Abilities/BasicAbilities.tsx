@@ -27,10 +27,11 @@ const BasicAbilities: FunctionalComponent = () => {
       {abilities.map((image, index) => (
         <div
           name={`${image}-icon`}
-          key={`${image}-icon`}
+          // key={`${image}-icon`}
           className="hover:cursor-pointer"
         >
           <Image
+            alt={""}
             src={image}
             onClick={() => toggleVisibility(index)}
             className="object-cover border border-gray-300"
