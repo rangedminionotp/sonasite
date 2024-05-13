@@ -19,12 +19,13 @@ const PassiveAb = () => {
     <div className="flex space-x-6">
       <div
         name={`passive-icon`}
-        key={`passive-icon`}
+        // key={`passive-icon`}
         className="hover:cursor-pointer"
       >
         <Image
           width={80} // Adjust the width as needed
           height={80}
+          alt={""}
           src={passive}
           onClick={() => toggleVisibility(4)}
           className="object-cover border border-gray-300"

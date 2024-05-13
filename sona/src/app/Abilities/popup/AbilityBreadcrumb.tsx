@@ -19,7 +19,7 @@ const AbilityBreadcrumb = () => {
     <Breadcrumbs aria-label="breadcrumbs" separator=" ♡ " size="lg">
       {breadcrumbList.map((item, index) => (
         <Link
-          key={item}
+          // key={item}
           color="neutral"
           href="#basics"
           onClick={() => switchBreadcrumbs(index)}

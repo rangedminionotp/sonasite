@@ -22,6 +22,7 @@ const AbilitiesNavbar = ({ index, name }) => {
         <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
           {fetchedData && name}
           <Image
+            alt={""}
             src={abilities[index]}
             className="object-cover border border-gray-300"
           />

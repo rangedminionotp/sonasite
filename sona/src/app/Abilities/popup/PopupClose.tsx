@@ -3,8 +3,12 @@ import { FaTimes } from "react-icons/fa";
 import AbilitiesContext from "../SharedContext";
 
 const PopupClose = ({ index }) => {
-  const { abilityVisibility, setAbilityVisibility } =
-    React.useContext(AbilitiesContext);
+  const {
+    abilityVisibility,
+    setAbilityVisibility,
+    breadcrumbs,
+    setBreadcrumbs,
+  } = React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex) => {
     setAbilityVisibility((prevState) => {
@@ -13,6 +17,13 @@ const PopupClose = ({ index }) => {
       abilityPrev[divIndex].active = false;
       return abilityPrev;
     });
+
+    // so that the abilities overview always display when abilities toggled
+    const updatedBreadcrumbs = breadcrumbs.map((breadcrumb, index) => ({
+      ...breadcrumb,
+      active: index === 0, // Set active to true only for the first element
+    }));
+    setBreadcrumbs(updatedBreadcrumbs);
   };
   return (
     <div
