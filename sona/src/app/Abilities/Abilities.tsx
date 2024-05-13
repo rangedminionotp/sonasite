@@ -9,26 +9,27 @@ import PassiveAb from "./PassiveAb";
 import UltAb from "./UltAb";
 import AbilitiesContext from "./SharedContext";
 import { SonaService } from "../graphql/fetchdata/service";
-import AbilityDescription from "./AbilityDescription";
+// import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
-
+import AbilitiesPopup from "./popup/AbilitiesPopup";
 const Abilities = () => {
   // boolean to see if user click on abilities expansion
-  const [divVisibility, setDivVisibility] = React.useState({
-    div0: false,
-    div1: false,
-    div2: false,
-    div3: false,
-    div4: false,
-  });
+  const [abilityVisibility, setAbilityVisibility] = React.useState([
+    { label: "SonaQ", active: false },
+    { label: "SonaW", active: false },
+    { label: "SonaE", active: false },
+    { label: "SonaR", active: false },
+    { label: "passive", active: false },
+  ]);
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
   const [fetchedData, setFetchedData] = React.useState(null);
   const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
-  const [breadCrumb, setBreabcrumb] = React.useState({
-    overview: true,
-    playerTip: false,
-    addTip: false,
-  });
+  const [breadcrumbs, setBreadcrumbs] = React.useState([
+    { label: "Overview", active: true },
+    { label: "Player Tip", active: false },
+    { label: "Add Tip", active: false },
+    { label: "Tutorials", active: false },
+  ]);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,12 +63,12 @@ const Abilities = () => {
   return (
     <AbilitiesContext.Provider
       value={{
-        divVisibility,
-        setDivVisibility,
+        abilityVisibility,
+        setAbilityVisibility,
         fetchedData,
         fetchedRawDataQ,
-        breadCrumb,
-        setBreabcrumb,
+        breadcrumbs,
+        setBreadcrumbs,
       }}
     >
       <div name="abilities" className="w-full h-screen relative">
@@ -82,7 +83,8 @@ const Abilities = () => {
           <PassiveAb />
           <BasicAbilities />
           <UltAb />
-          <AbilityDescription />
+          <AbilitiesPopup />
+          {/* <AbilityDescription /> */}
           <PassiveDes />
         </div>
       </div>

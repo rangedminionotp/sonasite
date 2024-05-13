@@ -2,14 +2,14 @@ import React from "react";
 import AbilitiesContext from "./SharedContext";
 
 const PassiveDes = () => {
-  const { divVisibility, setDivVisibility, fetchedData } =
+  const { abilityVisibility, setAbilityVisibility, fetchedData } =
     React.useContext(AbilitiesContext);
   return (
     <div>
       {fetchedData && (
         <div
           className={
-            !divVisibility[`div4`]
+            !abilityVisibility[4].active
               ? "hidden"
               : "top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90"
           }

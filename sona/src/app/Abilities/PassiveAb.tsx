@@ -4,15 +4,17 @@ import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 
 const PassiveAb = () => {
-  const toggleVisibility = (divIndex) => {
-    setDivVisibility((prevState) => ({
-      ...prevState,
-      [`div${divIndex}`]: !prevState[`div${divIndex}`],
-    }));
-  };
-  const { divVisibility, setDivVisibility } =
+  const { abilityVisibility, setAbilityVisibility } =
     React.useContext(AbilitiesContext);
 
+  const toggleVisibility = (divIndex) => {
+    setAbilityVisibility((prevState) => {
+      const abilityPrev = [...prevState];
+      // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
+      abilityPrev[divIndex].active = true;
+      return abilityPrev;
+    });
+  };
   return (
     <div className="flex space-x-6">
       <div
