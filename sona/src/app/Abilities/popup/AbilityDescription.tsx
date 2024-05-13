@@ -57,8 +57,14 @@ const resolveSpellText = (spellText, variables) => {
 };
 const AbilityDescription = () => {
   const abilities = [Q, W, E];
-  const { divVisibility, setDivVisibility, fetchedData, fetchedRawDataQ } =
-    React.useContext(AbilitiesContext);
+  const {
+    abilityVisibility,
+    setAbilityVisibility,
+    fetchedData,
+    fetchedRawDataQ,
+    breadcrumbs,
+    setBreadcrumbs,
+  } = React.useContext(AbilitiesContext);
 
   return (
     <div name="Overview">
@@ -66,9 +72,9 @@ const AbilityDescription = () => {
         fetchedData.abilities.map((ability, index) => (
           <div
             className={
-              !divVisibility[`div${index}`]
+              !abilityVisibility[index].active
                 ? "hidden"
-                : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80 absolute"
+                : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80"
             }
           >
             <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
