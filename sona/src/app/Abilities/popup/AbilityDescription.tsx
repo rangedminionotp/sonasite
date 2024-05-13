@@ -1,11 +1,11 @@
 import React from "react";
-import AbilitiesContext from "./SharedContext";
+import AbilitiesContext from "../SharedContext";
 import magicDamage from "./MagicDamage";
-import { FaBars, FaTimes } from "react-icons/fa";
-import Q from "../../../assets/abilities/Hymn_of_Valor.webp";
-import W from "../../../assets/abilities/Aria_of_Perseverance.webp";
-import E from "../../../assets/abilities/Song_of_Celerity.webp";
+import Q from "../../../../assets/abilities/Hymn_of_Valor.webp";
+import W from "../../../../assets/abilities/Aria_of_Perseverance.webp";
+import E from "../../../../assets/abilities/Song_of_Celerity.webp";
 import Image from "next/image";
+import AbilitiesNavbar from "./AbilitiesNavbar";
 
 const resolveSpellText = (spellText, variables) => {
   // Loop through each variable and replace placeholders in the spell text
@@ -60,15 +60,8 @@ const AbilityDescription = () => {
   const { divVisibility, setDivVisibility, fetchedData, fetchedRawDataQ } =
     React.useContext(AbilitiesContext);
 
-  const toggleVisibility = (divIndex) => {
-    setDivVisibility((prevState) => ({
-      ...prevState,
-      [`div${divIndex}`]: !prevState[`div${divIndex}`],
-    }));
-  };
-
   return (
-    <div name="overview">
+    <div name="Overview">
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => (
           <div
@@ -78,19 +71,7 @@ const AbilityDescription = () => {
                 : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80 absolute"
             }
           >
-            <div
-              className="text-6xl text-white"
-              onClick={() => toggleVisibility(index)}
-            >
-              <FaTimes className="h-12 w-12" />{" "}
-              {/* Adjust the height and width as needed */}
-            </div>
             <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
-              {fetchedData && ability.name}
-              <Image
-                src={abilities[index]}
-                className="object-cover border border-gray-300"
-              />
               <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
                 Cooldown: [
                 {fetchedData &&
