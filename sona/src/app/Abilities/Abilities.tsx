@@ -26,6 +26,7 @@ const Abilities = () => {
   const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
+  const [fetchedRawDataR, setFetchedRawDataR] = React.useState(null);
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
     { label: "Player Tip", active: false },
@@ -79,7 +80,6 @@ const Abilities = () => {
       try {
         const sonaService = new SonaService();
         const data = await sonaService.FetchRawE();
-        console.log(data);
         setFetchedRawDataE(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -87,6 +87,21 @@ const Abilities = () => {
     };
 
     fetchRawDataE();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchRawDataR = async () => {
+      try {
+        const sonaService = new SonaService();
+        const data = await sonaService.FetchRawR();
+        console.log(data);
+        setFetchedRawDataR(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchRawDataR();
   }, []);
 
   return (
@@ -98,6 +113,7 @@ const Abilities = () => {
         fetchedRawDataQ,
         fetchedRawDataW,
         fetchedRawDataE,
+        fetchedRawDataR,
         setFetchedRawDataW,
         breadcrumbs,
         setBreadcrumbs,
@@ -116,8 +132,6 @@ const Abilities = () => {
           <BasicAbilities />
           <UltAb />
           <AbilitiesPopup />
-          {/* <AbilityDescription /> */}
-          <PassiveDes />
         </div>
       </div>
     </AbilitiesContext.Provider>

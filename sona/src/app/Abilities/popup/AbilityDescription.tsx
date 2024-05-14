@@ -4,6 +4,8 @@ import magicDamage from "./MagicDamage";
 import Q from "../../../../assets/abilities/Hymn_of_Valor.webp";
 import W from "../../../../assets/abilities/Aria_of_Perseverance.webp";
 import E from "../../../../assets/abilities/Song_of_Celerity.webp";
+import R from "../../../../assets/abilities/Crescendo.webp";
+import passive from "../../../../assets/abilities/Power_Chord.webp";
 import Image from "next/image";
 import AbilitiesNavbar from "./AbilitiesNavbar";
 
@@ -58,7 +60,7 @@ const resolveSpellText = (spellText, variables) => {
 };
 
 const AbilityDescription = () => {
-  const abilities = [Q, W, E];
+  const abilities = [Q, W, E, R, passive];
   const {
     abilityVisibility,
     setAbilityVisibility,
@@ -66,6 +68,7 @@ const AbilityDescription = () => {
     fetchedRawDataQ,
     fetchedRawDataW,
     fetchedRawDataE,
+    fetchedRawDataR,
     breadcrumbs,
     setBreadcrumbs,
   } = React.useContext(AbilitiesContext);
@@ -73,7 +76,7 @@ const AbilityDescription = () => {
     fetchedRawDataQ,
     fetchedRawDataW,
     fetchedRawDataE,
-    fetchedRawDataW,
+    fetchedRawDataR,
   ];
   return (
     <div name="Overview">
@@ -116,13 +119,14 @@ const AbilityDescription = () => {
                   fetchedRawDataQ &&
                   fetchedRawDataW &&
                   fetchedRawDataE &&
+                  fetchedRawDataR &&
                   parseSpellText(
                     resolveSpellText(ability.tooltip, rawData[index])
                   ),
               }}
             />
           </div>
-        ))}{" "}
+        ))}
     </div>
   );
 };
