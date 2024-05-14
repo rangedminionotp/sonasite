@@ -4,6 +4,8 @@ import { Button, Input, Typography } from "@mui/joy";
 import Card from "@mui/joy/Card";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Logo from "../Navbar/Logo";
+import GmailLogin from "./GmailLogin";
 
 const login = () => {
   const router = useRouter();
@@ -49,14 +51,16 @@ const login = () => {
       });
   };
   return (
-    <div className="flex flex-col h-screen bg-white ">
+    <div className="flex flex-col h-screen bg-gray-400 ">
       {/* Login Form */}
-      <div className="flex-grow flex items-center justify-center bg-white dark:bg-black">
-        <Card
-          variant="plain"
-          className=" dark:bg-[#0f0f0f] bg-gray-100 w-full max-w-lg"
-        >
-          <Typography class="dark:text-gray-300">Log In</Typography>
+      <div className="flex-grow flex items-center justify-center bg-gray-700">
+        <Card variant="plain" className="  bg-gray-400 w-full max-w-lg">
+          <Typography class="text-2xl items-center justify-center flex">
+            Log In
+          </Typography>
+          <Typography class="text-md items-center justify-center flex">
+            Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
+          </Typography>
           <Input
             color="neutral"
             type="email"
@@ -83,18 +87,17 @@ const login = () => {
           />
 
           <Button
-            className="dark:text-gray-300 dark:hover:bg-black"
+            className=" "
             onClick={handleSubmit}
-            variant="soft"
+            variant="outlined"
             color="neutral"
           >
             Log In
           </Button>
           <Button
-            fullWidth
-            variant="soft"
+            variant="outlined"
             color="neutral"
-            className="dark:text-gray-300 dark:hover:bg-black"
+            className=" "
             sx={{ mt: 0, mb: 2 }}
             onClick={() => {
               router.push(
@@ -117,6 +120,7 @@ const login = () => {
             {"Don't have an account? Sign Up"}
           </Button> */}
         </Card>
+        <GmailLogin />
       </div>
     </div>
   );

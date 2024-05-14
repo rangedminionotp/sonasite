@@ -39,7 +39,6 @@ const Abilities = () => {
         const sonaService = new SonaService();
         const data = await sonaService.FetchVersion();
         setFetchedData(data);
-        console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
