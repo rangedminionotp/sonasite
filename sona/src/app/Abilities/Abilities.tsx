@@ -8,7 +8,7 @@ import BasicAbilities from "./BasicAbilities";
 import PassiveAb from "./PassiveAb";
 import UltAb from "./UltAb";
 import AbilitiesContext from "./SharedContext";
-import { SonaService } from "../graphql/fetchdata/service";
+import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
 import AbilitiesPopup from "./popup/AbilitiesPopup";
