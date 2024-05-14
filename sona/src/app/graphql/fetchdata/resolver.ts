@@ -2,7 +2,7 @@ import { Query, Resolver, Args } from "type-graphql"
 
 import { SonaService } from "./service"
 
-import { SonaOverview, SonaRawStatsQ, SonaRawStatsW, SonaRawStatsE } from "../schema"
+import { SonaOverview, SonaRawStatsQ, SonaRawStatsW, SonaRawStatsE, SonaRawStatsR } from "../schema"
 @Resolver()
 
 export class SonaResolver {
@@ -21,5 +21,9 @@ export class SonaResolver {
 
     async fetchAbilityRawdataE(): Promise<SonaRawStatsE>{ 
         return new SonaService().FetchRawE()
+    }
+
+    async fetchAbilityRawdataR(): Promise<SonaRawStatsE>{ 
+        return new SonaService().FetchRawR()
     }
 }

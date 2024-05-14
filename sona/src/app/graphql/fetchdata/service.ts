@@ -1,6 +1,6 @@
 import { pool } from "@/db";
 
-import { SonaOverview, SonaAbilities, SonaPassive,SonaRawStatsQ, SonaRawStatsW,  SonaRawStatsE } from "./schema";
+import { SonaOverview, SonaAbilities, SonaPassive,SonaRawStatsQ, SonaRawStatsW,  SonaRawStatsE, SonaRawStatsR } from "./schema";
 
 const sona = 'Sona'
 
@@ -213,6 +213,40 @@ export class SonaService {
       return SonaRawStatsE;
     } catch (error) {
             console.error('Error fetching raw data E', error);
+            return 'meow' //not a right return type btw xdddd
+        } 
+  } 
+
+  public async FetchRawR(): Promise<SonaRawStatsR>{
+    try {
+      const response = await fetch("http://localhost:3000/api/fetchRawData")
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      // raw data json fetched & stored in **data** 
+      const data = await response.json() 
+      // paths 
+      const sonaRPath = data[`Characters/${sona}/Spells/${sona}RAbility/${sona}R`]['mSpell']
+      const baseDamagePath: string[] = sonaRPath['mDataValues'][0]['mValues'].slice(1, 4)
+      const stundurationPath: string[] = sonaRPath['mDataValues'][1]['mValues'][0]
+      const cooldownPath: string[] = sonaRPath['cooldownTime'].slice(1, 4)
+      const manaPath: string[] = sonaRPath['mana'].slice(0, 3)
+      const damageRatio: string = sonaRPath['mSpellCalculations']['TotalDamage']['mFormulaParts'][1]['mCoefficient']
+      const convertedDamageRatio: string = decimalToPercentage(damageRatio, 2)
+      const totalDamage: string[] = []
+      totalDamage.push(`${baseDamagePath.map((item, index) => index === baseDamagePath.length - 1 ? item : item + ' / ').join('')} (+ ${convertedDamageRatio})`);
+      let sonaRawStatsR: SonaRawStatsR = {
+        'stunduration': stundurationPath,
+        'baseDamage': baseDamagePath,
+        'totaldamage': totalDamage,
+        'manaCost': manaPath,
+        'cooldown': cooldownPath,
+        'spellmodifierdescriptionappend': ""
+      }
+      return sonaRawStatsR;
+    } catch (error) {
+            console.error('Error fetching raw data R', error);
             return 'meow' //not a right return type btw xdddd
         } 
   }

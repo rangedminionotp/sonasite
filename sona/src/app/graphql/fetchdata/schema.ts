@@ -10,9 +10,9 @@ export class SonaOverview {
     @Field()
     lore!: string
     @Field()
-    abilities: SonaAbilities[] 
+    abilities!: SonaAbilities[] 
     @Field()
-    passive: SonaPassive
+    passive!: SonaPassive
     @Field()
     version!: string
 }
@@ -125,4 +125,20 @@ export class SonaRawStatsE {
     spellmodifierdescriptionappend!: string
     @Field()
     auraduration!:string
+}
+
+@ArgsType()
+export class SonaRawStatsR {
+    @Field()
+    stunduration!: string
+    @Field()
+    baseDamage!:string[]
+    @Field()
+    totaldamage!: string[]
+    @Field()
+    manaCost!: string[]
+    @Field()
+    cooldown!: string[]
+    @Field()
+    spellmodifierdescriptionappend!: string
 }
