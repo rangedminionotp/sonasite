@@ -1,1 +1,2 @@
- 
+DROP TABLE IF EXISTS Users CASCADE;
+CREATE TABLE Users(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), data jsonb);

@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "es2018",
-      "esnext.asynciterable"
-    ],
+    "target": "ES6",
+     "lib": ["ES6", "DOM"],
+     "outDir": "./dist",
+    "rootDir": "./src",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

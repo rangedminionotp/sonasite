@@ -2,10 +2,11 @@ import { createYoga } from 'graphql-yoga'
 import 'reflect-metadata'; // must come before buildSchema
 import { buildSchemaSync } from "type-graphql"
 
-import { SonaResolver } from '../graphql/fetchdata/resolver';
+// import { SonaResolver } from './fetchdata/resolver';
 
+import AuthResolver from '../graphql/Auth/resolver'
 const schema = buildSchemaSync({
-  resolvers: [SonaResolver],
+  resolvers: [AuthResolver],
   validate: true,  
 });
 

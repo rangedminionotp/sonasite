@@ -17,17 +17,20 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/joy": "^5.0.0-beta.16",
     "@mui/material": "^5.14.20",
+    "bcrypt": "^5.1.1",
     "class-validator": "^0.14.1",
     "classnames": "^2.5.1",
     "fs": "^0.0.1-security",
     "graphql-yoga": "^5.3.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "*",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.1.0",
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scroll": "*",
+    "reflect-metadata": "^0.2.2",
     "supertest": "*",
     "ts-jest": "*",
     "ts-node": "*",
@@ -42,7 +45,7 @@
     "@testing-library/react": "*",
     "@testing-library/user-event": "*",
     "@types/bcrypt": "*",
-    "@types/jsonwebtoken": "*",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.17",
     "@types/pg": "*",
     "@types/react": "^18.2.55",
@@ -55,7 +58,7 @@
     "tailwindcss": "^3.3.5",
     "typescript": "^5.3.3"
   },
-   "eslintConfig": {
+  "eslintConfig": {
     "extends": [
       "next/core-web-vitals",
       "typescript"

@@ -1,5 +1,5 @@
 import React from "react";
-import passive from "../../../assets/abilities/Power_Chord.webp";
+import passive from "@/assets/abilities/Power_Chord.webp";
 import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 

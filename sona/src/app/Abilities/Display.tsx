@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-// import images from "../../../assets/abilities";
 
-import Q from "../../../assets/abilities/Hymn_of_Valor.webp";
-import W from "../../../assets/abilities/Aria_of_Perseverance.webp";
+import Q from "@/assets/abilities/Hymn_of_Valor.webp";
+import W from "@/assets/abilities/Aria_of_Perseverance.webp";
 
-import E from "../../../assets/abilities/Song_of_Celerity.webp";
+import E from "@/assets/abilities/Song_of_Celerity.webp";
 
-import passive from "../../../assets/abilities/Power_Chord.webp";
-import R from "../../../assets/abilities/Crescendo.webp";
+import passive from "@/assets/abilities/Power_Chord.webp";
+import R from "@/assets/abilities/Crescendo.webp";
 
 import Image from "next/image";
 

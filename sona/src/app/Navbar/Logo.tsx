@@ -1,5 +1,5 @@
 import React from "react";
-import pic from "../../../assets/thuglife.png";
+import pic from "@/assets/thuglife.png";
 import Image from "next/image";
 
 const Logo = () => {
