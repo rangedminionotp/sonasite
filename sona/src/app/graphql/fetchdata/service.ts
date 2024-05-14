@@ -35,14 +35,13 @@ export class SonaService {
           'name':version.data.Sona.passive.name,
           'description':version.data.Sona.passive.description
         }
-         
+         sonaData.push(sonaPassive)
           const SonaOverview: SonaOverview = {
             'name': version.data.Sona.name,
             'title': version.data.Sona.title,
             'lore': version.data.Sona.lore,
             'abilities': sonaData,
-            'version': version.version,
-            'passive': sonaPassive
+            'version': version.version 
         }
         return SonaOverview;
         } catch (error) {
@@ -249,5 +248,5 @@ export class SonaService {
             console.error('Error fetching raw data R', error);
             return 'meow' //not a right return type btw xdddd
         } 
-  }
+  } 
 }

@@ -26,7 +26,7 @@ const AbilitiesPopup = () => {
             }
           >
             <PopupClose index={index} />
-            <AbilitiesNavbar index={index} name={ability.name} />
+            <AbilitiesNavbar index={index} name={ability.name || ""} />
             <AbilityBreadcrumb />
             {/* if user wants to see active... it should auto open overview */}
             {breadcrumbs[0].active ? <AbilityDescription /> : null}

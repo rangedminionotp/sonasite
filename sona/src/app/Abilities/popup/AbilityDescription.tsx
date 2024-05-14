@@ -77,6 +77,7 @@ const AbilityDescription = () => {
     fetchedRawDataW,
     fetchedRawDataE,
     fetchedRawDataR,
+    fetchedRawDataQ,
   ];
   return (
     <div name="Overview">
@@ -92,38 +93,63 @@ const AbilityDescription = () => {
           >
             <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
               <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
-                Cooldown: [
-                {fetchedData &&
-                  rawData[index] &&
-                  rawData[index].cooldown &&
-                  rawData[index].cooldown.join(" / ")}
-                {""}]
+                {index !== 4 && (
+                  <div>
+                    Cooldown: [
+                    {fetchedData &&
+                      rawData[index] &&
+                      rawData[index].cooldown &&
+                      rawData[index].cooldown.join(" / ")}
+                    {""}]
+                  </div>
+                )}
               </div>
               <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
-                Mana Cost: [
-                {fetchedData &&
-                  rawData[index] &&
-                  rawData[index].manaCost &&
-                  rawData[index].manaCost.join(" / ")}
-                {""}]
+                {index !== 4 && (
+                  <div>
+                    Mana Cost: [
+                    {fetchedData &&
+                      rawData[index] &&
+                      rawData[index].manaCost &&
+                      rawData[index].manaCost.join(" / ")}
+                    {""}]
+                  </div>
+                )}
               </div>
             </div>
             <div className="text-4xl font-bold italic text-white drop-shadow-lg sm:text-md border-b-2 border-gray-300 pb-2">
-              {fetchedData && ability.description}
+              {/* need to change this */}
+              {index !== 4 ? fetchedData && ability.description : null}
             </div>
             <div
               className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4"
-              dangerouslySetInnerHTML={{
-                __html:
-                  fetchedData &&
-                  fetchedRawDataQ &&
-                  fetchedRawDataW &&
-                  fetchedRawDataE &&
-                  fetchedRawDataR &&
-                  parseSpellText(
-                    resolveSpellText(ability.tooltip, rawData[index])
-                  ),
-              }}
+              {...(index !== 4
+                ? {
+                    dangerouslySetInnerHTML: {
+                      __html:
+                        fetchedData &&
+                        fetchedRawDataQ &&
+                        fetchedRawDataW &&
+                        fetchedRawDataE &&
+                        fetchedRawDataR &&
+                        parseSpellText(
+                          resolveSpellText(ability.tooltip, rawData[index])
+                        ),
+                    },
+                  }
+                : {
+                    dangerouslySetInnerHTML: {
+                      __html:
+                        fetchedData &&
+                        fetchedRawDataQ &&
+                        fetchedRawDataW &&
+                        fetchedRawDataE &&
+                        fetchedRawDataR &&
+                        parseSpellText(
+                          resolveSpellText(ability.description, rawData[index])
+                        ),
+                    },
+                  })}
             />
           </div>
         ))}
