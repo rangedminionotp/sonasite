@@ -7,100 +7,56 @@ import E from "../../../../assets/abilities/Song_of_Celerity.webp";
 import Image from "next/image";
 import AbilitiesNavbar from "./AbilitiesNavbar";
 
-const resolveSpellText = (spellText, variables) => {
-  // Loop through each variable and replace placeholders in the spell text
-  for (const [key, value] of Object.entries(variables)) {
-    spellText = spellText.replace(`{{ ${key} }}`, value);
-  }
+// ty chatgpt :3
+const parseSpellText = (spellText) => {
+  const regexReplacements = [
+    {
+      regex: /<magicDamage>(.*?)<\/magicDamage>/g,
+      replacement: '<span class="text-blue-500 font-bold">$1</span>',
+    },
+    {
+      regex: /<keywordMajor>(.*?)<\/keywordMajor>/g,
+      replacement: '<span class="text-yellow-500 font-bold">$1</span>',
+    },
+    {
+      regex: /<spellPassive>(.*?)<\/spellPassive>/g,
+      replacement: '<span class="font-bold text-gray-500">$1</span>',
+    },
+    {
+      regex: /<healing>(.*?)<\/healing>/g,
+      replacement: '<span class="text-green-500 font-bold">$1</span>',
+    },
+    {
+      regex: /<shield>(.*?)<\/shield>/g,
+      replacement: '<span class="text-green-600 font-bold">$1</span>',
+    },
+    {
+      regex: /<speed>(.*?)<\/speed>/g,
+      replacement: '<span class="text-purple-600 font-bold">$1</span>',
+    },
+    {
+      regex: /<status>(.*?)<\/status>/g,
+      replacement: '<span class="text-blue-800 font-bold italic">$1</span>',
+    },
+  ];
 
-  const magicDamageRegex = /<magicDamage>(.*?)<\/magicDamage>/g;
-  const keywordMajorRegex = /<keywordMajor>(.*?)<\/keywordMajor>/g;
-  const spellPassiveRegex = /<spellPassive>(.*?)<\/spellPassive>/g;
-  const healingRegex = /<healing>(.*?)<\/healing>/g;
-  const shieldRegex = /<shield>(.*?)<\/shield>/g;
-  const speedRegex = /<speed>(.*?)<\/speed>/g;
-  const statusRegex = /<status>(.*?)<\/status>/g;
-  const brRegex = /<br\s*\/?>/g;
-  const parsedText = spellText
-    .split(brRegex)
-    .map((part, index) => {
-      if (index % 2 === 1) {
-        // If the index is odd, it means we're inside a <br> tag
-        return <br />;
-      } else {
-        // Otherwise, handle other replacements
-        return part.split(magicDamageRegex).map((innerPart, innerIndex) => {
-          if (innerIndex % 2 === 1) {
-            // Matching text wrapped in span for magic damage
-            return <span className="text-blue-500 font-bold">{innerPart}</span>;
-          }
-          return innerPart
-            .split(keywordMajorRegex)
-            .map((keywordPart, keywordIndex) => {
-              if (keywordIndex % 2 === 1) {
-                // Matching text wrapped in span for keyword major
-                return (
-                  <span
-                    className="text-yellow-500 font-bold"
-                    // key={keywordIndex}
-                  >
-                    {keywordPart}
-                  </span>
-                );
-              }
-              return keywordPart
-                .split(spellPassiveRegex)
-                .map((passivePart, passiveIndex) => {
-                  if (passiveIndex % 2 === 1) {
-                    // Matching text wrapped in span for spell passive
-                    return (
-                      <span
-                        className="font-bold text-gray-500"
-                        // key={passiveIndex}
-                      >
-                        {passivePart}
-                      </span>
-                    );
-                  }
-                  return passivePart
-                    .split(healingRegex)
-                    .map((healingPart, healingIndex) => {
-                      if (healingIndex % 2 === 1) {
-                        // Matching text wrapped in span for healing
-                        return (
-                          <span
-                            className="text-green-500 font-bold"
-                            // key={healingIndex}
-                          >
-                            {healingPart}
-                          </span>
-                        );
-                      }
-                      return healingPart
-                        .split(shieldRegex)
-                        .map((shieldPart, shieldIndex) => {
-                          if (shieldIndex % 2 === 1) {
-                            // Matching text wrapped in span for shield
-                            return (
-                              <span
-                                className="text-green-600 font-bold"
-                                // key={shieldIndex}
-                              >
-                                {shieldPart}
-                              </span>
-                            );
-                          }
-                          return shieldPart; // Non-matching text
-                        });
-                    });
-                });
-            });
-        });
-      }
-    })
-    .flat();
+  let parsedText = spellText;
+
+  regexReplacements.forEach(({ regex, replacement }) => {
+    parsedText = parsedText.replace(regex, replacement);
+  });
+
   return parsedText;
 };
+
+const resolveSpellText = (spellText, variables) => {
+  // Replace placeholders with actual values
+  for (const [key, value] of Object.entries(variables)) {
+    spellText = spellText.replace(new RegExp(`{{\\s*${key}\\s*}}`, "g"), value);
+  }
+  return spellText;
+};
+
 const AbilityDescription = () => {
   const abilities = [Q, W, E];
   const {
@@ -152,13 +108,19 @@ const AbilityDescription = () => {
             <div className="text-4xl font-bold italic text-white drop-shadow-lg sm:text-md border-b-2 border-gray-300 pb-2">
               {fetchedData && ability.description}
             </div>
-            <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
-              {fetchedData &&
-                fetchedRawDataQ &&
-                fetchedRawDataW &&
-                fetchedRawDataE &&
-                resolveSpellText(ability.tooltip, rawData[index])}
-            </div>
+            <div
+              className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4"
+              dangerouslySetInnerHTML={{
+                __html:
+                  fetchedData &&
+                  fetchedRawDataQ &&
+                  fetchedRawDataW &&
+                  fetchedRawDataE &&
+                  parseSpellText(
+                    resolveSpellText(ability.tooltip, rawData[index])
+                  ),
+              }}
+            />
           </div>
         ))}{" "}
     </div>
