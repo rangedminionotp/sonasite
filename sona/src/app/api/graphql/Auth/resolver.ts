@@ -1,7 +1,6 @@
-import { Query, Resolver, Args } from "type-graphql"
-
-import { Credentials, User } from "./schema"
-import { AuthService } from "./service"
+import { Resolver, Query, Args } from "type-graphql";
+import { Credentials, User } from "./schema";
+import { AuthService } from "./service";
 
 @Resolver()
 export class AuthResolver {
@@ -9,6 +8,6 @@ export class AuthResolver {
   async login(
     @Args() credentials: Credentials,
   ): Promise<User> {
-    return new AuthService().login(credentials)
+    return new AuthService().login(credentials);
   }
 }

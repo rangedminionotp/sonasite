@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 import { Credentials, User } from './schema';
 
 import secrets from '../../../../../data/secrets.json'
-import { pool } from '@/db'
+import {pool} from '@/db';
 
 export class AuthService {
   public async login(credentials: Credentials): Promise<User>  {

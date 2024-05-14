@@ -1,16 +1,16 @@
 import { createYoga } from 'graphql-yoga';
-import 'reflect-metadata';
+import 'reflect-metadata'; // must come before buildSchema
 import { buildSchemaSync } from 'type-graphql';
-import AuthResolver from '../graphql/Auth/resolver'; // Check the import path
-import { nextAuthChecker } from '../graphql/Auth/checker'; // Check the import path
+import { AuthResolver } from './Auth/resolver';
 
 const schema = buildSchemaSync({
   resolvers: [AuthResolver],
   validate: true,
-  authChecker: nextAuthChecker // Add the authChecker option
 });
 
-export default createYoga({
+export const { handleRequest } = createYoga({
   schema,
   graphqlEndpoint: '/api/graphql',
 });
+
+export { handleRequest as GET, handleRequest as POST, handleRequest as OPTIONS }
