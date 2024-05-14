@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import images from "../../../assets/wallpapers";
+import images from "@/assets/wallpapers";
 
 const Background = () => {
   // Get an array of image keys

@@ -1,5 +1,5 @@
 import React from "react";
-import R from "../../../assets/abilities/Crescendo.webp";
+import R from "@/assets/abilities/Crescendo.webp";
 import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 

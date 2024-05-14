@@ -1,8 +1,11 @@
 "use client";
+
 import React from "react";
 import Logo from "./Logo";
+import { Button } from "@mui/joy";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
+import LoginBtn from "./LoginBtn";
 const Navbar = () => {
   const [nav, setNav] = React.useState(false);
   const handleClick = () => setNav(!nav);
@@ -29,6 +32,7 @@ const Navbar = () => {
         <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
           Skins
         </li>
+        <LoginBtn />
       </ul>
 
       {/* hamburger */}
@@ -65,6 +69,7 @@ const Navbar = () => {
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
           Skins
         </li>
+        <LoginBtn />
       </ul>
     </div>
   );

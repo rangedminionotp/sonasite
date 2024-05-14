@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import Q from "../../../assets/abilities/Hymn_of_Valor.webp";
-import W from "../../../assets/abilities/Aria_of_Perseverance.webp";
-import E from "../../../assets/abilities/Song_of_Celerity.webp";
+import Q from "@/assets/abilities/Hymn_of_Valor.webp";
+import W from "@/assets/abilities/Aria_of_Perseverance.webp";
+import E from "@/assets/abilities/Song_of_Celerity.webp";
 
 import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
