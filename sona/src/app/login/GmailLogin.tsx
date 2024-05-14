@@ -1,34 +1,28 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import GoogleIcon from "@mui/icons-material/Google";
+import { IconButton } from "@mui/material";
+
+import { Tooltip } from "@mui/joy";
 
 export default function GmailLogin() {
-  //   const [session, loading] = useSession();
-  //   return (
-  //     <div>
-  //       {!session ? (
-  //         <button onClick={() => signIn("google")}>Sign in with Google</button>
-  //       ) : (
-  //         <>
-  //           <p>Welcome, {session.user.name}</p>
-  //           <button onClick={() => signOut()}>Sign out</button>
-  //         </>
-  //       )}
-  //     </div>
-  //   );
   const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    );
-  }
+  //   if (session) {
+  //     return (
+  //       <>
+  //         Signed in as {session.user.email} <br />
+  //         <button onClick={() => signOut()}>Sign out</button>
+  //       </>
+  //     );
+  //   }
   return (
     <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <Tooltip title="Login with Gmail" variant="solid">
+        <IconButton onClick={() => signIn("google")}>
+          <GoogleIcon />
+        </IconButton>
+      </Tooltip>
     </>
   );
 }

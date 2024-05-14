@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Logo from "../Navbar/Logo";
 import GmailLogin from "./GmailLogin";
+import Head from "next/head";
 
 const login = () => {
   const router = useRouter();
@@ -41,7 +42,6 @@ const login = () => {
       })
       .then((json) => {
         if (json.errors) {
-          console.log(json);
           alert("Error logging in, please try again");
         } else {
           localStorage.setItem("user", JSON.stringify(json.data.login));
@@ -50,15 +50,20 @@ const login = () => {
         }
       });
   };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-400 ">
+    <div className="flex flex-col h-screen bg-gray-400">
+      {/* this isnt working for some reason... set page title section >_< */}
+      <Head>
+        <title>Login</title>
+      </Head>
       {/* Login Form */}
-      <div className="flex-grow flex items-center justify-center bg-gray-700">
-        <Card variant="plain" className="  bg-gray-400 w-full max-w-lg">
-          <Typography class="text-2xl items-center justify-center flex">
+      <div className="flex-grow flex flex-col items-center justify-center bg-gray-700 space-y-4">
+        <Card variant="plain" className="bg-gray-400 w-full max-w-lg">
+          <Typography className="text-2xl items-center justify-center flex">
             Log In
           </Typography>
-          <Typography class="text-md items-center justify-center flex">
+          <Typography className="text-md items-center justify-center flex">
             Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
           </Typography>
           <Input
@@ -87,7 +92,7 @@ const login = () => {
           />
 
           <Button
-            className=" "
+            className=""
             onClick={handleSubmit}
             variant="outlined"
             color="neutral"
@@ -97,29 +102,30 @@ const login = () => {
           <Button
             variant="outlined"
             color="neutral"
-            className=" "
+            className=""
             sx={{ mt: 0, mb: 2 }}
             onClick={() => {
-              router.push(
-                "/" // Use router.push from the useRouter hook
-              );
+              router.push("/");
             }}
           >
             Cancel
           </Button>
-          {/* <Button
+          <Button
             onClick={() => {
-              router.push(
-                "/signup" // Use router.push from the useRouter hook
-              );
+              router.push("/signup");
             }}
             variant="soft"
             color="neutral"
             className="dark:text-gray-300 dark:hover:bg-black"
           >
-            {"Don't have an account? Sign Up"}
-          </Button> */}
+            {"Not a Sona main yet? Click to join the cu*t"}
+          </Button>
         </Card>
+        <div className="flex items-center justify-center w-full max-w-lg my-6">
+          <hr className="flex-grow border-gray-300" />
+          <div className="px-4 text-gray-500">OR</div>
+          <hr className="flex-grow border-gray-300" />
+        </div>
         <GmailLogin />
       </div>
     </div>
