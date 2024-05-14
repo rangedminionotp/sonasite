@@ -7,8 +7,8 @@ import E from "../../../../assets/abilities/Song_of_Celerity.webp";
 import R from "../../../../assets/abilities/Crescendo.webp";
 import passive from "../../../../assets/abilities/Power_Chord.webp";
 import Image from "next/image";
-import AbilitiesNavbar from "./AbilitiesNavbar";
 
+import AbilitiesVideo from "./AbilitiesVideo";
 // ty chatgpt :3
 const parseSpellText = (spellText) => {
   const regexReplacements = [
@@ -151,6 +151,9 @@ const AbilityDescription = () => {
                     },
                   })}
             />
+            <div>
+              <AbilitiesVideo index={index} />
+            </div>
           </div>
         ))}
     </div>
