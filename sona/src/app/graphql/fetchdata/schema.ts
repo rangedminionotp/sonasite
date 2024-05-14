@@ -12,29 +12,29 @@ export class SonaOverview {
     @Field()
     abilities!: SonaAbilities[] 
     @Field()
-    passive!: SonaPassive
-    @Field()
     version!: string
 }
 
 @ArgsType()
 export class SonaAbilities{
     @Field()
-    id!: string
+    id?: string
     @Field()
-    name!: string
+    name?: string
     @Field()
-    tooltip!: string
+    tooltip?: string
     @Field()
-    description!:string
+    description?: string
+    @Field()
+    passive?: SonaPassive
 }
 
 @ArgsType()
 export class SonaPassive{ 
     @Field()
-    name!: string 
+    name?: string 
     @Field()
-    description!:string
+    description?:string
 }
 
 // maybe not hardcode variable names...? ._.
@@ -142,3 +142,4 @@ export class SonaRawStatsR {
     @Field()
     spellmodifierdescriptionappend!: string
 }
+ 
