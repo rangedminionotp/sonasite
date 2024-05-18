@@ -4,18 +4,14 @@ import { useRouter } from "next/navigation";
 const LoginBtn = () => {
   const router = useRouter();
   return (
-    <Button
-      variant="outlined"
-      color="neutral"
-      className="text-black-200 bg-purple-300 hover:bg-red-500 text-lg py-2 px-4 rounded-lg"
+    <button
+      className="text-lg py-2 px-4 rounded-lg border border-purple-300 text-black bg-purple-300 hover:bg-red-500 transition duration-300 ease-in-out transform hover:scale-105"
       onClick={() => {
-        router.push(
-          "/login" // Use router.push from the useRouter hook
-        );
+        router.push("/login");
       }}
     >
-      Log In
-    </Button>
+      Login
+    </button>
   );
 };
 

@@ -14,23 +14,23 @@ export class AuthService {
       values: [credentials.email],
     };
     const {rows} = await pool.query(query);
-    const user = rows[0].data;
-    const userid = rows[0].id;
-    const valid = bcrypt.compareSync(credentials.password, user.password);
-    return new Promise((resolve, reject) => {
-      if (valid) {
-        const accessToken = jwt.sign(
-          {id: userid, email: user.email, name: user.name, roles: user.roles}, 
-          secrets.accessToken, {
-            expiresIn: '30m',
-            algorithm: 'HS256'
-          });
-        resolve({id: userid, name: user.name, accessToken: accessToken});
-      } else {
-        console.log(credentials);
-        reject(new Error("Unauthorised"));
-      }
-    });
+const user = rows[0].data;  
+const userid = rows[0].id;
+const valid = bcrypt.compareSync(credentials.password, user.password);
+
+return new Promise((resolve, reject) => {
+  if (valid) {
+    const accessToken = jwt.sign(
+      { id: userid, email: user.email, name: user.name }, 
+      secrets.accessToken,
+      { expiresIn: '30m', algorithm: 'HS256' }
+    );
+    resolve({ id: userid, name: user.name, accessToken: accessToken, email: user.email });
+  } else {
+    console.log(credentials);
+    reject(new Error("Unauthorized"));
+  }
+});
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
