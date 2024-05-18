@@ -3,12 +3,17 @@
 import React from "react";
 import Logo from "./Logo";
 import { Button } from "@mui/joy";
+import Router from "next/router";
+
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
 import LoginBtn from "./LoginBtn";
+import UserDashboard from "./UserDashboard/UserDashboard";
 const Navbar = () => {
   const [nav, setNav] = React.useState(false);
   const handleClick = () => setNav(!nav);
+  const item = localStorage.getItem("user");
+  const user = JSON.parse(item);
   return (
     // <div className="bg-[#181818] shadow-gray-300 fixed w-full h-30 flex px-2 py-2 z-50 text-gray-300">
     <div className="fixed flex w-full h-30 bg-[#181818] shadow-gray-300 justify-between items-center px-2 py-2 z-50 text-gray-300">
@@ -18,21 +23,24 @@ const Navbar = () => {
       </div>
 
       {/* menu */}
-      <ul className="hidden md:flex">
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
+      <ul className="hidden md:flex justify-between items-center">
+        <div className="dark:text-gray-300  px-3 py-2 hover:cursor-pointer">
+          {" "}
+          {!item ? <LoginBtn /> : <UserDashboard />}
+        </div>
+        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
           <Link to="intro" smooth={true} duration={200}>
             Intro
           </Link>
         </li>
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
+        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
           <Link to="abilities" smooth={true} duration={200}>
             Abilities
           </Link>
         </li>
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-2 py-2 hover:cursor-pointer">
+        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
           Skins
         </li>
-        <LoginBtn />
       </ul>
 
       {/* hamburger */}
@@ -69,7 +77,7 @@ const Navbar = () => {
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
           Skins
         </li>
-        <LoginBtn />
+        {!item ? <LoginBtn /> : <UserDashboard />}
       </ul>
     </div>
   );

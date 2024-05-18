@@ -7,7 +7,7 @@ const PassiveAb = () => {
   const { abilityVisibility, setAbilityVisibility } =
     React.useContext(AbilitiesContext);
 
-  const toggleVisibility = (divIndex) => {
+  const toggleVisibility = (divIndex: number) => {
     setAbilityVisibility((prevState) => {
       const abilityPrev = [...prevState];
       // for some reason !abilityPrev[divIndex].active doesnt work :thinking:

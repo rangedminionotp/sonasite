@@ -28,7 +28,7 @@ const login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const query = {
-      query: `query login{login(email: "${user.email}" password: "${user.password}") { name, id, accessToken }}`,
+      query: `query login{login(email: "${user.email}" password: "${user.password}") { name, id, accessToken, email }}`,
     };
     fetch("/api/graphql", {
       method: "POST",

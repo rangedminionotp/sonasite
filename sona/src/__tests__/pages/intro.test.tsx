@@ -5,12 +5,6 @@ import { setupServer } from "msw/node";
 import "whatwg-fetch";
 
 import Intro from "../../app/Intro/Intro";
-const server = setupServer(...handlers);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 jest.mock("next/router", () => ({ push: jest.fn() }));
 
 const renderView = () => {
