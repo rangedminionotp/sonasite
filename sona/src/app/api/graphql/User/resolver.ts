@@ -12,7 +12,7 @@ export class UserResolver {
     @Mutation(() => UserInfo)
     async addUser( 
         @Arg("user") user: UserData
-    ): Promise<UserInfo>{
+    ): Promise<UserInfo>{ 
         return new UserService().AddUser(user)
     }
 }
