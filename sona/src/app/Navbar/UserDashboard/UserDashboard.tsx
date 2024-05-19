@@ -14,8 +14,9 @@ const UserDashboard = () => {
     <div className="relative inline-block text-left">
       <div>
         <IconButton
-          onMouseEnter={() => setIsMenuOpen(true)}
-          onMouseLeave={() => setIsMenuOpen(false)}
+          // onMouseEnter={() => setIsMenuOpen(true)}
+          // onMouseLeave={() => setIsMenuOpen(false)}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className={`flex items-center justify-center w-10 h-10 bg-gray-300 rounded-full focus:outline-none transition-transform ${
             isMenuOpen ? "scale-150" : ""
           }`}
@@ -26,8 +27,8 @@ const UserDashboard = () => {
 
       {isMenuOpen && (
         <div
-          onMouseEnter={() => setIsMenuOpen(true)}
-          onMouseLeave={() => setIsMenuOpen(false)}
+          // onMouseEnter={() => setIsMenuOpen(true)}
+          // onMouseLeave={() => setIsMenuOpen(false)}
           className="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 bg-gray-700"
         >
           <div className="py-1">

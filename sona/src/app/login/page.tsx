@@ -1,6 +1,14 @@
 "use client";
-import React from "react";
-import { Button, Input, Typography } from "@mui/joy";
+import React, { useState } from "react";
+import { CssVarsProvider } from "@mui/joy/styles";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Typography,
+} from "@mui/joy";
 import Card from "@mui/joy/Card";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,9 +16,8 @@ import Logo from "../Navbar/Logo";
 import GmailLogin from "./GmailLogin";
 import Head from "next/head";
 
-const login = () => {
+const Login = () => {
   const router = useRouter();
-
   const [user, setUser] = React.useState({ email: "", password: "" });
 
   React.useEffect(() => {
@@ -37,9 +44,7 @@ const login = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((json) => {
         if (json.errors) {
           alert("Error logging in, please try again");
@@ -52,78 +57,88 @@ const login = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-400">
-      {/* this isnt working for some reason... set page title section >_< */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-400 to-blue-500">
       <Head>
         <title>Login</title>
       </Head>
-      {/* Login Form */}
-      <div className="flex-grow flex flex-col items-center justify-center bg-gray-700 space-y-4">
-        <Card variant="plain" className="bg-gray-400 w-full max-w-lg">
-          <Typography className="text-2xl items-center justify-center flex">
-            Log In
-          </Typography>
-          <Typography className="text-md items-center justify-center flex">
-            Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
-          </Typography>
-          <Input
-            color="neutral"
-            type="email"
-            name="email"
-            label="Email Address"
-            placeholder="Enter your email"
-            fullWidth
-            value={user.email}
-            onChange={handleInputChange}
-            className="bg-gray-100 dark:bg-gray-300"
-          />
-
-          <Input
-            color="neutral"
-            type="password"
-            name="password"
-            label="Password"
-            placeholder="Enter your password"
-            fullWidth
-            value={user.password}
-            margin="normal"
-            onChange={handleInputChange}
-            className="bg-gray-100 dark:bg-gray-300"
-          />
-
-          <Button
-            className=""
-            onClick={handleSubmit}
-            variant="outlined"
-            color="neutral"
+      <div className="flex-grow flex flex-col items-center justify-center space-y-4">
+        <Box
+          sx={{
+            width: 400,
+            p: 4,
+            bgcolor: "white",
+            boxShadow: "lg",
+            borderRadius: "md",
+          }}
+        >
+          <Typography
+            component="h1"
+            gutterBottom
+            className="text-center text-gray-800 text-2xl font-bold"
           >
             Log In
-          </Button>
+          </Typography>
+          <Typography
+            component="p"
+            className="text-center text-gray-600 mb-4 text-sm"
+          >
+            Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <FormControl sx={{ mb: 3 }}>
+              <FormLabel className="text-black">Email</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={user.email}
+                onChange={handleInputChange}
+                required
+                placeholder="Enter your email"
+                className="mt-1 px-3 py-2 border bg-gray-100 text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </FormControl>
+            <FormControl sx={{ mb: 3 }}>
+              <FormLabel className="text-black">Password</FormLabel>
+              <Input
+                type="password"
+                name="password"
+                value={user.password}
+                onChange={handleInputChange}
+                placeholder="Enter your password"
+                required
+                className="mt-1 px-3 py-2 border bg-gray-100 text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </FormControl>
+            <Button
+              type="submit"
+              sx={{ width: "100%", py: 1.5 }}
+              className="bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-md shadow-sm"
+            >
+              Log In
+            </Button>
+          </form>
           <Button
             variant="outlined"
             color="neutral"
-            className=""
-            sx={{ mt: 0, mb: 2 }}
-            onClick={() => {
-              router.push("/");
-            }}
+            fullWidth
+            onClick={() => router.push("/")}
+            className="mt-3"
           >
             Cancel
           </Button>
           <Button
-            onClick={() => {
-              router.push("/signup");
-            }}
+            onClick={() => router.push("/signup")}
             variant="soft"
             color="neutral"
-            className="dark:text-gray-300 dark:hover:bg-black"
+            fullWidth
+            className="mt-3"
           >
-            {"Not a Sona main yet? Click to join the cu*t"}
+            Not a Sona main yet? Click to join the family o(=•ェ•=)m
           </Button>
-        </Card>
+        </Box>
         <div className="flex items-center justify-center w-full max-w-lg my-6">
           <hr className="flex-grow border-gray-300" />
-          <div className="px-4 text-gray-500">OR</div>
+          <div className="px-4 text-gray-200">OR</div>
           <hr className="flex-grow border-gray-300" />
         </div>
         <GmailLogin />
@@ -132,4 +147,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

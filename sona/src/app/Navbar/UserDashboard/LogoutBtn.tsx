@@ -10,9 +10,7 @@ const LogoutBtn = () => {
 
   const logout = () => {
     localStorage.removeItem("user");
-    router.push({
-      pathname: "/",
-    });
+    router.push("/");
   };
 
   return (
