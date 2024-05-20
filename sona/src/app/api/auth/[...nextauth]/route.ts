@@ -17,11 +17,15 @@ const handler = NextAuth({
     },
     async session({ session, token, user }) {
       session.userId = token.sub;
+      session.user.email = token.email;  // Add email to the session
+      session.user.name = token.name;    // Add name to the session
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.id = user.id;
+        token.email = user.email;  // Store email in the token
+        token.name = user.name;    // Store name in the token
       }
       return token;
     },
