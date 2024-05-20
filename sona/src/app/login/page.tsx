@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Typography,
+  IconButton,
 } from "@mui/joy";
 import Card from "@mui/joy/Card";
 import { useRouter } from "next/navigation";
@@ -15,10 +16,13 @@ import Link from "next/link";
 import Logo from "../Navbar/Logo";
 import GmailLogin from "./GmailLogin";
 import Head from "next/head";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
   const router = useRouter();
   const [user, setUser] = React.useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
   React.useEffect(() => {
     localStorage.removeItem("user");
@@ -100,7 +104,7 @@ const Login = () => {
             <FormControl sx={{ mb: 3 }}>
               <FormLabel className="text-black">Password</FormLabel>
               <Input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={user.password}
                 onChange={handleInputChange}
@@ -108,6 +112,17 @@ const Login = () => {
                 required
                 className="mt-1 px-3 py-2 border bg-gray-100 text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                sx={{
+                  position: "absolute",
+                  right: 10,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
             </FormControl>
             <Button
               type="submit"
