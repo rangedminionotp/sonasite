@@ -4,12 +4,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Button from "@mui/joy/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const LogoutBtn = () => {
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const logout = () => {
     localStorage.removeItem("user");
+    session ? signOut() : null;
     router.push("/");
   };
 

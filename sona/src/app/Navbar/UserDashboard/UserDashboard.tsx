@@ -7,6 +7,7 @@ import Button from "@mui/joy/Button";
 import { IconButton } from "@mui/material";
 import LogoutBtn from "./LogoutBtn";
 import UserInfo from "./UserInfo";
+import GmailStatus from "./GmailStatus";
 const UserDashboard = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
