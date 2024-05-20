@@ -9,7 +9,13 @@ import {
   FormLabel,
   Input,
   Typography,
+  Alert,
+  IconButton,
 } from "@mui/joy";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Signup = () => {
   const router = useRouter();
@@ -21,6 +27,11 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+
   React.useEffect(() => {
     localStorage.removeItem("user");
     localStorage.removeItem("signup");
@@ -31,11 +42,17 @@ const Signup = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setError(""); // Clear error on input change
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     const query = {
       query: `mutation addUser { addUser(user: {
         name:"${formData.name}",
@@ -45,6 +62,7 @@ const Signup = () => {
       })
       {id, name, email}}`,
     };
+
     fetch("/api/graphql", {
       method: "POST",
       body: JSON.stringify(query),
@@ -52,14 +70,24 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => {
-        return res.json();
-      })
-      .then(() => {
-        localStorage.setItem("signup", "true");
-        router.push("/");
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          setError("Error signing up, please try again");
+        } else {
+          localStorage.setItem("signup", "true");
+          setSuccess(true);
+          setTimeout(() => {
+            router.push("/login");
+          }, 2000); // Redirect after 2 seconds
+        }
       });
   };
+
+  const passwordsMatch =
+    formData.password &&
+    formData.confirmPassword &&
+    formData.password === formData.confirmPassword;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-400 to-blue-500">
@@ -86,6 +114,16 @@ const Signup = () => {
         >
           Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
         </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert severity="success" sx={{ mb: 3 }}>
+            Signup successful! Redirecting to login...
+          </Alert>
+        )}
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ mb: 3 }}>
             <FormLabel className="text-black">Name</FormLabel>
@@ -114,7 +152,7 @@ const Signup = () => {
           <FormControl sx={{ mb: 3 }}>
             <FormLabel className="text-black">Password</FormLabel>
             <Input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your password"
               value={formData.password}
@@ -122,11 +160,22 @@ const Signup = () => {
               required
               className="mt-1 px-3 py-2 border bg-gray-100 text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
+            <IconButton
+              onClick={() => setShowPassword(!showPassword)}
+              sx={{
+                position: "absolute",
+                right: 10,
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
           </FormControl>
-          <FormControl sx={{ mb: 3 }}>
+          <FormControl sx={{ mb: 3 }} className="relative">
             <FormLabel className="text-black">Confirm Password</FormLabel>
             <Input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm your password"
               value={formData.confirmPassword}
@@ -134,6 +183,33 @@ const Signup = () => {
               required
               className="mt-1 px-3 py-2 border bg-gray-100 text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
+            <IconButton
+              onClick={() => setConfirmShowPassword(!showConfirmPassword)}
+              sx={{
+                position: "absolute",
+                right: 10,
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            >
+              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+            {formData.confirmPassword && (
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  right: 50,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                {passwordsMatch ? (
+                  <CheckIcon style={{ color: "green" }} />
+                ) : (
+                  <CloseIcon style={{ color: "red" }} />
+                )}
+              </IconButton>
+            )}
           </FormControl>
           <Button
             type="submit"
