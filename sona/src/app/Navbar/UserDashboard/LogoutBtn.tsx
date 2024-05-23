@@ -10,12 +10,11 @@ const LogoutBtn = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const logout = () => {
+  const logout = async () => {
+    await signOut({ redirect: false });
     localStorage.removeItem("user");
-    session ? signOut() : null;
     router.push("/");
   };
-
   return (
     <div>
       <button

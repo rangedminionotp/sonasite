@@ -165,11 +165,11 @@ const Signup = () => {
               sx={{
                 position: "absolute",
                 right: 10,
-                top: "50%",
+                top: "70%",
                 transform: "translateY(-50%)",
               }}
             >
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+              {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </FormControl>
           <FormControl sx={{ mb: 3 }} className="relative">
@@ -188,11 +188,11 @@ const Signup = () => {
               sx={{
                 position: "absolute",
                 right: 10,
-                top: "50%",
+                top: "70%",
                 transform: "translateY(-50%)",
               }}
             >
-              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+              {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
             {formData.confirmPassword && (
               <IconButton

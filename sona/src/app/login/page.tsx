@@ -117,11 +117,11 @@ const Login = () => {
                 sx={{
                   position: "absolute",
                   right: 10,
-                  top: "50%",
+                  top: "70%",
                   transform: "translateY(-50%)",
                 }}
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </FormControl>
             <Button
