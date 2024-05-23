@@ -1,15 +1,13 @@
 import React from "react";
 import AbilitiesContext from "../SharedContext";
-import magicDamage from "./MagicDamage";
 import Q from "@/assets/abilities/Hymn_of_Valor.webp";
 import W from "@/assets/abilities/Aria_of_Perseverance.webp";
 import E from "@/assets/abilities/Song_of_Celerity.webp";
 import R from "@/assets/abilities/Crescendo.webp";
 import passive from "@/assets/abilities/Power_Chord.webp";
 import Image from "next/image";
-
 import AbilitiesVideo from "./AbilitiesVideo";
-// ty chatgpt :3
+
 const parseSpellText = (spellText) => {
   const regexReplacements = [
     {
@@ -80,11 +78,11 @@ const AbilityDescription = () => {
     fetchedRawDataQ,
   ];
   return (
-    <div name="Overview">
+    <div name="Overview" className="px-4 md:px-16 lg:px-24">
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => (
           <div
-            // key={`${ability}-overview`}
+            key={`${ability}-overview`} // Re-added the key prop
             className={
               !abilityVisibility[index].active
                 ? "hidden"
@@ -92,8 +90,8 @@ const AbilityDescription = () => {
             }
           >
             <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
-              <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
-                {index !== 4 && (
+              {index !== 4 ? (
+                <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
                   <div>
                     Cooldown: [
                     {fetchedData &&
@@ -102,10 +100,10 @@ const AbilityDescription = () => {
                       rawData[index].cooldown.join(" / ")}
                     {""}]
                   </div>
-                )}
-              </div>
-              <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
-                {index !== 4 && (
+                </div>
+              ) : null}
+              {index !== 4 ? (
+                <div className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4">
                   <div>
                     Mana Cost: [
                     {fetchedData &&
@@ -114,42 +112,25 @@ const AbilityDescription = () => {
                       rawData[index].manaCost.join(" / ")}
                     {""}]
                   </div>
-                )}
-              </div>
+                </div>
+              ) : null}
             </div>
             <div className="text-4xl font-bold italic text-white drop-shadow-lg sm:text-md border-b-2 border-gray-300 pb-2">
-              {/* need to change this */}
               {index !== 4 ? fetchedData && ability.description : null}
             </div>
             <div
               className="text-2xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-4"
-              {...(index !== 4
-                ? {
-                    dangerouslySetInnerHTML: {
-                      __html:
-                        fetchedData &&
-                        fetchedRawDataQ &&
-                        fetchedRawDataW &&
-                        fetchedRawDataE &&
-                        fetchedRawDataR &&
-                        parseSpellText(
-                          resolveSpellText(ability.tooltip, rawData[index])
-                        ),
-                    },
-                  }
-                : {
-                    dangerouslySetInnerHTML: {
-                      __html:
-                        fetchedData &&
-                        fetchedRawDataQ &&
-                        fetchedRawDataW &&
-                        fetchedRawDataE &&
-                        fetchedRawDataR &&
-                        parseSpellText(
-                          resolveSpellText(ability.description, rawData[index])
-                        ),
-                    },
-                  })}
+              dangerouslySetInnerHTML={{
+                __html:
+                  fetchedData &&
+                  rawData[index] &&
+                  parseSpellText(
+                    resolveSpellText(
+                      index !== 4 ? ability.tooltip : ability.description,
+                      rawData[index]
+                    )
+                  ),
+              }}
             />
             <div>
               <AbilitiesVideo index={index} />

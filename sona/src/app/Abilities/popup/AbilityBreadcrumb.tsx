@@ -1,33 +1,45 @@
-import * as React from "react";
-import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import Link from "@mui/joy/Link";
-import Typography from "@mui/joy/Typography";
+import React from "react";
 import AbilitiesContext from "../SharedContext";
+
 const AbilityBreadcrumb = () => {
   const breadcrumbList = ["Overview", "Player Tips", "Add Tips", "Tutorials"];
-  const { breadCrumbs, setBreadcrumbs } = React.useContext(AbilitiesContext);
-  const switchBreadcrumbs = (index: number) => {
+  const { breadcrumbs, setBreadcrumbs } = React.useContext(AbilitiesContext);
+
+  const switchBreadcrumbs = (index) => {
     setBreadcrumbs((prevState) => {
-      const breadcrumbPrev = [...prevState];
-      // for some reason !breadcrumbPrev[index].active doesnt work :thinking:
-      breadcrumbPrev[0].active = false;
-      breadcrumbPrev[index].active = true;
-      return breadcrumbPrev;
+      const newBreadcrumbs = prevState.map((breadcrumb, i) => ({
+        ...breadcrumb,
+        active: i === index,
+      }));
+      return newBreadcrumbs;
     });
   };
+
   return (
-    <Breadcrumbs aria-label="breadcrumbs" separator=" ♡ " size="lg">
-      {breadcrumbList.map((item, index) => (
-        <Link
-          // key={item}
-          color="neutral"
-          href="#basics"
-          onClick={() => switchBreadcrumbs(index)}
-        >
-          {item}
-        </Link>
+    <nav
+      aria-label="breadcrumbs"
+      className="text-3xl font-bold flex justify-center items-center"
+    >
+      {breadcrumbs.map((breadcrumb, index) => (
+        <React.Fragment key={breadcrumb.label}>
+          <a
+            href="#basics"
+            onClick={(e) => {
+              e.preventDefault();
+              switchBreadcrumbs(index);
+            }}
+            className={`${
+              breadcrumb.active ? "text-blue-300 font-bold" : "text-gray-400"
+            } cursor-pointer hover:text-blue-300`}
+          >
+            {breadcrumb.label}
+          </a>
+          {index < breadcrumbs.length - 1 && (
+            <span className="mx-2 text-pink-300">♡</span>
+          )}
+        </React.Fragment>
       ))}
-    </Breadcrumbs>
+    </nav>
   );
 };
 

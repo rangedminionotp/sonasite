@@ -10,8 +10,11 @@ import UserDashboard from "./UserDashboard/UserDashboard";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [user, setUser] = useState(null);
+
   const { data: session, status } = useSession();
+  const item = localStorage.getItem("user");
+  const userLogin = JSON.parse(item);
+  const [user, setUser] = useState(userLogin);
   useEffect(() => {
     if (status === "authenticated" && session.user) {
       const data = {
