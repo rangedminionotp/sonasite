@@ -16,13 +16,21 @@ const AbilitiesNavbar = ({ index, name }) => {
   return (
     <div>
       {fetchedData && (
-        <div className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
-          {fetchedData && name}
-          <Image
-            alt={""}
-            src={abilities[index]}
-            className="object-cover border border-gray-300"
-          />
+        <div className="text-center">
+          <div className="text-center">
+            <div className="flex items-center justify-center">
+              <h1 className="text-6xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2 mr-4">
+                {fetchedData && name}
+              </h1>
+              <div>
+                <Image
+                  alt=""
+                  src={abilities[index]}
+                  className="object-cover border border-gray-300"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -10,8 +10,15 @@ const AbilitiesVideo = ({ index }) => {
   ];
 
   return (
-    <div>
-      <video preload="metadata" controls loop muted autoPlay>
+    <div className="relative w-full h-auto">
+      <video
+        className="w-[41.5em]  h-auto rounded-md shadow-lg"
+        preload="metadata"
+        controls
+        loop
+        muted
+        autoPlay
+      >
         <source src={videos[index]} type="video/webm" />
         {/* Add additional source elements for other video formats if necessary */}
         Your browser does not support the video tag.

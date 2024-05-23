@@ -4,6 +4,7 @@ import AbilitiesContext from "../SharedContext";
 import PopupClose from "./PopupClose";
 import AbilitiesNavbar from "./AbilitiesNavbar";
 import AbilityDescription from "./AbilityDescription";
+
 const AbilitiesPopup = () => {
   const {
     abilityVisibility,
@@ -13,6 +14,7 @@ const AbilitiesPopup = () => {
     breadcrumbs,
     setBreadcrumbs,
   } = React.useContext(AbilitiesContext);
+
   return (
     <div name="abilities-popup">
       {fetchedData &&
@@ -27,7 +29,11 @@ const AbilitiesPopup = () => {
           >
             <PopupClose index={index} />
             <AbilitiesNavbar index={index} name={ability.name || ""} />
-            <AbilityBreadcrumb />
+            <div className="mt-6">
+              {" "}
+              {/* Add margin-top for gap */}
+              <AbilityBreadcrumb />
+            </div>
             {/* if user wants to see active... it should auto open overview */}
             {breadcrumbs[0].active ? <AbilityDescription /> : null}
           </div>
