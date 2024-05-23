@@ -17,8 +17,8 @@ const handler = NextAuth({
     },
     async session({ session, token, user }) {
       session.userId = token.sub;
-      session.user.email = token.email;  // Add email to the session
-      session.user.name = token.name;    // Add name to the session
+      session.user.email = token.email;  
+      session.user.name = token.name;   
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
@@ -28,6 +28,10 @@ const handler = NextAuth({
         token.name = user.name;    // Store name in the token
       }
       return token;
+    },
+    async signOut({ session, token }) {
+      // Clear token and session data
+      return { ...session, ...token, id: null, email: null, name: null };
     },
   },
 });

@@ -7,10 +7,10 @@ import Button from "@mui/joy/Button";
 import { IconButton } from "@mui/material";
 import LogoutBtn from "./LogoutBtn";
 import UserInfo from "./UserInfo";
-import GmailStatus from "./GmailStatus";
 const UserDashboard = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  const item = localStorage.getItem("user");
+  const user = JSON.parse(item);
   return (
     <div className="relative inline-block text-left">
       <div>
@@ -22,7 +22,7 @@ const UserDashboard = () => {
             isMenuOpen ? "scale-150" : ""
           }`}
         >
-          <Avatar />
+          <Avatar>{user ? user.name[0] : null}</Avatar>
         </IconButton>
       </div>
 
@@ -33,7 +33,7 @@ const UserDashboard = () => {
           className="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 bg-gray-700"
         >
           <div className="py-1">
-            <UserInfo />
+            <UserInfo user={user} />
             <LogoutBtn />
           </div>
         </div>

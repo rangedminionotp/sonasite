@@ -1,8 +1,6 @@
 import React from "react";
 
-const UserInfo = () => {
-  const item = localStorage.getItem("user");
-  const user = JSON.parse(item);
+const UserInfo = ({ user }) => {
   if (user)
     return (
       <div className="text-white text-center">
