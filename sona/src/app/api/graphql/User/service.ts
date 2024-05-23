@@ -19,6 +19,15 @@ export class UserService {
         return UserObj;
     }
     public async AddUser(user: UserData): Promise<UserInfo> {
+        const emailCheckQuery = {
+        text: 'SELECT 1 FROM Users WHERE data->>\'email\' = $1',
+        values: [user.email],
+    };
+        const emailCheckResult = await pool.query(emailCheckQuery);
+
+        if (emailCheckResult.rows.length > 0) {
+            throw new Error('Email already exists');
+        }
         user['password'] = bcrypt.hashSync(user['password'], 10);
         const insert = 'INSERT INTO Users(data) VALUES ($1) RETURNING id, data'
         const query = {
