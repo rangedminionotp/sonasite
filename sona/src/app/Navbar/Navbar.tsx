@@ -15,6 +15,7 @@ const Navbar = () => {
   const item = localStorage.getItem("user");
   const userLogin = JSON.parse(item);
   const [user, setUser] = useState(userLogin);
+
   useEffect(() => {
     if (status === "authenticated" && session.user) {
       const data = {
@@ -28,8 +29,8 @@ const Navbar = () => {
       console.log(
         "User is not authenticated, removing user data from localStorage"
       );
-      localStorage.removeItem("user");
-      setUser(null);
+      const item = localStorage.getItem("user");
+      const userLogin = JSON.parse(item);
     }
   }, [status, session]);
 
