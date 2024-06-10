@@ -28,6 +28,7 @@ const Abilities = () => {
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
   const [fetchedRawDataR, setFetchedRawDataR] = React.useState(null);
+  const [abilities, setAbilities] = React.useState([]);
 
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
@@ -35,6 +36,40 @@ const Abilities = () => {
     { label: "Add Tip", active: false },
     { label: "Tutorials", active: false },
   ]);
+
+  React.useEffect(() => {
+    const query = {
+      query: `
+        query MyQuery {
+          getAllAbility {
+            abilityId
+            abilityName
+          }
+        }
+      `,
+    };
+
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          alert("Error with ability id, please try again");
+        } else {
+          setAbilities(json.data.getAllAbility);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching abilities:", error);
+        alert("Failed to fetch abilities. Please try again.");
+      });
+  }, []); // Empty dependency array to run once
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,6 +153,8 @@ const Abilities = () => {
         setFetchedRawDataW,
         breadcrumbs,
         setBreadcrumbs,
+        abilities,
+        setAbilities,
       }}
     >
       <div name="abilities" className="w-full h-screen relative">

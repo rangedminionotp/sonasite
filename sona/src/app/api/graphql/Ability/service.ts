@@ -16,9 +16,7 @@ export class AbilityService {
             abilityName: rows[item].name
             }
             ability.push(ABilityObj)
-        }
-        
-        console.log('inside get all ability') 
+        } 
         return ability;
     }
 }
