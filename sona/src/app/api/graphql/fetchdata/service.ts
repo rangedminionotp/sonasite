@@ -14,8 +14,8 @@ function decimalToSmallPercentage(decimalValue: number, precision: number = 2): 
     return `${roundedValue.toFixed(precision)}%`; // Format the value with the specified precision
 }
 
-export class SonaService {
-    public async FetchVersion():Promise<SonaOverview> {
+export class SonaService { 
+  public async FetchVersion(): Promise<SonaOverview> { 
       try {
         const response = await fetch("http://localhost:3000/api/fetchdata")
         if (!response.ok) {

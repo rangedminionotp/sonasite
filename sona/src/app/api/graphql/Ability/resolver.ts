@@ -1,13 +1,13 @@
 import { Query, Resolver, Mutation, Arg, Authorized } from "type-graphql"
 
-import { AbilityTipsService } from "./service"
+import { AbilityService } from "./service"
 
-import { AbilityTipsInfo } from "./schema"
+import { AbilityInfo } from "./schema"
 
 @Resolver()
 export class AbilityResolver {
-    @Query(() => [AbilityTipsInfo])
-    async getAllAbilityTips(): Promise<AbilityTipsInfo[]>{
-        return new AbilityTipsService().getAllTips()
+    @Query(() => [AbilityInfo])
+    async getAllAbility(): Promise<AbilityInfo[]>{
+        return new AbilityService().getAllAbility()
     }
 }

@@ -26,7 +26,7 @@ export class SonaAbilities{
     @Field()
     description?: string
     @Field()
-    passive?: SonaPassive
+    passive?: SonaPassive 
 }
 
 @ArgsType()

@@ -12,6 +12,7 @@ import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
 import AbilitiesPopup from "./popup/AbilitiesPopup";
+import { AbilityService } from "../api/graphql/Ability/service";
 const Abilities = () => {
   // boolean to see if user click on abilities expansion
   const [abilityVisibility, setAbilityVisibility] = React.useState([
@@ -27,6 +28,7 @@ const Abilities = () => {
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
   const [fetchedRawDataR, setFetchedRawDataR] = React.useState(null);
+
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
     { label: "Player Tip", active: false },
