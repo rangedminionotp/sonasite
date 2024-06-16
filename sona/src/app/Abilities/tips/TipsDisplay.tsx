@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, setState } from "react";
 import AbilitiesContext from "../SharedContext";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import Avatar from "@mui/joy/Avatar";
@@ -7,6 +7,10 @@ const TipsDisplay = () => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
   const index = activeIndex;
+
+  // useEffect(() => {
+  //   setState(setabilityTips);
+  // }, [abilityTips]);
 
   useEffect(() => {
     if (abilities && abilities[index]) {
@@ -41,6 +45,7 @@ const TipsDisplay = () => {
             const sortedTips = json.data.getAbilityTipsByAbilityId.sort(
               (a, b) => new Date(b.date) - new Date(a.date)
             );
+            console.log("sorted tips", sortedTips);
             setabilityTips(sortedTips);
           }
         })
@@ -51,22 +56,20 @@ const TipsDisplay = () => {
   }, [abilities, index, setabilityTips]);
 
   const handleUpvote = (tipId, upvotes) => {
-    // API call to upvote
-    console.log("inside handleupvote", tipId, upvotes);
     const query = {
       query: `mutation MyMutation {
-  updateUpvotes(tip_id: "${tipId}", upvotes: ${upvotes}) {
-    tip_id
-    ability_id
-    date
-    downvotes
-    description
-    ownerId
-    ownerName
-    upvotes
-    version
-  } 
-}`,
+    updateUpvotes(tip_id: "${tipId}", upvotes: ${upvotes}) {
+      tip_id
+      ability_id
+      date
+      downvotes
+      description
+      ownerId
+      ownerName
+      upvotes
+      version
+    }
+  }`,
     };
     fetch("/api/graphql", {
       method: "POST",
@@ -79,9 +82,9 @@ const TipsDisplay = () => {
       .then((data) => {
         if (data.success) {
           // Update state
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip === tipId ? { ...tip, upvotes: tip.upvotes + 1 } : tip
+          setabilityTips((...prevTips) =>
+            prevTips.map(
+              tip.tip_id === tipId ? { ...tip, upvotes: tip.upvotes + 1 } : tip
             )
           );
         }
@@ -91,11 +94,25 @@ const TipsDisplay = () => {
       });
   };
 
-  const handleDownvote = (tipId) => {
-    // API call to downvote
-    fetch("/api/downvote", {
+  const handleDownvote = (tipId, downvotes) => {
+    const query = {
+      query: `mutation MyMutation {
+    updateDownvotes(tip_id: "${tipId}", downvotes: ${downvotes}) {
+      tip_id
+      ability_id
+      date
+      downvotes
+      description
+      ownerId
+      ownerName
+      upvotes
+      version
+    }
+  }`,
+    };
+    fetch("/api/graphql", {
       method: "POST",
-      body: JSON.stringify({ tipId }),
+      body: JSON.stringify(query),
       headers: {
         "Content-Type": "application/json",
       },
@@ -104,9 +121,11 @@ const TipsDisplay = () => {
       .then((data) => {
         if (data.success) {
           // Update state
-          setabilityTips((prevTips) =>
+          setabilityTips((...prevTips) =>
             prevTips.map((tip) =>
-              tip.id === tipId ? { ...tip, downvotes: tip.downvotes + 1 } : tip
+              tip.tip_id === tipId
+                ? { ...tip, downvotes: tip.downvotes + 1 }
+                : tip
             )
           );
         }
@@ -150,7 +169,7 @@ const TipsDisplay = () => {
               </div>
               <div
                 className="flex items-center space-x-1 cursor-pointer"
-                onClick={() => handleDownvote(tip.tip_id)}
+                onClick={() => handleDownvote(tip.tip_id, tip.downvotes + 1)}
               >
                 <span className="text-red-600">▼</span>
                 <span className="text-gray-800">{tip.downvotes}</span>
