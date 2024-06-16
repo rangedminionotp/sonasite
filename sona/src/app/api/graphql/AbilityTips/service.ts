@@ -12,15 +12,15 @@ export class AbilityTipsService {
         const abilityTips = []
         for (const item in rows) {
             const TipsObj = {
-                tip_id: rows[0].id,
-                ability_id: rows[0].ability_id,
-                description: rows[0].data.description,
-                ownerId: rows[0].owner_id,
-                ownerName: rows[0].owner_name,
-                date: rows[0].data.date,
-                version: rows[0].data.version,
-                upvotes: rows[0].upvotes,
-                downvotes: rows[0].downvotes
+                tip_id: rows[item].id,
+                ability_id: rows[item].ability_id,
+                description: rows[item].data.description,
+                ownerId: rows[item].owner_id,
+                ownerName: rows[item].owner_name,
+                date: rows[item].data.date,
+                version: rows[item].data.version,
+                upvotes: rows[item].upvotes,
+                downvotes: rows[item].downvotes
             }
             abilityTips.push(TipsObj)
         }
@@ -32,19 +32,22 @@ export class AbilityTipsService {
             text: select,
             values: [ability_id]
         }
-        const { rows } = await pool.query(query)
+        const { rows } = await pool.query(query) 
+        console.log('inside get tip by ability id')
+        console.log(rows)
         const abilityTips = []
         for (const item in rows) {
+            console.log(item)
             const TipsObj = {
-                tip_id: rows[0].id,
-                ability_id: rows[0].ability_id,
-                description: rows[0].data.description,
-                ownerId: rows[0].owner_id,
-                ownerName: rows[0].owner_name,
-                date: rows[0].data.date,
-                version: rows[0].data.version,
-                upvotes: rows[0].upvotes,
-                downvotes: rows[0].downvotes
+                tip_id: rows[item].id,
+                ability_id: rows[item].ability_id,
+                description: rows[item].data.description,
+                ownerId: rows[item].owner_id,
+                ownerName: rows[item].owner_name,
+                date: rows[item].data.date,
+                version: rows[item].data.version,
+                upvotes: rows[item].upvotes,
+                downvotes: rows[item].downvotes
             }
             abilityTips.push(TipsObj)
         }
@@ -60,15 +63,15 @@ export class AbilityTipsService {
         const abilityTips = []
         for (const item in rows) {
             const TipsObj = {
-                tip_id: rows[0].id,
-                ability_id: rows[0].ability_id,
-                description: rows[0].data.description,
-                ownerId: rows[0].owner_id,
-                ownerName: rows[0].owner_name,
-                date: rows[0].data.date,
-                version: rows[0].data.version,
-                upvotes: rows[0].upvotes,
-                downvotes: rows[0].downvotes
+                tip_id: rows[item].id,
+                ability_id: rows[item].ability_id,
+                description: rows[item].data.description,
+                ownerId: rows[item].owner_id,
+                ownerName: rows[item].owner_name,
+                date: rows[item].data.date,
+                version: rows[item].data.version,
+                upvotes: rows[item].upvotes,
+                downvotes: rows[item].downvotes
             }
             abilityTips.push(TipsObj)
         }
