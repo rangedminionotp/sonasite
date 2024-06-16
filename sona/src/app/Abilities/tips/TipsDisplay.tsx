@@ -7,10 +7,7 @@ const TipsDisplay = () => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
   const index = activeIndex;
-
-  // useEffect(() => {
-  //   setState(setabilityTips);
-  // }, [abilityTips]);
+  const [votes, setVotes] = React.useState(abilityTips);
 
   useEffect(() => {
     if (abilities && abilities[index]) {
@@ -80,11 +77,11 @@ const TipsDisplay = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          // Update state
-          setabilityTips((...prevTips) =>
-            prevTips.map(
-              tip.tip_id === tipId ? { ...tip, upvotes: tip.upvotes + 1 } : tip
+        if (data.data && data.data.updateUpvotes) {
+          const updatedTip = data.data.updateUpvotes;
+          setabilityTips((prevTips) =>
+            prevTips.map((tip) =>
+              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
             )
           );
         }
@@ -119,13 +116,11 @@ const TipsDisplay = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          // Update state
-          setabilityTips((...prevTips) =>
+        if (data.data && data.data.updateDownvotes) {
+          const updatedTip = data.data.updateDownvotes;
+          setabilityTips((prevTips) =>
             prevTips.map((tip) =>
-              tip.tip_id === tipId
-                ? { ...tip, downvotes: tip.downvotes + 1 }
-                : tip
+              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
             )
           );
         }

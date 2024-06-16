@@ -26,3 +26,9 @@ INSERT INTO AbilityTips (id, owner_id, ability_id, owner_name, data, upvotes, do
 VALUES
     ('9c838adb-0cb9-4dda-a1d3-946412aa1121', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '60028b69-8180-4d66-8331-c42a0426ab5f', 'Anna Admin', '{"description": "Q mock data 2", "date": "2023-01-30T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 10, 2),
     ('9c838adb-0cb9-4dda-a1d3-946412aa1112', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '223eeef1-8046-49a4-abb8-e6c86eb5d392', 'Molly Member', '{"description": "W mock data 2", "date": "2023-01-30T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 15, 3);
+
+DELETE FROM AbilityTipsVotes;
+INSERT INTO AbilityTipsVotes(ability_tip_id, owner_id, voted) 
+VALUES
+    ('9c838adb-0cb9-4dda-a1d3-946412aa1121', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0), 
+    ('9c838adb-0cb9-4dda-a1d3-946412aa1121', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 1);

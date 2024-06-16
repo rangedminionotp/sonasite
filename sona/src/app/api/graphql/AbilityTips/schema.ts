@@ -30,3 +30,13 @@ export class AbilityTipsData {
     @Field()
     date!:string
 }
+
+@ObjectType()
+export class AbilityTipsVotes { 
+    @Field()
+    tip_id!: string
+    @Field()
+    owner_id!: string
+    @Field()
+    check!: boolean
+}

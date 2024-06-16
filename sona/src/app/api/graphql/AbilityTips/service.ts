@@ -1,5 +1,5 @@
 import { pool } from '@/db'
-import { AbilityTipsInfo, AbilityTipsData } from './schema'
+import { AbilityTipsInfo, AbilityTipsData, AbilityTipsVotes } from './schema'
 
 export class AbilityTipsService {
     public async getAllTips(): Promise<AbilityTipsInfo[]> {
@@ -105,7 +105,7 @@ export class AbilityTipsService {
         }
         return tipsObj;
     }
-    public async updateUpvotes(tip_id: string, upvotes: number): Promise<AbilityTipsInfo>{
+    public async updateUpvotes(tip_id: string, upvotes: number): Promise<AbilityTipsInfo>{ 
         const update = `UPDATE AbilityTips SET upvotes = $1 WHERE id = $2 RETURNING *`
         const query = {
             text: update,
@@ -144,5 +144,12 @@ export class AbilityTipsService {
              version: rows[0].data.version
         }
         return tipsObj;
+    }
+    public async checkIfVoted(owner_id: string, tip_id: string): Promise<AbilityTipsVotes> {
+        const select = `SELECT * FROM AbilityTipsVotes WHERE owner_id = $1 AND tip_id = $1`
+        const query = {
+            text: select,
+            values: []
+        }
     }
 }

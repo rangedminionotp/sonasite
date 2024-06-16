@@ -28,3 +28,10 @@ CREATE TABLE AbilityTips (
 ALTER TABLE AbilityTips
 ADD COLUMN upvotes INTEGER DEFAULT 0,
 ADD COLUMN downvotes INTEGER DEFAULT 0;
+
+-- Create AbilityTipsVotes table
+CREATE TABLE AbilityTipsVotes (
+    ability_tip_id UUID REFERENCES AbilityTips(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    owner_id UUID REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+    voted INT DEFAULT 0
+);
