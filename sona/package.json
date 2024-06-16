@@ -72,6 +72,11 @@
     "parserOptions": {
       "ecmaVersion": 13
     },
+    "browser": {
+  "fs": false,
+  "path": false,
+  "os": false
+},
     "rules": {
       "indent": [
         "warn",

@@ -24,3 +24,7 @@ CREATE TABLE AbilityTips (
     owner_name VARCHAR(30) NOT NULL,
     data JSONB
 );
+-- Add popularity columns
+ALTER TABLE AbilityTips
+ADD COLUMN upvotes INTEGER DEFAULT 0,
+ADD COLUMN downvotes INTEGER DEFAULT 0;

@@ -4,7 +4,9 @@ import { Matches, Length } from "class-validator";
 @ObjectType()
 export class AbilityTipsInfo {
     @Field()
-    ability!: string
+    tip_id!:string
+    @Field()
+    ability_id!: string
     @Field()
     description!: string
     @Field()
@@ -12,5 +14,19 @@ export class AbilityTipsInfo {
     @Field()
     date!: string
     @Field()
-    ownerName!:string
+    ownerName!: string
+    @Field()
+    version!: string
+    @Field()
+    upvotes!: number
+    @Field()
+    downvotes!: number
+}
+
+@ObjectType()
+export class AbilityTipsData {
+    @Field()
+    description!: string
+    @Field()
+    date!:string
 }

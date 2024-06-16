@@ -4,7 +4,7 @@ import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 
 const PassiveAb = () => {
-  const { abilityVisibility, setAbilityVisibility } =
+  const { abilityVisibility, setAbilityVisibility, setActiveIndex } =
     React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex: number) => {
@@ -12,6 +12,7 @@ const PassiveAb = () => {
       const abilityPrev = [...prevState];
       // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
       abilityPrev[divIndex].active = true;
+      setActiveIndex(divIndex);
       return abilityPrev;
     });
   };
