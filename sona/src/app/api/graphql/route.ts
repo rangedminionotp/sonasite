@@ -4,10 +4,13 @@ import { buildSchemaSync } from 'type-graphql';
 import { AuthResolver } from './Auth/resolver'; 
 import { UserResolver } from './User/resolver';
 import { AbilityResolver } from './Ability/resolver';
+import { AbilityTipsResolver } from './AbilityTips/resolver';
+import { nextAuthChecker } from './Auth/checker';
 // Build the schema with resolvers
 const schema = buildSchemaSync({
-  resolvers: [AuthResolver, UserResolver, AbilityResolver],
+  resolvers: [AuthResolver, UserResolver, AbilityResolver, AbilityTipsResolver],
   validate: true,
+  authChecker: nextAuthChecker,
 });
 
 // Create the Yoga handler

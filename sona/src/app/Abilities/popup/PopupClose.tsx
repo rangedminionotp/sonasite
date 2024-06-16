@@ -8,31 +8,34 @@ const PopupClose = ({ index }) => {
     setAbilityVisibility,
     breadcrumbs,
     setBreadcrumbs,
+    setActiveIndex, // Add this to context
   } = React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex) => {
     setAbilityVisibility((prevState) => {
       const abilityPrev = [...prevState];
-      // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
       abilityPrev[divIndex].active = false;
       return abilityPrev;
     });
 
-    // so that the abilities overview always display when abilities toggled
+    // Reset the active index
+    setActiveIndex(null);
+
+    // Ensure the abilities overview always displays when abilities are toggled
     const updatedBreadcrumbs = breadcrumbs.map((breadcrumb, index) => ({
       ...breadcrumb,
-      active: index === 0, // Set active to true only for the first element
+      active: index === 0,
     }));
     setBreadcrumbs(updatedBreadcrumbs);
   };
+
   return (
     <div
       name="popup-close"
       className="text-6xl text-white hover:cursor-pointer"
       onClick={() => toggleVisibility(index)}
     >
-      <FaTimes className="h-12 w-12" />{" "}
-      {/* Adjust the height and width as needed */}
+      <FaTimes className="h-12 w-12" />
     </div>
   );
 };

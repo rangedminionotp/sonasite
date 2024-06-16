@@ -10,7 +10,7 @@ import AbilityDescription from "./AbilityDescription";
 const BasicAbilities: FunctionalComponent = () => {
   const abilities = [Q, W, E];
 
-  const { abilityVisibility, setAbilityVisibility } =
+  const { abilityVisibility, setAbilityVisibility, setActiveIndex } =
     React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex) => {
@@ -18,6 +18,7 @@ const BasicAbilities: FunctionalComponent = () => {
       const abilityPrev = [...prevState];
       // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
       abilityPrev[divIndex].active = true;
+      setActiveIndex(divIndex);
       return abilityPrev;
     });
   };

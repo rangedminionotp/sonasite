@@ -28,7 +28,10 @@ const Abilities = () => {
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
   const [fetchedRawDataR, setFetchedRawDataR] = React.useState(null);
-  const [abilities, setAbilities] = React.useState([]);
+  const [abilities, setAbilities] = React.useState(null);
+  const [currAbility, setCurrAbility] = React.useState(null);
+  const [abilityTips, setabilityTips] = React.useState(null);
+  const [activeIndex, setActiveIndex] = React.useState(null);
 
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
@@ -61,6 +64,7 @@ const Abilities = () => {
         if (json.errors) {
           alert("Error with ability id, please try again");
         } else {
+          console.log(json.data.getAllAbility);
           setAbilities(json.data.getAllAbility);
         }
       })
@@ -155,6 +159,12 @@ const Abilities = () => {
         setBreadcrumbs,
         abilities,
         setAbilities,
+        currAbility,
+        setCurrAbility,
+        abilityTips,
+        setabilityTips,
+        activeIndex,
+        setActiveIndex,
       }}
     >
       <div name="abilities" className="w-full h-screen relative">
