@@ -55,6 +55,39 @@ const TipsDisplay = () => {
 
   const handleUpvote = async (tipId, upvotes) => {
     try {
+      const user = getUserFromLocalStorage();
+      const bearerToken = user?.accessToken;
+
+      if (!bearerToken) {
+        throw new Error("User not authenticated");
+      }
+
+      const graphQLClient = createGraphQLClient(bearerToken);
+      const voted = await checkIfVoted(graphQLClient, tipId, user.id);
+
+      if (voted !== 1) {
+        const updatedTip = await updateUpvotes(graphQLClient, tipId, upvotes);
+
+        if (updatedTip) {
+          setabilityTips((prevTips) =>
+            prevTips.map((tip) =>
+              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
+            )
+          );
+        }
+        if (voted === 0) {
+          await updateVotes(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
+        } else if (voted === -1) {
+          await createTipVote(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
+        }
+      }
+    } catch (error) {
+      console.error("Error upvoting:", error);
+    }
+  };
+
+  const handleDownvote = async (tipId, downvotes, upvotes) => {
+    try {
       // Get the user and bearer token from local storage
       const user = getUserFromLocalStorage();
       const bearerToken = user?.accessToken;
@@ -72,14 +105,45 @@ const TipsDisplay = () => {
 
       // If the tip has not been upvoted yet, update the upvotes and create/update tip vote
       if (voted === -1) {
-        const updatedTip = await updateUpvotes(graphQLClient, tipId, upvotes);
+        const updatedTip = await updateDownvotes(
+          graphQLClient,
+          tipId,
+          downvotes
+        );
+        console.log(updatedTip.tip_id);
         setabilityTips((prevTips) =>
           prevTips.map((tip) =>
             tip.tip_id === updatedTip.tip_id ? updatedTip : tip
           )
         );
 
-        await createTipVote(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
+        await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+      } else if (voted === 1) {
+        // await updateVotes(graphQLClient, tipId, user.id, 0);
+        // const updatedTip = await updateUpvotes(graphQLClient, tipId, upvotes);
+        // setabilityTips((prevTips) =>
+        //   prevTips.map((tip) =>
+        //     tip.tip_id === updatedTip.tip_id ? updatedTip : tip
+        //   )
+        // );
+        const updatedDownTip = await updateDownvotes(
+          graphQLClient,
+          tipId,
+          downvotes
+        );
+
+        if (updatedDownTip) {
+          setabilityTips((prevTips) =>
+            prevTips.map((tip) =>
+              tip.tip_id === updatedDownTip.tip_id ? updatedDownTip : tip
+            )
+          );
+          await updateVotes(graphQLClient, tipId, user.id, 0);
+        } else {
+          console.error(
+            "Error updating downvotes: updatedDownTip is null or undefined"
+          );
+        }
       }
     } catch (error) {
       console.error("Error upvoting:", error);
@@ -99,6 +163,22 @@ const TipsDisplay = () => {
     });
   };
 
+  const updateVotes = async (GraphQLClient, tipId, userId, votes) => {
+    try {
+      const update = gql`
+    mutation MyMutation {
+  updateVotes(owner_id: "${userId}", tip_id: "${tipId}", votes: ${votes} ) {
+    owner_id
+    tip_id
+    voted
+  }
+}
+    `;
+      await GraphQLClient.request(update);
+    } catch (error) {
+      console.error("Error checking if voted:", error);
+    }
+  };
   const checkIfVoted = async (graphQLClient, tipId, userId) => {
     try {
       const checker = gql`
@@ -139,6 +219,31 @@ const TipsDisplay = () => {
     }
   };
 
+  const updateDownvotes = async (graphQLClient, tipId, downvotes) => {
+    try {
+      const mutation = gql`
+      mutation MyMutation {
+        updateDownvotes(tip_id: "${tipId}", downvotes: ${downvotes}) {
+          tip_id
+          ability_id
+          date
+          downvotes
+          description
+          ownerId
+          ownerName
+          upvotes
+          version
+        }
+      }
+    `;
+      const response = await graphQLClient.request(mutation);
+      return response?.updateDownvotes ?? null;
+    } catch (error) {
+      console.error("Error updating downvotes:", error);
+      return null;
+    }
+  };
+
   const createTipVote = async (graphQLClient, tipId, userId, vote) => {
     try {
       const mutation = gql`
@@ -154,45 +259,6 @@ const TipsDisplay = () => {
     } catch (error) {
       console.error("Error creating/updating tip vote:", error);
     }
-  };
-
-  const handleDownvote = (tipId, downvotes) => {
-    const query = {
-      query: `mutation MyMutation {
-    updateDownvotes(tip_id: "${tipId}", downvotes: ${downvotes}) {
-      tip_id
-      ability_id
-      date
-      downvotes
-      description
-      ownerId
-      ownerName
-      upvotes
-      version
-    }
-  }`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(query),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.data && data.data.updateDownvotes) {
-          const updatedTip = data.data.updateDownvotes;
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
-            )
-          );
-        }
-      })
-      .catch((error) => {
-        console.error("Error downvoting:", error);
-      });
   };
 
   return (
@@ -229,7 +295,9 @@ const TipsDisplay = () => {
               </div>
               <div
                 className="flex items-center space-x-1 cursor-pointer"
-                onClick={() => handleDownvote(tip.tip_id, tip.downvotes + 1)}
+                onClick={() =>
+                  handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
+                }
               >
                 <span className="text-red-600">▼</span>
                 <span className="text-gray-800">{tip.downvotes}</span>
