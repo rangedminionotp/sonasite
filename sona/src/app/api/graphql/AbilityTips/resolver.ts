@@ -3,7 +3,7 @@ import type { NextApiRequest } from 'next'
 
 import { AbilityTipsService } from "./service"
 
-import { AbilityTipsInfo } from "./schema"
+import { AbilityTipsInfo, AbilityTipsVotes } from "./schema"
 
 @Resolver()
 export class AbilityTipsResolver {
@@ -55,4 +55,46 @@ export class AbilityTipsResolver {
       return new AbilityTipsService().updateDownvotes(tip_id, downvotes)
     }
 
+    // @Mutation(() => AbilityTipsVotes)
+    // async createTipVote( 
+    //     @Arg("voted") voted:number,
+    //     @Arg("ability_tip_id") ability_tip_id: string, 
+    //     @Ctx() request: NextApiRequest
+    // ): Promise<AbilityTipsVotes> {
+    //   return new AbilityTipsService().addVote(request.user.id, ability_tip_id, voted);
+    // }
+    @Mutation(() => AbilityTipsVotes)
+    async createTipVote( 
+        @Arg("voted") voted:number,
+        @Arg("ability_tip_id") ability_tip_id: string, 
+        @Arg("owner_id") owner_id: string
+    ): Promise<AbilityTipsVotes> {
+      return new AbilityTipsService().addVote(owner_id, ability_tip_id, voted);
+    }
+    
+    // @Authorized("member") 
+    // @Query(() => Number)
+    // async checkIfUpvoted(
+    //     @Arg("tip_id") tip_id: string,
+    //     @Ctx() request: NextApiRequest 
+    // ): Promise<number>{
+    //     return new AbilityTipsService().checkIfUpvoted(request.user.id, tip_id);
+    // }
+    
+        @Query(() => Number)
+    async checkIfVoted(
+        @Arg("tip_id") tip_id: string,
+            // @Ctx() request: NextApiRequest 
+        @Arg("owner_id") owner_id: string
+    ): Promise<number>{
+        return new AbilityTipsService().checkIfUpvoted(owner_id, tip_id);
+    }
+    // @Authorized("member") 
+    @Query(() => Number)
+    async checkIfDownvoted(
+        @Arg("tip_id") tip_id: string,
+        @Ctx() request: NextApiRequest 
+    ): Promise<number>{
+        return new AbilityTipsService().checkIfDownvoted(request.user.id, tip_id);
+    }
 }
