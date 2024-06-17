@@ -168,7 +168,7 @@ const Abilities = () => {
       }}
     >
       <div name="abilities" className="w-full h-screen relative">
-        <Background />
+        {/* <Background /> */}
         <div className="absolute inset-0 flex justify-center items-center">
           <Description />
         </div>

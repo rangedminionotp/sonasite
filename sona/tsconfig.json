@@ -19,9 +19,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
-      ]
-    },
+        "./src/*",
+      ],"/*": ["./node_modules/*"]
+     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -40,9 +40,13 @@
     "**/*.ts",
     "**/*.tsx",
     "src/middleware.ts.junk",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "pages/**/*",
+    "src/**/*",
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
+
 }
