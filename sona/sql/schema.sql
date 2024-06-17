@@ -33,5 +33,5 @@ ADD COLUMN downvotes INTEGER DEFAULT 0;
 CREATE TABLE AbilityTipsVotes (
     ability_tip_id UUID REFERENCES AbilityTips(id) ON DELETE CASCADE ON UPDATE CASCADE,
     owner_id UUID REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE, 
-    voted INT DEFAULT 0
+    voted INT
 );

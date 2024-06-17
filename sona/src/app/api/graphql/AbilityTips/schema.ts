@@ -38,5 +38,5 @@ export class AbilityTipsVotes {
     @Field()
     owner_id!: string
     @Field()
-    check!: boolean
+    voted!: boolean
 }

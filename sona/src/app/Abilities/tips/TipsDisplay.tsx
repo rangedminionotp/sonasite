@@ -2,6 +2,7 @@ import React, { useEffect, useContext, setState } from "react";
 import AbilitiesContext from "../SharedContext";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import Avatar from "@mui/joy/Avatar";
+import { GraphQLClient, gql } from "graphql-request";
 
 const TipsDisplay = () => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
@@ -52,43 +53,83 @@ const TipsDisplay = () => {
     }
   }, [abilities, index, setabilityTips]);
 
-  const handleUpvote = (tipId, upvotes) => {
-    const query = {
-      query: `mutation MyMutation {
-    updateUpvotes(tip_id: "${tipId}", upvotes: ${upvotes}) {
-      tip_id
-      ability_id
-      date
-      downvotes
-      description
-      ownerId
-      ownerName
-      upvotes
-      version
-    }
-  }`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(query),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.data && data.data.updateUpvotes) {
-          const updatedTip = data.data.updateUpvotes;
+  const handleUpvote = async (tipId, upvotes) => {
+    try {
+      // Get the user and bearer token from local storage
+      const item = localStorage.getItem("user");
+      const user = JSON.parse(item);
+      const bearerToken = user?.accessToken;
+      console.log(bearerToken);
+      console.log(user);
+      if (!bearerToken) {
+        throw new Error("User not authenticated");
+      }
+
+      // Initialize GraphQL client
+      const graphQLClient = new GraphQLClient(
+        "http://localhost:3000/api/graphql",
+        {
+          headers: {
+            Authorization: `Bearer ${bearerToken}`,
+          },
+        }
+      );
+
+      // Check if the tip has been upvoted by the user
+      const checker = gql`query checkIfVoted {
+        checkIfVoted(tip_id: "${tipId}", owner_id: "${user.id}")
+      }`;
+
+      const response = await graphQLClient.request(checker);
+      const voted = response?.checkIfVoted;
+      console.log("vote", voted);
+      // If the tip has not been upvoted yet, update the upvotes
+      if (voted === 0) {
+        const mutation = {
+          query: `mutation MyMutation {
+          updateUpvotes(tip_id: "${tipId}", upvotes: ${upvotes}) {
+            tip_id
+            ability_id
+            date
+            downvotes
+            description
+            ownerId
+            ownerName
+            upvotes
+            version
+          }
+        }`,
+        };
+
+        const updateResponse = await fetch("/api/graphql", {
+          method: "POST",
+          body: JSON.stringify(mutation),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearerToken}`, // Include the token in headers for the fetch request
+          },
+        });
+
+        const updateData = await updateResponse.json();
+
+        if (updateData.data && updateData.data.updateUpvotes) {
+          const updatedTip = updateData.data.updateUpvotes;
           setabilityTips((prevTips) =>
             prevTips.map((tip) =>
               tip.tip_id === updatedTip.tip_id ? updatedTip : tip
             )
           );
         }
-      })
-      .catch((error) => {
-        console.error("Error upvoting:", error);
-      });
+        const createTipVote = gql`
+          mutation MyMutation {
+            createTipVote(ability_tip_id: "${tipId}", voted: 1, owner_id: "${user.id}")
+          }
+        `;
+        const newTipVote = await graphQLClient.request(createTipVote);
+      }
+    } catch (error) {
+      console.error("Error upvoting:", error);
+    }
   };
 
   const handleDownvote = (tipId, downvotes) => {

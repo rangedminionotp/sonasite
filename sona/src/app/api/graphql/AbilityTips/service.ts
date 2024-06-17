@@ -145,11 +145,58 @@ export class AbilityTipsService {
         }
         return tipsObj;
     }
-    public async checkIfVoted(owner_id: string, tip_id: string): Promise<AbilityTipsVotes> {
-        const select = `SELECT * FROM AbilityTipsVotes WHERE owner_id = $1 AND tip_id = $1`
+    public async checkIfVoted(owner_id: string, tip_id: string): Promise<number> {
+    const select = `SELECT voted FROM AbilityTipsVotes WHERE owner_id = $1 AND ability_tip_id = $2`;
+    const query = {
+        text: select,
+        values: [owner_id, tip_id]
+    }; 
+
+    const { rows } = await pool.query(query); 
+
+    if (rows.length > 0) {
+        return rows[0].voted;
+    }
+    
+    return -1;  
+}
+
+    // public async checkIfDownvoted(owner_id: string, tip_id: string): Promise<number> {
+    //     const select = `SELECT * FROM AbilityTipsVotes WHERE owner_id = $1 AND ability_tip_id = $2`
+    //     const query = {
+    //         text: select,
+    //         values: [owner_id, tip_id]
+    //     }
+    //     const { rows } = await pool.query(query)
+    //     return rows[0] ? 0 : rows[0] === 0
+    // }
+    public async updateVotes(owner_id: string, ability_tip_id:string, voted: number): Promise<AbilityTipsVotes>{
+        const update = `UPDATE AbilityTips SET voted = $1 WHERE owner_id = $2 AND ability_tip_id = $3 RETURNING *` 
         const query = {
-            text: select,
-            values: []
+            text: update,
+            values: [voted, owner_id, ability_tip_id]
         }
+        const { rows } = await pool.query(query)
+         const tipObj: AbilityTipsVotes = {
+            tip_id: rows[0].ability_tip_id,
+            owner_id: rows[0].owner_id,
+            voted: rows[0].voted
+        }
+        return tipObj;
+    }
+
+    public async addVote(owner_id: string, tip_id: string, voted: number): Promise<AbilityTipsVotes>{
+        const insert = `INSERT INTO AbilityTipsVotes (ability_tip_id, owner_id, voted) VALUES ($1, $2, $2)`
+        const query = {
+            text: insert,
+            values: [tip_id, owner_id, voted]
+        }
+        const { rows } = await pool.query(query)
+        const tipObj: AbilityTipsVotes = {
+            tip_id: rows[0].ability_tip_id,
+            owner_id: rows[0].owner_id,
+            voted: rows[0].voted
+        }
+        return tipObj;
     }
 }
