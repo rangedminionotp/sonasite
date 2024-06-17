@@ -8,7 +8,7 @@ import { Element } from "react-scroll/modules";
 const Intro = () => {
   return (
     <div id="intro" name="intro" className="w-full h-screen relative">
-      <Background />
+      {/* <Background /> */}
       <div className="absolute inset-0 flex justify-center items-center">
         <Description />
       </div>

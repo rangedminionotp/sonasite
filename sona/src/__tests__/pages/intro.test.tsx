@@ -14,3 +14,13 @@ const renderView = () => {
 test("render", async () => {
   renderView();
 });
+
+test("Find intro description", async () => {
+  renderView();
+  // Use findByText to wait for specific text to appear on the screen
+  const sonaText = await screen.findByText("SONA");
+  const mavenText = await screen.findByText("MAVEN OF THE STRINGS");
+  // Assert that the text elements are found
+  expect(sonaText).toBeInTheDocument();
+  expect(mavenText).toBeInTheDocument();
+});
