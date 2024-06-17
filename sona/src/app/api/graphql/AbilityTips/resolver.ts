@@ -87,14 +87,23 @@ export class AbilityTipsResolver {
             // @Ctx() request: NextApiRequest 
         @Arg("owner_id") owner_id: string
     ): Promise<number>{
-        return new AbilityTipsService().checkIfUpvoted(owner_id, tip_id);
+        return new AbilityTipsService().checkIfVoted(owner_id, tip_id);
     }
-    // @Authorized("member") 
-    @Query(() => Number)
-    async checkIfDownvoted(
+    // // @Authorized("member") 
+    // @Query(() => Number)
+    // async checkIfDownvoted(
+    //     @Arg("tip_id") tip_id: string,
+    //     @Ctx() request: NextApiRequest 
+    // ): Promise<number>{
+    //     return new AbilityTipsService().checkIfDownvoted(request.user.id, tip_id);
+    // }
+
+    @Mutation(() => AbilityTipsVotes)
+    async updateVotes(
         @Arg("tip_id") tip_id: string,
-        @Ctx() request: NextApiRequest 
-    ): Promise<number>{
-        return new AbilityTipsService().checkIfDownvoted(request.user.id, tip_id);
+        @Arg("votes") votes: number,
+        @Arg("owner_id") owner_id: string
+    ): Promise<AbilityTipsVotes> {
+      return new AbilityTipsService().updateVotes(owner_id, tip_id, votes)
     }
 }
