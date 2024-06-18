@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, setState } from "react";
+import React, { useEffect, useContext, setState, useState } from "react";
 import AbilitiesContext from "../SharedContext";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import Avatar from "@mui/joy/Avatar";
@@ -13,7 +13,35 @@ const TipsDisplay = () => {
   const [isDateAsc, setIsDateAsc] = React.useState(true);
   const [isUpvotesAsc, setIsUpvotesAsc] = React.useState(true);
   const [isDownvotesAsc, setIsDownvotesAsc] = React.useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tipsPerPage = 4;
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentTips, setCurrentTips] = useState([]);
+  useEffect(() => {
+    if (abilityTips) {
+      const pages = Math.ceil(abilityTips.length / tipsPerPage);
+      setTotalPages(pages);
 
+      const tips = abilityTips.slice(
+        (currentPage - 1) * tipsPerPage,
+        currentPage * tipsPerPage
+      );
+      setCurrentTips(tips);
+    }
+  }, [abilityTips, currentPage]);
+
+  // Handle page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   useEffect(() => {
     if (abilities && abilities[index]) {
       const query = {
@@ -292,52 +320,67 @@ const TipsDisplay = () => {
   };
 
   return (
-    <div name="Player Tips" className="max-w-4xl mx-auto p-6">
-      <div>
-        <Button onClick={sortByDate}>Sort by Date</Button>
-        <Button onClick={sortByUpvotes}>Sort by Upvotes</Button>
-        <Button onClick={sortByDownvotes}>Sort by Downvotes</Button>
+    <div className="max-w-4xl mx-auto p-6 max-h-72">
+      <div className="flex flex-col md:flex-row md:justify-between mb-4">
+        <Button
+          onClick={sortByDate}
+          className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Sort by Date
+        </Button>
+        <Button
+          onClick={sortByUpvotes}
+          className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Sort by Upvotes
+        </Button>
+        <Button
+          onClick={sortByDownvotes}
+          className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Sort by Downvotes
+        </Button>
       </div>
-      {abilityTips && abilityTips.length > 0 ? (
-        abilityTips.map((tip, idx) => (
+      {currentTips && currentTips.length > 0 ? (
+        currentTips.map((tip, idx) => (
           <div
             key={idx}
-            className="bg-gray-300 shadow-md rounded-lg p-4 mb-4 border border-gray-200"
+            className="bg-[#262626] shadow-md p-4 border border-black"
           >
             <div className="flex items-center space-x-2">
               <Avatar>{tip.ownerName.charAt(0)}</Avatar>
-              <p className="text-gray-800 font-bold text-lg">{tip.ownerName}</p>
+              <p className="text-gray-300 font-bold text-lg">{tip.ownerName}</p>
               <div className="border-l border-gray-300 h-6 mx-2"></div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 {format(parseISO(tip.date), "MMMM dd, yyyy h:mm a")} (
                 {formatDistanceToNow(parseISO(tip.date), { addSuffix: true })})
               </p>
               <div className="border-l border-gray-300 h-6 mx-2"></div>
-              <p className="text-gray-500">
+              <p className="text-gray-400">
                 Version: {tip.version.slice(0, 5)}
               </p>
             </div>
-            <p className="text-gray-800 font-semibold mt-2">
+            <p className="text-gray-200 font-semibold mt-2">
               {tip.description}
             </p>
             <div className="flex items-center space-x-4 mt-2">
               <div
-                className="flex items-center space-x-1 cursor-pointer"
+                className="flex items-center space-x-1 cursor-pointer "
                 onClick={() =>
-                  handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
+                  handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes)
                 }
               >
                 <span className="text-green-600">▲</span>
-                <span className="text-gray-800">{tip.upvotes}</span>
+                <span className="text-gray-300">{tip.upvotes}</span>
               </div>
               <div
                 className="flex items-center space-x-1 cursor-pointer"
                 onClick={() =>
-                  handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
+                  handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes)
                 }
               >
                 <span className="text-red-600">▼</span>
-                <span className="text-gray-800">{tip.downvotes}</span>
+                <span className="text-gray-300">{tip.downvotes}</span>
               </div>
             </div>
           </div>
@@ -345,6 +388,33 @@ const TipsDisplay = () => {
       ) : (
         <p className="text-center text-gray-500">No tips available.</p>
       )}
+      <div className="flex justify-center space-x-4 mt-4">
+        <Button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          Previous
+        </Button>
+        <p className="text-gray-300">
+          Page {currentPage} of {totalPages}
+        </p>
+        <Button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };
