@@ -32,9 +32,7 @@ export class AbilityTipsService {
             text: select,
             values: [ability_id]
         }
-        const { rows } = await pool.query(query) 
-        console.log('inside get tip by ability id')
-        console.log(rows)
+        const { rows } = await pool.query(query)  
         const abilityTips = []
         for (const item in rows) {
             console.log(item)
@@ -85,7 +83,7 @@ export class AbilityTipsService {
             'version': version
         }
         
-        const insert = `INSERT INTO AbilityTips(owner_id, ability_id, owner_name, data, upvotes, downvotes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING owner_id, ability_id, owner_name, data, upvotes, downvotes`
+        const insert = `INSERT INTO AbilityTips(owner_id, ability_id, owner_name, data, upvotes, downvotes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`
         const query = {
             text: insert,
             values: [owner_id, ability_id, owner_name, data, 0, 0],
@@ -101,7 +99,7 @@ export class AbilityTipsService {
             date: rows[0].data.date,
             upvotes: rows[0].upvotes,
             downvotes: rows[0].downvotes,
-             version: rows[0].data.version,
+            version: rows[0].data.version,
         }
         return tipsObj;
     }

@@ -4,11 +4,17 @@ import AbilitiesContext from "../SharedContext";
 import PopupClose from "./PopupClose";
 import AbilitiesNavbar from "./AbilitiesNavbar";
 import AbilityDescription from "./AbilityDescription";
-import TipsDisplay from "../tips/TipsDisplay";
+import TipsDisplay from "../tipsDisplay/TipsDisplay";
+import AddTips from "../AddTips/AddTips";
 
 const AbilitiesPopup = () => {
-  const { abilityVisibility, fetchedData, breadcrumbs, setActiveIndex } =
-    useContext(AbilitiesContext);
+  const {
+    abilities,
+    abilityVisibility,
+    fetchedData,
+    breadcrumbs,
+    setActiveIndex,
+  } = useContext(AbilitiesContext);
 
   const [activeIndex, setActiveIndexState] = useState(null);
 
@@ -36,6 +42,12 @@ const AbilitiesPopup = () => {
               </div>
               {breadcrumbs[0].active && <AbilityDescription />}
               {breadcrumbs[1].active && <TipsDisplay />}
+              {breadcrumbs[2].active && (
+                <AddTips
+                  ability_id={abilities[activeIndex].abilityId}
+                  version={fetchedData.version}
+                />
+              )}
             </div>
           );
         })}
