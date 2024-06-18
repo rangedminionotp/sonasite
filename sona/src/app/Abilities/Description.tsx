@@ -13,7 +13,7 @@ const Description = () => {
           {"abilities".toUpperCase()}
         </div>
         <div className="text-6xl font-bold text-white italic drop-shadow-2xl  sm: text-md">
-          {fetchedData && fetchedData.version}
+          {fetchedData && fetchedData.version.slice(0, 5)}
         </div>
       </div>
     </div>
