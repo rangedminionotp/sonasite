@@ -4,3 +4,7 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
+const util = require("util");
+
+global.TextEncoder = util.TextEncoder;
+global.TextDecoder = util.TextDecoder;

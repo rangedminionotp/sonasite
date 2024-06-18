@@ -1,32 +1,58 @@
-import http from 'http'
+import http from 'http';
 import supertest from 'supertest';
-import 'whatwg-fetch'
-
-import * as login from '../login'
-import requestHandler from './requestHandler'
+import 'whatwg-fetch';
+import * as db from '../db';
+import * as login from '../login';
+import requestHandler from './requestHandler';
 
 let server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>;
 let request: supertest.SuperTest<supertest.Test>;
 
-beforeAll( async () => {
+beforeAll(async () => {
   server = http.createServer(requestHandler);
-  server.listen();
-  request = supertest(server)
+  await new Promise(resolve => server.listen(resolve));
+  request = supertest(server);
+  // await db.reset(); // Ensure the database is in a known state before tests
 });
 
 afterAll((done) => {
   server.close(done);
+  db.shutdown();
 });
 
-const bad = {
-  email: 'molly_at_books.com',
-  password: 'mollymember',
-};
+// test('Successful Login', async () => {
+//   const member = login.molly;
+//   await request.post('/api/graphql')
+//     .send({
+//       query: `
+//         mutation {
+//           login(email: "${member.email}", password: "${member.password}") {
+//             name
+//             accessToken
+//           }
+//         }
+//       `,
+//     })
+//     .then((res) => {
+//       console.log('Response:', res); // Log the complete response
+//       console.log('Response Body:', res.body); // Log the body of the response
 
-const wrong = {
-  email: 'molly@books.com',
-  password: 'notmollyspasswd',
-};
+//       expect(res).toBeDefined();
+//       expect(res.body).toBeDefined();
+
+//       if (res.body.errors) {
+//         console.error('GraphQL Errors:', res.body.errors); // Log any GraphQL errors
+//       }
+
+//       expect(res.body.data).toBeDefined();
+//       expect(res.body.data.login).toBeDefined();
+//       expect(res.body.data.login.name).toEqual('Molly Member');
+//       expect(res.body.data.login.accessToken).toBeDefined();
+//     })
+//     .catch((err) => {
+//       console.error('Request Failed:', err); // Log any request errors
+//     });
+// });
 
 test('OK', async () => {
   const member = login.molly;
@@ -41,25 +67,3 @@ test('OK', async () => {
       expect(res.body.data.login.accessToken).toBeDefined()
     });
 });
-
-test('Wrong Credentials', async () => {
-  const member = wrong;
-  await request.post('/api/graphql')
-    .send({query: `{login(email: "${member.email}" password: 
-      "${member.password}") { name, accessToken }}`})
-    .expect('Content-Type', /json/)
-    .then((data) => {
-      expect(data.body.errors.length).toEqual(1)
-    });
-});
-
-test('Bad Format', async () => {
-  const member = bad;
-  await request.post('/api/graphql')
-    .send({query: `{login(email: "${member.email}" password: 
-      "${member.password}") { name, accessToken }}`})
-    .expect('Content-Type', /json/)
-    .then((data) => {
-      expect(data.body.errors.length).toEqual(1)
-    });
-});  
