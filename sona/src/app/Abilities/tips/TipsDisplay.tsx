@@ -367,7 +367,7 @@ const TipsDisplay = () => {
               <div
                 className="flex items-center space-x-1 cursor-pointer "
                 onClick={() =>
-                  handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes)
+                  handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
                 }
               >
                 <span className="text-green-600">▲</span>
@@ -376,7 +376,7 @@ const TipsDisplay = () => {
               <div
                 className="flex items-center space-x-1 cursor-pointer"
                 onClick={() =>
-                  handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes)
+                  handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
                 }
               >
                 <span className="text-red-600">▼</span>
