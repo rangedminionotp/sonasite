@@ -1,7 +1,8 @@
-import {Pool} from 'pg';
+import { Pool } from 'pg';
 import * as fs from 'fs';
- 
-process.env.POSTGRES_DB='test';
+import * as path from 'path';
+
+process.env.POSTGRES_DB = 'test';
 
 const pool = new Pool({
   host: 'localhost',
@@ -12,24 +13,38 @@ const pool = new Pool({
 });
 
 const run = async (file: string) => {
-  const content = fs.readFileSync(file, 'utf8');
-  const statements = content.split(/\r?\n/);
-  for (const statement of statements) {
-    if (statement) {
+  try {
+    const filePath = path.resolve(__dirname, file);
+    const content = fs.readFileSync(filePath, 'utf8');
+    const statements = content
+      .split(/;\s*$/m)
+      .map(statement => statement.trim())
+      .filter(statement => statement.length > 0);
+
+    for (const statement of statements) {
       await pool.query(statement);
     }
+  } catch (error) {
+    console.error(`Error running SQL file ${file}:`, error);
   }
 };
 
 const reset = async () => {
-  await run('sql/schema.sql');
-  await run('sql/data.sql');
+  try {
+    await run('sql/schema.sql');
+    await run('sql/data.sql');
+  } catch (error) {
+    console.error('Error resetting the database:', error);
+  }
 };
 
-const shutdown = () => {
-  pool.end(() => {
-    console.log('pool has ended');
-  });
+const shutdown = async () => {
+  try {
+    await pool.end();
+    // console.log('pool has ended');
+  } catch (error) {
+    console.error('Error shutting down the pool:', error);
+  }
 };
 
-export {reset, shutdown};
+export { pool, reset, shutdown };

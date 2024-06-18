@@ -2,6 +2,7 @@ import React, { useEffect, useContext, setState } from "react";
 import AbilitiesContext from "../SharedContext";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import Avatar from "@mui/joy/Avatar";
+import Button from "@mui/joy/Button";
 import { GraphQLClient, gql } from "graphql-request";
 
 const TipsDisplay = () => {
@@ -9,6 +10,9 @@ const TipsDisplay = () => {
     useContext(AbilitiesContext);
   const index = activeIndex;
   const [votes, setVotes] = React.useState(abilityTips);
+  const [isDateAsc, setIsDateAsc] = React.useState(true);
+  const [isUpvotesAsc, setIsUpvotesAsc] = React.useState(true);
+  const [isDownvotesAsc, setIsDownvotesAsc] = React.useState(true);
 
   useEffect(() => {
     if (abilities && abilities[index]) {
@@ -40,11 +44,7 @@ const TipsDisplay = () => {
           if (json.errors) {
             alert("Error fetching tips, please try again");
           } else {
-            const sortedTips = json.data.getAbilityTipsByAbilityId.sort(
-              (a, b) => new Date(b.date) - new Date(a.date)
-            );
-            console.log("sorted tips", sortedTips);
-            setabilityTips(sortedTips);
+            setabilityTips(json.data.getAbilityTipsByAbilityId);
           }
         })
         .catch((error) => {
@@ -263,8 +263,41 @@ const TipsDisplay = () => {
     }
   };
 
+  const sortByDate = () => {
+    const sorted = [...abilityTips].sort((a, b) => {
+      const dateComparison =
+        new Date(a.date).getTime() - new Date(b.date).getTime();
+      return isDateAsc ? dateComparison : -dateComparison;
+    });
+    setabilityTips(sorted);
+    setIsDateAsc(!isDateAsc);
+  };
+
+  const sortByUpvotes = () => {
+    const sorted = [...abilityTips].sort((a, b) => {
+      const upvoteComparison = b.upvotes - a.upvotes;
+      return isUpvotesAsc ? upvoteComparison : -upvoteComparison;
+    });
+    setabilityTips(sorted);
+    setIsUpvotesAsc(!isUpvotesAsc);
+  };
+
+  const sortByDownvotes = () => {
+    const sorted = [...abilityTips].sort((a, b) => {
+      const downvoteComparison = b.downvotes - a.downvotes;
+      return isDownvotesAsc ? downvoteComparison : -downvoteComparison;
+    });
+    setabilityTips(sorted);
+    setIsDownvotesAsc(!isDownvotesAsc);
+  };
+
   return (
     <div name="Player Tips" className="max-w-4xl mx-auto p-6">
+      <div>
+        <Button onClick={sortByDate}>Sort by Date</Button>
+        <Button onClick={sortByUpvotes}>Sort by Upvotes</Button>
+        <Button onClick={sortByDownvotes}>Sort by Downvotes</Button>
+      </div>
       {abilityTips && abilityTips.length > 0 ? (
         abilityTips.map((tip, idx) => (
           <div
