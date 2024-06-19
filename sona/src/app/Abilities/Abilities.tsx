@@ -37,7 +37,6 @@ const Abilities = () => {
     { label: "Overview", active: true },
     { label: "Player Tip", active: false },
     { label: "Add Tip", active: false },
-    { label: "Tutorials", active: false },
   ]);
 
   React.useEffect(() => {

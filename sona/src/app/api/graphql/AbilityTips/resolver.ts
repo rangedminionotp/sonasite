@@ -120,4 +120,20 @@ export class AbilityTipsResolver {
     ): Promise<AbilityTipsVotes> {
       return new AbilityTipsService().updateVotes(owner_id, tip_id, votes)
     }
+    @Mutation(() => AbilityTipsInfo)
+    async editTips(
+        @Arg("owner_id") owner_id: string,
+        @Arg("ability_tip_id") ability_tip_id: string,
+        @Arg("description") description: string,
+         @Arg("version") version: string
+    ): Promise<AbilityTipsInfo> {
+      return new AbilityTipsService().updateAbilityTip(owner_id, ability_tip_id, description, version)
+    }
+    @Mutation(() => AbilityTipsInfo)
+    async deleteTips(
+        @Arg("owner_id") owner_id: string,
+        @Arg("ability_tip_id") ability_tip_id: string 
+    ): Promise<AbilityTipsInfo> {
+      return new AbilityTipsService().deleteAbilityTip(owner_id, ability_tip_id)
+    }
 }

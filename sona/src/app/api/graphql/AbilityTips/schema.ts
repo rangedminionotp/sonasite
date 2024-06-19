@@ -21,6 +21,8 @@ export class AbilityTipsInfo {
     upvotes!: number
     @Field()
     downvotes!: number
+    @Field()
+    edited?: boolean
 }
 
 @ObjectType()
