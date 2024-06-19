@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "@mui/joy/Avatar";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
-import TipsEdit from "./TipsEdit";
+import TipsEditAndDelete from "./TipsEditAndDelete ";
 import { getUserFromLocalStorage } from "./utils";
 const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
   const user = getUserFromLocalStorage();
@@ -38,7 +38,7 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
           <span className="text-red-600">▼</span>
           <span className="text-gray-300">{tip.downvotes}</span>
         </div>
-        {tip.ownerId === user.id ? <TipsEdit tip={tip} /> : null}
+        {tip.ownerId === user.id ? <TipsEditAndDelete tip={tip} /> : null}
       </div>
     </div>
   );
