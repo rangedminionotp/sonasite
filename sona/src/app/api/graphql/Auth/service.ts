@@ -3,7 +3,7 @@ import * as bcrypt from "bcrypt";
 
 import { Credentials, User } from './schema';
 
-import secrets from '../../../../../data/secrets.json'
+import secrets from '../../../../../.env.local'
 import {pool} from '@/db';
 
 export class AuthService {
