@@ -80,7 +80,11 @@ const TipsDisplay = () => {
           if (json.errors) {
             alert("Error fetching tips, please try again");
           } else {
-            setabilityTips(json.data.getAbilityTipsByAbilityId);
+            const allTips = json.data.getAbilityTipsByAbilityId;
+            const sortedTips = [...allTips].sort((a, b) => {
+              return new Date(b.date).getTime() - new Date(a.date).getTime();
+            });
+            setabilityTips(sortedTips);
           }
         })
         .catch((error) => {
