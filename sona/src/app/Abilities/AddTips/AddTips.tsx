@@ -12,8 +12,7 @@ const AddTips = ({ ability_id, version }) => {
   const user = JSON.parse(item);
 
   const handleInputChange = (event) => {
-    const { value, name } = event.target;
-    setDescription(value);
+    setDescription(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -51,8 +50,13 @@ const AddTips = ({ ability_id, version }) => {
         if (json.errors) {
           alert("Error adding tips, please try again");
         } else {
-          console.log("add tips???");
-          setDescription("");
+          console.log(json.data.createAbilityTip);
+          const newTip = json.data.createAbilityTip;
+          if (abilityTips) {
+            const newAbilityTips = [...abilityTips, newTip];
+            setabilityTips(newAbilityTips);
+          }
+          setDescription((prevDescription) => "");
         }
       });
   };
@@ -61,6 +65,7 @@ const AddTips = ({ ability_id, version }) => {
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="AddTips">
       <form onSubmit={handleSubmit}>
         <Textarea
+          value={description}
           onChange={handleInputChange}
           minRows={10}
           variant="soft"

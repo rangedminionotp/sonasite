@@ -13,10 +13,6 @@ const DeleteWarning = ({ tip }) => {
   };
 
   const handleDelete = async () => {
-    if (abilityTips) {
-      console.log("inside handle delete", abilityTips);
-    }
-
     const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
@@ -39,9 +35,11 @@ const DeleteWarning = ({ tip }) => {
     `;
       await graphQLClient.request(mutation);
       // maybe loop through and find tip id?
-      const newAbilityTips = abilityTips.filter((item) => {
-        return item.tip_id !== tip.tip_id;
-      });
+      if (abilityTips) {
+        const newAbilityTips = abilityTips.filter((item) => {
+          return item.tip_id !== tip.tip_id;
+        });
+      }
       setabilityTips(newAbilityTips);
     } catch (error) {
       console.log("error deleting tip:", error);
