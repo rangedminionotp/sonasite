@@ -20,7 +20,9 @@ export class AbilityTipsService {
                 date: rows[item].data.date,
                 version: rows[item].data.version,
                 upvotes: rows[item].upvotes,
-                downvotes: rows[item].downvotes
+                downvotes: rows[item].downvotes, 
+                            edited: false
+
             }
             abilityTips.push(TipsObj)
         }
@@ -45,7 +47,9 @@ export class AbilityTipsService {
                 date: rows[item].data.date,
                 version: rows[item].data.version,
                 upvotes: rows[item].upvotes,
-                downvotes: rows[item].downvotes
+                downvotes: rows[item].downvotes,
+                            edited: false
+
             }
             abilityTips.push(TipsObj)
         }
@@ -69,7 +73,9 @@ export class AbilityTipsService {
                 date: rows[item].data.date,
                 version: rows[item].data.version,
                 upvotes: rows[item].upvotes,
-                downvotes: rows[item].downvotes
+                downvotes: rows[item].downvotes, 
+                            edited: false
+
             }
             abilityTips.push(TipsObj)
         }
@@ -100,6 +106,7 @@ export class AbilityTipsService {
             upvotes: rows[0].upvotes,
             downvotes: rows[0].downvotes,
             version: rows[0].data.version,
+            edited: false
         }
         return tipsObj;
     }
@@ -119,7 +126,8 @@ export class AbilityTipsService {
             date: rows[0].data.date,
             upvotes: rows[0].upvotes,
             downvotes: rows[0].downvotes,
-             version: rows[0].data.version
+            version: rows[0].data.version,
+            edited: false
         }
         return tipsObj;
     }
@@ -139,7 +147,9 @@ export class AbilityTipsService {
             date: rows[0].data.date,
             upvotes: rows[0].upvotes,
             downvotes: rows[0].downvotes,
-             version: rows[0].data.version
+            version: rows[0].data.version,
+                        edited: false
+
         }
         return tipsObj;
     }
@@ -186,5 +196,62 @@ export class AbilityTipsService {
             voted: rows[0].voted
         }
         return tipObj;
+    }
+
+    public async updateAbilityTip(owner_id: string, ability_tip_id:string, description:string, version: string): Promise<AbilityTipsInfo>{
+        const update = `
+    UPDATE AbilityTips 
+    SET data = jsonb_set(
+                jsonb_set(
+                    jsonb_set(data, '{description}', $1::jsonb, false), 
+                    '{date}', $2::jsonb, false
+                ),
+                '{version}', $3::jsonb, false
+            )
+    WHERE owner_id = $4 AND id = $5 
+    RETURNING *
+`;  
+        const query = {
+    text: update,
+    values: [`"${description}"`, 
+      `"${new Date().toISOString()}"`, 
+     `"${version}"`, owner_id, ability_tip_id]
+  };
+        const { rows } = await pool.query(query) 
+        const tipsObj: AbilityTipsInfo = {
+            tip_id: rows[0].id,
+            ability_id: rows[0].ability_id,
+            description: rows[0].data.description,
+            ownerId: rows[0].owner_id,
+            ownerName: rows[0].owner_name,
+            date: rows[0].data.date,
+            upvotes: rows[0].upvotes,
+            downvotes: rows[0].downvotes,
+            version: rows[0].data.version,
+            edited: true
+        } 
+        return tipsObj;
+    }
+
+    public async deleteAbilityTip(owner_id: string, ability_tip_id: string): Promise<AbilityTipsInfo> {
+        const remove = `DELETE FROM AbilityTips WHERE owner_id = $1 AND id = $2 RETURNING *;`
+        const query = {
+            text: remove, 
+            values: [owner_id, ability_tip_id]
+        }
+        const { rows } = await pool.query(query)
+        const tipsObj: AbilityTipsInfo = {
+            tip_id: rows[0].id,
+            ability_id: rows[0].ability_id,
+            description: rows[0].data.description,
+            ownerId: rows[0].owner_id,
+            ownerName: rows[0].owner_name,
+            date: rows[0].data.date,
+            upvotes: rows[0].upvotes,
+            downvotes: rows[0].downvotes,
+            version: rows[0].data.version,
+            edited: true
+        } 
+        return tipsObj;
     }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import AbilitiesContext from "../SharedContext";
 
 const AbilityBreadcrumb = () => {
-  const breadcrumbList = ["Overview", "Player Tips", "Add Tips", "Tutorials"];
+  const breadcrumbList = ["Overview", "Player Tips", "Add Tips"];
   const { breadcrumbs, setBreadcrumbs } = React.useContext(AbilitiesContext);
 
   const switchBreadcrumbs = (index) => {

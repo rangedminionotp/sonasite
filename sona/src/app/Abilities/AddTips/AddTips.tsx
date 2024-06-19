@@ -7,22 +7,17 @@ const AddTips = ({ ability_id, version }) => {
   const { abilities, abilityTips, setabilityTips } =
     useContext(AbilitiesContext);
 
-  const [description, setDescription] = React.useState(null);
+  const [description, setDescription] = React.useState("");
   const item = localStorage.getItem("user");
   const user = JSON.parse(item);
 
   const handleInputChange = (event) => {
     const { value, name } = event.target;
     setDescription(value);
-    console.log(description);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("inside handlesubmit");
-    console.log(ability_id);
-    console.log(version);
-    console.log(user.id, user.name);
     const query = {
       query: `mutation MyMutation {
   createAbilityTip(
@@ -44,7 +39,6 @@ const AddTips = ({ ability_id, version }) => {
   }
 }`,
     };
-    console.log(query);
     fetch("/api/graphql", {
       method: "POST",
       body: JSON.stringify(query),
@@ -55,10 +49,9 @@ const AddTips = ({ ability_id, version }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.errors) {
-          console.log(json.errors);
           alert("Error adding tips, please try again");
         } else {
-          console.log("add tip", json.data.createAbilityTip);
+          setDescription("");
         }
       });
   };
