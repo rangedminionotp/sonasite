@@ -51,6 +51,7 @@ const AddTips = ({ ability_id, version }) => {
         if (json.errors) {
           alert("Error adding tips, please try again");
         } else {
+          console.log("add tips???");
           setDescription("");
         }
       });
