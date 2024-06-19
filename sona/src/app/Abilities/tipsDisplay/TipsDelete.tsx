@@ -3,7 +3,7 @@ import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
 import { gql } from "graphql-request";
 import AbilitiesContext from "../SharedContext";
 
-const DeleteWarning = ({ tip }) => {
+const TipsDelete = ({ tip }) => {
   const { abilityTips, setabilityTips } = React.useContext(AbilitiesContext);
 
   const [showWarning, setShowWarning] = useState(false);
@@ -85,4 +85,4 @@ const DeleteWarning = ({ tip }) => {
   );
 };
 
-export default DeleteWarning;
+export default TipsDelete;
