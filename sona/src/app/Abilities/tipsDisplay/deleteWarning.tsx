@@ -39,8 +39,8 @@ const DeleteWarning = ({ tip }) => {
         const newAbilityTips = abilityTips.filter((item) => {
           return item.tip_id !== tip.tip_id;
         });
+        setabilityTips(newAbilityTips);
       }
-      setabilityTips(newAbilityTips);
     } catch (error) {
       console.log("error deleting tip:", error);
     }
