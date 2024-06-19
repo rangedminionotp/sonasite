@@ -1,13 +1,11 @@
 import React from "react";
 import TipsDelete from "./TipsDelete";
 import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
-
-const TipsEditAndDelete = ({ tip }) => {
+import TipsEdit from "./TipsEdit";
+const TipsEditAndDelete = ({ tip, toggleEditing }) => {
   return (
     <div className="flex items-center space-x-1 cursor-pointer">
-      <span className="text-gray-500 hover:text-gray-300 hover:underline">
-        edit
-      </span>
+      <TipsEdit toggleEditing={toggleEditing} />
       <TipsDelete tip={tip} />
     </div>
   );
