@@ -1,16 +1,74 @@
 import React from "react";
 import Avatar from "@mui/joy/Avatar";
 import Textarea from "@mui/joy/Textarea"; // Assuming you imported JoyUI Textarea component
-
+import Button from "@mui/joy/Button";
+import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
+import { gql } from "graphql-request";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import TipsEditAndDelete from "./TipsEditAndDelete ";
-import { getUserFromLocalStorage } from "./utils";
+import AbilitiesContext from "../SharedContext";
+
 const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
+  const { fetchedData, abilityTips, setabilityTips } =
+    React.useContext(AbilitiesContext);
+
   const user = getUserFromLocalStorage();
   const [isEditing, setIsEditing] = React.useState(false); // State to manage editing mode
-
+  const [editDescription, setEditDescription] = React.useState(tip.description);
   const toggleEditing = () => {
     setIsEditing(!isEditing); // Toggle editing state
+  };
+  const handleInputChange = (event) => {
+    setEditDescription(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const user = getUserFromLocalStorage();
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
+    try {
+      const mutation = gql`
+        mutation MyMutation {
+          editTips(
+            ability_tip_id: "${tip.tip_id}"
+            description: "${editDescription}"
+            owner_id: "${user.id}"
+            version: "${fetchedData.version}"
+          ) {
+            ability_id
+            date
+            description
+            downvotes
+            edited
+            ownerId
+            ownerName
+            tip_id
+            upvotes
+            version
+          }
+        }
+      `;
+      await graphQLClient.request(mutation);
+      if (abilityTips) {
+        // Create a new array with updated tips
+        let updatedTips = abilityTips.map((item) => {
+          // Check if the current tip's ID matches the one we want to update
+          if (item.tip_id === tip.tip_id) {
+            // Return a new object with updated tip_id (assuming editDescription is the new value)
+            return { ...item, description: editDescription };
+          } else {
+            // Return the original tip object if no update is needed
+            return item;
+          }
+        });
+
+        // Update state with the new array of tips
+        setabilityTips(updatedTips);
+      }
+      toggleEditing();
+    } catch (error) {
+      console.log("error editing:", error);
+    }
   };
 
   return (
@@ -29,36 +87,41 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
 
       {/* Conditionally render Textarea or description */}
       {isEditing ? (
-        <Textarea
-          value={tip.description}
-          onChange={(event) => {
-            // Handle Textarea changes if needed
-          }}
-          minRows={5}
-          variant="soft"
-          sx={{
-            "--Textarea-focusedInset": "var(--any, )",
-            "--Textarea-focusedThickness": "0.25rem",
-            "--Textarea-focusedHighlight": "rgba(13,110,253,.25)",
-            backgroundColor: "#262626",
-            color: "#f5f5f5",
-            borderColor: "white",
-            border: "2px solid white", // Adding a white border with 3px thickness
-            "&::placeholder": {
-              color: "#888888",
-              opacity: 1,
-            },
-            "&:focus-within": {
-              borderColor: "#86b7fe",
-            },
-            "&::before": {
-              transition: "box-shadow .15s ease-in-out",
-            },
-            "&:hover": {
-              borderColor: "#555555",
-            },
-          }}
-        />
+        <>
+          <form onSubmit={handleSubmit}>
+            <Textarea
+              value={editDescription}
+              onChange={handleInputChange}
+              minRows={5}
+              variant="soft"
+              sx={{
+                "--Textarea-focusedInset": "var(--any, )",
+                "--Textarea-focusedThickness": "0.25rem",
+                "--Textarea-focusedHighlight": "rgba(13,110,253,.25)",
+                backgroundColor: "#262626",
+                color: "#f5f5f5",
+                borderColor: "white",
+                border: "2px solid white", // Adding a white border with 3px thickness
+                "&::placeholder": {
+                  color: "#888888",
+                  opacity: 1,
+                },
+                "&:focus-within": {
+                  borderColor: "#86b7fe",
+                },
+                "&::before": {
+                  transition: "box-shadow .15s ease-in-out",
+                },
+                "&:hover": {
+                  borderColor: "#555555",
+                },
+              }}
+            />
+          </form>
+          <Button type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </>
       ) : (
         <p className="text-gray-200 font-semibold mt-2">{tip.description}</p>
       )}
