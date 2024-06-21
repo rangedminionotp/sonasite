@@ -34,10 +34,10 @@ import { UserResolver } from './User/resolver';
 import { AbilityResolver } from './Ability/resolver';
 import { AbilityTipsResolver } from './AbilityTips/resolver';
 import { nextAuthChecker } from './Auth/checker';
-
+import { SkinResolver } from './Skin/resolver';
 // Build the schema with resolvers
 const schema = buildSchemaSync({
-  resolvers: [AuthResolver, UserResolver, AbilityResolver, AbilityTipsResolver],
+  resolvers: [AuthResolver, UserResolver, AbilityResolver, AbilityTipsResolver, SkinResolver],
   validate: true,
   authChecker: nextAuthChecker,
 });

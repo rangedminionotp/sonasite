@@ -33,9 +33,7 @@ export class SonaService {
         }
         let sonaSkins: SonaSkins[] = []
         let skinArray = version.data.Sona.skins
-        console.log(skinArray)
-        const skinName = []
-        const ide = []
+ 
         for (const items of skinArray) { 
           const skinObj: SonaSkins = {
             "id": items.id,
@@ -44,17 +42,11 @@ export class SonaService {
             "chromas": items.chromas,
             "imgURL": `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_${items.num}.jpg`
           }
-          ide.push(`https://modelviewer.lol/model-viewer?id=${items.id}`)
-          skinName.push(items.name)
-          sonaSkins.push(skinObj)
-        }
-        console.log(ide)
-        console.log(skinName)
+        } 
         let sonaPassive: SonaPassive = {
           'name':version.data.Sona.passive.name,
           'description':version.data.Sona.passive.description
-        }
-         sonaData.push(sonaPassive)
+        } 
           const SonaOverview: SonaOverview = {
             'name': version.data.Sona.name,
             'title': version.data.Sona.title,
