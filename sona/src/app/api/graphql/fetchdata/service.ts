@@ -39,7 +39,8 @@ export class SonaService {
             "id": items.id,
             "num": items.num,
             "name": items.name,
-            "chromas":items.chromas
+            "chromas": items.chromas,
+            "imgURL": `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_${items.num}.jpg`
           }
           sonaSkins.push(skinObj)
         }
