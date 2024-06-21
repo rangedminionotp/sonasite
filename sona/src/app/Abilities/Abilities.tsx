@@ -8,6 +8,7 @@ import BasicAbilities from "./BasicAbilities";
 import PassiveAb from "./PassiveAb";
 import UltAb from "./UltAb";
 import AbilitiesContext from "./SharedContext";
+import DataContext from "../DataContext";
 import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
@@ -23,7 +24,7 @@ const Abilities = () => {
     { label: "passive", active: false },
   ]);
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
-  const [fetchedData, setFetchedData] = React.useState(null);
+  // const [fetchedData, setFetchedData] = React.useState(null);
   const [fetchedRawDataQ, setFetchedRawDataQ] = React.useState(null);
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
@@ -32,6 +33,8 @@ const Abilities = () => {
   const [currAbility, setCurrAbility] = React.useState(null);
   const [abilityTips, setabilityTips] = React.useState(null);
   const [activeIndex, setActiveIndex] = React.useState(null);
+
+  const { fetchedData, setFetchedData } = React.useContext(DataContext);
 
   const [breadcrumbs, setBreadcrumbs] = React.useState([
     { label: "Overview", active: true },
@@ -73,19 +76,19 @@ const Abilities = () => {
       });
   }, []); // Empty dependency array to run once
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const sonaService = new SonaService();
-        const data = await sonaService.FetchVersion();
-        setFetchedData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const sonaService = new SonaService();
+  //       const data = await sonaService.FetchVersion();
+  //       setFetchedData(data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   React.useEffect(() => {
     const fetchRawDataQ = async () => {

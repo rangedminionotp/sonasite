@@ -10,7 +10,7 @@
     "test": "jest --runInBand --forceExit",
     "test:silent": "jest --runInBand --forceExit --silent",
     "test:watch": "jest --runInBand --forceExit --watchAll",
-    "docker": "docker compose down && docker compose up -d"
+    "docker": "docker compose down && docker compose up -d && npm run dev"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -65,7 +65,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
-          Skins
+          <Link to="skins" smooth={true} duration={200}>
+            Skins
+          </Link>
         </li>
       </ul>
       <div
@@ -97,7 +99,9 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
-          Skins
+          <Link to="skins" smooth={true} duration={200} onClick={handleClick}>
+            Skins
+          </Link>
         </li>
         {!user ? <LoginBtn /> : <UserDashboard />}
       </ul>
