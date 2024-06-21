@@ -9,5 +9,9 @@ export async function GET(request) {
   const champURL = `https://ddragon.leagueoflegends.com/cdn/${data[0]}/data/en_US/champion/Sona.json`
   const champRES = await fetch(champURL)
   const endData = await champRES.json()
+
+  const irl = 'https://leagueoflegends.fandom.com/wiki/Sona/LoL'
+  const something = await fetch(irl)
+  console.log(Response.json(something))
   return Response.json(endData)
 }

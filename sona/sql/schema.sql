@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Ability CASCADE;
 DROP TABLE IF EXISTS AbilityTips CASCADE;
+DROP TABLE IF EXISTS SkinItem CASCADE;
 
 -- Create Users table
 CREATE TABLE Users (
@@ -34,4 +35,11 @@ CREATE TABLE AbilityTipsVotes (
     ability_tip_id UUID REFERENCES AbilityTips(id) ON DELETE CASCADE ON UPDATE CASCADE,
     owner_id UUID REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE, 
     voted INT
+);
+
+-- Create AbilityTipsVotes table
+CREATE TABLE SkinItem (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(30) NOT NULL UNIQUE,
+    data JSONB
 );
