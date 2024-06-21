@@ -28,6 +28,8 @@ export class SonaSkins {
     name!: string
     @Field()
     chromas!: boolean
+    @Field()
+    imgURL!: string
 }
 @ArgsType()
 export class SonaAbilities{
