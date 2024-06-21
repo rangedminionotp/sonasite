@@ -11,7 +11,6 @@ export async function GET(request) {
   const endData = await champRES.json()
 
   const irl = 'https://leagueoflegends.fandom.com/wiki/Sona/LoL'
-  const something = await fetch(irl)
-  console.log(Response.json(something))
+  const something = await fetch(irl) 
   return Response.json(endData)
 }

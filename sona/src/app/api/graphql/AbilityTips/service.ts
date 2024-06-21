@@ -9,7 +9,7 @@ export class AbilityTipsService {
             values: []
         }
         const { rows } = await pool.query(query)
-        const abilityTips = []
+        const abilityTips:AbilityTipsInfo[]= []
         for (const item in rows) {
             const TipsObj = {
                 tip_id: rows[item].id,

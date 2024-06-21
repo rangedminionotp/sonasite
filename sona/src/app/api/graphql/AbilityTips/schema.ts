@@ -12,7 +12,7 @@ export class AbilityTipsInfo {
     @Field()
     ownerId!: string
     @Field()
-    date!: string
+    date!: Date
     @Field()
     ownerName!: string
     @Field()
@@ -30,7 +30,7 @@ export class AbilityTipsData {
     @Field()
     description!: string
     @Field()
-    date!:string
+    date!: Date
 }
 
 @ObjectType()
