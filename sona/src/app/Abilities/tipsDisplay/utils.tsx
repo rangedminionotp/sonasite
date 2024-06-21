@@ -111,3 +111,9 @@ export const createTipVote = async (graphQLClient, tipId, userId, vote) => {
     console.error("Error creating/updating tip vote:", error);
   }
 };
+
+export const sortByDateDescending = (allTips) => {
+  return [...allTips].sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+};

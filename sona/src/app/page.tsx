@@ -1,14 +1,10 @@
-import Image from "next/image";
-import Navbar from "./Navbar/Navbar";
-import Intro from "./Intro/Intro";
-import Abilities from "./Abilities/Abilities";
+import React from "react";
+import AllComponents from "./AllComponents";
 
 export default async function App() {
   return (
-    <div>
-      <Navbar />
-      <Intro />
-      <Abilities />
-    </div>
+    <>
+      <AllComponents />
+    </>
   );
 }

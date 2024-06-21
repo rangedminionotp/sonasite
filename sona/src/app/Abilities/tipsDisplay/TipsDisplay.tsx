@@ -11,7 +11,7 @@ import {
   createTipVote,
 } from "./utils";
 import TipItem from "./TipItem";
-
+import { sortByDateDescending } from "./utils";
 const TipsDisplay = () => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
@@ -81,9 +81,7 @@ const TipsDisplay = () => {
             alert("Error fetching tips, please try again");
           } else {
             const allTips = json.data.getAbilityTipsByAbilityId;
-            const sortedTips = [...allTips].sort((a, b) => {
-              return new Date(b.date).getTime() - new Date(a.date).getTime();
-            });
+            const sortedTips = sortByDateDescending(allTips);
             setabilityTips(sortedTips);
           }
         })

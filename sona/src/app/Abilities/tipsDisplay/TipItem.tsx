@@ -7,7 +7,7 @@ import { gql } from "graphql-request";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import TipsEditAndDelete from "./TipsEditAndDelete ";
 import AbilitiesContext from "../SharedContext";
-
+import { sortByDateDescending } from "./utils";
 const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
   const { fetchedData, abilityTips, setabilityTips } =
     React.useContext(AbilitiesContext);
@@ -48,22 +48,26 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
           }
         }
       `;
-      await graphQLClient.request(mutation);
+      const response = await graphQLClient.request(mutation);
       if (abilityTips) {
         // Create a new array with updated tips
         let updatedTips = abilityTips.map((item) => {
           // Check if the current tip's ID matches the one we want to update
           if (item.tip_id === tip.tip_id) {
             // Return a new object with updated tip_id (assuming editDescription is the new value)
-            return { ...item, description: editDescription };
+            return {
+              ...item,
+              description: response.editTips.description,
+              date: response.editTips.date,
+            };
           } else {
             // Return the original tip object if no update is needed
             return item;
           }
         });
-
+        const sortedTips = sortByDateDescending(abilityTips);
         // Update state with the new array of tips
-        setabilityTips(updatedTips);
+        setabilityTips(sortedTips);
       }
       toggleEditing();
     } catch (error) {

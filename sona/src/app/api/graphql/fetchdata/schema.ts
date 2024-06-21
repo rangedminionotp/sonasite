@@ -13,8 +13,22 @@ export class SonaOverview {
     abilities!: SonaAbilities[] 
     @Field()
     version!: string
+    @Field()
+    skins!: SonaSkins[]
 }
 
+
+@ArgsType
+export class SonaSkins {
+    @Field()
+    id!: string
+    @Field()
+    num!: number
+    @Field()
+    name!: string
+    @Field()
+    chromas!: boolean
+}
 @ArgsType()
 export class SonaAbilities{
     @Field()

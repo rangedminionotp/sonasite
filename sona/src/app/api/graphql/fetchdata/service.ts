@@ -1,6 +1,6 @@
 import { pool } from "@/db";
 
-import { SonaOverview, SonaAbilities, SonaPassive,SonaRawStatsQ, SonaRawStatsW,  SonaRawStatsE, SonaRawStatsR } from "./schema";
+import { SonaOverview, SonaAbilities, SonaPassive,SonaRawStatsQ, SonaRawStatsW,  SonaRawStatsE, SonaRawStatsR, SonaSkins } from "./schema";
 
 const sona = 'Sona'
 
@@ -31,6 +31,18 @@ export class SonaService {
             "description": version.data.Sona.spells[index].description
           })
         }
+        let sonaSkins: SonaSkins[] = []
+        let skinArray = version.data.Sona.skins
+        console.log(skinArray)
+        for (const items of skinArray) { 
+          const skinObj: SonaSkins = {
+            "id": items.id,
+            "num": items.num,
+            "name": items.name,
+            "chromas":items.chromas
+          }
+          sonaSkins.push(skinObj)
+        }
         let sonaPassive: SonaPassive = {
           'name':version.data.Sona.passive.name,
           'description':version.data.Sona.passive.description
@@ -41,7 +53,8 @@ export class SonaService {
             'title': version.data.Sona.title,
             'lore': version.data.Sona.lore,
             'abilities': sonaData,
-            'version': version.version 
+            'version': version.version ,
+            'skins':sonaSkins
         }
         return SonaOverview;
         } catch (error) {
