@@ -12,10 +12,9 @@ import {
 } from "./utils";
 import TipItem from "./TipItem";
 import { sortByDateDescending } from "./utils";
-const TipsDisplay = () => {
+const TipsDisplay = ({ index }) => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
-  const index = activeIndex;
   const [isDateAsc, setIsDateAsc] = useState(true);
   const [isUpvotesAsc, setIsUpvotesAsc] = useState(true);
   const [isDownvotesAsc, setIsDownvotesAsc] = useState(true);
@@ -51,7 +50,10 @@ const TipsDisplay = () => {
   };
 
   useEffect(() => {
+    console.log("inside useeffect", abilities[index]);
+
     if (abilities && abilities[index]) {
+      console.log(abilities[index]);
       const query = {
         query: `query MyQuery {
           getAbilityTipsByAbilityId(ability_id: "${abilities[index].abilityId}") {

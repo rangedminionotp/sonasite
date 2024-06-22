@@ -7,6 +7,7 @@ const PopupClose = ({ index }) => {
     abilityVisibility,
     setAbilityVisibility,
     breadcrumbs,
+    setabilityTips,
     setBreadcrumbs,
     setActiveIndex, // Add this to context
   } = React.useContext(AbilitiesContext);
@@ -15,12 +16,13 @@ const PopupClose = ({ index }) => {
     setAbilityVisibility((prevState) => {
       const abilityPrev = [...prevState];
       abilityPrev[divIndex].active = false;
+
       return abilityPrev;
     });
 
     // Reset the active index
     setActiveIndex(null);
-
+    setabilityTips([]);
     // Ensure the abilities overview always displays when abilities are toggled
     const updatedBreadcrumbs = breadcrumbs.map((breadcrumb, index) => ({
       ...breadcrumb,

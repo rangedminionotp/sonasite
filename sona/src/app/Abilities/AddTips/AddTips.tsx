@@ -10,7 +10,7 @@ const AddTips = ({ ability_id, version }) => {
   const [description, setDescription] = React.useState("");
   const item = localStorage.getItem("user");
   const user = JSON.parse(item);
-
+  console.log("inside add tips", ability_id);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
@@ -52,10 +52,11 @@ const AddTips = ({ ability_id, version }) => {
         } else {
           console.log(json.data.createAbilityTip);
           const newTip = json.data.createAbilityTip;
-          if (abilityTips) {
-            const newAbilityTips = [...abilityTips, newTip];
-            setabilityTips(newAbilityTips);
-          }
+          // if (abilityTips) {
+          const newAbilityTips = [...abilityTips, newTip];
+          console.log("newability", newAbilityTips);
+          setabilityTips(newAbilityTips);
+          // }
           setDescription((prevDescription) => "");
         }
       });

@@ -12,14 +12,13 @@ const PassiveAb = () => {
       const abilityPrev = [...prevState];
       // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
       abilityPrev[divIndex].active = true;
-      setActiveIndex(divIndex);
+      console.log("ability prev", abilityPrev);
       return abilityPrev;
     });
   };
   return (
     <div className="flex space-x-6">
       <div
-        name={`passive-icon`}
         // key={`passive-icon`}
         className="hover:cursor-pointer"
       >

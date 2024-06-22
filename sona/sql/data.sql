@@ -16,6 +16,7 @@ DELETE FROM AbilityTips;
 
 INSERT INTO AbilityTips (owner_id, ability_id, owner_name, data, upvotes, downvotes)
 VALUES
+    ('7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '27ce1177-a9c5-44e6-b450-bd1c3c4c54a9', 'Molly Member', '{"description": "Effective for early game harassment", "date": "2023-02-10T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 12, 1),
     ('7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '60028b69-8180-4d66-8331-c42a0426ab5f', 'Molly Member', '{"description": "Effective for early game harassment", "date": "2023-02-10T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 12, 1),
     ('7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '223eeef1-8046-49a4-abb8-e6c86eb5d392', 'Molly Member', '{"description": "Provides excellent lane sustain", "date": "2023-02-11T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 18, 4),
     ('7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '8a29baf7-e2dc-47c0-ace4-1c5844ff8a71', 'Molly Member', '{"description": "Increases movement speed significantly", "date": "2023-02-12T07:27:29.475Z", "version": "14.12.1"}'::jsonb, 7, 3),

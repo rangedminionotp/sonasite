@@ -13,22 +13,26 @@ const AbilitiesPopup = () => {
     abilityVisibility,
     fetchedData,
     breadcrumbs,
+    activeIndex,
     setActiveIndex,
   } = useContext(AbilitiesContext);
 
-  const [activeIndex, setActiveIndexState] = useState(null);
+  useEffect(() => {
+    if (fetchedData && fetchedData.abilities) {
+      fetchedData.abilities.forEach((ability, index) => {
+        if (abilityVisibility[index]?.active && activeIndex === null) {
+          setActiveIndex(index);
+        }
+      });
+    }
+  }, [fetchedData, abilityVisibility, activeIndex]);
 
   return (
     <div name="abilities-popup">
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => {
-          if (abilityVisibility[index].active && activeIndex === null) {
-            setActiveIndexState(index);
-          }
-
           return (
             <div
-              key={index}
               className={
                 !abilityVisibility[index].active
                   ? "hidden"
@@ -41,7 +45,7 @@ const AbilitiesPopup = () => {
                 <AbilityBreadcrumb />
               </div>
               {breadcrumbs[0].active && <AbilityDescription />}
-              {breadcrumbs[1].active && <TipsDisplay />}
+              {breadcrumbs[1].active && <TipsDisplay index={activeIndex} />}
               {breadcrumbs[2].active && (
                 <AddTips
                   ability_id={abilities[activeIndex].abilityId}

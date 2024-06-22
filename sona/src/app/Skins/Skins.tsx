@@ -4,9 +4,11 @@ import Description from "./Description";
 import SonaSkinsImage from "./SonaSkinsImage";
 import SonaSkinsItem from "./SonaSkinsItem";
 import SkinContext from "./SharedContext";
-
+import DataContext from "../DataContext";
 const Skins = () => {
   const [skins, setSkins] = React.useState(null);
+  const [skin, setSkin] = React.useState(null);
+  const { fetchedData, setFetchedData } = React.useContext(DataContext);
 
   React.useEffect(() => {
     const query = {
@@ -40,8 +42,7 @@ const Skins = () => {
         if (json.errors) {
           alert("Error with skin, please try again");
         } else {
-          console.log(json.data.getAllSkins);
-          setSkins(json.data.getAllSkins);
+          setSkin(json.data.getAllSkins);
         }
       })
       .catch((error) => {
@@ -50,6 +51,15 @@ const Skins = () => {
       });
   }, []);
 
+  React.useEffect(() => {
+    if (fetchedData && skin !== null) {
+      const skinInfo = fetchedData.skins;
+      skinInfo.map((item, index) => {
+        item.info = skin[index];
+      });
+      setSkins(skinInfo);
+    }
+  });
   return (
     <SkinContext.Provider value={{ skins, setSkins }}>
       <div name="skins" className="w-full h-screen relative">

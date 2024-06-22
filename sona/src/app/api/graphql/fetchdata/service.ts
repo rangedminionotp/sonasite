@@ -47,7 +47,8 @@ export class SonaService {
         let sonaPassive: SonaPassive = {
           'name':version.data.Sona.passive.name,
           'description':version.data.Sona.passive.description
-        } 
+        }
+        sonaData.push(sonaPassive)
           const SonaOverview: SonaOverview = {
             'name': version.data.Sona.name,
             'title': version.data.Sona.title,

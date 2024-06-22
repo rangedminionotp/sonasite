@@ -21,7 +21,7 @@ const Abilities = () => {
     { label: "SonaW", active: false },
     { label: "SonaE", active: false },
     { label: "SonaR", active: false },
-    { label: "passive", active: false },
+    { label: "Passive", active: false },
   ]);
   // fetch data from 'https://ddragon.leagueoflegends.com/cdn/latest_version/data/en_US/champion/Sona.json'
   // const [fetchedData, setFetchedData] = React.useState(null);
@@ -29,9 +29,9 @@ const Abilities = () => {
   const [fetchedRawDataW, setFetchedRawDataW] = React.useState(null);
   const [fetchedRawDataE, setFetchedRawDataE] = React.useState(null);
   const [fetchedRawDataR, setFetchedRawDataR] = React.useState(null);
-  const [abilities, setAbilities] = React.useState(null);
+  const [abilities, setAbilities] = React.useState([]);
   const [currAbility, setCurrAbility] = React.useState(null);
-  const [abilityTips, setabilityTips] = React.useState(null);
+  const [abilityTips, setabilityTips] = React.useState([]);
   const [activeIndex, setActiveIndex] = React.useState(null);
 
   const { fetchedData, setFetchedData } = React.useContext(DataContext);
@@ -66,7 +66,6 @@ const Abilities = () => {
         if (json.errors) {
           alert("Error with ability id, please try again");
         } else {
-          console.log(json.data.getAllAbility);
           setAbilities(json.data.getAllAbility);
         }
       })

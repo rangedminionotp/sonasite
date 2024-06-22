@@ -1,5 +1,4 @@
 import React from "react";
-import DataContext from "../DataContext";
 import SkinContext from "./SharedContext";
 import icons from "@data/icons.json";
 import Image from "next/image";
@@ -7,19 +6,11 @@ import CakeIcon from "@mui/icons-material/Cake";
 import Tooltip from "@mui/joy/Tooltip";
 
 const SonaSkinsItem = () => {
-  const { fetchedData, setFetchedData } = React.useContext(DataContext);
   const [isHovered, setIsHovered] = React.useState(false);
   const { skins } = React.useContext(SkinContext);
-  if (!fetchedData || !fetchedData.skins || !skins) {
+  if (!skins) {
     return <div>Loading...</div>;
   }
-
-  // Combine the two arrays
-  const skinInfo = fetchedData.skins;
-  skinInfo.map((item, index) => {
-    item.info = skins[index];
-  });
-  console.log("skins", skinInfo);
   const parseDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -86,10 +77,10 @@ const SonaSkinsItem = () => {
 
   return (
     <div className="flex flex-wrap">
-      {skinInfo.map((item, index) => (
+      {skins.map((item, index) => (
         <div
           key={index}
-          className="w-full sm:w-1/2 md:w-1/2 px-2 mb-8"
+          className="w-full sm:w-1/16 md:w-1/4 px-2 mb-8"
           name={item.name}
         >
           <div
