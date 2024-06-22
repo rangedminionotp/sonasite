@@ -1,6 +1,8 @@
-// next.config.js
 const nextConfig = {
-  // Your Next.js configuration
+  images: {
+    domains: ["static.wikia.nocookie.net"],
+  },
+  // Other Next.js configuration options can be added here
 };
 
 module.exports = nextConfig;
