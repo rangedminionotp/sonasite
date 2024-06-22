@@ -50,6 +50,7 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
       `;
       const response = await graphQLClient.request(mutation);
       if (abilityTips) {
+        const editedTip = response.editTips;
         // Create a new array with updated tips
         let updatedTips = abilityTips.map((item) => {
           // Check if the current tip's ID matches the one we want to update
@@ -57,15 +58,15 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
             // Return a new object with updated tip_id (assuming editDescription is the new value)
             return {
               ...item,
-              description: response.editTips.description,
-              date: response.editTips.date,
+              description: editedTip.description,
+              date: editedTip.date,
             };
           } else {
             // Return the original tip object if no update is needed
             return item;
           }
         });
-        const sortedTips = sortByDateDescending(abilityTips);
+        const sortedTips = sortByDateDescending(updatedTips);
         // Update state with the new array of tips
         setabilityTips(sortedTips);
       }

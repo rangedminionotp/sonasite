@@ -50,11 +50,9 @@ const AddTips = ({ ability_id, version }) => {
         if (json.errors) {
           alert("Error adding tips, please try again");
         } else {
-          console.log(json.data.createAbilityTip);
           const newTip = json.data.createAbilityTip;
           // if (abilityTips) {
           const newAbilityTips = [...abilityTips, newTip];
-          console.log("newability", newAbilityTips);
           setabilityTips(newAbilityTips);
           // }
           setDescription((prevDescription) => "");
