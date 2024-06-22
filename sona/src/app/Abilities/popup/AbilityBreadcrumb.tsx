@@ -23,7 +23,7 @@ const AbilityBreadcrumb = () => {
       {breadcrumbs.map((breadcrumb, index) => (
         <React.Fragment key={breadcrumb.label}>
           <a
-            href="#basics"
+            // href="#basics"
             onClick={(e) => {
               e.preventDefault();
               switchBreadcrumbs(index);
