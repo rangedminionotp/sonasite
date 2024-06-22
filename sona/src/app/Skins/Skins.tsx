@@ -5,6 +5,7 @@ import SonaSkinsImage from "./SonaSkinsImage";
 import SonaSkinsItem from "./SonaSkinsItem";
 import SkinContext from "./SharedContext";
 import DataContext from "../DataContext";
+import SkinsNavbar from "./SkinsNavbar";
 const Skins = () => {
   const [skins, setSkins] = React.useState(null);
   const [skin, setSkin] = React.useState(null);
@@ -63,8 +64,11 @@ const Skins = () => {
   return (
     <SkinContext.Provider value={{ skins, setSkins }}>
       <div name="skins" className="w-full h-screen relative">
-        <div className="absolute inset-0 flex justify-center items-center">
+        <div>
           <Description />
+        </div>
+        <div>
+          <SkinsNavbar />
         </div>
         <div className="flex flex-wrap justify-center ">
           <SonaSkinsItem />

@@ -4,13 +4,25 @@ import icons from "@data/icons.json";
 import Image from "next/image";
 import CakeIcon from "@mui/icons-material/Cake";
 import Tooltip from "@mui/joy/Tooltip";
+import Skeleton from "@mui/joy/Skeleton";
 
 const SonaSkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState(false);
   const { skins } = React.useContext(SkinContext);
   if (!skins) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-wrap">
+        {Array.from(new Array(4)).map((_, index) => (
+          <div key={index} className="w-full sm:w-1/2 md:w-1/4 px-2 mb-8">
+            <Skeleton variant="rectangular" height={200} className="mb-4" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" width="60%" />
+          </div>
+        ))}
+      </div>
+    );
   }
+
   const parseDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
