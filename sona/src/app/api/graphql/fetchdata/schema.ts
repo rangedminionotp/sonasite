@@ -1,6 +1,6 @@
 import { Field, ObjectType, ArgsType } from "type-graphql"
 import { Length, Matches } from "class-validator";
-
+import { SkinOverview,SkinInfo } from "../Skin/schema";
 @ArgsType()
 export class SonaOverview {
     @Field()
@@ -30,7 +30,10 @@ export class SonaSkins {
     chromas!: boolean
     @Field()
     imgURL!: string
+    @Field()
+    info?: SkinOverview[]
 }
+
 @ArgsType()
 export class SonaAbilities{
     @Field()
