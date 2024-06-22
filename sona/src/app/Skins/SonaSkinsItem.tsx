@@ -88,15 +88,17 @@ const SonaSkinsItem = () => {
   ];
 
   return (
-    <div className="flex flex-wrap">
+    <div name="skins-container" className="text-center justify-center">
       {skins.map((item, index) => (
         <div
           key={index}
-          className="w-full sm:w-1/16 md:w-1/4 px-2 mb-8"
+          className="w-full lg:w-1/2 px-2 mb-8"
           name={item.name}
+          text-center
+          justify-center
         >
           <div
-            className={`p-4 rounded-lg shadow-md flex flex-col ${bgGradient[index]} h-full`}
+            className={`p-4 relative rounded-lg shadow-md text-center justify-center ${bgGradient[index]} h-full`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -135,12 +137,12 @@ const SonaSkinsItem = () => {
               />
               {isHovered && (
                 <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
-                  <div className="flex ">
+                  <div className="flex">
                     <Tooltip
                       title={`${item.name} was released on ${parseDate(
                         item.info.data.releaseDate
                       )} (
-                        ${daysAgo(item.info.data.releaseDate)})`}
+                    ${daysAgo(item.info.data.releaseDate)})`}
                     >
                       <p className="text-sm text-gray-300 mb-1 font-sans">
                         <CakeIcon style={{ color: "#CEB57C" }} />{" "}

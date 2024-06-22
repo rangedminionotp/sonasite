@@ -70,7 +70,7 @@ const Skins = () => {
         <div>
           <SkinsNavbar />
         </div>
-        <div className="flex flex-wrap justify-center ">
+        <div>
           <SonaSkinsItem />
         </div>
       </div>
