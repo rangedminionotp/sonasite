@@ -87,33 +87,32 @@ VALUES
     ('5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Immortal Journey Sona', '{"lore": "As a newly immortal member of the Radiant Passion School, Sona''s power is in building harmony from dissonance. To her, immortality only comes through finding your shared harmony with your fellow people, and she sees her students as strong notes to be built into immortal chords. It is in this shared passion that makes anything possible.", "price": "1350", "releaseDate": "2023-08-16T07:00:00.000Z", "artist": "Ina Wong, West Studio", "threeDURL": "https://modelviewer.lol/model-viewer?id=37045", "voiceActor": "Erin Fitzgerald"}', 4.9),
     ('d7c43d66-655d-4d9c-a241-a17fa13e3b15', 'Prestige Immortal Journey Sona', '{"lore": "A virtuoso artist radiating passion in whatever she does, Sona paused her promising music career to enroll in fashion school. Now a graduate, the Gala is the first showing of her debut line, and Sona is more than happy to let her work do the talking. Unlike her classmates, she has no dreams of becoming immortal through her designs. The journey is enough.", "price": "Special", "releaseDate": "2023-08-16T07:00:00.000Z", "artist": "Francis Tneh, West Studio", "threeDURL": "https://modelviewer.lol/model-viewer?id=37046", "voiceActor": "Erin Fitzgerald"}', 5.0);
 
-DELETE FROM SkinReviews;
-INSERT INTO SkinReviews (id, owner_id, skin_id, owner_name, rating)
+INSERT INTO SkinReviews (id, owner_id, skin_id, owner_name, rating, data)
 VALUES
-    ('d8e9e675-65b9-4869-8e90-4cb9fefd20e8', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'ec724962-80b6-48a4-a638-ce7abce59808', 'Anna Admin', 4),
-    ('25b569e7-6b84-4263-aeaa-3722374801da', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd2d5fe06-6e4c-4a6b-8d0b-7c88dbebc8e1', 'Anna Admin', 5),
-    ('72973c69-d8b3-4919-8bc0-9b9527b6ee96', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', 'Anna Admin', 3),
-    ('1bb48bbe-5bb3-48e0-aee0-a6f2a6c6cdcf', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '53a82f4f-6867-4920-a522-037ad7b0c53b', 'Anna Admin', 4),
-    ('d0ff42a5-922d-45cc-83f1-070b0a0f7292', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', 'Anna Admin', 5),
-    ('0f125415-ce90-427c-b420-7a7e527600a8', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'e673d8bc-f48e-427d-b91a-c2ba1f2dc7db', 'Anna Admin', 3),
-    ('d10768e0-8ced-4612-af7c-b377ea4651f5', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', 'Anna Admin', 4),
-    ('5335ecc2-3506-40c6-bc70-1b45c08be225', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '181ed2b2-f169-4d25-9a82-e3beda1a2025', 'Anna Admin', 5),
-    ('5d27a046-c261-494a-ad17-7ee1d6e1aaef', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '812487b4-1068-4e43-b732-4c7897f3a292', 'Anna Admin', 4),
-    ('472ca6e9-b885-43ca-933d-b68dee7709a6', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'e5a5177b-156b-44cd-bc6c-a518c0d106e0', 'Anna Admin', 3),
-    ('fbe731e3-71f4-4b6e-868b-68f25508b71f', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Anna Admin', 4),
-    ('fbd33c65-7e25-4006-8f5b-61b71560f127', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'f883705f-20ff-40e5-af92-0d15b1272472', 'Anna Admin', 5),
-    ('52bcd2ec-31fa-4d87-85fd-bdf6e4296fe4', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Anna Admin', 3),
-    ('25794837-03de-4e65-808c-3c6580141a6e', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7c43d66-655d-4d9c-a241-a17fa13e3b15', 'Anna Admin', 5);
-INSERT INTO SkinReviews (id, owner_id, skin_id, owner_name, rating)
-VALUES
-    ('373e7a8c-2f73-4850-9da2-b66723c76759', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 'ec724962-80b6-48a4-a638-ce7abce59808', 'Molly Member', 5),
-    ('a523d523-ffb5-4f71-89a1-25d1bfbf4286', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', 'Molly Member', 3),
-    ('264767ad-61e0-4fa2-bb4a-0d798bdcf82d', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', 'Molly Member', 4),
-    ('a887b57f-0cab-455a-967f-3ee4619b3875', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', 'Molly Member', 3),
-    ('ef2c0fd0-9b10-4683-8e94-288ba0f1efe1', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '812487b4-1068-4e43-b732-4c7897f3a292', 'Molly Member', 5),
-    ('e48a9976-368f-43f6-b652-a899d1e36a0f', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Molly Member', 4),
-    ('37c771f6-d927-40cb-a119-c5eec0ee9a51', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Molly Member', 4);
+    ('d8e9e675-65b9-4869-8e90-4cb9fefd20e8', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'ec724962-80b6-48a4-a638-ce7abce59808', 'Anna Admin', 4, '{"description": "Great skin with vibrant colors", "date": "2024-01-15T10:15:30.000Z"}'),
+    ('25b569e7-6b84-4263-aeaa-3722374801da', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd2d5fe06-6e4c-4a6b-8d0b-7c88dbebc8e1', 'Anna Admin', 5, '{"description": "Excellent detail and texture", "date": "2024-02-10T14:30:45.000Z"}'),
+    ('72973c69-d8b3-4919-8bc0-9b9527b6ee96', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', 'Anna Admin', 3, '{"description": "Decent but could be better", "date": "2024-03-05T18:45:00.000Z"}'),
+    ('1bb48bbe-5bb3-48e0-aee0-a6f2a6c6cdcf', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '53a82f4f-6867-4920-a522-037ad7b0c53b', 'Anna Admin', 4, '{"description": "Nice skin with good usability", "date": "2024-03-20T07:27:29.475Z"}'),
+    ('d0ff42a5-922d-45cc-83f1-070b0a0f7292', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', 'Anna Admin', 5, '{"description": "Perfect skin for my needs", "date": "2024-04-10T09:00:15.000Z"}'),
+    ('0f125415-ce90-427c-b420-7a7e527600a8', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'e673d8bc-f48e-427d-b91a-c2ba1f2dc7db', 'Anna Admin', 3, '{"description": "Average quality", "date": "2024-05-01T13:15:00.000Z"}'),
+    ('d10768e0-8ced-4612-af7c-b377ea4651f5', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', 'Anna Admin', 4, '{"description": "Good performance and look", "date": "2024-06-15T16:30:45.000Z"}'),
+    ('5335ecc2-3506-40c6-bc70-1b45c08be225', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '181ed2b2-f169-4d25-9a82-e3beda1a2025', 'Anna Admin', 5, '{"description": "Fantastic design!", "date": "2024-07-20T11:45:30.000Z"}'),
+    ('5d27a046-c261-494a-ad17-7ee1d6e1aaef', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '812487b4-1068-4e43-b732-4c7897f3a292', 'Anna Admin', 4, '{"description": "Very nice and user-friendly", "date": "2024-08-05T08:00:15.000Z"}'),
+    ('472ca6e9-b885-43ca-933d-b68dee7709a6', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'e5a5177b-156b-44cd-bc6c-a518c0d106e0', 'Anna Admin', 3, '{"description": "Satisfactory but has issues", "date": "2024-09-10T12:30:00.000Z"}'),
+    ('fbe731e3-71f4-4b6e-868b-68f25508b71f', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Anna Admin', 4, '{"description": "Looks great!", "date": "2024-10-01T14:45:45.000Z"}'),
+    ('fbd33c65-7e25-4006-8f5b-61b71560f127', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'f883705f-20ff-40e5-af92-0d15b1272472', 'Anna Admin', 5, '{"description": "Excellent!", "date": "2024-11-15T17:00:30.000Z"}'),
+    ('52bcd2ec-31fa-4d87-85fd-bdf6e4296fe4', '9c838adb-0cb9-4dda-a1d3-946412aa1183', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Anna Admin', 3, '{"description": "Good but has room for improvement", "date": "2024-12-20T19:15:15.000Z"}'),
+    ('25794837-03de-4e65-808c-3c6580141a6e', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7c43d66-655d-4d9c-a241-a17fa13e3b15', 'Anna Admin', 5, '{"description": "Perfect in every way", "date": "2025-01-05T21:30:00.000Z"}');
 
+INSERT INTO SkinReviews (id, owner_id, skin_id, owner_name, rating, data)
+VALUES
+    ('373e7a8c-2f73-4850-9da2-b66723c76759', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 'ec724962-80b6-48a4-a638-ce7abce59808', 'Molly Member', 5, '{"description": "Outstanding skin", "date": "2024-02-15T10:30:00.000Z"}'),
+    ('a523d523-ffb5-4f71-89a1-25d1bfbf4286', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', 'Molly Member', 3, '{"description": "Not bad, could be better", "date": "2024-03-25T12:00:15.000Z"}'),
+    ('264767ad-61e0-4fa2-bb4a-0d798bdcf82d', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', 'Molly Member', 4, '{"description": "Good quality", "date": "2024-04-30T14:45:30.000Z"}'),
+    ('a887b57f-0cab-455a-967f-3ee4619b3875', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', 'Molly Member', 3, '{"description": "Average performance", "date": "2024-05-20T16:00:45.000Z"}'),
+    ('ef2c0fd0-9b10-4683-8e94-288ba0f1efe1', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '812487b4-1068-4e43-b732-4c7897f3a292', 'Molly Member', 5, '{"description": "Exceptional skin!", "date": "2024-06-25T18:15:00.000Z"}'),
+    ('e48a9976-368f-43f6-b652-a899d1e36a0f', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Molly Member', 4, '{"description": "Very good and reliable", "date": "2024-07-15T20:30:15.000Z"}'),
+    ('37c771f6-d927-40cb-a119-c5eec0ee9a51', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Molly Member', 4, '{"description": "Solid choice", "date": "2024-08-10T22:45:30.000Z"}');
 DELETE FROM SkinReviewsVotes;
 INSERT INTO SkinReviewsVotes (skin_id, owner_id, voted) 
 VALUES 

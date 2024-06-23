@@ -1,6 +1,8 @@
 import { Field, ObjectType, ArgsType } from "type-graphql"
 import { Length, Matches } from "class-validator";
-import { SkinOverview,SkinInfo } from "../Skin/schema";
+import { SkinOverview, SkinInfo } from "../Skin/schema";
+import { uuid } from "../../../types/custom";
+
 @ArgsType()
 export class SonaOverview {
     @Field()
@@ -21,6 +23,8 @@ export class SonaOverview {
 @ArgsType
 export class SonaSkins {
     @Field()
+    @Matches(uuid)
+
     id!: string
     @Field()
     num!: number
@@ -37,7 +41,8 @@ export class SonaSkins {
 @ArgsType()
 export class SonaAbilities{
     @Field()
-    id?: string
+        @Matches(uuid)
+    id?:string
     @Field()
     name?: string
     @Field()

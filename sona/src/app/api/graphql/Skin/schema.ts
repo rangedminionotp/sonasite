@@ -1,5 +1,6 @@
 import { Field, ObjectType, InputType, ArgsType, Float} from "type-graphql"
 import { Matches, Length } from "class-validator";
+import { uuid } from "../../../types/custom";
 
 @ObjectType()
 export class SkinInfo {
@@ -20,6 +21,7 @@ export class SkinInfo {
 @ObjectType()
 export class SkinOverview { 
     @Field()
+    @Matches(uuid)
     id!: string
     @Field()
     name!: string
