@@ -1,4 +1,4 @@
-import { Field, ObjectType, InputType, ArgsType} from "type-graphql"
+import { Field, ObjectType, InputType, ArgsType, Float} from "type-graphql"
 import { Matches, Length } from "class-validator";
 
 @ObjectType()
@@ -25,5 +25,7 @@ export class SkinOverview {
     name!: string
     @Field()
     data!: SkinInfo
+    @Field(type => Float)
+    rating!: number;
 }
 

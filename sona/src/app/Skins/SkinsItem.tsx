@@ -5,8 +5,8 @@ import Image from "next/image";
 import CakeIcon from "@mui/icons-material/Cake";
 import Tooltip from "@mui/joy/Tooltip";
 import Skeleton from "@mui/joy/Skeleton";
-
-const SonaSkinsItem = () => {
+import SkinItemRating from "./SkinsItemRating";
+const SkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState(false);
   const { skins } = React.useContext(SkinContext);
   if (!skins) {
@@ -203,6 +203,7 @@ const SonaSkinsItem = () => {
             <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
               {item.info.data.lore}
             </p>
+            <SkinItemRating rating={item.info.rating} />
           </div>
         </div>
       ))}
@@ -210,4 +211,4 @@ const SonaSkinsItem = () => {
   );
 };
 
-export default SonaSkinsItem;
+export default SkinsItem;

@@ -53,7 +53,7 @@ CREATE TABLE SkinReviews (
     owner_id UUID REFERENCES Users(id),
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     owner_name VARCHAR(30) NOT NULL,
-    rating INTEGER
+    rating DOUBLE PRECISION
 );
 
 -- Create SkinReviewsVotes table
