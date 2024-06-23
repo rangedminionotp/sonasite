@@ -1,9 +1,13 @@
 import React from "react";
-import uuid from "../../types/custom";
 import SkinContext from "../SharedContext";
-import { format, formatDistanceToNow, parseISO } from "date-fns";
-import SkinItemRating from "../SkinsItemRating";
-const SkinReviewsDisplay = ({ skin_id }) => {
+
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
+import SkinReviewsItem from "./SkinReviewsItem";
+
+const SkinReviewsDisplay = ({ skin_id, open, setOpen }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
 
   React.useEffect(() => {
@@ -37,7 +41,6 @@ const SkinReviewsDisplay = ({ skin_id }) => {
         if (json.errors) {
           alert("Error with fetching skin reviews, please try again");
         } else {
-          console.log(json.data.getReviewsBySkinId);
           setSkinReviews(json.data.getReviewsBySkinId);
         }
       })
@@ -48,28 +51,46 @@ const SkinReviewsDisplay = ({ skin_id }) => {
   }, []);
 
   return (
-    <div>
-      <h1>Skin Reviews</h1>
-      {skinReviews &&
-        skinReviews.map((item) => {
-          return (
-            <div key={item.id}>
-              <div>{item.owner_name}</div>
-              <div>
-                {format(parseISO(item.data.date), "MMMM dd, yyyy h:mm a")} (
-                {formatDistanceToNow(parseISO(item.data.date), {
-                  addSuffix: true,
-                })}
-                )
-              </div>
-              <div>
-                <SkinItemRating rating={item.rating} />
-              </div>
-              <div>{item.data.description}</div>
-            </div>
-          );
-        })}
-    </div>
+    <React.Fragment>
+      <div>
+        <Modal
+          aria-labelledby="modal-title"
+          aria-describedby="modal-desc"
+          open={open}
+          onClose={() => setOpen(false)}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Sheet
+            variant="outlined"
+            sx={{
+              maxWidth: 500,
+              borderRadius: "md",
+              p: 3,
+              boxShadow: "lg",
+            }}
+          >
+            <ModalClose variant="plain" sx={{ m: 1 }} />
+            <Typography
+              component="h2"
+              id="modal-title"
+              level="h4"
+              textColor="inherit"
+              fontWeight="lg"
+              mb={1}
+            >
+              Skin Reviews
+            </Typography>
+            <Typography id="modal-desc" textColor="text.tertiary">
+              <SkinReviewsItem />
+            </Typography>
+          </Sheet>
+        </Modal>
+      </div>
+    </React.Fragment>
   );
 };
 

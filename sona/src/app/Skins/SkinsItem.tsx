@@ -10,6 +10,9 @@ import SkinReviewsDisplay from "./SkinReviews/SkinReviewsDisplay";
 const SkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
+
+  const [open, setOpen] = React.useState<boolean>(false);
+
   const { skins } = React.useContext(SkinContext);
 
   if (!skins) {
@@ -28,6 +31,7 @@ const SkinsItem = () => {
 
   const toggleVisibility = (skin_id: uuid) => {
     setActiveSkinId(skin_id);
+    setOpen(true);
   };
 
   const parseDate = (dateString) => {
@@ -221,9 +225,15 @@ const SkinsItem = () => {
             </p>
             <SkinItemRating rating={item.info.rating} />
           </div>
-          {activeSkinId && <SkinReviewsDisplay skin_id={activeSkinId} />}
         </div>
       ))}
+      {activeSkinId && (
+        <SkinReviewsDisplay
+          skin_id={activeSkinId}
+          open={open}
+          setOpen={setOpen}
+        />
+      )}
     </div>
   );
 };

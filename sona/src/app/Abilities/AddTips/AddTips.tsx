@@ -2,21 +2,27 @@ import React, { useContext, useEffect } from "react";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import AbilitiesContext from "../SharedContext";
+import { useRouter } from "next/navigation";
 
 const AddTips = ({ ability_id, version }) => {
   const { abilities, abilityTips, setabilityTips } =
     useContext(AbilitiesContext);
+  const router = useRouter();
 
   const [description, setDescription] = React.useState("");
   const item = localStorage.getItem("user");
   const user = JSON.parse(item);
-  console.log("inside add tips", ability_id);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!user) {
+      alert("Please login to submit tips");
+      router.push("/login");
+      return;
+    }
     const query = {
       query: `mutation MyMutation {
   createAbilityTip(
