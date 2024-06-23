@@ -6,7 +6,7 @@ import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import SkinReviewsItem from "./SkinReviewsItem";
-
+import AddReviews from "./AddReviews";
 const SkinReviewsDisplay = ({ skin_id, open, setOpen }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
 
@@ -82,7 +82,7 @@ const SkinReviewsDisplay = ({ skin_id, open, setOpen }) => {
               fontWeight="lg"
               mb={1}
             >
-              Skin Reviews
+              Skin Reviews <AddReviews />
             </Typography>
             <Typography id="modal-desc" textColor="text.tertiary">
               <SkinReviewsItem />

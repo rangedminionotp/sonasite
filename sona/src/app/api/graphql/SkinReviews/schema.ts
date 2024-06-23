@@ -3,12 +3,21 @@ import { Matches, Length } from "class-validator";
 import { uuid } from "../../../types/custom";
 
 
+// Define the ObjectType for SkinReviewsData
 @ObjectType()
-export class SkinReviewsData{
+export class SkinReviewsData {
     @Field()
-    description!: string
+    description!: string;
+    
     @Field()
-    date!: Date
+    date!: Date;
+}
+
+// Define the InputType for SkinReviewsData input
+@InputType()
+export class SkinReviewsDataInput {
+    @Field()
+    description!: string;
 }
 
 
@@ -44,6 +53,7 @@ export class SkinReviewsVote {
 }
 
 @ObjectType()
+@InputType('SkinReviewsAdd')
 export class SkinReviewsAdd {
     @Field()
     @Matches(uuid)
@@ -51,6 +61,10 @@ export class SkinReviewsAdd {
     @Field()
     @Matches(uuid)
     skin_id!: string;
+    @Field(() => SkinReviewsDataInput)
+    data!: SkinReviewsDataInput;
+    @Field(type => Float)
+    rating!: number
     @Field()
-    data!: SkinReviewsData;
+    owner_name!: string
 }
