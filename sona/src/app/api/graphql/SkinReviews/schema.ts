@@ -27,6 +27,8 @@ export class SkinReviewsInfo {
     rating!: number;
     @Field()
     data!: SkinReviewsData;
+    @Field()
+    owner_name!: string;
 }
 
 @ObjectType()

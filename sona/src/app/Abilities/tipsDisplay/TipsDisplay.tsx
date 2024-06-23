@@ -50,10 +50,7 @@ const TipsDisplay = ({ index }) => {
   };
 
   useEffect(() => {
-    console.log("inside useeffect", abilities[index]);
-
     if (abilities && abilities[index]) {
-      console.log(abilities[index]);
       const query = {
         query: `query MyQuery {
           getAbilityTipsByAbilityId(ability_id: "${abilities[index].abilityId}") {

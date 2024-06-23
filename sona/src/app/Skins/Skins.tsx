@@ -6,9 +6,11 @@ import SkinsItem from "./SkinsItem";
 import SkinContext from "./SharedContext";
 import DataContext from "../DataContext";
 import SkinsNavbar from "./SkinsNavbar";
+import { SkinOverView } from "./SkinOverView";
 const Skins = () => {
   const [skins, setSkins] = React.useState(null);
   const [skin, setSkin] = React.useState(null);
+  const [skinReviews, setSkinReviews] = React.useState<SkinOverView[]>(null);
   const { fetchedData, setFetchedData } = React.useContext(DataContext);
 
   React.useEffect(() => {
@@ -62,11 +64,12 @@ const Skins = () => {
         meow.push(skin[index].id);
       });
       setSkins(skinInfo);
-      console.log(meow);
     }
   });
   return (
-    <SkinContext.Provider value={{ skins, setSkins }}>
+    <SkinContext.Provider
+      value={{ skins, setSkins, skinReviews, setSkinReviews }}
+    >
       <div name="skins" className="w-full h-screen relative">
         <div>
           <Description />

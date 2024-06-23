@@ -21,7 +21,8 @@ export class SkinReviewsService {
                 skin_id: rows[item].skin_id,
                 rating: rows[item].rating,
                 data: dataObj,
-                voted: rows[item].voted
+                voted: rows[item].voted,
+                owner_name: rows[item].owner_name
             }
             SkinReviews.push(reviewObj)
         }
@@ -46,7 +47,8 @@ export class SkinReviewsService {
                 skin_id: rows[item].skin_id,
                 rating: rows[item].rating,
                 data: dataObj,
-                voted: rows[item].voted
+                voted: rows[item].voted,
+                owner_name: rows[item].owner_name
             }
             SkinReviews.push(reviewObj)
         }
