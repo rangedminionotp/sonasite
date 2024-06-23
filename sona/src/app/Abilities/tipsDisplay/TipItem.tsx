@@ -150,7 +150,7 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
           <span className="text-red-600">▼</span>
           <span className="text-gray-300">{tip.downvotes}</span>
         </div>
-        {tip.ownerId === user.id ? (
+        {user.id && tip.ownerId === user.id ? (
           <TipsEditAndDelete tip={tip} toggleEditing={toggleEditing} />
         ) : null}
       </div>
