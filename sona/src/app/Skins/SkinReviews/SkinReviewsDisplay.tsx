@@ -6,9 +6,19 @@ import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import SkinReviewsItem from "./SkinReviewsItem";
-import AddReviews from "./AddReviews";
-const SkinReviewsDisplay = ({ skin_id, open, setOpen }) => {
+import AddReviewsBtn from "./AddReviewsBtn";
+import ReviewsPopupClose from "./ReviewsPopupClose";
+import AddReviewsPopup from "./AddReviewsPopup";
+const SkinReviewsDisplay = ({
+  skin_id,
+  open,
+  setOpen,
+  bgColor,
+  toggleVisibility,
+  activeImgUrl,
+}) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
+  const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const query = {
@@ -52,43 +62,21 @@ const SkinReviewsDisplay = ({ skin_id, open, setOpen }) => {
 
   return (
     <React.Fragment>
-      <div>
-        <Modal
-          aria-labelledby="modal-title"
-          aria-describedby="modal-desc"
-          open={open}
-          onClose={() => setOpen(false)}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Sheet
-            variant="outlined"
-            sx={{
-              maxWidth: 500,
-              borderRadius: "md",
-              p: 3,
-              boxShadow: "lg",
-            }}
-          >
-            <ModalClose variant="plain" sx={{ m: 1 }} />
-            <Typography
-              component="h2"
-              id="modal-title"
-              level="h4"
-              textColor="inherit"
-              fontWeight="lg"
-              mb={1}
-            >
-              Skin Reviews <AddReviews />
-            </Typography>
-            <Typography id="modal-desc" textColor="text.tertiary">
-              <SkinReviewsItem />
-            </Typography>
-          </Sheet>
-        </Modal>
+      <div
+        className={
+          !open
+            ? "hidden"
+            : `top-0 left-0 w-full h-screen ${bgColor} bg-opacity-50 absolute`
+        }
+      >
+        <ReviewsPopupClose setOpen={setOpen} />
+        <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+        <SkinReviewsItem />
+        <AddReviewsPopup
+          addReviewOpen={addReviewOpen}
+          setAddReviewOpen={setAddReviewOpen}
+          activeImgUrl={activeImgUrl}
+        />
       </div>
     </React.Fragment>
   );

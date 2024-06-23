@@ -10,8 +10,9 @@ import SkinReviewsDisplay from "./SkinReviews/SkinReviewsDisplay";
 const SkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
-
+  const [bgIndex, setBgIndex] = React.useState<number>(null);
   const [open, setOpen] = React.useState<boolean>(false);
+  const [activeImgUrl, setActiveImgUrl] = React.useState<string>(null);
 
   const { skins } = React.useContext(SkinContext);
 
@@ -29,9 +30,11 @@ const SkinsItem = () => {
     );
   }
 
-  const toggleVisibility = (skin_id: uuid) => {
+  const toggleVisibility = (skin_id: uuid, index, skin_url) => {
     setActiveSkinId(skin_id);
+    setBgIndex(index);
     setOpen(true);
+    setActiveImgUrl(skin_url);
   };
 
   const parseDate = (dateString) => {
@@ -149,7 +152,9 @@ const SkinsItem = () => {
               {isHovered && (
                 <div>
                   <div
-                    onClick={() => toggleVisibility(item.info.id)}
+                    onClick={() =>
+                      toggleVisibility(item.info.id, index, item.imgURL)
+                    }
                     className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans text-xl"
                   >
                     SHOW REVIEWS
@@ -223,7 +228,7 @@ const SkinsItem = () => {
             <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
               {item.info.data.lore}
             </p>
-            <SkinItemRating rating={item.info.rating} />
+            <SkinItemRating rating={item.info.rating} readOnly={true} />
           </div>
         </div>
       ))}
@@ -232,6 +237,8 @@ const SkinsItem = () => {
           skin_id={activeSkinId}
           open={open}
           setOpen={setOpen}
+          bgColor={bgGradient[bgIndex]}
+          activeImgUrl={activeImgUrl}
         />
       )}
     </div>
