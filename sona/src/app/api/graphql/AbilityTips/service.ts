@@ -36,8 +36,7 @@ export class AbilityTipsService {
         }
         const { rows } = await pool.query(query)  
         const abilityTips = []
-        for (const item in rows) {
-            console.log(item)
+        for (const item in rows) { 
             const TipsObj = {
                 tip_id: rows[item].id,
                 ability_id: rows[item].ability_id,

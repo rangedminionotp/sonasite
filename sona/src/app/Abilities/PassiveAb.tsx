@@ -12,7 +12,6 @@ const PassiveAb = () => {
       const abilityPrev = [...prevState];
       // for some reason !abilityPrev[divIndex].active doesnt work :thinking:
       abilityPrev[divIndex].active = true;
-      console.log("ability prev", abilityPrev);
       return abilityPrev;
     });
   };

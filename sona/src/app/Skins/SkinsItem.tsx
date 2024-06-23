@@ -6,9 +6,12 @@ import CakeIcon from "@mui/icons-material/Cake";
 import Tooltip from "@mui/joy/Tooltip";
 import Skeleton from "@mui/joy/Skeleton";
 import SkinItemRating from "./SkinsItemRating";
+import SkinReviewsDisplay from "./SkinReviews/SkinReviewsDisplay";
 const SkinsItem = () => {
-  const [isHovered, setIsHovered] = React.useState(false);
+  const [isHovered, setIsHovered] = React.useState<boolean>(false);
+  const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
   const { skins } = React.useContext(SkinContext);
+
   if (!skins) {
     return (
       <div className="flex flex-wrap">
@@ -22,6 +25,10 @@ const SkinsItem = () => {
       </div>
     );
   }
+
+  const toggleVisibility = (skin_id: uuid) => {
+    setActiveSkinId(skin_id);
+  };
 
   const parseDate = (dateString) => {
     const date = new Date(dateString);
@@ -136,66 +143,75 @@ const SkinsItem = () => {
                 className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
               />
               {isHovered && (
-                <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
-                  <div className="flex">
-                    <Tooltip
-                      title={`${item.name} was released on ${parseDate(
-                        item.info.data.releaseDate
-                      )} (
+                <div>
+                  <div
+                    onClick={() => toggleVisibility(item.info.id)}
+                    className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans text-xl"
+                  >
+                    SHOW REVIEWS
+                  </div>
+
+                  <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
+                    <div className="flex">
+                      <Tooltip
+                        title={`${item.name} was released on ${parseDate(
+                          item.info.data.releaseDate
+                        )} (
                     ${daysAgo(item.info.data.releaseDate)})`}
-                    >
-                      <p className="text-sm text-gray-300 mb-1 font-sans">
-                        <CakeIcon style={{ color: "#CEB57C" }} />{" "}
-                        {parseDate(item.info.data.releaseDate)} (
-                        {daysAgo(item.info.data.releaseDate)})
-                      </p>
-                    </Tooltip>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <Image
-                      alt={""}
-                      src={icons.artist}
-                      objectFit="cover"
-                      className="object-cover"
-                      width={20}
-                      height={20}
-                    />
-                    <Tooltip
-                      title={`${item.name} was drawn by ${item.info.data.artist}`}
-                    >
-                      <p className="text-sm text-gray-300 mb-1 font-sans">
-                        {item.info.data.artist}
-                      </p>
-                    </Tooltip>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Image
-                      alt={""}
-                      src={icons.voice}
-                      objectFit="cover"
-                      className="object-cover"
-                      width={20}
-                      height={20}
-                    />
-                    <Tooltip
-                      title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
-                    >
-                      <p className="text-sm text-gray-300 mb-1 font-sans">
-                        {item.info.data.voiceActor}
-                      </p>
-                    </Tooltip>
-                  </div>
-                  <div className="flex">
-                    <Tooltip title={`${item.name} has a 3D model available`}>
-                      <a
-                        href={item.info.data.threeDURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-300 font-bold hover:underline"
                       >
-                        3D Model
-                      </a>
-                    </Tooltip>
+                        <p className="text-sm text-gray-300 mb-1 font-sans">
+                          <CakeIcon style={{ color: "#CEB57C" }} />{" "}
+                          {parseDate(item.info.data.releaseDate)} (
+                          {daysAgo(item.info.data.releaseDate)})
+                        </p>
+                      </Tooltip>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                      <Image
+                        alt={""}
+                        src={icons.artist}
+                        objectFit="cover"
+                        className="object-cover"
+                        width={20}
+                        height={20}
+                      />
+                      <Tooltip
+                        title={`${item.name} was drawn by ${item.info.data.artist}`}
+                      >
+                        <p className="text-sm text-gray-300 mb-1 font-sans">
+                          {item.info.data.artist}
+                        </p>
+                      </Tooltip>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Image
+                        alt={""}
+                        src={icons.voice}
+                        objectFit="cover"
+                        className="object-cover"
+                        width={20}
+                        height={20}
+                      />
+                      <Tooltip
+                        title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
+                      >
+                        <p className="text-sm text-gray-300 mb-1 font-sans">
+                          {item.info.data.voiceActor}
+                        </p>
+                      </Tooltip>
+                    </div>
+                    <div className="flex">
+                      <Tooltip title={`${item.name} has a 3D model available`}>
+                        <a
+                          href={item.info.data.threeDURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-300 font-bold hover:underline"
+                        >
+                          3D Model
+                        </a>
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
               )}
@@ -205,6 +221,7 @@ const SkinsItem = () => {
             </p>
             <SkinItemRating rating={item.info.rating} />
           </div>
+          {activeSkinId && <SkinReviewsDisplay skin_id={activeSkinId} />}
         </div>
       ))}
     </div>

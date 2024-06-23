@@ -26,8 +26,7 @@ return new Promise((resolve, reject) => {
       { expiresIn: '30m', algorithm: 'HS256' }
     );
     resolve({ id: userid, name: user.name, accessToken: accessToken, email: user.email });
-  } else {
-    console.log(credentials);
+  } else { 
     reject(new Error("Unauthorized"));
   }
 });
