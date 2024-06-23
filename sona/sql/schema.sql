@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Ability CASCADE;
 DROP TABLE IF EXISTS AbilityTips CASCADE;
 DROP TABLE IF EXISTS SkinItem; 
+DROP TABLE IF EXISTS SkinReviews;
+DROP TABLE IF EXISTS SkinReviewsVotes;
 
 -- Create Users table
 CREATE TABLE Users (
@@ -37,9 +39,26 @@ CREATE TABLE AbilityTipsVotes (
     voted INT
 );
 
--- -- Create AbilityTipsVotes table
+-- -- Create Skin information table
 CREATE TABLE SkinItem (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(50) NOT NULL UNIQUE,
-    data JSONB
+    data JSONB,
+    rating DOUBLE PRECISION
+);
+
+-- Create Skin reviews table
+CREATE TABLE SkinReviews (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    owner_id UUID REFERENCES Users(id),
+    skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    owner_name VARCHAR(30) NOT NULL,
+    rating INTEGER
+);
+
+-- Create SkinReviewsVotes table
+CREATE TABLE SkinReviewsVotes (
+    skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    owner_id UUID REFERENCES Users(id), 
+    voted INT
 );

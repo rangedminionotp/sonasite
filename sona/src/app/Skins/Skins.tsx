@@ -54,11 +54,14 @@ const Skins = () => {
 
   React.useEffect(() => {
     if (fetchedData && skin !== null) {
+      let meow = [];
       const skinInfo = fetchedData.skins;
       skinInfo.map((item, index) => {
         item.info = skin[index];
+        meow.push(skin[index].id);
       });
       setSkins(skinInfo);
+      console.log(meow);
     }
   });
   return (

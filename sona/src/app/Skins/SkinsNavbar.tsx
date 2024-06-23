@@ -19,7 +19,6 @@ const SkinsNavbar = () => {
       </div>
     );
   }
-
   return (
     <div name="skins-navbar" className="flex flex-wrap">
       {skins.map((item, index) => (
