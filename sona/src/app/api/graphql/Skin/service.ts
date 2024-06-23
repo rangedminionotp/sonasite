@@ -23,7 +23,8 @@ export class SkinService {
             const itemObj: SkinOverview = {
                 "id": item.id,
                 "name": item.name,
-                "data": skinObj
+                "data": skinObj, 
+                "rating": item.rating 
             }
             skin.push(itemObj)
         }

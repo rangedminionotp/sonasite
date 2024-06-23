@@ -2,7 +2,7 @@
 import React from "react";
 import Description from "./Description";
 import SonaSkinsImage from "./SonaSkinsImage";
-import SonaSkinsItem from "./SonaSkinsItem";
+import SkinsItem from "./SkinsItem";
 import SkinContext from "./SharedContext";
 import DataContext from "../DataContext";
 import SkinsNavbar from "./SkinsNavbar";
@@ -26,6 +26,7 @@ const Skins = () => {
     }
     id
     name
+    rating
   }
 }
       `,
@@ -74,7 +75,7 @@ const Skins = () => {
           <SkinsNavbar />
         </div>
         <div>
-          <SonaSkinsItem />
+          <SkinsItem />
         </div>
       </div>
     </SkinContext.Provider>
