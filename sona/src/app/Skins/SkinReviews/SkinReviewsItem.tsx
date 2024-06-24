@@ -5,13 +5,15 @@ import SkinItemRating from "../SkinsItemRating";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import SkinReviewsItemDisplay from "./SkinReviewsItemDisplay";
+import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+
 const SkinReviewsItem = () => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [currentPage, setCurrentPage] = useState(1);
   const tipsPerPage = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [currentReviews, setCurrentReviews] = useState([]);
-
+  const user = getUserFromLocalStorage();
   React.useEffect(() => {
     if (skinReviews) {
       const pages = Math.ceil(skinReviews.length / tipsPerPage);
@@ -22,7 +24,6 @@ const SkinReviewsItem = () => {
         currentPage * tipsPerPage
       );
       setCurrentReviews(reviews);
-      console.log("reviews", reviews);
     }
   }, [skinReviews, currentPage]);
 
@@ -46,6 +47,7 @@ const SkinReviewsItem = () => {
         {currentReviews && currentReviews.length > 0 ? (
           currentReviews.map((item) => (
             <div
+              name={`${item.skin_id}${user.id}`}
               key={item.id}
               className="p-4 mb-4 bg-gray-700 rounded shadow-md"
             >

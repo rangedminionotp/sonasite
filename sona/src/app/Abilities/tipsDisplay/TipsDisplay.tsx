@@ -22,6 +22,8 @@ const TipsDisplay = ({ index }) => {
   const tipsPerPage = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [currentTips, setCurrentTips] = useState([]);
+  const [upvote, setUpvote] = React.useState<boolean>(false);
+  const [downvote, setDownvote] = React.useState<boolean>(false);
 
   useEffect(() => {
     if (abilityTips) {
@@ -35,6 +37,20 @@ const TipsDisplay = ({ index }) => {
       setCurrentTips(tips);
     }
   }, [abilityTips, currentPage]);
+
+  // useEffect(async () => {
+  //   const user = getUserFromLocalStorage();
+  //   const bearerToken = user?.accessToken;
+  //   const graphQLClient = createGraphQLClient(bearerToken);
+  //   const voted = await checkIfVoted(graphQLClient, tipId, user.id);
+  //   if (voted === 1) {
+  //     setUpvote(true);
+  //   } else if (voted === 0) {
+  //     setDownvote(true);
+  //   } else if (voted === -1) {
+  //     await deleteTipVote(graphQLClient, tipId, user.id);
+  //   }
+  // }, [currentTips]);
 
   // Handle page navigation
   const goToNextPage = () => {
@@ -101,7 +117,6 @@ const TipsDisplay = ({ index }) => {
 
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tipId, user.id);
-
       if (voted !== 1) {
         const updatedTip = await updateUpvotes(graphQLClient, tipId, upvotes);
 
@@ -238,6 +253,8 @@ const TipsDisplay = ({ index }) => {
           <TipItem
             key={idx}
             tip={tip}
+            upvote={upvote}
+            downvote={downvote}
             handleUpvote={handleUpvote}
             handleDownvote={handleDownvote}
           />

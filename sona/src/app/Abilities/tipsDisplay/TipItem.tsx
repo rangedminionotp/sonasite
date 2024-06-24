@@ -8,11 +8,13 @@ import { format, formatDistanceToNow, parseISO } from "date-fns";
 import TipsEditAndDelete from "./TipsEditAndDelete ";
 import AbilitiesContext from "../SharedContext";
 import { sortByDateDescending } from "./utils";
-const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
+import Tooltip from "@mui/joy/Tooltip";
+const TipItem = ({ tip, upvote, downvote, handleUpvote, handleDownvote }) => {
   const { fetchedData, abilityTips, setabilityTips } =
     React.useContext(AbilitiesContext);
 
   const user = getUserFromLocalStorage();
+  // const [downvotes, setDownvotes] = React.useState(tip.downvotes);
   const [isEditing, setIsEditing] = React.useState(false); // State to manage editing mode
   const [editDescription, setEditDescription] = React.useState(tip.description);
   const toggleEditing = () => {
@@ -132,24 +134,27 @@ const TipItem = ({ tip, handleUpvote, handleDownvote }) => {
       )}
 
       <div className="flex items-center space-x-4 mt-2">
-        <div
-          className="flex items-center space-x-1 cursor-pointer"
-          onClick={() =>
-            handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
-          }
-        >
-          <span className="text-green-600">▲</span>
-          <span className="text-gray-300">{tip.upvotes}</span>
-        </div>
-        <div
-          className="flex items-center space-x-1 cursor-pointer"
-          onClick={() =>
-            handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
-          }
-        >
-          <span className="text-red-600">▼</span>
-          <span className="text-gray-300">{tip.downvotes}</span>
-        </div>
+        <Tooltip title={`Upvotes: ${tip.upvotes}, Downvotes: ${tip.downvotes}`}>
+          <div className="flex items-center space-x-1 cursor-pointer">
+            <span
+              onClick={() =>
+                handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
+              }
+              className="text-green-600"
+            >
+              ▲
+            </span>
+            <span className="text-gray-300">{tip.upvotes - tip.downvotes}</span>
+            <span
+              onClick={() =>
+                handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
+              }
+              className="text-red-600"
+            >
+              ▼
+            </span>
+          </div>
+        </Tooltip>
         {user.id && tip.ownerId === user.id ? (
           <TipsEditAndDelete tip={tip} toggleEditing={toggleEditing} />
         ) : null}
