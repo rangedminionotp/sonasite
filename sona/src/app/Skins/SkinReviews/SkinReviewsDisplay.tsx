@@ -10,6 +10,8 @@ import AddReviewsBtn from "./AddReviewsBtn";
 import ReviewsPopupClose from "./ReviewsPopupClose";
 import AddReviewsPopup from "./AddReviewsPopup";
 import SkinImg from "./SkinImg";
+import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+
 const SkinReviewsDisplay = ({
   skin_id,
   open,
@@ -20,6 +22,8 @@ const SkinReviewsDisplay = ({
 }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
+  const [reviewed, setReviewed] = React.useState<boolean>(false);
+  const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
     const query = {
@@ -61,6 +65,36 @@ const SkinReviewsDisplay = ({
       });
   }, []);
 
+  React.useEffect(() => {
+    const query = {
+      query: `
+        query MyQuery {
+          checkIfReviewed(owner_id: "${user.id}", skin_id: "${skin_id}")
+        }
+      `,
+    };
+
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          alert("Error with fetching skin reviews, please try again");
+        } else {
+          setReviewed(json.data.checkIfReviewed);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching skin reviews:", error);
+        alert("Failed to fetching skinreviews. Please try again.");
+      });
+  }, []);
+
   return (
     <React.Fragment>
       <div
@@ -71,7 +105,11 @@ const SkinReviewsDisplay = ({
         }
       >
         <ReviewsPopupClose setOpen={setOpen} />
-        <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+        {!reviewed ? (
+          <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+        ) : (
+          <div>edit your review</div>
+        )}
         {/* <SkinImg imgUrl={activeImgUrl} /> */}
         <SkinReviewsItem />
         <AddReviewsPopup

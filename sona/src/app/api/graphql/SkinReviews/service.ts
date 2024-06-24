@@ -1,5 +1,5 @@
 import { pool } from '@/db'
-import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput} from './schema'
+import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput, SkinReviewsVotes} from './schema'
 
 export class SkinReviewsService {
     public async checkIfReviewed(owner_id: string, tip_id: string): Promise<boolean>{
@@ -84,5 +84,17 @@ export class SkinReviewsService {
         return skinReviewsInfo
     } 
 
-    
+    public async createSkinReviewsVotes(skin_id: string, owner_id: string): Promise<SkinReviewsVotes>{
+        const insert = `INSERT INTO SkinReviewsVotes (skin_id, owner_id) VALUES ($1, $2) RETURNING *`
+        const query = {
+            text: insert,
+            values: [skin_id, owner_id]
+        }
+        const { rows } = await pool.query(query)
+        const skinReviewsVotes: SkinReviewsVotes = {
+            skin_id: rows[0].skin_id,
+            owner_id: rows[0].owner_id
+        }
+        return skinReviewsVotes
+    }
 }
