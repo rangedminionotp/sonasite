@@ -17,4 +17,8 @@ export class SkinReviewsResolver{
     async addReview(@Arg('input') input: SkinReviewsAdd): Promise<SkinReviewsInfo> {
         return new SkinReviewsService().createReview(input)
     }
+    @Query(() => Boolean)
+    async checkIfReviewed(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<boolean> {
+        return new SkinReviewsService().checkIfReviewed(owner_id, skin_id)
+    }
 }

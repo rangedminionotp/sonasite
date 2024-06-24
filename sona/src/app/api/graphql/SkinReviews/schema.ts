@@ -8,7 +8,6 @@ import { uuid } from "../../../types/custom";
 export class SkinReviewsData {
     @Field()
     description!: string;
-    
     @Field()
     date!: Date;
 }
@@ -37,7 +36,7 @@ export class SkinReviewsInfo {
     @Field()
     data!: SkinReviewsData;
     @Field()
-    owner_name!: string;
+    owner_name!: string 
 }
 
 @ObjectType()
@@ -67,4 +66,16 @@ export class SkinReviewsAdd {
     rating!: number
     @Field()
     owner_name!: string
+}
+
+@ObjectType()
+export class SkinReviewsVotes {
+    @Field() 
+    @Matches(uuid)
+    skin_id!: string;
+    @Field()
+    @Matches(uuid)
+    owner_id!: string;
+    @Field()
+    voted!: boolean
 }

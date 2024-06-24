@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Typography from "@mui/material/Typography";
-
+import SkinContext from "./SharedContext";
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
@@ -13,7 +13,7 @@ const StyledRating = styled(Rating)({
 });
 
 export default function SkinItemRating({ rating, readOnlyBoolean }) {
-  const [value, setValue] = React.useState(0);
+  const { setAddReviewsRating } = React.useContext(SkinContext);
   return (
     <Box
       sx={{
@@ -28,7 +28,7 @@ export default function SkinItemRating({ rating, readOnlyBoolean }) {
             `${value} Heart${value !== 1 ? "s" : ""}`
           }
           onChange={(event, newValue) => {
-            setValue(newValue);
+            setAddReviewsRating(newValue);
           }}
           readOnly={readOnlyBoolean}
           precision={0.1}

@@ -6,15 +6,65 @@ import Sheet from "@mui/joy/Sheet";
 import SkinItemRating from "../SkinsItemRating";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
-
-const AddReviewsPopup = ({ addReviewOpen, setAddReviewOpen, activeImgUrl }) => {
+import SkinContext from "../SharedContext";
+import SkinImg from "./SkinImg";
+const AddReviewsPopup = ({
+  addReviewOpen,
+  setAddReviewOpen,
+  activeImgUrl,
+  skin_id,
+}) => {
   const [description, setDescription] = React.useState("");
-  console.log("activim", activeImgUrl);
+  const { addReviewsRating, skinReviews, setSkinReviews, setAddReviewsRating } =
+    React.useContext(SkinContext);
+  const item = localStorage.getItem("user");
+  const user = JSON.parse(item);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
   const handleSubmit = () => {
-    console.log("submit");
+    event.preventDefault();
+    if (!user) {
+      alert("Please login to submit tips");
+      router.push("/login");
+      return;
+    }
+    const query = {
+      query: `mutation MyMutation {
+  addReview(
+    input: {owner_id: "${user.id}", skin_id: "${skin_id}", data: {description: "${description}"}, rating: ${addReviewsRating}, owner_name: "${user.name}"}
+  ) {
+    data {
+      date
+      description
+    }
+    id
+    owner_id
+    owner_name
+    rating
+    skin_id
+  }
+}`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      body: JSON.stringify(query),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          alert("Error adding skin reviews, please try again");
+        } else {
+          const newReview = json.data.addReview;
+          const newSkinReviews = [...skinReviews, newReview];
+          setSkinReviews(newSkinReviews);
+          setDescription((prevDescription) => "");
+          setAddReviewsRating(0);
+        }
+      });
   };
   return (
     <React.Fragment>
@@ -47,7 +97,7 @@ const AddReviewsPopup = ({ addReviewOpen, setAddReviewOpen, activeImgUrl }) => {
             </Typography>
             <Typography id="modal-desc" textColor="text.tertiary">
               <SkinItemRating rating={0} readOnlyBoolean={false} />
-              <img src={activeImgUrl} className="w-full mb-4" />
+              <SkinImg imgUrl={activeImgUrl} />
             </Typography>
             <form onSubmit={handleSubmit}>
               <Textarea
