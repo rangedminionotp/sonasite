@@ -24,83 +24,77 @@ const AddReviewsPopup = ({
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     event.preventDefault();
-
     const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
-    const graphQLClient = createGraphQLClient(bearerToken);
-
     if (!user) {
       alert("Please login to submit tips");
       router.push("/login");
       return;
     }
-
-    try {
-      // Add review mutation
-      const addReviewMutation = gql`
-        mutation AddReview($input: AddReviewInput!) {
-          addReview(input: $input) {
-            data {
-              date
-              description
-            }
-            id
-            owner_id
-            owner_name
-            rating
-            skin_id
-          }
-        }
-      `;
-
-      const addReviewVariables = {
-        input: {
-          owner_id: user.id,
-          skin_id: skin_id,
-          data: { description: description },
-          rating: addReviewsRating,
-          owner_name: user.name,
-        },
-      };
-
-      const addReviewResponse = await graphQLClient.request(
-        addReviewMutation,
-        addReviewVariables
-      );
-      const newReview = addReviewResponse.addReview;
-      const newSkinReviews = [...skinReviews, newReview];
-
-      setSkinReviews(newSkinReviews);
-      setDescription("");
-      setAddReviewsRating(0);
-
-      // Add review vote mutation
-      const addReviewVoteMutation = gql`
-        mutation CreateSkinReviewsVotes($skin_id: ID!, $owner_id: ID!) {
-          createSkinReviewsVotes(skin_id: $skin_id, owner_id: $owner_id) {
-            skin_id
-            owner_id
-          }
-        }
-      `;
-
-      const addReviewVoteVariables = {
-        skin_id: skin_id,
-        owner_id: user.id,
-      };
-
-      await graphQLClient.request(
-        addReviewVoteMutation,
-        addReviewVoteVariables
-      );
-    } catch (error) {
-      console.error(
-        "Error adding skin review or review vote, please try again",
-        error
-      );
+    // add review
+    const query = {
+      query: `mutation MyMutation {
+  addReview(
+    input: {owner_id: "${user.id}", skin_id: "${skin_id}", data: {description: "${description}"}, rating: ${addReviewsRating}, owner_name: "${user.name}"}
+  ) {
+    data {
+      date
+      description
     }
+    id
+    owner_id
+    owner_name
+    rating
+    skin_id
+  }
+}`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      body: JSON.stringify(query),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          alert("Error adding skin reviews, please try again");
+        } else {
+          const newReview = json.data.addReview;
+          const newSkinReviews = [...skinReviews, newReview];
+          setSkinReviews(newSkinReviews);
+          setDescription((prevDescription) => "");
+          setAddReviewsRating(0);
+        }
+      });
+
+    // add reviews vote (quick way to track if user has reviewed this skin)
+    const votes = {
+      query: `
+        mutation MyMutation {
+          createSkinReviewsVotes(skin_id: "${skin_id}", owner_id: "${user.id}") {
+            skin_id
+            owner_id
+          }
+        }`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      body: JSON.stringify(votes),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          alert("Error adding skin reviews, please try again");
+        } else {
+        }
+      });
   };
 
   return (
