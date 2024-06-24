@@ -196,6 +196,20 @@ export class AbilityTipsService {
         }
         return tipObj;
     }
+    public async deleteVote(owner_id: string, tip_id: string): Promise<AbilityTipsVotes>{
+        const remove = `DELETE FROM AbilityTipsVotes WHERE owner_id = $1 AND tip_id = $2 RETURNING *`
+        const query = {
+            text: remove,
+            values: [owner_id,tip_id]
+        }
+        const { rows } = await pool.query(query)
+        const tipObj: AbilityTipsVotes = {
+            tip_id: rows[0].ability_tip_id,
+            owner_id: rows[0].owner_id,
+            voted: rows[0].voted
+        }
+        return tipObj;
+    }
 
     public async updateAbilityTip(owner_id: string, ability_tip_id:string, description:string, version: string): Promise<AbilityTipsInfo>{
         const update = `

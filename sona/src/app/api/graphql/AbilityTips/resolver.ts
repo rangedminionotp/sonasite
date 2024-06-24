@@ -86,6 +86,13 @@ export class AbilityTipsResolver {
       return new AbilityTipsService().addVote(owner_id, ability_tip_id, voted);
     }
     
+    @Mutation(() => AbilityTipsVotes)
+    async deleteTipVote(
+        @Arg("owner_id") owner_id: string,
+        @Arg("ability_tip_id") ability_tip_id: string
+    ): Promise<AbilityTipsVotes> {
+      return new AbilityTipsService().deleteVote(owner_id, ability_tip_id);
+    }
     // @Authorized("member") 
     // @Query(() => Number)
     // async checkIfUpvoted(
