@@ -38,20 +38,6 @@ const TipsDisplay = ({ index }) => {
     }
   }, [abilityTips, currentPage]);
 
-  // useEffect(async () => {
-  //   const user = getUserFromLocalStorage();
-  //   const bearerToken = user?.accessToken;
-  //   const graphQLClient = createGraphQLClient(bearerToken);
-  //   const voted = await checkIfVoted(graphQLClient, tipId, user.id);
-  //   if (voted === 1) {
-  //     setUpvote(true);
-  //   } else if (voted === 0) {
-  //     setDownvote(true);
-  //   } else if (voted === -1) {
-  //     await deleteTipVote(graphQLClient, tipId, user.id);
-  //   }
-  // }, [currentTips]);
-
   // Handle page navigation
   const goToNextPage = () => {
     if (currentPage < totalPages) {
@@ -141,8 +127,14 @@ const TipsDisplay = ({ index }) => {
             );
           }
           await updateVotes(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
+          setUpvote(true);
         } else if (voted === -1) {
           await createTipVote(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
+          setDownvote(false);
+          setUpvote(false);
+        } else if (voted === 1) {
+          await deleteTipVote(graphQLClient, tipId, user.id);
+          setUpvote(false);
         }
       }
     } catch (error) {
@@ -188,9 +180,16 @@ const TipsDisplay = ({ index }) => {
               )
             );
           }
+
           await updateVotes(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          setDownvote(true);
         } else if (voted === -1) {
           await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          setUpvote(false);
+          setDownvote(false);
+        } else if (voted === 0) {
+          await deleteTipVote(graphQLClient, tipId, user.id);
+          setDownvote(false);
         }
       }
     } catch (error) {
@@ -253,10 +252,12 @@ const TipsDisplay = ({ index }) => {
           <TipItem
             key={idx}
             tip={tip}
-            upvote={upvote}
-            downvote={downvote}
             handleUpvote={handleUpvote}
             handleDownvote={handleDownvote}
+            upvote={upvote}
+            downvote={downvote}
+            setUpvote={setUpvote}
+            setDownvote={setDownvote}
           />
         ))
       ) : (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/joy/Avatar";
 import Textarea from "@mui/joy/Textarea"; // Assuming you imported JoyUI Textarea component
 import Button from "@mui/joy/Button";
@@ -9,10 +9,21 @@ import TipsEditAndDelete from "./TipsEditAndDelete ";
 import AbilitiesContext from "../SharedContext";
 import { sortByDateDescending } from "./utils";
 import Tooltip from "@mui/joy/Tooltip";
-const TipItem = ({ tip, upvote, downvote, handleUpvote, handleDownvote }) => {
+import { checkIfVoted } from "./utils";
+
+const TipItem = ({
+  tip,
+  handleUpvote,
+  handleDownvote,
+  upvote,
+  downvote,
+  setUpvote,
+  setDownvote,
+}) => {
   const { fetchedData, abilityTips, setabilityTips } =
     React.useContext(AbilitiesContext);
-
+  // const [upvote, setUpvote] = React.useState<boolean>(false);
+  // const [downvote, setDownvote] = React.useState<boolean>(false);
   const user = getUserFromLocalStorage();
   // const [downvotes, setDownvotes] = React.useState(tip.downvotes);
   const [isEditing, setIsEditing] = React.useState(false); // State to manage editing mode
@@ -23,6 +34,23 @@ const TipItem = ({ tip, upvote, downvote, handleUpvote, handleDownvote }) => {
   const handleInputChange = (event) => {
     setEditDescription(event.target.value);
   };
+
+  useEffect(() => {
+    const seeVoteStatus = async () => {
+      const bearerToken = user?.accessToken;
+      const graphQLClient = createGraphQLClient(bearerToken);
+      const voted = await checkIfVoted(graphQLClient, tip.tip_id, user.id);
+      if (voted === 1) {
+        setUpvote(true);
+      } else if (voted === 0) {
+        setDownvote(true);
+      } else if (voted === -1) {
+        setUpvote(false);
+        setDownvote(false);
+      }
+    };
+    seeVoteStatus();
+  }, [tip.tip_id]);
 
   const handleSubmit = async () => {
     const user = getUserFromLocalStorage();
@@ -140,7 +168,7 @@ const TipItem = ({ tip, upvote, downvote, handleUpvote, handleDownvote }) => {
               onClick={() =>
                 handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
               }
-              className="text-green-600"
+              className={`${upvote ? "text-green-600" : "text-gray-300"}`}
             >
               ▲
             </span>
@@ -149,7 +177,7 @@ const TipItem = ({ tip, upvote, downvote, handleUpvote, handleDownvote }) => {
               onClick={() =>
                 handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
               }
-              className="text-red-600"
+              className={` ${downvote ? "text-red-600" : "text-gray-300"}`}
             >
               ▼
             </span>

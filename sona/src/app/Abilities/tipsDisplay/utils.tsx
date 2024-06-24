@@ -112,6 +112,22 @@ export const createTipVote = async (graphQLClient, tipId, userId, vote) => {
   }
 };
 
+export const deleteTipVote = async (graphQLClient, tipId, userId) => {
+  try {
+    const mutation = gql`
+      mutation MyMutation {
+        deleteTipVote(owner_id: "${userId}", ability_tip_id: "${tipId}") {
+          owner_id
+          tip_id
+          voted
+        }
+      }
+    `;
+    await graphQLClient.request(mutation);
+  } catch (error) {
+    console.error("Error deleting tip vote:", error);
+  }
+};
 export const sortByDateDescending = (allTips) => {
   return [...allTips].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
