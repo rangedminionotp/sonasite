@@ -2,6 +2,15 @@ import { pool } from '@/db'
 import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput} from './schema'
 
 export class SkinReviewsService {
+    public async checkIfReviewed(owner_id: string, tip_id: string): Promise<boolean>{
+        const select = `SELECT * FROM SkinReviewsVotes WHERE owner_id = $1 AND skin_id = $2`
+        const query = {
+            text: select,
+            values: [owner_id, tip_id]
+        }
+        const { rows } = await pool.query(query) 
+        return rows.length > 0
+    }
     public async getAllSkinReviews(): Promise<SkinReviewsInfo[]>{ 
         const select = `SELECT * FROM SkinReviews`
         const query = {
@@ -55,7 +64,7 @@ export class SkinReviewsService {
         return SkinReviews;
     } 
     public async createReview(input:SkinReviewsAdd): Promise<SkinReviewsInfo>{
-        const { skin_id, rating, data, owner_id, owner_name } = input
+        const { skin_id, rating, data, owner_id, owner_name } = input 
         data.date = new Date().toISOString()
         const insert = `INSERT INTO SkinReviews (skin_id, rating, data, owner_id, owner_name) VALUES ($1, $2, $3, $4, $5) RETURNING *`
         const query = {
@@ -74,4 +83,6 @@ export class SkinReviewsService {
         }
         return skinReviewsInfo
     } 
+
+    
 }

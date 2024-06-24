@@ -9,6 +9,7 @@ import SkinReviewsItem from "./SkinReviewsItem";
 import AddReviewsBtn from "./AddReviewsBtn";
 import ReviewsPopupClose from "./ReviewsPopupClose";
 import AddReviewsPopup from "./AddReviewsPopup";
+import SkinImg from "./SkinImg";
 const SkinReviewsDisplay = ({
   skin_id,
   open,
@@ -71,11 +72,13 @@ const SkinReviewsDisplay = ({
       >
         <ReviewsPopupClose setOpen={setOpen} />
         <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+        {/* <SkinImg imgUrl={activeImgUrl} /> */}
         <SkinReviewsItem />
         <AddReviewsPopup
           addReviewOpen={addReviewOpen}
           setAddReviewOpen={setAddReviewOpen}
           activeImgUrl={activeImgUrl}
+          skin_id={skin_id}
         />
       </div>
     </React.Fragment>

@@ -114,19 +114,23 @@ VALUES
     ('e48a9976-368f-43f6-b652-a899d1e36a0f', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Molly Member', 4, '{"description": "Very good and reliable", "date": "2024-07-15T20:30:15.000Z"}'),
     ('37c771f6-d927-40cb-a119-c5eec0ee9a51', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Molly Member', 4, '{"description": "Solid choice", "date": "2024-08-10T22:45:30.000Z"}');
 DELETE FROM SkinReviewsVotes;
-INSERT INTO SkinReviewsVotes (skin_id, owner_id, voted) 
-VALUES 
-    ('ec724962-80b6-48a4-a638-ce7abce59808', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('d2d5fe06-6e4c-4a6b-8d0b-7c88dbebc8e1', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('53a82f4f-6867-4920-a522-037ad7b0c53b', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('d7564774-c5cf-433e-a474-4ca2f5ca52ae', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('e673d8bc-f48e-427d-b91a-c2ba1f2dc7db', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('181ed2b2-f169-4d25-9a82-e3beda1a2025', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('812487b4-1068-4e43-b732-4c7897f3a292', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('e5a5177b-156b-44cd-bc6c-a518c0d106e0', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('588737b6-3d26-4545-80a8-7a16965edeaf', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('f883705f-20ff-40e5-af92-0d15b1272472', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0),
-    ('5715006a-625d-4efd-9852-b6bdb58d5ed6', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 1),
-    ('d7c43d66-655d-4d9c-a241-a17fa13e3b15', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', 0);
+-- INSERT INTO SkinReviewsVotes (skin_id, owner_id) 
+-- VALUES 
+--     ('ec724962-80b6-48a4-a638-ce7abce59808', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('d7564774-c5cf-433e-a474-4ca2f5ca52ae', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('812487b4-1068-4e43-b732-4c7897f3a292', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('588737b6-3d26-4545-80a8-7a16965edeaf', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
+--     ('5715006a-625d-4efd-9852-b6bdb58d5ed6', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04');
+
+-- First, we need to retrieve the distinct skin_id and owner_id pairs from the SkinReviews table.
+WITH ReviewPairs AS (
+    SELECT DISTINCT skin_id, owner_id
+    FROM SkinReviews
+)
+
+-- Now, we insert these pairs into the SkinReviewsVotes table.
+INSERT INTO SkinReviewsVotes (skin_id, owner_id)
+SELECT skin_id, owner_id
+FROM ReviewPairs;
