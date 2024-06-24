@@ -30,7 +30,7 @@ const SkinsItem = () => {
     );
   }
 
-  const toggleVisibility = (skin_id: uuid, index, skin_url) => {
+  const toggleVisibility = (skin_id: uuid, index: number, skin_url: string) => {
     setActiveSkinId(skin_id);
     setBgIndex(index);
     setOpen(true);

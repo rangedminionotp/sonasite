@@ -63,7 +63,7 @@ const SkinReviewsDisplay = ({
         console.error("Error fetching skin reviews:", error);
         alert("Failed to fetching skinreviews. Please try again.");
       });
-  }, []);
+  });
 
   React.useEffect(() => {
     const query = {
@@ -93,7 +93,7 @@ const SkinReviewsDisplay = ({
         console.error("Error fetching skin reviews:", error);
         alert("Failed to fetching skinreviews. Please try again.");
       });
-  }, []);
+  });
 
   return (
     <React.Fragment>
@@ -104,7 +104,7 @@ const SkinReviewsDisplay = ({
             : `top-0 left-0 w-full h-screen ${bgColor} bg-opacity-50 absolute`
         }
       >
-        <ReviewsPopupClose setOpen={setOpen} />
+        <ReviewsPopupClose setOpen={setOpen} setSkinReviews={setSkinReviews} />
         {!reviewed ? (
           <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
         ) : (
