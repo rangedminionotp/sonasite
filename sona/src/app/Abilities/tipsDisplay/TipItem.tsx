@@ -28,6 +28,8 @@ const TipItem = ({
   // const [downvotes, setDownvotes] = React.useState(tip.downvotes);
   const [isEditing, setIsEditing] = React.useState(false); // State to manage editing mode
   const [editDescription, setEditDescription] = React.useState(tip.description);
+  const [loading, setLoading] = React.useState(true); // State to track loading status
+
   const toggleEditing = () => {
     setIsEditing(!isEditing); // Toggle editing state
   };
@@ -43,14 +45,15 @@ const TipItem = ({
       if (voted === 1) {
         setUpvote(true);
       } else if (voted === 0) {
-        setDownvote(true);
+        setDownvote(false);
       } else if (voted === -1) {
         setUpvote(false);
-        setDownvote(false);
+        setDownvote(true);
       }
     };
     seeVoteStatus();
-  }, [tip.tip_id]);
+    setLoading(false);
+  }, []);
 
   const handleSubmit = async () => {
     const user = getUserFromLocalStorage();
@@ -105,7 +108,9 @@ const TipItem = ({
       console.log("error editing:", error);
     }
   };
-
+  if (loading) {
+    return <p>Loading...</p>; // Render a loading indicator while fetching data
+  }
   return (
     <div className="bg-[#262626] shadow-md p-4 border border-black">
       <div className="flex items-center space-x-2">
@@ -166,18 +171,22 @@ const TipItem = ({
           <div className="flex items-center space-x-1 cursor-pointer">
             <span
               onClick={() =>
-                handleUpvote(tip.tip_id, tip.upvotes + 1, tip.downvotes - 1)
+                handleUpvote(tip.tip_id, tip.upvotes, tip.downvotes)
               }
-              className={`${upvote ? "text-green-600" : "text-gray-300"}`}
+              className={`${
+                upvote === true ? "text-green-600" : "text-gray-300"
+              }`}
             >
               ▲
             </span>
             <span className="text-gray-300">{tip.upvotes - tip.downvotes}</span>
             <span
               onClick={() =>
-                handleDownvote(tip.tip_id, tip.downvotes + 1, tip.upvotes - 1)
+                handleDownvote(tip.tip_id, tip.downvotes, tip.upvotes)
               }
-              className={` ${downvote ? "text-red-600" : "text-gray-300"}`}
+              className={` ${
+                downvote === false ? "text-red-600" : "text-gray-300"
+              }`}
             >
               ▼
             </span>

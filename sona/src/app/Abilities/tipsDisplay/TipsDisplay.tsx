@@ -23,7 +23,7 @@ const TipsDisplay = ({ index }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentTips, setCurrentTips] = useState([]);
   const [upvote, setUpvote] = React.useState<boolean>(false);
-  const [downvote, setDownvote] = React.useState<boolean>(false);
+  const [downvote, setDownvote] = React.useState<boolean>(true);
 
   useEffect(() => {
     if (abilityTips) {
@@ -104,7 +104,11 @@ const TipsDisplay = ({ index }) => {
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tipId, user.id);
       if (voted !== 1) {
-        const updatedTip = await updateUpvotes(graphQLClient, tipId, upvotes);
+        const updatedTip = await updateUpvotes(
+          graphQLClient,
+          tipId,
+          upvotes + 1
+        );
 
         if (updatedTip) {
           setabilityTips((prevTips) =>
@@ -117,7 +121,7 @@ const TipsDisplay = ({ index }) => {
           const updatedDownTip = await updateDownvotes(
             graphQLClient,
             tipId,
-            downvotes
+            downvotes - 1
           );
           if (updatedDownTip) {
             setabilityTips((prevTips) =>
@@ -130,9 +134,21 @@ const TipsDisplay = ({ index }) => {
           setUpvote(true);
         } else if (voted === -1) {
           await createTipVote(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
-          setDownvote(false);
+          setDownvote(!downvote);
           setUpvote(false);
         } else if (voted === 1) {
+          const updatedUpvotes = await updateUpvotes(
+            graphQLClient,
+            tipId,
+            upvotes - 1
+          );
+          if (updatedUpvotes) {
+            setabilityTips((prevTips) =>
+              prevTips.map((tip) =>
+                tip.tip_id === updatedUpvotes.tip_id ? updatedUpvotes : tip
+              )
+            );
+          }
           await deleteTipVote(graphQLClient, tipId, user.id);
           setUpvote(false);
         }
@@ -146,19 +162,18 @@ const TipsDisplay = ({ index }) => {
     try {
       const user = getUserFromLocalStorage();
       const bearerToken = user?.accessToken;
-
+      console.log("inside handle down vote");
       if (!bearerToken) {
         throw new Error("User not authenticated");
       }
 
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tipId, user.id);
-
       if (voted !== 0) {
         const updatedTip = await updateDownvotes(
           graphQLClient,
           tipId,
-          downvotes
+          downvotes + 1
         );
         if (updatedTip) {
           setabilityTips((prevTips) =>
@@ -167,29 +182,45 @@ const TipsDisplay = ({ index }) => {
             )
           );
         }
+
+        console.log("voted", voted);
+        console.log(voted === 0);
         if (voted === 1) {
-          const updatedUpTip = await updateUpvotes(
+          const updatedDownTip = await updateUpvotes(
             graphQLClient,
             tipId,
-            upvotes
+            upvotes - 1
           );
-          if (updatedUpTip) {
+          if (updatedDownTip) {
+            setabilityTips((prevTips) =>
+              prevTips.map((tip) =>
+                tip.tip_id === updatedDownTip.tip_id ? updatedDownTip : tip
+              )
+            );
+          }
+
+          await updateVotes(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          setDownvote(!downvote);
+        } else if (voted === -1) {
+          await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          setUpvote(false);
+          setDownvote(!downvote);
+        } else if (voted === 0) {
+          console.log("click downvote twice");
+          const updatedDownTip = await updateDownvotes(
+            graphQLClient,
+            tipId,
+            downvotes - 1
+          );
+          if (updatedDownTip) {
             setabilityTips((prevTips) =>
               prevTips.map((tip) =>
                 tip.tip_id === updatedUpTip.tip_id ? updatedUpTip : tip
               )
             );
           }
-
-          await updateVotes(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
-          setDownvote(true);
-        } else if (voted === -1) {
-          await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
-          setUpvote(false);
-          setDownvote(false);
-        } else if (voted === 0) {
           await deleteTipVote(graphQLClient, tipId, user.id);
-          setDownvote(false);
+          setDownvote(!downvote);
         }
       }
     } catch (error) {
