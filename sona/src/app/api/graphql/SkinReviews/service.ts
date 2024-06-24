@@ -1,9 +1,9 @@
 import { pool } from '@/db'
-import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput, SkinReviewsVotes} from './schema'
+import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput, SkinReviewsReviewed} from './schema'
 
 export class SkinReviewsService {
     public async checkIfReviewed(owner_id: string, tip_id: string): Promise<boolean>{
-        const select = `SELECT * FROM SkinReviewsVotes WHERE owner_id = $1 AND skin_id = $2`
+        const select = `SELECT * FROM SkinReviewsReviewed WHERE owner_id = $1 AND skin_id = $2`
         const query = {
             text: select,
             values: [owner_id, tip_id]
@@ -84,17 +84,17 @@ export class SkinReviewsService {
         return skinReviewsInfo
     } 
 
-    public async createSkinReviewsVotes(skin_id: string, owner_id: string): Promise<SkinReviewsVotes>{
-        const insert = `INSERT INTO SkinReviewsVotes (skin_id, owner_id) VALUES ($1, $2) RETURNING *`
+    public async createSkinReviewsReviewed(skin_id: string, owner_id: string): Promise<SkinReviewsReviewed>{
+        const insert = `INSERT INTO SkinReviewsReviewed (skin_id, owner_id) VALUES ($1, $2) RETURNING *`
         const query = {
             text: insert,
             values: [skin_id, owner_id]
         }
         const { rows } = await pool.query(query)
-        const skinReviewsVotes: SkinReviewsVotes = {
+        const SkinReviewsReviewed: SkinReviewsReviewed = {
             skin_id: rows[0].skin_id,
             owner_id: rows[0].owner_id
         }
-        return skinReviewsVotes
+        return SkinReviewsReviewed
     }
 }

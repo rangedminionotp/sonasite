@@ -69,7 +69,7 @@ export class SkinReviewsAdd {
 }
 
 @ObjectType()
-export class SkinReviewsVotes {
+export class SkinReviewsReviewed {
     @Field() 
     @Matches(uuid)
     skin_id!: string;

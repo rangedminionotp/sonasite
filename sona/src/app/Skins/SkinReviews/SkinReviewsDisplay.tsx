@@ -23,6 +23,7 @@ const SkinReviewsDisplay = ({
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
   const [reviewed, setReviewed] = React.useState<boolean>(false);
+
   const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
