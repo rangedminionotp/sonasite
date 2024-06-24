@@ -8,6 +8,10 @@ import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import SkinContext from "../SharedContext";
 import SkinImg from "./SkinImg";
+import { gql } from "graphql-request";
+
+import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+
 const AddReviewsPopup = ({
   addReviewOpen,
   setAddReviewOpen,
@@ -17,20 +21,24 @@ const AddReviewsPopup = ({
   const [description, setDescription] = React.useState("");
   const { addReviewsRating, skinReviews, setSkinReviews, setAddReviewsRating } =
     React.useContext(SkinContext);
-  const item = localStorage.getItem("user");
-  const user = JSON.parse(item);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     event.preventDefault();
+    const user = getUserFromLocalStorage();
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
+
     if (!user) {
       alert("Please login to submit tips");
       router.push("/login");
       return;
     }
-    const query = {
-      query: `mutation MyMutation {
+    // add review
+    try {
+      const mutation = gql`
+        mutation MyMutation {
   addReview(
     input: {owner_id: "${user.id}", skin_id: "${skin_id}", data: {description: "${description}"}, rating: ${addReviewsRating}, owner_name: "${user.name}"}
   ) {
@@ -44,27 +52,31 @@ const AddReviewsPopup = ({
     rating
     skin_id
   }
-}`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(query),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.errors) {
-          alert("Error adding skin reviews, please try again");
-        } else {
-          const newReview = json.data.addReview;
-          const newSkinReviews = [...skinReviews, newReview];
-          setSkinReviews(newSkinReviews);
-          setDescription((prevDescription) => "");
-          setAddReviewsRating(0);
+}
+      `;
+      const response = await graphQLClient.request(mutation);
+      const newReview = response.addReview;
+      const newSkinReviews = [...skinReviews, newReview];
+      setSkinReviews(newSkinReviews);
+      setDescription((prevDescription) => "");
+      setAddReviewsRating(0);
+    } catch (error) {
+      console.error("Error adding skin reviews, please try again", error);
+    }
+    // add reviews vote (quick way to track if user has reviewed this skin)
+    try {
+      const mutation = gql`
+        mutation MyMutation {
+          createSkinReviewsVotes(skin_id: "${skin_id}", owner_id: "${user.id}") {
+            skin_id
+            owner_id
+          }
         }
-      });
+      `;
+      await graphQLClient.request(mutation);
+    } catch (error) {
+      console.error("Error adding skin reviews vote, please try again", error);
+    }
   };
   return (
     <React.Fragment>

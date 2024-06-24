@@ -75,7 +75,5 @@ export class SkinReviewsVotes {
     skin_id!: string;
     @Field()
     @Matches(uuid)
-    owner_id!: string;
-    @Field()
-    voted!: boolean
+    owner_id!: string; 
 }
