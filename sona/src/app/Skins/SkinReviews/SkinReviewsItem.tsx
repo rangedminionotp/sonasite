@@ -1,16 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import SkinContext from "../SharedContext";
+import Button from "@mui/joy/Button";
 import SkinItemRating from "../SkinsItemRating";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
+import SkinReviewsItemDisplay from "./SkinReviewsItemDisplay";
 const SkinReviewsItem = () => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tipsPerPage = 4;
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentReviews, setCurrentReviews] = useState([]);
 
-  return (
-    <div>
-      {skinReviews &&
-        skinReviews.map((item) => {
-          return (
+  React.useEffect(() => {
+    if (skinReviews) {
+      const pages = Math.ceil(skinReviews.length / tipsPerPage);
+      setTotalPages(pages);
+
+      const reviews = skinReviews.slice(
+        (currentPage - 1) * tipsPerPage,
+        currentPage * tipsPerPage
+      );
+      setCurrentReviews(reviews);
+      console.log("reviews", reviews);
+    }
+  }, [skinReviews, currentPage]);
+
+  // Handle page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const ReviewList = ({ currentReviews }) => {
+    console.log("currentReviews:", currentReviews);
+
+    return (
+      <div>
+        {currentReviews && currentReviews.length > 0 ? (
+          currentReviews.map((item) => (
             <div
               key={item.id}
               className="p-4 mb-4 bg-gray-700 rounded shadow-md"
@@ -30,8 +64,44 @@ const SkinReviewsItem = () => {
               </div>
               <div className="text-gray-800">{item.data.description}</div>
             </div>
-          );
-        })}
+          ))
+        ) : (
+          <div>No reviews available</div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <ReviewList currentReviews={currentReviews} />
+      <div className="flex justify-center space-x-4 mt-4">
+        <Button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          Previous
+        </Button>
+        <p className="text-gray-300">
+          Page {currentPage} of {totalPages}
+        </p>
+        <Button
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 };

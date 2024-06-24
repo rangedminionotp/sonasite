@@ -1,7 +1,7 @@
 import { Query, Resolver, Mutation, Arg, Authorized ,  Ctx} from "type-graphql"
 import type { NextApiRequest } from 'next'
 import { SkinReviewsService } from './service'
-import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData,  SkinReviewsAdd, SkinReviewsVotes} from './schema'
+import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData,  SkinReviewsAdd, SkinReviewsReviewed} from './schema'
 
 @Resolver()
 export class SkinReviewsResolver{
@@ -21,8 +21,8 @@ export class SkinReviewsResolver{
     async checkIfReviewed(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<boolean> {
         return new SkinReviewsService().checkIfReviewed(owner_id, skin_id)
     }
-    @Mutation(()=>SkinReviewsVotes)
-    async createSkinReviewsVotes(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string): Promise<SkinReviewsVotes>{
-        return new SkinReviewsService().createSkinReviewsVotes(skin_id, owner_id)
+    @Mutation(()=>SkinReviewsReviewed)
+    async createSkinReviewsReviewed(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string): Promise<SkinReviewsReviewed>{
+        return new SkinReviewsService().createSkinReviewsReviewed(skin_id, owner_id)
     }
 }

@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Ability CASCADE;
 DROP TABLE IF EXISTS AbilityTips CASCADE;
 DROP TABLE IF EXISTS SkinItem; 
 DROP TABLE IF EXISTS SkinReviews;
-DROP TABLE IF EXISTS SkinReviewsVotes;
+DROP TABLE IF EXISTS SkinReviewsReviewed;
 
 -- Create Users table
 CREATE TABLE Users (
@@ -57,8 +57,8 @@ CREATE TABLE SkinReviews (
     data JSONB
 );
 
--- Create SkinReviewsVotes table
-CREATE TABLE SkinReviewsVotes (
+-- Create SkinReviews reviewed table
+CREATE TABLE SkinReviewsReviewed (
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     owner_id UUID REFERENCES Users(id)
 );

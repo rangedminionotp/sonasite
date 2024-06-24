@@ -24,7 +24,7 @@ const AddReviewsPopup = ({
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     event.preventDefault();
     const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
@@ -75,7 +75,7 @@ const AddReviewsPopup = ({
     const votes = {
       query: `
         mutation MyMutation {
-          createSkinReviewsVotes(skin_id: "${skin_id}", owner_id: "${user.id}") {
+          createSkinReviewsReviewed(skin_id: "${skin_id}", owner_id: "${user.id}") {
             skin_id
             owner_id
           }
@@ -95,6 +95,7 @@ const AddReviewsPopup = ({
         } else {
         }
       });
+    setAddReviewOpen(false);
   };
 
   return (
