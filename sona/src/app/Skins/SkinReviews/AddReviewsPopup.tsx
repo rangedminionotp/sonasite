@@ -24,8 +24,9 @@ const AddReviewsPopup = ({
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
     const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
@@ -35,49 +36,73 @@ const AddReviewsPopup = ({
       router.push("/login");
       return;
     }
-    // add review
+
     try {
-      const mutation = gql`
-        mutation MyMutation {
-  addReview(
-    input: {owner_id: "${user.id}", skin_id: "${skin_id}", data: {description: "${description}"}, rating: ${addReviewsRating}, owner_name: "${user.name}"}
-  ) {
-    data {
-      date
-      description
-    }
-    id
-    owner_id
-    owner_name
-    rating
-    skin_id
-  }
-}
+      // Add review mutation
+      const addReviewMutation = gql`
+        mutation AddReview($input: AddReviewInput!) {
+          addReview(input: $input) {
+            data {
+              date
+              description
+            }
+            id
+            owner_id
+            owner_name
+            rating
+            skin_id
+          }
+        }
       `;
-      const response = await graphQLClient.request(mutation);
-      const newReview = response.addReview;
+
+      const addReviewVariables = {
+        input: {
+          owner_id: user.id,
+          skin_id: skin_id,
+          data: { description: description },
+          rating: addReviewsRating,
+          owner_name: user.name,
+        },
+      };
+
+      const addReviewResponse = await graphQLClient.request(
+        addReviewMutation,
+        addReviewVariables
+      );
+      const newReview = addReviewResponse.addReview;
       const newSkinReviews = [...skinReviews, newReview];
+
       setSkinReviews(newSkinReviews);
-      setDescription((prevDescription) => "");
+      setDescription("");
       setAddReviewsRating(0);
-    } catch (error) {
-      console.error("Error adding skin reviews, please try again", error);
-    }
-    // add reviews vote (quick way to track if user has reviewed this skin)
-    try {
-      const mutation = gql`
-        mutation MyMutation {
-          createSkinReviewsVotes(skin_id: "${skin_id}", owner_id: "${user.id}") {
+
+      // Add review vote mutation
+      const addReviewVoteMutation = gql`
+        mutation CreateSkinReviewsVotes($skin_id: ID!, $owner_id: ID!) {
+          createSkinReviewsVotes(skin_id: $skin_id, owner_id: $owner_id) {
             skin_id
             owner_id
           }
         }
       `;
-      await graphQLClient.request(mutation);
+
+      const addReviewVoteVariables = {
+        skin_id: skin_id,
+        owner_id: user.id,
+      };
+
+      await graphQLClient.request(
+        addReviewVoteMutation,
+        addReviewVoteVariables
+      );
     } catch (error) {
-      console.error("Error adding skin reviews vote, please try again", error);
+      console.error(
+        "Error adding skin review or review vote, please try again",
+        error
+      );
     }
   };
+
   return (
     <React.Fragment>
       <div className="w-full flex justify-center items-center">
