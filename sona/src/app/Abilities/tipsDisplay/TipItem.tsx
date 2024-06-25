@@ -39,7 +39,6 @@ const TipItem = ({ tip }) => {
       const bearerToken = user?.accessToken;
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tip.tip_id, user.id);
-      console.log("voted", voted);
       if (voted === 1) {
         setUpvote(true);
       } else if (voted === 0) {
@@ -51,7 +50,7 @@ const TipItem = ({ tip }) => {
     };
     seeVoteStatus();
     setLoading(false);
-  }, []);
+  }, [upvote, downvote]);
 
   const toggleEditing = () => {
     setIsEditing(!isEditing); // Toggle editing state
@@ -178,6 +177,7 @@ const TipItem = ({ tip }) => {
         }
       } // if current vote state of tip is upvoted
       else if (voted === 1) {
+        console.log("upvote status", upvote);
         const updatedUpvotes = await updateUpvotes(
           graphQLClient,
           tipId,
@@ -256,7 +256,7 @@ const TipItem = ({ tip }) => {
           await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
         }
       } else if (voted === 0) {
-        console.log("inside downvote reverse");
+        console.log("downvote status", downvote);
         const updatedDownTip = await updateDownvotes(
           graphQLClient,
           tipId,

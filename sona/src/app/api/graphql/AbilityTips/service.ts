@@ -197,7 +197,7 @@ export class AbilityTipsService {
         return tipObj;
     }
     public async deleteVote(owner_id: string, tip_id: string): Promise<AbilityTipsVotes>{
-        const remove = `DELETE FROM AbilityTipsVotes WHERE owner_id = $1 AND tip_id = $2 RETURNING *`
+        const remove = `DELETE FROM AbilityTipsVotes WHERE owner_id = $1 AND ability_tip_id = $2 RETURNING *`
         const query = {
             text: remove,
             values: [owner_id,tip_id]
