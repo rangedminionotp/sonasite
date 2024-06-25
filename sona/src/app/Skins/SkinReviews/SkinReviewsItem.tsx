@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import SkinContext from "../SharedContext";
 import Button from "@mui/joy/Button";
 import SkinItemRating from "../SkinsItemRating";
+import { gql } from "graphql-request";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import SkinReviewsItemDisplay from "./SkinReviewsItemDisplay";
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import EditReviewsBtn from "./EditReviewsBtn";
+import DeleteReviews from "./DeleteReviews";
 
-const SkinReviewsItem = () => {
+const SkinReviewsItem = ({ reviewed }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [currentPage, setCurrentPage] = useState(1);
   const tipsPerPage = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [currentReviews, setCurrentReviews] = useState([]);
+  const [editReviewOpen, setEditReviewOpen] = React.useState<boolean>(false);
   const user = getUserFromLocalStorage();
+
   React.useEffect(() => {
     if (skinReviews) {
       const pages = Math.ceil(skinReviews.length / tipsPerPage);
@@ -39,13 +44,13 @@ const SkinReviewsItem = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const ReviewList = ({ currentReviews }) => {
-    return (
+  return (
+    <div>
       <div>
         {currentReviews && currentReviews.length > 0 ? (
           currentReviews.map((item) => (
             <div
-              name={`${item.skin_id}${user.id}`}
+              name={`${item.skin_id}${item.owner_id}`}
               key={item.id}
               className="p-4 mb-4 bg-gray-700 rounded shadow-md"
             >
@@ -63,18 +68,19 @@ const SkinReviewsItem = () => {
                 <SkinItemRating rating={item.rating} readOnlyBoolean={true} />
               </div>
               <div className="text-gray-800">{item.data.description}</div>
+
+              {reviewed && user.id === item.owner_id ? (
+                <div className="flex justify-center space-x-1 cursor-pointer">
+                  <EditReviewsBtn setEditReviewOpen={setEditReviewOpen} />
+                  <DeleteReviews skin_id={item.skin_id} />
+                </div>
+              ) : null}
             </div>
           ))
         ) : (
           <div>No reviews available</div>
         )}
       </div>
-    );
-  };
-
-  return (
-    <div>
-      <ReviewList currentReviews={currentReviews} />
       <div className="flex justify-center space-x-4 mt-4">
         <Button
           onClick={goToPreviousPage}

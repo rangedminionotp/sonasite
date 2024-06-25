@@ -228,7 +228,7 @@ const SkinsItem = () => {
             <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
               {item.info.data.lore}
             </p>
-            <SkinItemRating rating={item.info.rating} readOnly={true} />
+            <SkinItemRating rating={item.info.rating} readOnlyBoolean={true} />
           </div>
         </div>
       ))}

@@ -27,9 +27,13 @@ export default function SkinItemRating({ rating, readOnlyBoolean }) {
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`
           }
-          onChange={(event, newValue) => {
-            setAddReviewsRating(newValue);
-          }}
+          onChange={
+            !readOnlyBoolean
+              ? (event, newValue) => {
+                  setAddReviewsRating(newValue);
+                }
+              : null
+          }
           readOnly={readOnlyBoolean}
           precision={0.1}
           icon={<FavoriteIcon fontSize="inherit" />}
