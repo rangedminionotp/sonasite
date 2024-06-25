@@ -10,7 +10,10 @@ import AddReviewsBtn from "./AddReviewsBtn";
 import ReviewsPopupClose from "./ReviewsPopupClose";
 import AddReviewsPopup from "./AddReviewsPopup";
 import SkinImg from "./SkinImg";
+
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+
+import { Link } from "react-scroll";
 
 const SkinReviewsDisplay = ({
   skin_id,
@@ -23,7 +26,6 @@ const SkinReviewsDisplay = ({
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
   const [reviewed, setReviewed] = React.useState<boolean>(false);
-
   const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
@@ -64,7 +66,7 @@ const SkinReviewsDisplay = ({
         console.error("Error fetching skin reviews:", error);
         alert("Failed to fetching skinreviews. Please try again.");
       });
-  });
+  }, [skinReviews]);
 
   React.useEffect(() => {
     const query = {
@@ -109,10 +111,15 @@ const SkinReviewsDisplay = ({
         {!reviewed ? (
           <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
         ) : (
-          <div>edit your review</div>
+          <div>
+            {/* name={`${item.skin_id}${user.id}`} */}
+            <Link to={`${skin_id}${user.id}`} smooth={true} duration={200}>
+              Check your own review
+            </Link>
+          </div>
         )}
         {/* <SkinImg imgUrl={activeImgUrl} /> */}
-        <SkinReviewsItem />
+        <SkinReviewsItem reviewed={reviewed} />
         <AddReviewsPopup
           addReviewOpen={addReviewOpen}
           setAddReviewOpen={setAddReviewOpen}

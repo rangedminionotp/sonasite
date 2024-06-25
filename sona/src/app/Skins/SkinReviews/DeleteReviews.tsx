@@ -1,57 +1,55 @@
 import React, { useState } from "react";
-import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
-import { gql } from "graphql-request";
-import AbilitiesContext from "../SharedContext";
+import SkinContext from "../SharedContext";
 import DeleteIcon from "@mui/icons-material/Delete";
-const TipsDelete = ({ tip }) => {
-  const { abilityTips, setabilityTips } = React.useContext(AbilitiesContext);
 
+import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { gql } from "graphql-request";
+const DeleteReviews = ({ skin_id }) => {
+  const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [showWarning, setShowWarning] = useState(false);
-
   const toggleWarning = () => {
     setShowWarning(!showWarning);
   };
 
-  const handleDelete = async () => {
+  const handleDeleteReview = async (skinId) => {
+    const client = createGraphQLClient();
     const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {
-      const mutation = gql`
+      const query = gql`
       mutation MyMutation {
-        deleteTips(ability_tip_id: "${tip.tip_id}", owner_id: "${tip.ownerId}") {
-          ability_id
-          date
-          description
-          downvotes
-          edited
-          ownerId
-          ownerName
-          tip_id
-          upvotes
-          version
+        deleteSkinReview(
+          owner_id: "${user.id}"
+          skin_id: "${skinId}"
+        ) {
+          data {
+            date
+            description
+          }
+          id
+          owner_id
+          owner_name
+          rating
+          skin_id
         }
       }
     `;
-      await graphQLClient.request(mutation);
-      // maybe loop through and find tip id?
-      if (abilityTips) {
-        const newAbilityTips = abilityTips.filter((item) => {
-          return item.tip_id !== tip.tip_id;
-        });
-        setabilityTips(newAbilityTips);
+      const response = await graphQLClient.request(query);
+      if (skinReviews) {
+        const newReviews = skinReviews.filter(
+          (review) => review.owner_id !== user.id
+        );
+        setSkinReviews(newReviews);
       }
     } catch (error) {
-      console.log("error deleting tip:", error);
+      console.error("Error deleting review:", error);
     }
   };
-
   const confirmDelete = () => {
-    // need to trigger the whole ability tips re render on delete
-    handleDelete();
-    setShowWarning(false); // Hide the warning box after delete action
+    handleDeleteReview(skin_id);
+    setShowWarning(false);
   };
-
   return (
     <div className="inline-block relative">
       <span
@@ -86,4 +84,4 @@ const TipsDelete = ({ tip }) => {
   );
 };
 
-export default TipsDelete;
+export default DeleteReviews;
