@@ -22,8 +22,8 @@ const TipsDisplay = ({ index }) => {
   const tipsPerPage = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [currentTips, setCurrentTips] = useState([]);
-  // const [upvote, setUpvote] = React.useState<boolean>(false);
-  // const [downvote, setDownvote] = React.useState<boolean>(true);
+  const [isPopularityAsc, setIsPopularityAsc] = useState(true);
+  const [isVotesAsc, setIsVotesAsc] = useState(true);
 
   useEffect(() => {
     if (abilityTips) {
@@ -120,6 +120,25 @@ const TipsDisplay = ({ index }) => {
     setIsDownvotesAsc(!isDownvotesAsc);
   };
 
+  const sortByPopularity = () => {
+    const sorted = [...abilityTips].sort((a, b) => {
+      const popularityComparison =
+        b.upvotes - a.upvotes + (b.downvotes - a.downvotes);
+      return isPopularityAsc ? popularityComparison : -popularityComparison;
+    });
+    setabilityTips(sorted);
+    setIsPopularityAsc(!isPopularityAsc);
+  };
+
+  const sortByVotes = () => {
+    const sorted = [...abilityTips].sort((a, b) => {
+      const votesComparison =
+        b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
+      return isVotesAsc ? votesComparison : -votesComparison;
+    });
+    setabilityTips(sorted);
+    setIsVotesAsc(!isVotesAsc);
+  };
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
       <div className="flex flex-col md:flex-row md:justify-between mb-4">
@@ -128,6 +147,18 @@ const TipsDisplay = ({ index }) => {
           className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Sort by Date
+        </Button>
+        <Button
+          onClick={sortByVotes}
+          className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Sort by Votes
+        </Button>
+        <Button
+          onClick={sortByPopularity}
+          className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Sort by Popularity
         </Button>
         <Button
           onClick={sortByUpvotes}
