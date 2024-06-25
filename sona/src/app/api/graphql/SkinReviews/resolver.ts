@@ -25,4 +25,8 @@ export class SkinReviewsResolver{
     async createSkinReviewsReviewed(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string, @Arg('skin_reviews_id') skin_reviews_id: string): Promise<SkinReviewsReviewed>{
         return new SkinReviewsService().createSkinReviewsReviewed(skin_id, owner_id, skin_reviews_id)
     }
+    @Mutation(()=>SkinReviewsInfo)
+    async deleteSkinReview(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string): Promise<SkinReviewsInfo>{
+        return new SkinReviewsService().deleteSkinReviews(owner_id,skin_id )
+    }
 }

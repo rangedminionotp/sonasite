@@ -99,12 +99,12 @@ export class SkinReviewsService {
         return SkinReviewsReviewed
     }
     public async deleteSkinReviews(owner_id: string, skin_id: string): Promise<SkinReviewsInfo>{
-        const deleteQuery = `DELETE FROM SkinReviews WHERE owner_id = $1 AND skin_id = $2`
+        const deleteQuery = `DELETE FROM SkinReviews WHERE owner_id = $1 AND skin_id = $2 RETURNING *`
         const query = {
             text: deleteQuery,
             values: [owner_id, skin_id]
-        }
-        const { rows } = await pool.query(query)
+        } 
+        const { rows } = await pool.query(query)  
         const deleteReview: SkinReviewsInfo = {
             id: rows[0].id,
             owner_id: rows[0].owner_id,
