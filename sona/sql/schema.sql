@@ -60,5 +60,6 @@ CREATE TABLE SkinReviews (
 -- Create SkinReviews reviewed table
 CREATE TABLE SkinReviewsReviewed (
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    owner_id UUID REFERENCES Users(id)
+    owner_id UUID REFERENCES Users(id),
+    skin_reviews_id UUID REFERENCES SkinReviews(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

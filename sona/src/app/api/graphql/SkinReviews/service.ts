@@ -84,17 +84,36 @@ export class SkinReviewsService {
         return skinReviewsInfo
     } 
 
-    public async createSkinReviewsReviewed(skin_id: string, owner_id: string): Promise<SkinReviewsReviewed>{
-        const insert = `INSERT INTO SkinReviewsReviewed (skin_id, owner_id) VALUES ($1, $2) RETURNING *`
+    public async createSkinReviewsReviewed(skin_id: string, owner_id: string, skin_reviews_id: string): Promise<SkinReviewsReviewed>{
+        const insert = `INSERT INTO SkinReviewsReviewed (skin_id, owner_id, skin_reviews_id) VALUES ($1, $2, $3) RETURNING *`
         const query = {
             text: insert,
-            values: [skin_id, owner_id]
+            values: [skin_id, owner_id, skin_reviews_id]
         }
         const { rows } = await pool.query(query)
         const SkinReviewsReviewed: SkinReviewsReviewed = {
             skin_id: rows[0].skin_id,
-            owner_id: rows[0].owner_id
+            owner_id: rows[0].owner_id,
+            skin_reviews_id: rows[0].skin_reviews_id
         }
         return SkinReviewsReviewed
+    }
+    public async deleteSkinReviews(owner_id: string, skin_id: string): Promise<SkinReviewsInfo>{
+        const deleteQuery = `DELETE FROM SkinReviews WHERE owner_id = $1 AND skin_id = $2`
+        const query = {
+            text: deleteQuery,
+            values: [owner_id, skin_id]
+        }
+        const { rows } = await pool.query(query)
+        const deleteReview: SkinReviewsInfo = {
+            id: rows[0].id,
+            owner_id: rows[0].owner_id,
+            skin_id: rows[0].skin_id,
+            rating: rows[0].rating,
+            data: rows[0].data,
+            voted: rows[0].voted,
+            owner_name: rows[0].owner_name
+        }
+        return deleteReview
     }
 }

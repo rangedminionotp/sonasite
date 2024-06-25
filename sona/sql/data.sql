@@ -113,24 +113,15 @@ VALUES
     ('ef2c0fd0-9b10-4683-8e94-288ba0f1efe1', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '812487b4-1068-4e43-b732-4c7897f3a292', 'Molly Member', 5, '{"description": "Exceptional skin!", "date": "2024-06-25T18:15:00.000Z"}'),
     ('e48a9976-368f-43f6-b652-a899d1e36a0f', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '588737b6-3d26-4545-80a8-7a16965edeaf', 'Molly Member', 4, '{"description": "Very good and reliable", "date": "2024-07-15T20:30:15.000Z"}'),
     ('37c771f6-d927-40cb-a119-c5eec0ee9a51', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04', '5715006a-625d-4efd-9852-b6bdb58d5ed6', 'Molly Member', 4, '{"description": "Solid choice", "date": "2024-08-10T22:45:30.000Z"}');
-DELETE FROM SkinReviewsReviewed;
--- INSERT INTO SkinReviewsReviewed (skin_id, owner_id) 
--- VALUES 
---     ('ec724962-80b6-48a4-a638-ce7abce59808', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('d7564774-c5cf-433e-a474-4ca2f5ca52ae', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('812487b4-1068-4e43-b732-4c7897f3a292', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('588737b6-3d26-4545-80a8-7a16965edeaf', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04'),
---     ('5715006a-625d-4efd-9852-b6bdb58d5ed6', '7b8b1684-ce6c-4c4d-bb84-fa518bac7e04');
+DELETE FROM SkinReviewsReviewed; 
 
 -- First, we need to retrieve the distinct skin_id and owner_id pairs from the SkinReviews table.
 WITH ReviewPairs AS (
-    SELECT DISTINCT skin_id, owner_id
+    SELECT DISTINCT skin_id, owner_id, id
     FROM SkinReviews
 )
 
 -- Now, we insert these pairs into the SkinReviewsReviewed table.
-INSERT INTO SkinReviewsReviewed (skin_id, owner_id)
-SELECT skin_id, owner_id
+INSERT INTO SkinReviewsReviewed (skin_id, owner_id, skin_reviews_id)
+SELECT skin_id, owner_id, id
 FROM ReviewPairs;

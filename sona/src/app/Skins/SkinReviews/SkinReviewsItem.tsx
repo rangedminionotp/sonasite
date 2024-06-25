@@ -40,8 +40,6 @@ const SkinReviewsItem = () => {
     }
   };
   const ReviewList = ({ currentReviews }) => {
-    console.log("currentReviews:", currentReviews);
-
     return (
       <div>
         {currentReviews && currentReviews.length > 0 ? (
