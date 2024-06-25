@@ -12,8 +12,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export default function SkinItemRating({ rating, readOnlyBoolean }) {
-  const { setAddReviewsRating } = React.useContext(SkinContext);
+export default function SkinItemRating({ setRating, rating, readOnlyBoolean }) {
   return (
     <Box
       sx={{
@@ -30,7 +29,7 @@ export default function SkinItemRating({ rating, readOnlyBoolean }) {
           onChange={
             !readOnlyBoolean
               ? (event, newValue) => {
-                  setAddReviewsRating(newValue);
+                  setRating(newValue);
                 }
               : null
           }

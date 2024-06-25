@@ -19,8 +19,9 @@ const AddReviewsPopup = ({
   skin_id,
 }) => {
   const [description, setDescription] = React.useState("");
-  const { addReviewsRating, skinReviews, setSkinReviews, setAddReviewsRating } =
-    React.useContext(SkinContext);
+  const [addReviewsRating, setAddReviewsRating] = React.useState(0);
+
+  const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
@@ -142,7 +143,11 @@ const AddReviewsPopup = ({
               Add Skin Review
             </Typography>
             <Typography id="modal-desc" textColor="text.tertiary">
-              <SkinItemRating rating={0} readOnlyBoolean={false} />
+              <SkinItemRating
+                setRating={setAddReviewsRating}
+                rating={0}
+                readOnlyBoolean={false}
+              />
               <SkinImg imgUrl={activeImgUrl} />
             </Typography>
             <form onSubmit={handleSubmit}>
