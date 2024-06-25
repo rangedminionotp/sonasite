@@ -12,7 +12,6 @@ const Skins = () => {
   const [skin, setSkin] = React.useState(null);
   const [skinReviews, setSkinReviews] = React.useState<SkinOverView[]>(null);
   const { fetchedData, setFetchedData } = React.useContext(DataContext);
-  const [addReviewsRating, setAddReviewsRating] = React.useState(0);
   React.useEffect(() => {
     const query = {
       query: `
@@ -73,8 +72,6 @@ const Skins = () => {
         setSkins,
         skinReviews,
         setSkinReviews,
-        addReviewsRating,
-        setAddReviewsRating,
       }}
     >
       <div name="skins" className="w-full h-screen relative">

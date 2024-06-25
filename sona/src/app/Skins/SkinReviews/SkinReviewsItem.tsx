@@ -17,6 +17,9 @@ const SkinReviewsItem = ({ reviewed }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [editReviewOpen, setEditReviewOpen] = React.useState<boolean>(false);
+
+  const [editDescription, setEditDescription] = React.useState<string>("");
+  const [editReviewsRating, setEditReviewsRating] = React.useState(0);
   const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
@@ -44,6 +47,41 @@ const SkinReviewsItem = ({ reviewed }) => {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  // edit skin reviews
+  const handleEditReview = async (id) => {
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
+    try {
+      const mutation = gql`
+      mutation MyMutation { 
+  editSkinReview(input: {id: "${id}", data: {description: "${editDescription}"}, rating: ${editReviewsRating}}) {
+    id
+    owner_id
+    owner_name
+    rating
+    skin_id
+    data {
+      date
+      description
+    }
+  }
+}`;
+      const response = await graphQLClient.request(mutation);
+      if (skinReviews) {
+        const editedReview = response.editSkinReview;
+        const updatedReviews = skinReviews.map((review) => {
+          if (review.id === editedReview.id) {
+            return editedReview;
+          }
+          return review;
+        });
+        setSkinReviews(updatedReviews);
+      }
+    } catch (error) {
+      console.log("error editing skin review", error);
+    }
+  };
   return (
     <div>
       <div>
@@ -65,7 +103,11 @@ const SkinReviewsItem = ({ reviewed }) => {
                 )
               </div>
               <div className="mb-2">
-                <SkinItemRating rating={item.rating} readOnlyBoolean={true} />
+                <SkinItemRating
+                  setRating={setEditReviewsRating}
+                  rating={item.rating}
+                  readOnlyBoolean={item.owner_id === user.id ? false : true}
+                />
               </div>
               <div className="text-gray-800">{item.data.description}</div>
 
