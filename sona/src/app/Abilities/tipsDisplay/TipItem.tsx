@@ -27,7 +27,12 @@ const TipItem = ({ tip }) => {
   const [upvote, setUpvote] = React.useState<boolean>(false);
   // if downvote = true, then current tip is not downvoted;
   // if downvote = false, then current tip is downvoted;
-  const [downvote, setDownvote] = React.useState<boolean>(true);
+  const [downvote, setDownvote] = React.useState<boolean>(false);
+
+  const [votes, setVotes] = React.useState<number>(0
+  );
+  const [upVotes, setUpVotes] = React.useState<number>(0);
+  const [downVotes, setDownVotes] = React.useState<number>(0);
 
   const user = getUserFromLocalStorage();
   // const [downvotes, setDownvotes] = React.useState(tip.downvotes);
@@ -42,12 +47,17 @@ const TipItem = ({ tip }) => {
       if (voted === 1) {
         setUpvote(true);
       } else if (voted === 0) {
-        setDownvote(false);
+        setDownvote(true);
       } else if (voted === -1) {
         setUpvote(false);
-        setDownvote(true);
+        setDownvote(false);
       }
     };
+    setVotes(tip.upvotes > tip.downvotes
+      ? tip.upvotes - tip.downvotes
+      : tip.upvotes + tip.downvotes)
+    setUpvotes(votes + 1)
+    setDownVotes(votes - 1)
     seeVoteStatus();
     setLoading(false);
   }, [upvote, downvote]);
@@ -57,6 +67,33 @@ const TipItem = ({ tip }) => {
   };
   const handleInputChange = (event) => {
     setEditDescription(event.target.value);
+  };
+
+  const handleVote = async (type, tipId, upvotes, downvotes) => {
+    try {
+      const user = getUserFromLocalStorage();
+      const bearerToken = user?.accessToken;
+
+      if (!bearerToken) {
+        throw new Error("User not authenticated");
+      }
+
+      const graphQLClient = createGraphQLClient(bearerToken);
+      const voted = await checkIfVoted(graphQLClient, tipId, user.id);
+      if (type === "upvote") {
+        // vote state of current tip is not upvoted
+      if (voted !== 1) {
+        const updatedTip = await updateUpvotes(
+          graphQLClient,
+          tipId,
+          upvotes 
+        );
+
+      } else {
+      }
+    } catch (error) {
+      console.log("error voting:", error);
+    }
   };
 
   // edit tip
@@ -111,169 +148,6 @@ const TipItem = ({ tip }) => {
       toggleEditing();
     } catch (error) {
       console.log("error editing:", error);
-    }
-  };
-
-  // upvote function
-  const handleUpvote = async (tipId, upvotes, downvotes) => {
-    try {
-      const user = getUserFromLocalStorage();
-      const bearerToken = user?.accessToken;
-
-      if (!bearerToken) {
-        throw new Error("User not authenticated");
-      }
-
-      const graphQLClient = createGraphQLClient(bearerToken);
-      const voted = await checkIfVoted(graphQLClient, tipId, user.id);
-
-      // vote state of current tip is not upvoted
-      if (voted !== 1) {
-        const updatedTip = await updateUpvotes(
-          graphQLClient,
-          tipId,
-          upvotes + 1
-        );
-
-        // if upvote update success, update the state of current ability tips,
-        // to re-render the change of votes
-        if (updatedTip) {
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
-            )
-          );
-        }
-
-        // if vote state of current tip is downvoted
-        if (voted === 0) {
-          const updatedDownTip = await updateDownvotes(
-            graphQLClient,
-            tipId,
-            downvotes - 1
-          );
-          if (updatedDownTip) {
-            setabilityTips((prevTips) =>
-              prevTips.map((tip) =>
-                tip.tip_id === updatedDownTip.tip_id ? updatedDownTip : tip
-              )
-            );
-          }
-          // if upvote update success, update the state of current ability tips,
-          // to re-render the change of votes
-          await updateVotes(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
-
-          // set upvote => true (tip will display that upvote is active)
-          setUpvote(true);
-          // set downvote => true (tip will display that downvote is not active)
-          setDownvote(true);
-        }
-
-        // if current vote state of tip is not voted by upvote or downvote
-        else if (voted === -1) {
-          await createTipVote(graphQLClient, tipId, user.id, 1); // Vote = 1 for upvote
-          // set upvote => true (tip will display that upvote is active)
-          setUpvote(true);
-        }
-      } // if current vote state of tip is upvoted
-      else if (voted === 1) {
-        console.log("upvote status", upvote);
-        const updatedUpvotes = await updateUpvotes(
-          graphQLClient,
-          tipId,
-          upvotes - 1
-        );
-        if (updatedUpvotes) {
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip_id === updatedUpvotes.tip_id ? updatedUpvotes : tip
-            )
-          );
-        }
-        // delete the tip vote, so that the current user is not voted for current tip
-        await deleteTipVote(graphQLClient, tipId, user.id);
-        // set upvote => false (tip will display that upvote is not active)
-        setUpvote(false);
-      }
-    } catch (error) {
-      console.error("Error upvoting:", error);
-    }
-  };
-
-  const handleDownvote = async (tipId, downvotes, upvotes) => {
-    try {
-      const user = getUserFromLocalStorage();
-      const bearerToken = user?.accessToken;
-      if (!bearerToken) {
-        throw new Error("User not authenticated");
-      }
-
-      const graphQLClient = createGraphQLClient(bearerToken);
-      const voted = await checkIfVoted(graphQLClient, tipId, user.id);
-
-      // if current vote state of tip is not downvoted
-      if (voted !== 0) {
-        const updatedTip = await updateDownvotes(
-          graphQLClient,
-          tipId,
-          downvotes + 1
-        );
-        // if downvote update success, update the state of current ability tips,
-        // to re-render the change of votes
-        if (updatedTip) {
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip_id === updatedTip.tip_id ? updatedTip : tip
-            )
-          );
-        }
-        // set downvote => false (tip will display that downvote is active)
-        setDownvote(false);
-        // set upvote => false (tip will display that upvote is not active)
-        setUpvote(false);
-
-        // if current vote state of tip is upvoted
-        if (voted === 1) {
-          const updatedDownTip = await updateUpvotes(
-            graphQLClient,
-            tipId,
-            upvotes - 1
-          );
-          // if downvote update success, update the state of current ability tips,
-          // to re-render the change of votes
-          if (updatedDownTip) {
-            setabilityTips((prevTips) =>
-              prevTips.map((tip) =>
-                tip.tip_id === updatedDownTip.tip_id ? updatedDownTip : tip
-              )
-            );
-          }
-
-          await updateVotes(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
-        }
-        // if current vote state of tip is not voted by upvote or downvote
-        else if (voted === -1) {
-          await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
-        }
-      } else if (voted === 0) {
-        console.log("downvote status", downvote);
-        const updatedDownTip = await updateDownvotes(
-          graphQLClient,
-          tipId,
-          downvotes - 1
-        );
-        if (updatedDownTip) {
-          setabilityTips((prevTips) =>
-            prevTips.map((tip) =>
-              tip.tip_id === updatedDownTip.tip_id ? updatedDownTip : tip
-            )
-          );
-        }
-        await deleteTipVote(graphQLClient, tipId, user.id);
-        setDownvote(true);
-      }
-    } catch (error) {
-      console.error("Error downvoting:", error);
     }
   };
 
@@ -339,23 +213,19 @@ const TipItem = ({ tip }) => {
         <Tooltip title={`Upvotes: ${tip.upvotes}, Downvotes: ${tip.downvotes}`}>
           <div className="flex items-center space-x-1 cursor-pointer">
             <span
-              onClick={() =>
-                handleUpvote(tip.tip_id, tip.upvotes, tip.downvotes)
-              }
-              className={`${
-                upvote == true ? "text-green-600" : "text-gray-300"
-              }`}
+              // onClick={() =>
+              //   handleUpvote(tip.tip_id, tip.upvotes, tip.downvotes)
+              // }
+              className={`${upvote ? "text-green-600" : "text-gray-300"}`}
             >
               ▲
             </span>
-            <span className="text-gray-300">{tip.upvotes - tip.downvotes}</span>
+            <span className="text-gray-300">{votes}</span>
             <span
-              onClick={() =>
-                handleDownvote(tip.tip_id, tip.downvotes, tip.upvotes)
-              }
-              className={`${
-                downvote == false ? "text-red-600" : "text-gray-300"
-              }`}
+              // onClick={() =>
+              //   handleDownvote(tip.tip_id, tip.downvotes, tip.upvotes)
+              // }
+              className={`${downvote ? "text-red-600" : "text-gray-300"}`}
             >
               ▼
             </span>
