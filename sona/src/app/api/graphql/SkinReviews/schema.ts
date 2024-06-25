@@ -69,6 +69,18 @@ export class SkinReviewsAdd {
 }
 
 @ObjectType()
+@InputType('SkinReviewsEdit')
+export class SkinReviewsEdit {
+    @Field()
+    @Matches(uuid)
+    id!: string;
+    @Field(() => SkinReviewsDataInput)
+    data!: SkinReviewsDataInput;
+    @Field(type => Float)
+    rating!: number
+}
+
+@ObjectType()
 export class SkinReviewsReviewed {
     @Field() 
     @Matches(uuid)

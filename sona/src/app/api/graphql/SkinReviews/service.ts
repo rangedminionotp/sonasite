@@ -1,5 +1,5 @@
 import { pool } from '@/db'
-import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput, SkinReviewsReviewed} from './schema'
+import { SkinReviewsInfo, SkinReviewsVote, SkinReviewsData, SkinReviewsAdd, SkinReviewsDataInput, SkinReviewsReviewed, SkinReviewsEdit} from './schema'
 
 export class SkinReviewsService {
     public async checkIfReviewed(owner_id: string, tip_id: string): Promise<boolean>{
@@ -115,5 +115,24 @@ export class SkinReviewsService {
             owner_name: rows[0].owner_name
         }
         return deleteReview
+    }
+    public async editSkinReviews(input: SkinReviewsEdit): Promise<SkinReviewsInfo>{
+        const { id, rating, data } = input
+        const update = `UPDATE SkinReviews SET rating = $1, data = jsonb_set(jsonb_set(data, '{description}', $2::jsonb, false), '{date}', $3::jsonb, false) WHERE id = $4 RETURNING *`
+        const query = {
+            text: update,
+            values: [rating, `"${data.description}"`, `"${new Date().toISOString()}"`, id]
+        }
+        const { rows } = await pool.query(query)
+        const editReview: SkinReviewsInfo = {
+            id: rows[0].id,
+            owner_id: rows[0].owner_id,
+            skin_id: rows[0].skin_id,
+            rating: rows[0].rating,
+            data: rows[0].data,
+            voted: rows[0].voted,
+            owner_name: rows[0].owner_name
+        }
+        return editReview
     }
 }
