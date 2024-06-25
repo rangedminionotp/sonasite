@@ -9,6 +9,7 @@ import SkinReviewsItemDisplay from "./SkinReviewsItemDisplay";
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 import EditReviewsBtn from "./EditReviewsBtn";
 import DeleteReviews from "./DeleteReviews";
+import EditReviewsPopup from "./EditReviewsPopup";
 
 const SkinReviewsItem = ({ reviewed }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
@@ -48,40 +49,6 @@ const SkinReviewsItem = ({ reviewed }) => {
     }
   };
 
-  // edit skin reviews
-  const handleEditReview = async (id) => {
-    const bearerToken = user?.accessToken;
-    const graphQLClient = createGraphQLClient(bearerToken);
-    try {
-      const mutation = gql`
-      mutation MyMutation { 
-  editSkinReview(input: {id: "${id}", data: {description: "${editDescription}"}, rating: ${editReviewsRating}}) {
-    id
-    owner_id
-    owner_name
-    rating
-    skin_id
-    data {
-      date
-      description
-    }
-  }
-}`;
-      const response = await graphQLClient.request(mutation);
-      if (skinReviews) {
-        const editedReview = response.editSkinReview;
-        const updatedReviews = skinReviews.map((review) => {
-          if (review.id === editedReview.id) {
-            return editedReview;
-          }
-          return review;
-        });
-        setSkinReviews(updatedReviews);
-      }
-    } catch (error) {
-      console.log("error editing skin review", error);
-    }
-  };
   return (
     <div>
       <div>
@@ -114,6 +81,17 @@ const SkinReviewsItem = ({ reviewed }) => {
               {reviewed && user.id === item.owner_id ? (
                 <div className="flex justify-center space-x-1 cursor-pointer">
                   <EditReviewsBtn setEditReviewOpen={setEditReviewOpen} />
+                  <EditReviewsPopup
+                    editReviewOpen={editReviewOpen}
+                    setEditReviewOpen={setEditReviewOpen}
+                    activeImgUrl={item.imgUrl}
+                    review_id={item.id}
+                    curr_review={item}
+                    editDescription={item.data.description}
+                    setEditDescription={setEditDescription}
+                    editReviewsRating={item.rating}
+                    setEditReviewsRating={setEditReviewsRating}
+                  />
                   <DeleteReviews skin_id={item.skin_id} />
                 </div>
               ) : null}
