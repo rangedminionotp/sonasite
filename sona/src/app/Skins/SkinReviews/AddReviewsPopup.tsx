@@ -9,7 +9,7 @@ import Button from "@mui/joy/Button";
 import SkinContext from "../SharedContext";
 import SkinImg from "./SkinImg";
 import { gql } from "graphql-request";
-
+import { SkinReviewsInfo } from "@/app/api/graphql/SkinReviews/schema";
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 
 const AddReviewsPopup = ({
@@ -24,78 +24,92 @@ const AddReviewsPopup = ({
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const user = getUserFromLocalStorage();
-    const bearerToken = user?.accessToken;
     if (!user) {
       alert("Please login to submit tips");
       router.push("/login");
       return;
     }
-    // add review
-    const query = {
-      query: `mutation MyMutation {
-  addReview(
-    input: {owner_id: "${user.id}", skin_id: "${skin_id}", data: {description: "${description}"}, rating: ${addReviewsRating}, owner_name: "${user.name}"}
-  ) {
-    data {
-      date
-      description
-    }
-    id
-    owner_id
-    owner_name
-    rating
-    skin_id
-  }
-}`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(query),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.errors) {
-          alert("Error adding skin reviews, please try again");
-        } else {
-          const newReview = json.data.addReview;
-          const newSkinReviews = [...skinReviews, newReview];
-          setSkinReviews(newSkinReviews);
-          setDescription((prevDescription) => "");
-          setAddReviewsRating(0);
+    let newAddId = "";
+
+    const query = `
+    mutation AddReview {
+      addReview(
+        input: {
+          owner_id: "${user.id}",
+          skin_id: "${skin_id}",
+          data: { description: "${description}" },
+          rating: ${addReviewsRating},
+          owner_name: "${user.name}"
         }
+      ) {
+        data {
+          date
+          description
+        }
+        id
+        owner_id
+        owner_name
+        rating
+        skin_id
+      }
+    }
+  `;
+
+    try {
+      const response = await fetch("/api/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
       });
 
-    // add reviews vote (quick way to track if user has reviewed this skin)
-    const votes = {
-      query: `
-        mutation MyMutation {
-          createSkinReviewsReviewed(skin_id: "${skin_id}", owner_id: "${user.id}") {
-            skin_id
-            owner_id
-          }
-        }`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(votes),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.errors) {
-          alert("Error adding skin reviews, please try again");
-        } else {
+      const json = await response.json();
+
+      if (json.errors) {
+        alert("Error adding skin reviews, please try again");
+        return;
+      }
+
+      const newReview = json.data.addReview;
+      const newSkinReviews = [...skinReviews, newReview];
+      setDescription("");
+      setAddReviewsRating(0);
+      const votesQuery = `
+      mutation CreateSkinReviewsReviewed {
+        createSkinReviewsReviewed(
+          skin_id: "${skin_id}",
+          owner_id: "${user.id}",
+          skin_reviews_id: "${newReview.id}"
+        ) {
+          skin_id
+          owner_id
+          skin_reviews_id
         }
+      }
+    `;
+
+      const votesResponse = await fetch("/api/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: votesQuery }),
       });
-    setAddReviewOpen(false);
+
+      const votesJson = await votesResponse.json();
+      if (votesJson.errors) {
+        alert("Error adding skin reviews, please try again");
+      } else {
+        setAddReviewOpen(false);
+      }
+    } catch (error) {
+      alert("An error occurred. Please try again.");
+      console.error("Error submitting review:", error);
+    }
   };
 
   return (

@@ -22,7 +22,7 @@ export class SkinReviewsResolver{
         return new SkinReviewsService().checkIfReviewed(owner_id, skin_id)
     }
     @Mutation(()=>SkinReviewsReviewed)
-    async createSkinReviewsReviewed(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string): Promise<SkinReviewsReviewed>{
-        return new SkinReviewsService().createSkinReviewsReviewed(skin_id, owner_id)
+    async createSkinReviewsReviewed(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string, @Arg('skin_reviews_id') skin_reviews_id: string): Promise<SkinReviewsReviewed>{
+        return new SkinReviewsService().createSkinReviewsReviewed(skin_id, owner_id, skin_reviews_id)
     }
 }

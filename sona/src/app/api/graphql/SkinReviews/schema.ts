@@ -76,4 +76,7 @@ export class SkinReviewsReviewed {
     @Field()
     @Matches(uuid)
     owner_id!: string; 
+    @Field()
+    @Matches(uuid)
+    skin_reviews_id!: string;
 }
