@@ -48,7 +48,9 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((json) => {
         if (json.errors) {
           alert("Error logging in, please try again");

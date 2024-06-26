@@ -82,7 +82,9 @@ export class AbilityTipsService {
     }
 
     public async createAbilityTip(owner_id: string, owner_name: string, description: string, ability_id: string, version: string): Promise<AbilityTipsInfo> {
-        const data : AbilityTipsData = {
+        console.log('ownerid', owner_id)
+        
+        const data: AbilityTipsData = {
             'description': description,
             'date': new Date().toISOString(),
             'version': version

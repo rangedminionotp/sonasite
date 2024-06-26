@@ -21,5 +21,5 @@ export class User {
   accessToken!: string
   @Field()
   @Matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
-  email!: string
+  email!: string 
 }

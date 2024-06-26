@@ -21,37 +21,38 @@ const valid = bcrypt.compareSync(credentials.password, user.password);
 return new Promise((resolve, reject) => {
   if (valid) {
     const accessToken = jwt.sign(
-      { id: userid, email: user.email, name: user.name }, 
+      { id: userid, email: user.email, name: user.name, roles: user.roles }, 
       secrets.accessToken,
       { expiresIn: '30m', algorithm: 'HS256' }
     );
-    resolve({ id: userid, name: user.name, accessToken: accessToken, email: user.email });
+    return resolve({ id: userid, name: user.name, accessToken: accessToken, email: user.email, roles: user.roles });
   } else { 
-    reject(new Error("Unauthorized"));
+    return reject(new Error("Unauthorized"));
   }
 });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async check(authHeader?: string, roles?: string[]): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { 
       if (!authHeader) {
-        reject(new Error("Unauthorized"));
+        return reject(new Error("Unauthorized"));
       } else {
         const tokens = authHeader.split(' ');
         if (tokens.length !== 2 || tokens[0] !== 'Bearer') {
-          reject(new Error("Invalid token format"));
+          console.log('invalid token', tokens[0], tokens[1])
+          return reject(new Error("Invalid token format"));
         }
-        
+
         jwt.verify(tokens[1], secrets.accessToken, (err: any, user: any) => {
           if (err) {
-            reject(new Error("Invalid token"));
+            return reject(new Error("Invalid token"));
           } else if (roles && roles.length > 0) {
             if (!user.roles || !roles.some(role => user.roles.includes(role))) {
-              reject(new Error("Unauthorized"));
+              return reject(new Error("Unauthorized"));
             }
           }
-          resolve({ id: user.id, email: user.email, name: user.name });
+          return resolve({ id: user.id, email: user.email, name: user.name });
         });
       }
     });
