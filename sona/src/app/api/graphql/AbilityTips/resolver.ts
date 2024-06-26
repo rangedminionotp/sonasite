@@ -24,29 +24,19 @@ export class AbilityTipsResolver {
         @Arg("owner_id") owner_id: string
     ): Promise<AbilityTipsInfo[]>{
         return new AbilityTipsService().getTipsByOwnerId(owner_id)
-    }
-    // // @Authorized("member")
-    // @Mutation(() => AbilityTipsInfo)
-    // async createAbilityTip(
-    //     @Arg("owner_name") owner_name: string,
-    //     @Arg("description") description: string,
-    //     @Arg("ability_id") ability_id: string,
-    //     @Arg("version") version: string,
-    //     @Ctx() request: NextApiRequest
-    // ): Promise<AbilityTipsInfo> {
-    //   return new AbilityTipsService().createAbilityTip(request.user.id, owner_name, description, ability_id, version);
-    // }
+    } 
 
-        // @Authorized("member") 
+      @Authorized("member") 
     @Mutation(() => AbilityTipsInfo)
     async createAbilityTip(
         @Arg("owner_name") owner_name: string,
         @Arg("description") description: string,
         @Arg("ability_id") ability_id: string,
         @Arg("version") version: string,
-        @Arg("owner_id") owner_id: string
-    ): Promise<AbilityTipsInfo> {
-      return new AbilityTipsService().createAbilityTip(owner_id, owner_name, description, ability_id, version);
+        @Ctx() request: NextApiRequest
+      ): Promise<AbilityTipsInfo> {
+        console.log('request user id', request.request.user);
+      return new AbilityTipsService().createAbilityTip(request.request.user.id, owner_name, description, ability_id, version);
     }
 
 

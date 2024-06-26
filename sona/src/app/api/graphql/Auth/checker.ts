@@ -1,16 +1,16 @@
-// import { AuthChecker } from "type-graphql"
-// import type { NextApiRequest } from 'next'
-
-// import { AuthService } from "./service"
-
-// export async function authChecker(context: NextApiRequest, authHeader: string, roles: string[]): Promise<boolean> {
-//   try {
-//     context.user = await new AuthService().check(authHeader, roles)
-//   } catch (err) {
-//     return false
-//   }
-//   return true
-// }
+import { AuthChecker } from 'type-graphql';
+import type { NextApiRequest } from 'next';
+import { AuthService } from './service';
+import {headers} from 'next/headers'
+async function authChecker(req: NextApiRequest, authHeader: string, roles: string[]): Promise<boolean> {
+  try {
+    req.user = await new AuthService().check(authHeader, roles);
+    console.log('7', req.user)
+  } catch (err) {
+    return false;
+  }
+  return true;
+}
 
 // export const nextAuthChecker: AuthChecker<NextApiRequest> = async (
 //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,22 +20,13 @@
 // };
 
 
-import { AuthChecker } from 'type-graphql';
-import type { NextApiRequest } from 'next';
-import { AuthService } from './service'; // Adjust the import path as needed
 
-export async function authChecker({ req }: NextApiRequest, authHeader: string, roles: string[]): Promise<boolean> {
-  try {
-    const authService = new AuthService();
-    req.user = await authService.check(authHeader, roles);
-    return true;
-  } catch (err) {
-    console.error('Authentication error:', err);
-    return false;
+export const nextAuthChecker: AuthChecker<{ req: NextApiRequest }> = async ({ context }, roles) => {
+  const authHeader = headers().get('Authorization')
+
+  if (!authHeader) {
+    throw new Error('Authorization header is missing');
   }
-}
 
-export const nextAuthChecker: AuthChecker<NextApiRequest> = async ({ context }, roles) => {
-  const authHeader = context.req.headers.authorization || '';
   return await authChecker(context.req, authHeader, roles);
 };

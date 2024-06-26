@@ -27,8 +27,7 @@ const AddTips = ({ ability_id, version }) => {
       query: `mutation MyMutation {
   createAbilityTip(
     ability_id: "${ability_id}"
-    description: "${description}"
-    owner_id: "${user.id}"
+    description: "${description}" 
     version: "${version.slice(0, 5)}"
     owner_name: "${user.name}"
   ) {
@@ -51,7 +50,9 @@ const AddTips = ({ ability_id, version }) => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((json) => {
         if (json.errors) {
           alert("Error adding tips, please try again");
