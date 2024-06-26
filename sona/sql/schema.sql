@@ -1,4 +1,3 @@
--- Drop existing tables if they exist
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS Ability CASCADE;
 DROP TABLE IF EXISTS AbilityTips CASCADE;
@@ -6,11 +5,8 @@ DROP TABLE IF EXISTS SkinItem;
 DROP TABLE IF EXISTS SkinReviews;
 DROP TABLE IF EXISTS SkinReviewsReviewed;
 
--- Create Users table
-CREATE TABLE Users (
-    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
-    data JSONB
-);
+-- -- Create Users table
+CREATE TABLE Users (id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),data JSONB);
 
 -- Create Ability table
 CREATE TABLE Ability (

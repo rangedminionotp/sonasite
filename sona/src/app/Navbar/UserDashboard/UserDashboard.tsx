@@ -7,7 +7,7 @@ import Button from "@mui/joy/Button";
 import { IconButton } from "@mui/material";
 import LogoutBtn from "./LogoutBtn";
 import UserInfo from "./UserInfo";
-const UserDashboard = () => {
+const UserDashboard = ({ setUser }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const item = localStorage.getItem("user");
   const user = JSON.parse(item);
@@ -34,7 +34,7 @@ const UserDashboard = () => {
         >
           <div className="py-1">
             <UserInfo user={user} />
-            <LogoutBtn />
+            <LogoutBtn setUser={setUser} />
           </div>
         </div>
       )}

@@ -11,9 +11,9 @@ export class UserData {
     @Field()
     @Matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     email!: string
-    @Field()
+    @Field({ nullable: true })
     @Length(8, 16)
-    password!: string
+    password?: string
 }
 
 @ObjectType()
