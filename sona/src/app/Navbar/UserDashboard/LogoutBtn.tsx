@@ -6,14 +6,15 @@ import Button from "@mui/joy/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-const LogoutBtn = () => {
+const LogoutBtn = ({ setUser }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const logout = async () => {
-    await signOut({ redirect: false });
     localStorage.removeItem("user");
     router.push("/");
+    setUser(null);
+    await signOut({ redirect: false });
   };
   return (
     <div>

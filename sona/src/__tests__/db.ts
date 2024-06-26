@@ -1,11 +1,12 @@
-import { Pool } from 'pg';
+import {Pool} from 'pg';
 import * as fs from 'fs';
-import * as path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
-process.env.POSTGRES_DB = 'test';
+process.env.POSTGRES_DB='test';
 
 const pool = new Pool({
-  host: 'localhost',
+  host: process.env.POSTGRES_HOST,
   port: 5432,
   database: process.env.POSTGRES_DB,
   user: process.env.POSTGRES_USER,
@@ -13,38 +14,24 @@ const pool = new Pool({
 });
 
 const run = async (file: string) => {
-  try {
-    const filePath = path.resolve(__dirname, file);
-    const content = fs.readFileSync(filePath, 'utf8');
-    const statements = content
-      .split(/;\s*$/m)
-      .map(statement => statement.trim())
-      .filter(statement => statement.length > 0);
-
-    for (const statement of statements) {
+  const content = fs.readFileSync(file, 'utf8');
+  const statements = content.split(/\r?\n/);
+  for (const statement of statements) {
+    if (statement) {
       await pool.query(statement);
     }
-  } catch (error) {
-    console.error(`Error running SQL file ${file}:`, error);
   }
 };
 
 const reset = async () => {
-  try {
-    await run('sql/schema.sql');
-    await run('sql/data.sql');
-  } catch (error) {
-    console.error('Error resetting the database:', error);
-  }
+  await run('sql/schema.sql');
+  await run('sql/data.sql');
 };
 
-const shutdown = async () => {
-  try {
-    await pool.end();
+const shutdown = () => {
+  pool.end(() => {
     // console.log('pool has ended');
-  } catch (error) {
-    console.error('Error shutting down the pool:', error);
-  }
+  });
 };
 
-export { pool, reset, shutdown };
+export {pool, reset, shutdown};

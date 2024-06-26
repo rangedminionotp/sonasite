@@ -15,7 +15,6 @@ const Navbar = () => {
   const item = localStorage.getItem("user");
   const userLogin = JSON.parse(item);
   const [user, setUser] = useState(userLogin);
-
   useEffect(() => {
     if (status === "authenticated" && session.user) {
       const data = {
@@ -25,6 +24,32 @@ const Navbar = () => {
       console.log("User is authenticated and session data is available:", data);
       localStorage.setItem("user", JSON.stringify(data));
       setUser(data);
+      const query = {
+        query: `mutation addUser { addUser(user: {
+        name:"${session.user.name}",
+        email: "${session.user.email}", 
+        roles: ["member"]
+      })
+      {id, name, email}}`,
+      };
+      fetch("/api/graphql", {
+        method: "POST",
+        body: JSON.stringify(query),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          if (json.errors) {
+            console.log(json.errors);
+            alert("Error signing up with gmail, please try again");
+          } else {
+            console.log("return value", json.data.addUser);
+          }
+        });
     } else if (status === "unauthenticated") {
       console.log(
         "User is not authenticated, removing user data from localStorage"
@@ -52,7 +77,7 @@ const Navbar = () => {
       </div>
       <ul className="hidden md:flex justify-between items-center">
         <div className="dark:text-gray-300 px-3 py-2 hover:cursor-pointer">
-          {!user ? <LoginBtn /> : <UserDashboard />}
+          {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
         </div>
         <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
           <Link to="intro" smooth={true} duration={200}>
@@ -103,7 +128,7 @@ const Navbar = () => {
             Skins
           </Link>
         </li>
-        {!user ? <LoginBtn /> : <UserDashboard />}
+        {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
       </ul>
     </div>
   );

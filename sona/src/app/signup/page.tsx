@@ -70,10 +70,12 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        return res.json();
+      })
       .then((json) => {
         if (json.errors) {
-          setError("Error signing up, please try again");
+          alert("Error signing up, please try again");
         } else {
           localStorage.setItem("signup", "true");
           setSuccess(true);
