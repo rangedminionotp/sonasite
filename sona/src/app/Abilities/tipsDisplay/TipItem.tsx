@@ -39,15 +39,16 @@ const TipItem = ({ tip }) => {
     const seeVoteStatus = async () => {
       const bearerToken = user?.accessToken;
       const graphQLClient = createGraphQLClient(bearerToken);
-      const voted = await checkIfVoted(graphQLClient, tip.tip_id, user.id);
-      console.log("voted", voted);
-      if (voted === 1) {
-        setUpvote(true);
-      } else if (voted === 0) {
-        setDownvote(false);
-      } else if (voted === -1) {
-        setUpvote(false);
-        setDownvote(true);
+      if (user) {
+        const voted = await checkIfVoted(graphQLClient, tip.tip_id, user.id);
+        if (voted === 1) {
+          setUpvote(true);
+        } else if (voted === 0) {
+          setDownvote(false);
+        } else if (voted === -1) {
+          setUpvote(false);
+          setDownvote(true);
+        }
       }
     };
     seeVoteStatus();
@@ -363,7 +364,7 @@ const TipItem = ({ tip }) => {
             </span>
           </div>
         </Tooltip>
-        {user.id && tip.ownerId === user.id ? (
+        {user?.id && tip.ownerId === user?.id ? (
           <TipsEditAndDelete tip={tip} toggleEditing={toggleEditing} />
         ) : null}
       </div>

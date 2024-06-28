@@ -73,7 +73,7 @@ const SkinReviewsItem = ({ reviewed }) => {
                 <SkinItemRating
                   setRating={setEditReviewsRating}
                   rating={item.rating}
-                  readOnlyBoolean={item.owner_id === user.id ? false : true}
+                  readOnlyBoolean={item.owner_id === user?.id ? false : true}
                 />
               </div>
               <div className="text-gray-800">{item.data.description}</div>
