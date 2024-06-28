@@ -1,7 +1,7 @@
 import { pool } from '@/db'
-import { UserData, UserInfo } from './schema'
+import { UserData, UserInfo, GmailUserInfo } from './schema'
 import * as bcrypt from 'bcrypt'
-
+import { generateRandomPassword } from '@/app/utils/common'
 export class UserService {
     public async getAllUsers(): Promise<UserInfo[]>{
         const select = 'SELECT * FROM Users'
@@ -24,38 +24,63 @@ export class UserService {
         } 
         return users;
     }
-    public async getUser(email: string): Promise<UserInfo | null>{
-        console.log('in get user')
-        const select = `SELECT 1 FROM Users WHERE data->>\'email\' = $1`
+    public async getGmailUser(email: string): Promise<GmailUserInfo | null>{
+        const select = `SELECT * FROM Users WHERE data->>\'email\' = $1`
         const query = {
             text: select,
             values: [email]
         }
         const { rows } = await pool.query(query);
-        const userObj: UserInfo = {
-            id: rows[0].id,
-            name: rows[0].data.name,
-            email: rows[0].data.email,
-            roles: rows[0].data.roles
+        if (rows.length > 0) {
+            const userObj: GmailUserInfo = {
+                id: rows[0].id,
+                name: rows[0].data['name'],
+                roles: rows[0].data['roles'],
+                email: rows[0].data['email'],
+                password: rows[0].data['password'],
+                ogPassword: rows[0].data['ogPassword']
+            }
+            return userObj
+        } 
+        return null; 
+    } 
+
+    public async AddGmailUser(user: UserData): Promise<GmailUserInfo>{
+        const userExist = await this.getGmailUser(user.email)
+        if (userExist) {
+            return userExist;
         }
-        console.log('getuser', userObj)
-        return userObj;
+        user['password'] = generateRandomPassword(12);
+        user['ogPassword'] = user['password']
+        user['password'] = bcrypt.hashSync(user['password'], 10); 
+        const insert = 'INSERT INTO Users(data) VALUES ($1) RETURNING *'
+        const query = {
+            text: insert,
+            values: [user],
+        };
+        const { rows } = await pool.query(query);
+        const gmailUserObj: GmailUserInfo = {
+            id: rows[0].id,
+            name: rows[0].data['name'],
+            roles: rows[0].data['roles'],
+            email: rows[0].data['email'],
+            password: rows[0].data['password']
+        }
+        return gmailUserObj;
     }
+
     public async AddUser(user: UserData): Promise<UserInfo> {
         const emailCheckQuery = {
         text: 'SELECT 1 FROM Users WHERE data->>\'email\' = $1',
         values: [user.email],
     };
         const emailCheckResult = await pool.query(emailCheckQuery);
-
+ 
         if (emailCheckResult.rows.length > 0) {
             throw new Error('Email already exists');
-        }
-
-        if (user.password) {
-            user['password'] = bcrypt.hashSync(user['password'], 10);
-        }
-        const insert = 'INSERT INTO Users(data) VALUES ($1) RETURNING id, data'
+        } 
+        user['password'] = bcrypt.hashSync(user['password'], 10); 
+        const insert = 'INSERT INTO Users(data) VALUES ($1) RETURNING *'
         const query = {
             text: insert,
             values: [user],

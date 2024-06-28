@@ -17,22 +17,20 @@ const Navbar = () => {
   const [user, setUser] = useState(userLogin);
   useEffect(() => {
     if (status === "authenticated" && session.user) {
-      const data = {
-        name: session.user.name,
-        email: session.user.email,
-        id: session.userId,
-        accessToken: session.accessToken,
-      };
-      console.log("User is authenticated and session data is available:", data);
-      localStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
+      console.log(
+        "User is authenticated and session data is available:",
+        session.user
+      );
+      // localStorage.setItem("user", JSON.stringify(data));
+      // setUser(data);
+      // add gmail user into local db ... idk >_>
       const query = {
-        query: `mutation addUser { addUser(user: {
+        query: `mutation addGmailUser { addGmailUser(user: {
         name:"${session.user.name}",
         email: "${session.user.email}",
         roles: ["member"]
       })
-      {id, name, email}}`,
+      {id, name, email, password, ogPassword}}`,
       };
       fetch("/api/graphql", {
         method: "POST",
@@ -49,10 +47,33 @@ const Navbar = () => {
             console.log(json.errors);
             alert("Error signing up with gmail, please try again");
           } else {
-            console.log("return value", json.data.addUser);
-            data.id = json.data.addUser.id;
-            localStorage.setItem("user", JSON.stringify(data));
-            setUser(data);
+            console.log("return value", json.data.addGmailUser);
+            // localStorage.setItem("user", JSON.stringify(data));
+            // setUser(data);
+            const loginQuery = {
+              query: `query login{login(email: "${json.data.addGmailUser.email}" password: "${json.data.addGmailUser.ogPassword}") { name, id, accessToken, email }}`,
+            };
+            fetch("/api/graphql", {
+              method: "POST",
+              body: JSON.stringify(loginQuery),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => {
+                return res.json();
+              })
+              .then((json) => {
+                if (json.errors) {
+                  console.log(json.errors);
+                  alert("Error logging in, please try again");
+                } else {
+                  localStorage.setItem("user", JSON.stringify(json.data.login));
+                  setUser(json.data.login);
+                  router.push("/");
+                  console.log("logged in");
+                }
+              });
           }
         });
     } else if (status === "unauthenticated") {

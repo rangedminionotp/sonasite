@@ -14,6 +14,8 @@ export class UserData {
     @Field({nullable: true})
     @Length(8, 16)
     password?: string
+    @Field({nullable: true})
+    ogPassword?: string
 }
 
 @ObjectType()
@@ -26,4 +28,20 @@ export class UserInfo {
     email!: string 
     @Field(type => [String])
     roles!: Array<string>
+}
+
+@ObjectType()
+export class GmailUserInfo {
+    @Field()
+    id!: string
+    @Field()
+    name!: string
+    @Field()
+    email!: string
+    @Field(type => [String])
+    roles!: Array<string> 
+    @Field()
+    password!: string
+    @Field({nullable: true})
+    ogPassword?: string
 }
