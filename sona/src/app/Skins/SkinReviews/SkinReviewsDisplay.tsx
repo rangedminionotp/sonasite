@@ -69,33 +69,35 @@ const SkinReviewsDisplay = ({
   }, [skinReviews]);
 
   React.useEffect(() => {
-    const query = {
-      query: `
+    if (user) {
+      const query = {
+        query: `
         query MyQuery {
           checkIfReviewed(owner_id: "${user.id}", skin_id: "${skin_id}")
         }
       `,
-    };
+      };
 
-    fetch("/api/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(query),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.errors) {
-          alert("Error with fetching skin reviews, please try again");
-        } else {
-          setReviewed(json.data.checkIfReviewed);
-        }
+      fetch("/api/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(query),
       })
-      .catch((error) => {
-        console.error("Error fetching skin reviews:", error);
-        alert("Failed to fetching skinreviews. Please try again.");
-      });
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.errors) {
+            alert("Error with fetching skin reviews, please try again");
+          } else {
+            setReviewed(json.data.checkIfReviewed);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching skin reviews:", error);
+          alert("Failed to fetching skinreviews. Please try again.");
+        });
+    }
   });
 
   return (

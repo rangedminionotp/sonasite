@@ -25,9 +25,7 @@ const AddTips = ({ ability_id, version }) => {
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     if (!user) {
-      alert("Please login to submit tips");
       router.push("/login");
-      return;
     }
     try {
       const mutation = gql`mutation MyMutation {
