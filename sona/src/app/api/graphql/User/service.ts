@@ -24,24 +24,37 @@ export class UserService {
         } 
         return users;
     }
-    public async getUser(email: string): Promise<Boolean>{
+    public async getUser(email: string): Promise<UserInfo | null>{
+        console.log('in get user')
         const select = `SELECT 1 FROM Users WHERE data->>\'email\' = $1`
         const query = {
             text: select,
             values: [email]
         }
         const { rows } = await pool.query(query);
-        return rows.length > 0;
+        const userObj: UserInfo = {
+            id: rows[0].id,
+            name: rows[0].data.name,
+            email: rows[0].data.email,
+            roles: rows[0].data.roles
+        }
+        console.log('getuser', userObj)
+        return userObj;
     }
-    public async AddUser(user: UserData): Promise<UserInfo> { 
+    public async AddUser(user: UserData): Promise<UserInfo> {
+        const emailCheckQuery = {
+        text: 'SELECT 1 FROM Users WHERE data->>\'email\' = $1',
+        values: [user.email],
+    };
         const emailCheckResult = await pool.query(emailCheckQuery);
 
-        if (emailCheckResult) {
-            return null;
+        if (emailCheckResult.rows.length > 0) {
+            throw new Error('Email already exists');
         }
-        if (user['password']) {
+
+        if (user.password) {
             user['password'] = bcrypt.hashSync(user['password'], 10);
-        } 
+        }
         const insert = 'INSERT INTO Users(data) VALUES ($1) RETURNING id, data'
         const query = {
             text: insert,

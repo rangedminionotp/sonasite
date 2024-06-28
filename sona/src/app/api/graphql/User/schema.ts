@@ -7,11 +7,11 @@ export class UserData {
     @Field()
     name!: string
     @Field(type => [String])
-    roles!: Array<"member"|"admin">
+    roles!: Array<"member" | "admin">
     @Field()
     @Matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     email!: string
-    @Field({ nullable: true })
+    @Field({nullable: true})
     @Length(8, 16)
     password?: string
 }
