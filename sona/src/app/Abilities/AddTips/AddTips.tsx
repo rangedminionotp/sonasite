@@ -3,28 +3,34 @@ import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import AbilitiesContext from "../SharedContext";
 import { useRouter } from "next/navigation";
+import { gql } from "graphql-request";
 
+import {
+  getUserFromLocalStorage,
+  createGraphQLClient,
+} from "../tipsDisplay/utils";
 const AddTips = ({ ability_id, version }) => {
   const { abilities, abilityTips, setabilityTips } =
     useContext(AbilitiesContext);
   const router = useRouter();
 
   const [description, setDescription] = React.useState("");
-  const item = localStorage.getItem("user");
-  const user = JSON.parse(item);
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const user = getUserFromLocalStorage();
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
     if (!user) {
       alert("Please login to submit tips");
       router.push("/login");
       return;
     }
-    const query = {
-      query: `mutation MyMutation {
+    try {
+      const mutation = gql`mutation MyMutation {
   createAbilityTip(
     ability_id: "${ability_id}"
     description: "${description}" 
@@ -41,30 +47,16 @@ const AddTips = ({ ability_id, version }) => {
     version
     ability_id
   }
-}`,
-    };
-    fetch("/api/graphql", {
-      method: "POST",
-      body: JSON.stringify(query),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        if (json.errors) {
-          alert("Error adding tips, please try again");
-        } else {
-          const newTip = json.data.createAbilityTip;
-          // if (abilityTips) {
-          const newAbilityTips = [...abilityTips, newTip];
-          setabilityTips(newAbilityTips);
-          // }
-          setDescription((prevDescription) => "");
-        }
-      });
+}`;
+      const response = await graphQLClient.request(mutation);
+      const newTip = response.createAbilityTip;
+
+      const newAbilityTips = [...abilityTips, newTip];
+      setabilityTips(newAbilityTips);
+      setDescription((prevDescription) => "");
+    } catch (error) {
+      console.log("Error adding tips, please try again", error);
+    }
   };
 
   return (
