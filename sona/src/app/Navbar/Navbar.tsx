@@ -70,7 +70,6 @@ const Navbar = () => {
                 } else {
                   localStorage.setItem("user", JSON.stringify(json.data.login));
                   setUser(json.data.login);
-                  router.push("/");
                   console.log("logged in");
                 }
               });
