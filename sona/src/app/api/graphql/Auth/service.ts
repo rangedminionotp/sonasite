@@ -15,7 +15,8 @@ export class AuthService {
     };
     const {rows} = await pool.query(query);
 const user = rows[0].data;  
-const userid = rows[0].id;
+    const userid = rows[0].id;
+    
 const valid = bcrypt.compareSync(credentials.password, user.password);
 
 return new Promise((resolve, reject) => {
