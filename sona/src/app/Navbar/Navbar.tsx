@@ -20,6 +20,8 @@ const Navbar = () => {
       const data = {
         name: session.user.name,
         email: session.user.email,
+        id: session.userId,
+        accessToken: session.accessToken,
       };
       console.log("User is authenticated and session data is available:", data);
       localStorage.setItem("user", JSON.stringify(data));
@@ -27,7 +29,7 @@ const Navbar = () => {
       const query = {
         query: `mutation addUser { addUser(user: {
         name:"${session.user.name}",
-        email: "${session.user.email}", 
+        email: "${session.user.email}",
         roles: ["member"]
       })
       {id, name, email}}`,
@@ -48,6 +50,9 @@ const Navbar = () => {
             alert("Error signing up with gmail, please try again");
           } else {
             console.log("return value", json.data.addUser);
+            data.id = json.data.addUser.id;
+            localStorage.setItem("user", JSON.stringify(data));
+            setUser(data);
           }
         });
     } else if (status === "unauthenticated") {
