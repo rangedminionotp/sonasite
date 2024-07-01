@@ -24,7 +24,7 @@ return new Promise((resolve, reject) => {
     const accessToken = jwt.sign(
       { id: userid, email: user.email, name: user.name, roles: user.roles }, 
       secrets.accessToken,
-      { expiresIn: '30m', algorithm: 'HS256' }
+      { expiresIn: '7d', algorithm: 'HS256' }
     );
     return resolve({ id: userid, name: user.name, accessToken: accessToken, email: user.email, roles: user.roles });
   } else { 
