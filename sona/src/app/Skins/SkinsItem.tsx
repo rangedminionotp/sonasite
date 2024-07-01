@@ -18,6 +18,7 @@ const SkinsItem = () => {
   const [activeImgUrl, setActiveImgUrl] = React.useState<string>(null);
   const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
   const [currItem, setCurrItem] = React.useState<any>(null);
+
   const { skins } = React.useContext(SkinContext);
 
   if (!skins) {

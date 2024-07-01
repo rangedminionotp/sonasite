@@ -10,7 +10,15 @@ import { gql } from "graphql-request";
 
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 
-const AddLorePopup = ({ open, setOpen, skinName, skinImgURL, skin_id }) => {
+const AddLorePopup = ({
+  open,
+  setOpen,
+  skinName,
+  skinImgURL,
+  skin_id,
+  customLore,
+  setCustomLore,
+}) => {
   const [description, setDescription] = React.useState<string>("");
   const maxLength = 250;
   const user = getUserFromLocalStorage();
@@ -41,6 +49,7 @@ const AddLorePopup = ({ open, setOpen, skinName, skinImgURL, skin_id }) => {
       `;
       const response = await graphQLClient.request(mutation);
       console.log("response", response.createLore);
+      setOpen(false);
     } catch (error) {
       console.error("error adding skin lores", error);
     }
