@@ -6,20 +6,19 @@ import { uuid } from "../../../types/custom";
 export class SkinLore {
     @Field()
     @Matches(uuid)
-    id: string;
+    id!: string;
     @Field()
     @Matches(uuid)
-    skin_id: string;
+    skin_id!: string;
     @Field()
     @Matches(uuid)
-    owner_id: string;
+    owner_id!: string;
     @Field(() => String)
     @Length(1, 250)
-                @MaxLength(250)
-
-    lore: string;
+    @MaxLength(250)
+    lore!: string;
     @Field(() => Date)
-    time: Date;
+    time?: Date;
 }
 
 @ObjectType()
@@ -27,12 +26,24 @@ export class SkinLore {
 export class SkinLoreInput {
     @Field()
     @Matches(uuid)
-    skin_id: string;
+    skin_id!: string;
     @Field()
     @Matches(uuid)
-    owner_id: string;
+    owner_id!: string;
     @Field(() => String)
     @Length(1, 250)
     @MaxLength(250)
-    lore: string;
+    lore!: string; 
+}
+
+@ObjectType()
+@InputType('SkinLoreUpdateInput')
+export class SkinLoreUpdateInput {  
+    @Field(() => String)
+    @Length(1, 250)
+    @MaxLength(250)
+    lore!: string;
+    @Field(() => String)
+    @Matches(uuid)
+    id!: string;
 }

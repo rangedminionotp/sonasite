@@ -30,11 +30,6 @@ const AddReviewsPopup = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     const user = getUserFromLocalStorage();
-    if (!user) {
-      alert("Please login to submit tips");
-      router.push("/login");
-      return;
-    }
     let newAddId = "";
 
     const query = `
