@@ -35,8 +35,7 @@ export class AbilityTipsResolver {
         @Arg("version") version: string,
         @Ctx() request: NextApiRequest
       ): Promise<AbilityTipsInfo> {
-        console.log('request user id', request.request.user);
-      return new AbilityTipsService().createAbilityTip(request.request.user.id, owner_name, description, ability_id, version);
+       return new AbilityTipsService().createAbilityTip(request.request.user.id, owner_name, description, ability_id, version);
     }
 
 

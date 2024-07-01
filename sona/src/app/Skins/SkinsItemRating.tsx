@@ -12,7 +12,22 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export default function SkinItemRating({ setRating, rating, readOnlyBoolean }) {
+export default function SkinItemRating({
+  setRating,
+  rating,
+  readOnlyBoolean,
+  setEditReviewOpen,
+}) {
+  const handleChange = (event, newValue) => {
+    if (newValue !== null && newValue !== rating) {
+      setRating(newValue);
+    }
+  };
+
+  const handleClick = () => {
+    setEditReviewOpen(true);
+  };
+
   return (
     <Box
       sx={{
@@ -26,13 +41,8 @@ export default function SkinItemRating({ setRating, rating, readOnlyBoolean }) {
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`
           }
-          onChange={
-            !readOnlyBoolean
-              ? (event, newValue) => {
-                  setRating(newValue);
-                }
-              : null
-          }
+          onClick={!readOnlyBoolean ? handleClick : null}
+          onChange={!readOnlyBoolean ? handleChange : null}
           readOnly={readOnlyBoolean}
           precision={0.1}
           icon={<FavoriteIcon fontSize="inherit" />}

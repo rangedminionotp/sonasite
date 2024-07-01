@@ -4,6 +4,7 @@ import Button from "@mui/joy/Button";
 import AbilitiesContext from "../SharedContext";
 import { useRouter } from "next/navigation";
 import { gql } from "graphql-request";
+import Typography from "@mui/joy/Typography";
 
 import {
   getUserFromLocalStorage,
@@ -13,6 +14,7 @@ const AddTips = ({ ability_id, version }) => {
   const { abilities, abilityTips, setabilityTips } =
     useContext(AbilitiesContext);
   const router = useRouter();
+  const maxLength = 250;
 
   const [description, setDescription] = React.useState("");
   const handleInputChange = (event) => {
@@ -48,7 +50,6 @@ const AddTips = ({ ability_id, version }) => {
 }`;
       const response = await graphQLClient.request(mutation);
       const newTip = response.createAbilityTip;
-
       const newAbilityTips = [...abilityTips, newTip];
       setabilityTips(newAbilityTips);
       setDescription((prevDescription) => "");
@@ -89,6 +90,16 @@ const AddTips = ({ ability_id, version }) => {
           placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
         />
       </form>
+      <Typography
+        variant="body2"
+        sx={{
+          mt: 1,
+          textAlign: "right",
+          color: description.length > maxLength ? "red" : "white",
+        }}
+      >
+        {description.length} / {maxLength} characters
+      </Typography>
       <Button type="submit" onClick={handleSubmit}>
         Submit
       </Button>

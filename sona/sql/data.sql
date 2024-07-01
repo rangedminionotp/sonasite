@@ -125,3 +125,8 @@ WITH ReviewPairs AS (
 INSERT INTO SkinReviewsReviewed (skin_id, owner_id, skin_reviews_id)
 SELECT skin_id, owner_id, id
 FROM ReviewPairs;
+
+INSERT INTO UserSkinLore (owner_id, skin_id, lore)
+VALUES
+    ('9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', '风是乌发弄心弦，花是零落化暗香，雪是天籁映丹蔻，月是良夜伴君侧。');
+    
