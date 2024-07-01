@@ -1,5 +1,5 @@
 import { Field, ObjectType, InputType, ArgsType} from "type-graphql"
-import { Matches, Length } from "class-validator";
+import { Matches, Length,MaxLength } from "class-validator";
 
 @ObjectType()
 export class AbilityTipsInfo {
@@ -8,6 +8,7 @@ export class AbilityTipsInfo {
     @Field()
     ability_id!: string
     @Field()
+
     description!: string
     @Field()
     ownerId!: string

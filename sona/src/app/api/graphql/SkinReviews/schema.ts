@@ -1,5 +1,5 @@
 import { Field, ObjectType, InputType, ArgsType, Float} from "type-graphql"
-import { Matches, Length } from "class-validator";
+import { Matches, Length,MaxLength } from "class-validator";
 import { uuid } from "../../../types/custom";
 
 
@@ -7,6 +7,8 @@ import { uuid } from "../../../types/custom";
 @ObjectType()
 export class SkinReviewsData {
     @Field()
+    @Length(1, 250)
+        @MaxLength(250)
     description!: string;
     @Field()
     date!: Date;
@@ -16,6 +18,7 @@ export class SkinReviewsData {
 @InputType()
 export class SkinReviewsDataInput {
     @Field()
+    @Length(1, 250)
     description!: string;
 }
 

@@ -7,13 +7,16 @@ import Tooltip from "@mui/joy/Tooltip";
 import Skeleton from "@mui/joy/Skeleton";
 import SkinItemRating from "./SkinsItemRating";
 import SkinReviewsDisplay from "./SkinReviews/SkinReviewsDisplay";
+import AddCustomLore from "./AddCustomLore";
+import AddLorePopup from "./AddLorePopup";
 const SkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
   const [bgIndex, setBgIndex] = React.useState<number>(null);
   const [open, setOpen] = React.useState<boolean>(false);
   const [activeImgUrl, setActiveImgUrl] = React.useState<string>(null);
-
+  const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
+  const [currItem, setCurrItem] = React.useState<any>(null);
   const { skins } = React.useContext(SkinContext);
 
   if (!skins) {
@@ -225,14 +228,34 @@ const SkinsItem = () => {
                 </div>
               )}
             </div>
-            <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
-              {item.info.data.lore}
-            </p>
             <SkinItemRating
               setRating={null}
               rating={item.info.rating}
               readOnlyBoolean={true}
+              setEditReviewOpen={null}
             />
+            <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
+              {item.info.data.lore}
+            </p>
+
+            <div>
+              {item.info.data.lore === "" ? (
+                <div>
+                  <div onClick={() => setCurrItem(item)}>
+                    <AddCustomLore
+                      skinName={item.name}
+                      setAddLoreOpen={setAddLoreOpen}
+                    />
+                  </div>
+                  <AddLorePopup
+                    open={addLoreOpen}
+                    setOpen={setAddLoreOpen}
+                    skinName={currItem?.name}
+                    skinImgURL={currItem?.imgURL}
+                  />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       ))}

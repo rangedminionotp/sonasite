@@ -8,7 +8,7 @@ import { AbilityTipsResolver } from './AbilityTips/resolver';
 import { nextAuthChecker } from './Auth/checker';
 import { SkinResolver } from './Skin/resolver';
 import { SkinReviewsResolver } from './SkinReviews/resolver';
-
+import { SkinLoreResolver } from './SkinLore/resolver';
 // Build the schema with resolvers
 const schema = buildSchemaSync({
   resolvers: [
@@ -17,7 +17,8 @@ const schema = buildSchemaSync({
     AbilityResolver,
     AbilityTipsResolver,
     SkinResolver,
-    SkinReviewsResolver
+    SkinReviewsResolver,
+    SkinLoreResolver
   ],
   validate: true,
   authChecker: nextAuthChecker,

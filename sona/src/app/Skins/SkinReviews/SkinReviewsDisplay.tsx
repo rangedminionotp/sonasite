@@ -88,17 +88,21 @@ const SkinReviewsDisplay = ({
         .then((res) => res.json())
         .then((json) => {
           if (json.errors) {
-            alert("Error with fetching skin reviews, please try again");
+            alert(
+              "Error with checking if skin reviews reviewed, please try again"
+            );
           } else {
             setReviewed(json.data.checkIfReviewed);
           }
         })
         .catch((error) => {
-          console.error("Error fetching skin reviews:", error);
-          alert("Failed to fetching skinreviews. Please try again.");
+          console.error("Error with checking if skin reviews reviewed:", error);
+          alert(
+            "Failed with checking if skin reviews reviewed. Please try again."
+          );
         });
     }
-  });
+  }, [skinReviews]);
 
   return (
     <React.Fragment>

@@ -22,6 +22,8 @@ const AddReviewsPopup = ({
   const [addReviewsRating, setAddReviewsRating] = React.useState(0);
 
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
+  const maxLength = 250;
+
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
@@ -160,6 +162,9 @@ const AddReviewsPopup = ({
                 placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
               />
             </form>
+            <Typography variant="body2" sx={{ mt: 1, textAlign: "right" }}>
+              {description.length} / {maxLength} characters
+            </Typography>
             <Button type="submit" onClick={handleSubmit}>
               Submit
             </Button>

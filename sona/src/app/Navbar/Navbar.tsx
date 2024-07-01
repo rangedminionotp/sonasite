@@ -17,10 +17,6 @@ const Navbar = () => {
   const [user, setUser] = useState(userLogin);
   useEffect(() => {
     if (status === "authenticated" && session.user) {
-      console.log(
-        "User is authenticated and session data is available:",
-        session.user
-      );
       // localStorage.setItem("user", JSON.stringify(data));
       // setUser(data);
       // add gmail user into local db ... idk >_>
@@ -47,7 +43,6 @@ const Navbar = () => {
             console.log(json.errors);
             alert("Error signing up with gmail, please try again");
           } else {
-            console.log("return value", json.data.addGmailUser);
             // localStorage.setItem("user", JSON.stringify(data));
             // setUser(data);
             const loginQuery = {
@@ -70,7 +65,6 @@ const Navbar = () => {
                 } else {
                   localStorage.setItem("user", JSON.stringify(json.data.login));
                   setUser(json.data.login);
-                  console.log("logged in");
                 }
               });
           }

@@ -7,7 +7,7 @@ export class Credentials {
   @Matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     email!: string
   @Field()
-  @Length(8, 16)
+  @Length(8, 20)
     password!: string
 }
 
