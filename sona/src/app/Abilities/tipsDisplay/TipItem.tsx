@@ -298,7 +298,7 @@ const TipItem = ({ tip }) => {
       </div>
 
       {/* Conditionally render Textarea or description */}
-      {isEditing ? (
+      {isEditing && tip.description ? (
         <>
           <form onSubmit={handleSubmit}>
             <Textarea

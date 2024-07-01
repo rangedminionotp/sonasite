@@ -8,7 +8,6 @@ export class AbilityTipsInfo {
     @Field()
     ability_id!: string
     @Field()
-
     description!: string
     @Field()
     ownerId!: string
