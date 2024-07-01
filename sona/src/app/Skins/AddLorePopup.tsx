@@ -6,16 +6,44 @@ import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import Textarea from "@mui/joy/Textarea";
 import SkinImg from "./SkinReviews/SkinImg";
-const AddLorePopup = ({ open, setOpen, skinName, skinImgURL }) => {
+import { gql } from "graphql-request";
+
+import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+
+const AddLorePopup = ({ open, setOpen, skinName, skinImgURL, skin_id }) => {
   const [description, setDescription] = React.useState<string>("");
   const maxLength = 250;
-  console.log("skinImgURL skinName", skinImgURL, skinName);
+  const user = getUserFromLocalStorage();
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(description);
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
+    try {
+      const mutation = gql`
+        mutation MyMutation {
+          createLore(
+            loreInput: {
+              skin_id: "${skin_id}"
+              owner_id: "${user.id}"
+              lore: "${description}"
+            }
+          ) {
+            id
+            lore
+            owner_id
+            skin_id
+            time
+          }
+        }
+      `;
+      const response = await graphQLClient.request(mutation);
+      console.log("response", response.createLore);
+    } catch (error) {
+      console.error("error adding skin lores", error);
+    }
   };
   return (
     <React.Fragment>

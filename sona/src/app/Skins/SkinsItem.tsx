@@ -9,6 +9,7 @@ import SkinItemRating from "./SkinsItemRating";
 import SkinReviewsDisplay from "./SkinReviews/SkinReviewsDisplay";
 import AddCustomLore from "./AddCustomLore";
 import AddLorePopup from "./AddLorePopup";
+import CustomLoreDisplay from "./CustomLoreDisplay";
 const SkinsItem = () => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
@@ -235,7 +236,11 @@ const SkinsItem = () => {
               setEditReviewOpen={null}
             />
             <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
-              {item.info.data.lore}
+              {item.info.data.lore === "" ? (
+                <CustomLoreDisplay skin_id={item.info.id} />
+              ) : (
+                item.info.data.lore
+              )}
             </p>
 
             <div>
@@ -252,6 +257,7 @@ const SkinsItem = () => {
                     setOpen={setAddLoreOpen}
                     skinName={currItem?.name}
                     skinImgURL={currItem?.imgURL}
+                    skin_id={currItem?.info.id}
                   />
                 </div>
               ) : null}

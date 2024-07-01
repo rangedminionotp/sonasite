@@ -129,4 +129,8 @@ FROM ReviewPairs;
 INSERT INTO UserSkinLore (owner_id, skin_id, lore)
 VALUES
     ('9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', '风是乌发弄心弦，花是零落化暗香，雪是天籁映丹蔻，月是良夜伴君侧。');
+
+INSERT INTO UserSkinLore (id, owner_id, skin_id, lore)
+VALUES
+    ('680fdcb9-e2e5-4863-a350-d08ccff74afe', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', '老婆给我cosplay谈个琴呗lol');
     
