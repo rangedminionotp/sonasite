@@ -1,6 +1,6 @@
 import { pool } from "@/db";
 
-import { SkinInfo, SkinOverview } from "./schema";
+import { SkinInfo, SkinOverview, AvgSkinRatingInput } from "./schema";
 
 export class SkinService {
     public async getSkin(): Promise<SkinOverview[]> {
@@ -30,5 +30,21 @@ export class SkinService {
         }
         return skin
     }
-        
+
+    public async editSkinRating(input: AvgSkinRatingInput): Promise<SkinOverview> {
+        const { id, rating } = input
+        const select = `UPDATE SkinItem SET rating = $2 WHERE id = $1 RETURNING *`
+        const query = {
+            text: select,
+            values: [id, rating]
+        }
+        const {rows} = await pool.query(query)
+        const skinObj: SkinOverview = {
+            "id": rows[0].id,
+            "name": rows[0].name,
+            "data": rows[0].data,
+            "rating": rows[0].rating
+        }
+        return skinObj
+    }
 }

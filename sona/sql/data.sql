@@ -126,6 +126,8 @@ INSERT INTO SkinReviewsReviewed (skin_id, owner_id, skin_reviews_id)
 SELECT skin_id, owner_id, id
 FROM ReviewPairs;
 
+
+DELETE FROM UserSkinLore;
 INSERT INTO UserSkinLore (owner_id, skin_id, lore)
 VALUES
     ('9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', '风是乌发弄心弦，花是零落化暗香，雪是天籁映丹蔻，月是良夜伴君侧。');
@@ -133,4 +135,21 @@ VALUES
 INSERT INTO UserSkinLore (id, owner_id, skin_id, lore)
 VALUES
     ('680fdcb9-e2e5-4863-a350-d08ccff74afe', '9c838adb-0cb9-4dda-a1d3-946412aa1183', 'd7564774-c5cf-433e-a474-4ca2f5ca52ae', '老婆给我cosplay谈个琴呗lol');
-    
+
+DELETE FROM SkinRating;
+INSERT INTO SkinRating (skin_id, rating, rating_count)
+VALUES
+    ('ec724962-80b6-48a4-a638-ce7abce59808', 4.5, 1200),
+    ('d2d5fe06-6e4c-4a6b-8d0b-7c88dbebc8e1', 3.2, 850),
+    ('2b76f31f-8b5f-4bc2-8d36-ad94b7363e77', 4.3, 950),
+    ('53a82f4f-6867-4920-a522-037ad7b0c53b', 4.0, 700),
+    ('d7564774-c5cf-433e-a474-4ca2f5ca52ae', 4.1, 820),
+    ('e673d8bc-f48e-427d-b91a-c2ba1f2dc7db', 4.7, 1400),
+    ('4fdcc2f3-2e8d-47dd-9cd2-fb997938281c', 4.8, 1600),
+    ('181ed2b2-f169-4d25-9a82-e3beda1a2025', 4.4, 900),
+    ('812487b4-1068-4e43-b732-4c7897f3a292', 3.6, 1300),
+    ('e5a5177b-156b-44cd-bc6c-a518c0d106e0', 4.9, 1700),
+    ('588737b6-3d26-4545-80a8-7a16965edeaf', 4.7, 1400),
+    ('f883705f-20ff-40e5-af92-0d15b1272472', 4.8, 1600),
+    ('5715006a-625d-4efd-9852-b6bdb58d5ed6', 4.9, 1700),
+    ('d7c43d66-655d-4d9c-a241-a17fa13e3b15', 2.0, 2000);

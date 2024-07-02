@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS SkinItem;
 DROP TABLE IF EXISTS SkinReviews;
 DROP TABLE IF EXISTS SkinReviewsReviewed;
 DROP TABLE IF EXISTS UserSkinLore;
+DROP TABLE IF EXISTS SkinRating;
 
 -- -- Create Users table
 CREATE TABLE Users (id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),data JSONB);
@@ -67,4 +68,10 @@ CREATE TABLE UserSkinLore (
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     lore TEXT,
     time TIMESTAMP DEFAULT now()
+);
+
+CREATE TABLE SkinRating (
+    skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    rating DOUBLE PRECISION,
+    rating_count INTEGER
 );

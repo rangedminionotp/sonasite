@@ -52,7 +52,7 @@ const Skins = () => {
         console.error("Error fetching skins:", error);
         alert("Failed to fetch skins. Please try again.");
       });
-  }, []);
+  });
 
   React.useEffect(() => {
     if (fetchedData && skin !== null) {

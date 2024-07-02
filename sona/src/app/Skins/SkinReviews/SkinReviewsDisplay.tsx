@@ -22,6 +22,8 @@ const SkinReviewsDisplay = ({
   bgColor,
   toggleVisibility,
   activeImgUrl,
+  newRating,
+  setNewRating,
 }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
@@ -60,6 +62,10 @@ const SkinReviewsDisplay = ({
           alert("Error with fetching skin reviews, please try again");
         } else {
           setSkinReviews(json.data.getReviewsBySkinId);
+          for (const review of json.data.getReviewsBySkinId) {
+            setNewRating(review.rating + newRating);
+          }
+          setNewRating(newRating / json.data.getReviewsBySkinId.length);
         }
       })
       .catch((error) => {

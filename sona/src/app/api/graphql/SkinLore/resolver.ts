@@ -19,7 +19,7 @@ export class SkinLoreResolver {
     async createLore(@Arg('loreInput') loreInput: SkinLoreInput): Promise<SkinLore>{
         return new SkinLoreService().createLore(loreInput)
     }
-    // @Authorized('member')
+    @Authorized('member')
     @Mutation(() => SkinLore)
     async editLore(@Arg('loreInput') loreInput: SkinLoreInput): Promise<SkinLore>{
         return new SkinLoreService().editLore(loreInput)

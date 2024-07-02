@@ -31,3 +31,12 @@ export class SkinOverview {
     rating!: number;
 }
 
+@ObjectType()
+@InputType("AvgSkinRatingInput")
+export class AvgSkinRatingInput {
+    @Field()
+    rating!: number
+    @Field()
+    @Matches(uuid)
+    id!: string
+}
