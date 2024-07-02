@@ -28,6 +28,7 @@ const Skins = () => {
     id
     name
     rating
+    rating_count
   }
 }
       `,
@@ -43,16 +44,16 @@ const Skins = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.errors) {
-          alert("Error with skin, please try again");
+          console.log("Error with skin, please try again");
         } else {
           setSkin(json.data.getAllSkins);
         }
       })
       .catch((error) => {
         console.error("Error fetching skins:", error);
-        alert("Failed to fetch skins. Please try again.");
+        console.log("Failed to fetch skins. Please try again.");
       });
-  });
+  }, [skins, skinReviews]);
 
   React.useEffect(() => {
     if (fetchedData && skin !== null) {
