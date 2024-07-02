@@ -19,6 +19,9 @@ const SkinsItem = () => {
   const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
   const [currItem, setCurrItem] = React.useState<any>(null);
 
+  // avg rating for each skin
+  const [newRating, setNewRating] = React.useState(0);
+
   const { skins } = React.useContext(SkinContext);
 
   if (!skins) {
@@ -108,164 +111,170 @@ const SkinsItem = () => {
 
   return (
     <div name="skins-container" className="text-center justify-center">
-      {skins.map((item, index) => (
-        <div
-          key={index}
-          className="w-full lg:w-1/2 px-2 mb-8"
-          name={item.name}
-          text-center
-          justify-center
-        >
-          <div
-            className={`p-4 relative rounded-lg shadow-md text-center justify-center ${bgGradient[index]} h-full`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <div className="relative overflow-hidden">
-              <div className="absolute top-0 left-0 z-10 px-2 py-1 text-3xl font-semibold">
-                <h1
-                  style={{
-                    color: "#253942",
-                    textShadow:
-                      "-0.7px -0.7px 0 #CAABCD, 0.7px -0.7px 0 #CAABCD, -0.7px 0.7px 0 #CAABCD, 0.7px 0.7px 0 #CAABCD",
-                  }}
-                  className="text-[#82631a]"
-                >
-                  {item.name}
-                </h1>
-                <div className="flex gap-1 items-center">
-                  {item.info.data.price === "Special" ? null : (
-                    <Image
-                      alt={icons.rp}
-                      src={icons.rp}
-                      objectFit="cover"
-                      className="object-cover"
-                      width={30}
-                      height={30}
-                    />
+      {skins.map(
+        (item, index) => (
+          console.log("item info rating", item.info.name, item.info.rating),
+          (
+            <div
+              key={index}
+              className="w-full lg:w-1/2 px-2 mb-8"
+              name={item.name}
+              text-center
+              justify-center
+            >
+              <div
+                className={`p-4 relative rounded-lg shadow-md text-center justify-center ${bgGradient[index]} h-full`}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-0 left-0 z-10 px-2 py-1 text-3xl font-semibold">
+                    <h1
+                      style={{
+                        color: "#253942",
+                        textShadow:
+                          "-0.7px -0.7px 0 #CAABCD, 0.7px -0.7px 0 #CAABCD, -0.7px 0.7px 0 #CAABCD, 0.7px 0.7px 0 #CAABCD",
+                      }}
+                      className="text-[#82631a]"
+                    >
+                      {item.name}
+                    </h1>
+                    <div className="flex gap-1 items-center">
+                      {item.info.data.price === "Special" ? null : (
+                        <Image
+                          alt={icons.rp}
+                          src={icons.rp}
+                          objectFit="cover"
+                          className="object-cover"
+                          width={30}
+                          height={30}
+                        />
+                      )}
+                      <p className="text-sm text-gray-200 mb-1 font-sans text-shadow-[_0_1px_0_rgb(0_0_0_/_40%)]">
+                        {item.info.data.price}
+                      </p>
+                    </div>
+                  </div>
+                  <img
+                    src={item.imgURL}
+                    alt={item.name}
+                    className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
+                  />
+                  {isHovered && (
+                    <div>
+                      <div
+                        onClick={() =>
+                          toggleVisibility(item.info.id, index, item.imgURL)
+                        }
+                        className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans text-xl"
+                      >
+                        SHOW REVIEWS
+                      </div>
+
+                      <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
+                        <div className="flex">
+                          <Tooltip
+                            title={`${item.name} was released on ${parseDate(
+                              item.info.data.releaseDate
+                            )} (
+                    ${daysAgo(item.info.data.releaseDate)})`}
+                          >
+                            <p className="text-sm text-gray-300 mb-1 font-sans">
+                              <CakeIcon style={{ color: "#CEB57C" }} />{" "}
+                              {parseDate(item.info.data.releaseDate)} (
+                              {daysAgo(item.info.data.releaseDate)})
+                            </p>
+                          </Tooltip>
+                        </div>
+                        <div className="flex gap-1 items-center">
+                          <Image
+                            alt={""}
+                            src={icons.artist}
+                            objectFit="cover"
+                            className="object-cover"
+                            width={20}
+                            height={20}
+                          />
+                          <Tooltip
+                            title={`${item.name} was drawn by ${item.info.data.artist}`}
+                          >
+                            <p className="text-sm text-gray-300 mb-1 font-sans">
+                              {item.info.data.artist}
+                            </p>
+                          </Tooltip>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Image
+                            alt={""}
+                            src={icons.voice}
+                            objectFit="cover"
+                            className="object-cover"
+                            width={20}
+                            height={20}
+                          />
+                          <Tooltip
+                            title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
+                          >
+                            <p className="text-sm text-gray-300 mb-1 font-sans">
+                              {item.info.data.voiceActor}
+                            </p>
+                          </Tooltip>
+                        </div>
+                        <div className="flex">
+                          <Tooltip
+                            title={`${item.name} has a 3D model available`}
+                          >
+                            <a
+                              href={item.info.data.threeDURL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-300 font-bold hover:underline"
+                            >
+                              3D Model
+                            </a>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
                   )}
-                  <p className="text-sm text-gray-200 mb-1 font-sans text-shadow-[_0_1px_0_rgb(0_0_0_/_40%)]">
-                    {item.info.data.price}
-                  </p>
+                </div>
+                <SkinItemRating
+                  setRating={null}
+                  rating={item.info.rating}
+                  readOnlyBoolean={true}
+                />
+                <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
+                  {item.info.data.lore === "" ? (
+                    <CustomLoreDisplay skin_id={item.info.id} />
+                  ) : (
+                    item.info.data.lore
+                  )}
+                </p>
+
+                <div>
+                  {item.info.data.lore === "" ? (
+                    <div>
+                      <div onClick={() => setCurrItem(item)}>
+                        <AddCustomLore
+                          skinName={item.name}
+                          setAddLoreOpen={setAddLoreOpen}
+                        />
+                      </div>
+                      <AddLorePopup
+                        open={addLoreOpen}
+                        setOpen={setAddLoreOpen}
+                        skinName={currItem?.name}
+                        skinImgURL={currItem?.imgURL}
+                        skin_id={currItem?.info.id}
+                      />
+                    </div>
+                  ) : null}
                 </div>
               </div>
-              <img
-                src={item.imgURL}
-                alt={item.name}
-                className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
-              />
-              {isHovered && (
-                <div>
-                  <div
-                    onClick={() =>
-                      toggleVisibility(item.info.id, index, item.imgURL)
-                    }
-                    className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans text-xl"
-                  >
-                    SHOW REVIEWS
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
-                    <div className="flex">
-                      <Tooltip
-                        title={`${item.name} was released on ${parseDate(
-                          item.info.data.releaseDate
-                        )} (
-                    ${daysAgo(item.info.data.releaseDate)})`}
-                      >
-                        <p className="text-sm text-gray-300 mb-1 font-sans">
-                          <CakeIcon style={{ color: "#CEB57C" }} />{" "}
-                          {parseDate(item.info.data.releaseDate)} (
-                          {daysAgo(item.info.data.releaseDate)})
-                        </p>
-                      </Tooltip>
-                    </div>
-                    <div className="flex gap-1 items-center">
-                      <Image
-                        alt={""}
-                        src={icons.artist}
-                        objectFit="cover"
-                        className="object-cover"
-                        width={20}
-                        height={20}
-                      />
-                      <Tooltip
-                        title={`${item.name} was drawn by ${item.info.data.artist}`}
-                      >
-                        <p className="text-sm text-gray-300 mb-1 font-sans">
-                          {item.info.data.artist}
-                        </p>
-                      </Tooltip>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Image
-                        alt={""}
-                        src={icons.voice}
-                        objectFit="cover"
-                        className="object-cover"
-                        width={20}
-                        height={20}
-                      />
-                      <Tooltip
-                        title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
-                      >
-                        <p className="text-sm text-gray-300 mb-1 font-sans">
-                          {item.info.data.voiceActor}
-                        </p>
-                      </Tooltip>
-                    </div>
-                    <div className="flex">
-                      <Tooltip title={`${item.name} has a 3D model available`}>
-                        <a
-                          href={item.info.data.threeDURL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-300 font-bold hover:underline"
-                        >
-                          3D Model
-                        </a>
-                      </Tooltip>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
-            <SkinItemRating
-              setRating={null}
-              rating={item.info.rating}
-              readOnlyBoolean={true}
-              setEditReviewOpen={null}
-            />
-            <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
-              {item.info.data.lore === "" ? (
-                <CustomLoreDisplay skin_id={item.info.id} />
-              ) : (
-                item.info.data.lore
-              )}
-            </p>
-
-            <div>
-              {item.info.data.lore === "" ? (
-                <div>
-                  <div onClick={() => setCurrItem(item)}>
-                    <AddCustomLore
-                      skinName={item.name}
-                      setAddLoreOpen={setAddLoreOpen}
-                    />
-                  </div>
-                  <AddLorePopup
-                    open={addLoreOpen}
-                    setOpen={setAddLoreOpen}
-                    skinName={currItem?.name}
-                    skinImgURL={currItem?.imgURL}
-                    skin_id={currItem?.info.id}
-                  />
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      ))}
+          )
+        )
+      )}
       {activeSkinId && (
         <SkinReviewsDisplay
           skin_id={activeSkinId}
@@ -273,6 +282,8 @@ const SkinsItem = () => {
           setOpen={setOpen}
           bgColor={bgGradient[bgIndex]}
           activeImgUrl={activeImgUrl}
+          newRating={newRating}
+          setNewRating={setNewRating}
         />
       )}
     </div>

@@ -16,17 +16,18 @@ export default function SkinItemRating({
   setRating,
   rating,
   readOnlyBoolean,
-  setEditReviewOpen,
+  // setEditReviewOpen,
 }) {
+  // console.log("rating", rating);
   const handleChange = (event, newValue) => {
     if (newValue !== null && newValue !== rating) {
       setRating(newValue);
     }
   };
 
-  const handleClick = () => {
-    setEditReviewOpen(true);
-  };
+  // const handleClick = () => {
+  //   setEditReviewOpen(true);
+  // };
 
   return (
     <Box
@@ -41,8 +42,14 @@ export default function SkinItemRating({
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`
           }
-          onClick={!readOnlyBoolean ? handleClick : null}
-          onChange={!readOnlyBoolean ? handleChange : null}
+          // onClick={!readOnlyBoolean ? handleClick : null}
+          onChange={
+            !readOnlyBoolean
+              ? (event, newValue) => {
+                  setRating(newValue);
+                }
+              : null
+          }
           readOnly={readOnlyBoolean}
           precision={0.1}
           icon={<FavoriteIcon fontSize="inherit" />}
