@@ -51,8 +51,9 @@ CREATE TABLE SkinReviews (
     owner_id UUID REFERENCES Users(id),
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     owner_name VARCHAR(30) NOT NULL,
-    rating DOUBLE PRECISION,
-    data JSONB
+    rating DOUBLE PRECISION NOT NULL,  
+    data JSONB,
+    rating_count INTEGER
 );
 
 -- Create SkinReviews reviewed table
@@ -71,7 +72,7 @@ CREATE TABLE UserSkinLore (
 );
 
 CREATE TABLE SkinRating (
-    skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    skin_id UUID PRIMARY KEY REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     rating DOUBLE PRECISION,
     rating_count INTEGER
 );

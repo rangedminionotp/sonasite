@@ -29,13 +29,16 @@ export class SkinOverview {
     data!: SkinInfo
     @Field(type => Float)
     rating!: number;
+    @Field()
+    rating_count!: number
 }
 
-@ObjectType()
-@InputType("AvgSkinRatingInput")
-export class AvgSkinRatingInput {
-    @Field()
+@ObjectType() 
+export class SkinRating{
+    @Field(type => Float)
     rating!: number
+    @Field(type => Int)
+    rating_count!: number
     @Field()
     @Matches(uuid)
     id!: string
