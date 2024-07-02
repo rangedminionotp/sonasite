@@ -19,9 +19,6 @@ const SkinsItem = () => {
   const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
   const [currItem, setCurrItem] = React.useState<any>(null);
 
-  // avg rating for each skin
-  const [newRating, setNewRating] = React.useState(0);
-
   const { skins } = React.useContext(SkinContext);
 
   if (!skins) {
@@ -113,7 +110,12 @@ const SkinsItem = () => {
     <div name="skins-container" className="text-center justify-center">
       {skins.map(
         (item, index) => (
-          console.log("item info rating", item.info.name, item.info.rating),
+          console.log(
+            "item info rating",
+            item.info.name,
+            item.info.rating,
+            item.info.rating_count
+          ),
           (
             <div
               key={index}
@@ -238,11 +240,17 @@ const SkinsItem = () => {
                     </div>
                   )}
                 </div>
-                <SkinItemRating
-                  setRating={null}
-                  rating={item.info.rating}
-                  readOnlyBoolean={true}
-                />
+                <Tooltip
+                  title={`${item.info.rating_count} Sona meows rated ${item.name} (✿◡‿◡)`}
+                >
+                  <div>
+                    <SkinItemRating
+                      setRating={null}
+                      rating={item.info.rating}
+                      readOnlyBoolean={true}
+                    />
+                  </div>
+                </Tooltip>
                 <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
                   {item.info.data.lore === "" ? (
                     <CustomLoreDisplay skin_id={item.info.id} />

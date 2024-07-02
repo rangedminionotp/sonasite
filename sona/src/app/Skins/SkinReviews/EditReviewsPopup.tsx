@@ -53,7 +53,6 @@ const EditReviewsPopup = ({
   }
 }`;
       const response = await graphQLClient.request(mutation);
-      console.log("response", response.editSkinReview);
       if (skinReviews) {
         const editedReview = response.editSkinReview;
         const updatedReviews = skinReviews.map((review) => {
