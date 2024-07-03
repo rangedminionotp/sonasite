@@ -3,7 +3,7 @@ import data from "../../../data/data.json";
 
 const Description = () => {
   return (
-    <div className="text-center mt-4 max-w-[100%]">
+    <div className="text-center mt-4 max-w-[100%] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
       <div className="text-8xl font-bold text-[#FFD700] drop-shadow-lg sm: text-md">
         {data.name.toUpperCase()}
       </div>

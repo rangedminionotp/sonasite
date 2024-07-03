@@ -18,7 +18,7 @@ const AbilityBreadcrumb = () => {
   return (
     <nav
       aria-label="breadcrumbs"
-      className="text-3xl font-bold flex justify-center items-center"
+      className="text-3xl font-bold flex justify-center items-center font-work-sans"
     >
       {breadcrumbs.map((breadcrumb, index) => (
         <React.Fragment key={breadcrumb.label}>
