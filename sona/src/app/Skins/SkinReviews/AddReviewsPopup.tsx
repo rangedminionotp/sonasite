@@ -30,83 +30,64 @@ const AddReviewsPopup = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     const user = getUserFromLocalStorage();
+    const bearerToken = user?.accessToken;
+    const graphQLClient = createGraphQLClient(bearerToken);
     let newAddId = "";
-
-    const query = `
-    mutation AddReview {
-      addReview(
-        input: {
-          owner_id: "${user.id}",
-          skin_id: "${skin_id}",
-          data: { description: "${description}" },
-          rating: ${addReviewsRating},
-          owner_name: "${user.name}"
-        }
-      ) {
-        data {
-          date
-          description
-        }
-        id
-        owner_id
-        owner_name
-        rating
-        skin_id
-      }
-    }
-  `;
-
     try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query }),
-      });
-
-      const json = await response.json();
-
-      if (json.errors) {
-        alert("Error adding skin reviews, please try again");
-        return;
-      }
-
-      const newReview = json.data.addReview;
-      const newSkinReviews = [...skinReviews, newReview];
-      setDescription("");
-      setAddReviewsRating(0);
-      const votesQuery = `
-      mutation CreateSkinReviewsReviewed {
-        createSkinReviewsReviewed(
-          skin_id: "${skin_id}",
-          owner_id: "${user.id}",
-          skin_reviews_id: "${newReview.id}"
+      const mutation = gql`
+      mutation AddReview {
+        addReview(
+          input: {
+            owner_id: "${user.id}",
+            skin_id: "${skin_id}",
+            data: { description: "${description}" },
+            rating: ${addReviewsRating},
+            owner_name: "${user.name}"
+          }
         ) {
-          skin_id
+          data {
+            date
+            description
+          }
+          id
           owner_id
-          skin_reviews_id
+          owner_name
+          rating
+          skin_id
         }
       }
     `;
+      const response = await graphQLClient.request(mutation);
+      const newReview = response.addReview;
+      const newSkinReviews = [newReview, ...skinReviews];
+      setSkinReviews(newSkinReviews);
+      setDescription("");
+      setAddReviewsRating(0);
 
-      const votesResponse = await fetch("/api/graphql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: votesQuery }),
-      });
-
-      const votesJson = await votesResponse.json();
-      if (votesJson.errors) {
-        alert("Error adding skin reviews, please try again");
-      } else {
+      try {
+        const reviewedMutation = gql`
+        mutation CreateSkinReviewsReviewed {
+          createSkinReviewsReviewed(
+            skin_id: "${skin_id}",
+            owner_id: "${user.id}",
+            skin_reviews_id: "${newReview.id}"
+          ) {
+            skin_id
+            owner_id
+            skin_reviews_id
+          }
+        }
+      `;
+        const reviewedResponse = await graphQLClient.request(reviewedMutation);
         setAddReviewOpen(false);
+      } catch (error) {
+        console.log(
+          "Error adding skin reviews reviewed stats, please try again",
+          error
+        );
       }
     } catch (error) {
-      alert("An error occurred. Please try again.");
-      console.error("Error submitting review:", error);
+      console.log("Error adding skin reviews, please try again", error);
     }
   };
 
