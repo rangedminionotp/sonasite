@@ -2,10 +2,16 @@ import { pool } from '@/db'
 import { SkinLore, SkinLoreInput, SkinLoreUpdateInput } from './schema' 
 
 export class SkinLoreService {
-    public async getAllUserLores():Promise<SkinLore[]> {
-        const result = await pool.query<AbilityLore>('SELECT * FROM UserSkinLore')
+    public async getAllUserLores(): Promise<SkinLore[]> {
+        
+        const select = `SELECT * FROM UserSkinLore`
+        const query = {
+            text: select,
+            values: []
+        }
+        const { rows } = await pool.query(query) 
         const lore: SkinLore[] = []
-        for (const item of result.rows) { 
+        for (const item of rows) { 
             const loreObj : SkinLore = {
                 id: item.id,
                 skin_id: item.skin_id,
@@ -17,10 +23,15 @@ export class SkinLoreService {
         }
         return lore
     }
-    public async getLoreBySkinId(skin_id: string):Promise<SkinLore[]> {
-        const result = await pool.query<AbilityLore>('SELECT * FROM UserSkinLore WHERE skin_id = $1', [skin_id])
+    public async getLoreBySkinId(skin_id: string): Promise<SkinLore[]> {
+        const select = `SELECT * FROM UserSkinLore WHERE skin_id = $1`
+        const query = {
+            text: select,
+            values: [skin_id]
+        }
+        const { rows } = await pool.query(query)
         const lore: SkinLore[] = []
-        for (const item of result.rows) { 
+        for (const item of rows) { 
             const loreObj : SkinLore = {
                 id: item.id,
                 skin_id: item.skin_id,
@@ -33,9 +44,14 @@ export class SkinLoreService {
         return lore
     }
     public async getLoreByUserId(owner_id: string, skin_id: string): Promise<SkinLore[]> {
-        const result = await pool.query<SkinLore>('SELECT * FROM UserSkinLore WHERE owner_id = $1 AND skin_id = $2', [owner_id, skin_id])
+        const select = `SELECT * FROM UserSkinLore WHERE owner_id = $1 AND skin_id = $2`
+        const query = {
+            text: select,
+            values: [owner_id, skin_id]
+        }
+        const { rows } = await pool.query(query)
         const lore: SkinLore[] = []
-        for (const item of result.rows) {
+        for (const item of rows) {
             const loreObj : SkinLore = {
                 id: item.id,
                 skin_id: item.skin_id,
@@ -48,37 +64,53 @@ export class SkinLoreService {
         return lore
     }
     public async createLore(loreInput: SkinLoreInput):Promise<SkinLore> {
-        const result = await pool.query<SkinLore>('INSERT INTO UserSkinLore (skin_id, lore, owner_id) VALUES ($1, $2, $3) RETURNING *', [loreInput.skin_id, loreInput.lore, loreInput.owner_id])
+        const insert = `INSERT INTO UserSkinLore (skin_id, lore, owner_id) VALUES ($1, $2, $3) RETURNING *`
+        const query = {
+            text: insert,
+            values: [loreInput.skin_id, loreInput.lore, loreInput.owner_id]
+        }
+        const { rows } = await pool.query(query)
         const skinLore: SkinLore = {
-            id: result.rows[0].id,
-            skin_id: result.rows[0].skin_id,
-            lore: result.rows[0].lore,
-            time: result.rows[0].time,
-            owner_id: result.rows[0].owner_id
+            id: rows[0].id,
+            skin_id: rows[0].skin_id,
+            lore: rows[0].lore,
+            time: rows[0].time,
+            owner_id: rows[0].owner_id
         }
         
         return skinLore;
     }
     public async editLore(loreInput: SkinLoreUpdateInput):Promise<SkinLore> {
-        const result = await pool.query<SkinLore>('UPDATE UserSkinLore SET lore = $1 AND TIME = $3 WHERE id = $2 RETURNING *', [loreInput.lore, loreInput.id, `"${new Date().toISOString()}"`])
+        const update = `UPDATE UserSkinLore SET lore = $1, time = $2 WHERE id = $3 RETURNING *`
+        const query = {
+            text: update,
+            values: [loreInput.lore, new Date().toISOString(), loreInput.id]
+        }
+        const { rows } = await pool.query(query)
+
         const skinLore: SkinLore = {
-            id: result.rows[0].id,
-            skin_id: result.rows[0].skin_id,
-            lore: result.rows[0].lore,
-            time: result.rows[0].time,
-            owner_id: result.rows[0].owner_id
+            id: rows[0].id,
+            skin_id: rows[0].skin_id,
+            lore: rows[0].lore,
+            time: rows[0].time,
+            owner_id: rows[0].owner_id
         }
         
         return skinLore;
     }
     public async deleteLore(id: string): Promise<SkinLore> {
-        const result = await pool.query<SkinLore>('DELETE FROM UserSkinLore WHERE id = $1 RETURNING *', [id])
+        const deleteQuery = `DELETE FROM UserSkinLore WHERE id = $1 RETURNING *`
+        const query = {
+            text: deleteQuery,
+            values: [id]
+        }
+        const { rows } = await pool.query(query)
         const skinLore: SkinLore = {
-            id: result.rows[0].id,
-            skin_id: result.rows[0].skin_id,
-            lore: result.rows[0].lore,
-            time: result.rows[0].time,
-            owner_id: result.rows[0].owner_id
+            id: rows[0].id,
+            skin_id: rows[0].skin_id,
+            lore: rows[0].lore,
+            time: rows[0].time,
+            owner_id: rows[0].owner_id
         }
         
         return skinLore;

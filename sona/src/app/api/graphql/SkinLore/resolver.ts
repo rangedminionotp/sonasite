@@ -1,7 +1,7 @@
 import { Query, Resolver, Mutation, Arg, Authorized ,  Ctx} from "type-graphql"
 import type { NextApiRequest } from 'next'
 
-import { SkinLore, SkinLoreInput } from './schema'
+import { SkinLore, SkinLoreInput, SkinLoreUpdateInput } from './schema'
 import { SkinLoreService } from './service' 
 
 @Resolver()
@@ -19,11 +19,13 @@ export class SkinLoreResolver {
     async createLore(@Arg('loreInput') loreInput: SkinLoreInput): Promise<SkinLore>{
         return new SkinLoreService().createLore(loreInput)
     }
+
     @Authorized('member')
     @Mutation(() => SkinLore)
-    async editLore(@Arg('loreInput') loreInput: SkinLoreInput): Promise<SkinLore>{
+    async editLore(@Arg('loreInput') loreInput: SkinLoreUpdateInput): Promise<SkinLore>{
         return new SkinLoreService().editLore(loreInput)
     }
+    
     @Authorized('member')
     @Query(() => [SkinLore])
     async getLoreByUserId(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<SkinLore[]>{

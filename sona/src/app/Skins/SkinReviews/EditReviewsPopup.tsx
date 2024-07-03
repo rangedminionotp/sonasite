@@ -29,7 +29,6 @@ const EditReviewsPopup = ({
 
   const handleInputChange = (event) => {
     setDescription(event.target.value);
-    console.log("editreviews rating", editReviewsRating);
   };
 
   // edit skin reviews
