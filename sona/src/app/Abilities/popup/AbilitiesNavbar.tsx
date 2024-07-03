@@ -17,9 +17,9 @@ const AbilitiesNavbar = ({ index, name }) => {
     <div>
       {fetchedData && (
         <div className="text-center">
-          <div className="text-center flex">
-            <div className="flex items-end ">
-              <h1 className="text-4xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2 mr-4">
+          <div className="flex items-center justify-center">
+            <div className="flex items-end mr-4">
+              <h1 className="text-4xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
                 {fetchedData && name}
               </h1>
               <div>
@@ -31,7 +31,7 @@ const AbilitiesNavbar = ({ index, name }) => {
                 />
               </div>
             </div>
-            <div className="items-center justify-center">
+            <div className="flex items-center justify-center">
               <AbilityBreadcrumb />
             </div>
           </div>
