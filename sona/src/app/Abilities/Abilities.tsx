@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Background from "../Intro/Background";
 import Description from "./Description";
 import Display from "./Display";
 import BasicAbilities from "./BasicAbilities";
@@ -12,6 +11,8 @@ import DataContext from "../DataContext";
 import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
+import Background from "@/app/utils/Background";
+
 import AbilitiesPopup from "./popup/AbilitiesPopup";
 import { AbilityService } from "../api/graphql/Ability/service";
 const Abilities = () => {

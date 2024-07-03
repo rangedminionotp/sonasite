@@ -25,16 +25,14 @@ const AllComponents = () => {
   }, []);
 
   return (
-    <div>
-      <DataContext.Provider value={{ fetchedData, setFetchedData }}>
-        <div>
-          <Navbar />
-          <Intro />
-          <Abilities />
-          <Skins />
-        </div>
-      </DataContext.Provider>
-    </div>
+    <DataContext.Provider value={{ fetchedData, setFetchedData }}>
+      <div>
+        <Navbar />
+        <Intro />
+        <Abilities />
+        <Skins />
+      </div>
+    </DataContext.Provider>
   );
 };
 
