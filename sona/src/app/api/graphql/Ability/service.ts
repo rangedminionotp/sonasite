@@ -13,7 +13,8 @@ export class AbilityService {
         for (const item in rows) {
              const ABilityObj = {
             abilityId: rows[item].id,
-            abilityName: rows[item].name
+            abilityName: rows[item].name,
+            fullName: rows[item].data.fullName
             }
             ability.push(ABilityObj)
         } 

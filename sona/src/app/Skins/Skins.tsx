@@ -74,7 +74,7 @@ const Skins = () => {
         setSkinReviews,
       }}
     >
-      <div name="skins" className="w-full h-screen relative mt-[-50px]">
+      <div name="skins" className="w-full h-screen relative mb-[-100px]">
         <Background />
         <div>
           <Description />

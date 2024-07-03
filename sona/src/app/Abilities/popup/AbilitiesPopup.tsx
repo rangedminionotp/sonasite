@@ -36,14 +36,11 @@ const AbilitiesPopup = () => {
               className={
                 !abilityVisibility[index].active
                   ? "hidden"
-                  : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80 absolute"
+                  : "top-[80px]  left-0  w-full h-full bg-[#0b0e25] fixed overflow-y-auto"
               }
             >
               <PopupClose index={index} />
               <AbilitiesNavbar index={index} name={ability.name || ""} />
-              <div className="mt-6">
-                <AbilityBreadcrumb />
-              </div>
               {breadcrumbs[0].active && <AbilityDescription />}
               {breadcrumbs[1].active && <TipsDisplay index={activeIndex} />}
               {breadcrumbs[2].active && (

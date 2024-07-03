@@ -8,7 +8,7 @@ import { Link } from "react-scroll";
 import LoginBtn from "./LoginBtn";
 import UserDashboard from "./UserDashboard/UserDashboard";
 import { Popover } from "@headlessui/react";
-import { ScrollPosition } from "./ScrollPosition";
+import { ScrollPosition } from "@/app/utils/ScrollPosition";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
@@ -108,7 +108,7 @@ const Navbar = () => {
       <div>
         <Logo />
       </div>
-      <ul className="hidden md:flex justify-between items-center">
+      <ul className="hidden md:flex justify-between items-center font-work-sans ">
         <div className="px-3 py-2 hover:cursor-pointer">
           {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
         </div>
@@ -138,7 +138,7 @@ const Navbar = () => {
         className={
           !nav
             ? "hidden"
-            : "absolute top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center"
+            : "absolute top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center font-work-sans "
         }
       >
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">

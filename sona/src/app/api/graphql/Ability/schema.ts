@@ -9,5 +9,7 @@ export class AbilityInfo {
     @Matches(uuid)
     abilityId!: string
     @Field()
-    abilityName!:string
+    abilityName!: string
+    @Field()
+    fullName!:string
 }

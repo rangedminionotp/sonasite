@@ -30,7 +30,7 @@ const AllComponents = () => {
         <Navbar />
         <Intro />
         <Abilities />
-        <Skins />
+        {/* <Skins /> */}
       </div>
     </DataContext.Provider>
   );
