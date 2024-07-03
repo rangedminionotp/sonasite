@@ -28,6 +28,7 @@ const AddTips = ({ ability_id, version }) => {
     const graphQLClient = createGraphQLClient(bearerToken);
     if (!user) {
       router.push("/login");
+      alert("Please log in to add tips!");
     }
     try {
       const mutation = gql`mutation MyMutation {
@@ -50,7 +51,7 @@ const AddTips = ({ ability_id, version }) => {
 }`;
       const response = await graphQLClient.request(mutation);
       const newTip = response.createAbilityTip;
-      const newAbilityTips = [...abilityTips, newTip];
+      const newAbilityTips = [newTip, ...abilityTips];
       setabilityTips(newAbilityTips);
       setDescription((prevDescription) => "");
     } catch (error) {

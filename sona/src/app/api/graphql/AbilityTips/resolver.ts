@@ -40,7 +40,7 @@ export class AbilityTipsResolver {
 
 
 
-    // @Authorized("member") 
+    @Authorized("member") 
     @Mutation(() => AbilityTipsInfo)
     async updateUpvotes(
         @Arg("tip_id") tip_id: string,
@@ -49,7 +49,7 @@ export class AbilityTipsResolver {
       return new AbilityTipsService().updateUpvotes(tip_id, upvotes)
     }
 
-    // @Authorized("member") 
+    @Authorized("member") 
     @Mutation(() => AbilityTipsInfo)
     async updateDownvotes(
         @Arg("tip_id") tip_id: string,
@@ -66,6 +66,7 @@ export class AbilityTipsResolver {
     // ): Promise<AbilityTipsVotes> {
     //   return new AbilityTipsService().addVote(request.user.id, ability_tip_id, voted);
     // }
+    @Authorized("member") 
     @Mutation(() => AbilityTipsVotes)
     async createTipVote( 
         @Arg("voted") voted:number,
@@ -75,6 +76,7 @@ export class AbilityTipsResolver {
       return new AbilityTipsService().addVote(owner_id, ability_tip_id, voted);
     }
     
+      @Authorized("member") 
     @Mutation(() => AbilityTipsVotes)
     async deleteTipVote(
         @Arg("owner_id") owner_id: string,
@@ -107,7 +109,7 @@ export class AbilityTipsResolver {
     // ): Promise<number>{
     //     return new AbilityTipsService().checkIfDownvoted(request.user.id, tip_id);
     // }
-
+    @Authorized("member") 
     @Mutation(() => AbilityTipsVotes)
     async updateVotes(
         @Arg("tip_id") tip_id: string,
@@ -116,6 +118,7 @@ export class AbilityTipsResolver {
     ): Promise<AbilityTipsVotes> {
       return new AbilityTipsService().updateVotes(owner_id, tip_id, votes)
     }
+    @Authorized("member") 
     @Mutation(() => AbilityTipsInfo)
     async editTips(
         @Arg("owner_id") owner_id: string,
@@ -125,6 +128,7 @@ export class AbilityTipsResolver {
     ): Promise<AbilityTipsInfo> {
       return new AbilityTipsService().updateAbilityTip(owner_id, ability_tip_id, description, version)
     }
+    @Authorized("member") 
     @Mutation(() => AbilityTipsInfo)
     async deleteTips(
         @Arg("owner_id") owner_id: string,

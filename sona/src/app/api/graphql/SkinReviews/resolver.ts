@@ -13,6 +13,7 @@ export class SkinReviewsResolver{
     async getReviewsBySkinId(@Arg('skin_id') skin_id: string): Promise<SkinReviewsInfo[]> {
         return new SkinReviewsService().getReviewsBySkinId(skin_id)
     }
+    @Authorized("member") 
     @Mutation(() => SkinReviewsInfo)
     async addReview(@Arg('input') input: SkinReviewsAdd): Promise<SkinReviewsInfo> {
         return new SkinReviewsService().createReview(input)
@@ -21,14 +22,17 @@ export class SkinReviewsResolver{
     async checkIfReviewed(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<boolean> {
         return new SkinReviewsService().checkIfReviewed(owner_id, skin_id)
     }
+    @Authorized("member") 
     @Mutation(()=>SkinReviewsReviewed)
     async createSkinReviewsReviewed(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string, @Arg('skin_reviews_id') skin_reviews_id: string): Promise<SkinReviewsReviewed>{
         return new SkinReviewsService().createSkinReviewsReviewed(skin_id, owner_id, skin_reviews_id)
     }
+    @Authorized("member") 
     @Mutation(()=>SkinReviewsInfo)
     async deleteSkinReview(@Arg('skin_id') skin_id: string, @Arg('owner_id') owner_id: string): Promise<SkinReviewsInfo>{
         return new SkinReviewsService().deleteSkinReviews(owner_id,skin_id )
     }
+    @Authorized("member") 
     @Mutation(()=>SkinReviewsInfo)
     async editSkinReview(@Arg('input') input: SkinReviewsEdit): Promise<SkinReviewsInfo>{
         return new SkinReviewsService().editSkinReviews(input)

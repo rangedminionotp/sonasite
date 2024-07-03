@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/react": "*",
     "@emotion/styled": "*",
+    "@headlessui/react": "^2.1.1",
     "@mui/icons-material": "*",
     "@mui/joy": "*",
     "@mui/material": "*",

@@ -7,6 +7,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-scroll";
 import LoginBtn from "./LoginBtn";
 import UserDashboard from "./UserDashboard/UserDashboard";
+import { Popover } from "@headlessui/react";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -90,7 +91,7 @@ const Navbar = () => {
   const handleClick = () => setNav(!nav);
 
   return (
-    <div className="fixed flex w-full h-30 bg-[#181818] shadow-gray-300 justify-between items-center px-2 py-2 z-50 text-gray-300">
+    <div className="fixed flex w-full h-30 bg-[#222222] shadow-gray-300 justify-between items-center px-2 py-2 z-50 text-gray-300">
       <div>
         <Logo />
       </div>
