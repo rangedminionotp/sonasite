@@ -12,9 +12,10 @@ const CustomLoreDisplay = ({ skin_id }) => {
     const savedLore = localStorage.getItem(`customLore_${skin_id}`);
     const savedRandomNumber = localStorage.getItem(`randomNumber_${skin_id}`);
     const savedTimestamp = localStorage.getItem(`timestamp_${skin_id}`);
-
+    const hours = 24;
+    const hour = 60 * 60 * 1000;
     const now = new Date().getTime();
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    const oneDayInMilliseconds = hours * hour;
 
     if (
       savedLore &&

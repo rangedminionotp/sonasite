@@ -24,4 +24,14 @@ export class SkinLoreResolver {
     async editLore(@Arg('loreInput') loreInput: SkinLoreInput): Promise<SkinLore>{
         return new SkinLoreService().editLore(loreInput)
     }
+    @Authorized('member')
+    @Query(() => [SkinLore])
+    async getLoreByUserId(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<SkinLore[]>{
+        return new SkinLoreService().getLoreByUserId(owner_id, skin_id)
+    }
+    @Authorized('member')
+    @Mutation(() => SkinLore)
+    async deleteLore(@Arg('id') id: string): Promise<SkinLore>{
+        return new SkinLoreService().deleteLore(id)
+    }
 }

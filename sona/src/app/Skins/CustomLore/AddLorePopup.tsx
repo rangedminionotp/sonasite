@@ -48,7 +48,6 @@ const AddLorePopup = ({
         }
       `;
       const response = await graphQLClient.request(mutation);
-      console.log("response", response.createLore);
       setOpen(false);
     } catch (error) {
       console.error("error adding skin lores", error);

@@ -12,7 +12,6 @@ const AddCustomLore = ({ skinName, setAddLoreOpen }) => {
     const user = getUserFromLocalStorage();
     if (!user) {
       router.push("/login");
-      alert("Please login to add lores!");
       return;
     }
     setAddLoreOpen(true);

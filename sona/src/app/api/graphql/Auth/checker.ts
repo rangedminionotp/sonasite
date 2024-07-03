@@ -4,8 +4,7 @@ import { AuthService } from './service';
 import {headers} from 'next/headers'
 async function authChecker(req: NextApiRequest, authHeader: string, roles: string[]): Promise<boolean> {
   try {
-    req.user = await new AuthService().check(authHeader, roles);
-    console.log('7', req.user)
+    req.user = await new AuthService().check(authHeader, roles); 
   } catch (err) {
     return false;
   }
