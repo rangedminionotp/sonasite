@@ -214,6 +214,7 @@ const TipItem = ({ tip }) => {
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tipId, user.id);
 
+      console.log("in handle downvote", voted);
       // if current vote state of tip is not downvoted
       if (voted !== 0) {
         const updatedTip = await updateDownvotes(
@@ -230,10 +231,6 @@ const TipItem = ({ tip }) => {
             )
           );
         }
-        // set downvote => false (tip will display that downvote is active)
-        setDownvote(false);
-        // set upvote => false (tip will display that upvote is not active)
-        setUpvote(false);
 
         // if current vote state of tip is upvoted
         if (voted === 1) {
@@ -253,10 +250,15 @@ const TipItem = ({ tip }) => {
           }
 
           await updateVotes(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          // set downvote => false (tip will display that downvote is active)
+          setDownvote(false);
+          // set upvote => false (tip will display that upvote is not active)
+          setUpvote(false);
         }
         // if current vote state of tip is not voted by upvote or downvote
         else if (voted === -1) {
           await createTipVote(graphQLClient, tipId, user.id, 0); // Vote = 0 for downvote
+          setDownvote(false);
         }
       } else if (voted === 0) {
         const updatedDownTip = await updateDownvotes(

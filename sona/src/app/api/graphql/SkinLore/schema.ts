@@ -31,7 +31,6 @@ export class SkinLoreInput {
     @Matches(uuid)
     owner_id!: string;
     @Field(() => String)
-    @Length(1, 250)
     @MaxLength(250)
     lore!: string; 
 }
@@ -39,8 +38,7 @@ export class SkinLoreInput {
 @ObjectType()
 @InputType('SkinLoreUpdateInput')
 export class SkinLoreUpdateInput {  
-    @Field(() => String)
-    @Length(1, 250)
+    @Field(() => String) 
     @MaxLength(250)
     lore!: string;
     @Field(() => String)
