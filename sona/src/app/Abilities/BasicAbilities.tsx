@@ -8,9 +8,9 @@ import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 import AbilityDescription from "./AbilityDescription";
 const BasicAbilities: FunctionalComponent = () => {
-  const abilities = [Q, W, E];
+  const abilitiesImg = [Q, W, E];
 
-  const { abilityVisibility, setAbilityVisibility, setActiveIndex } =
+  const { abilities, abilityVisibility, setAbilityVisibility, setActiveIndex } =
     React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex) => {
@@ -24,21 +24,32 @@ const BasicAbilities: FunctionalComponent = () => {
   };
 
   return (
-    <div className="flex space-x-6 mb-[-15em]">
-      {abilities.map((image, index) => (
-        <div
-          name={`${image}-icon`}
-          // key={`${image}-icon`}
-          className="hover:cursor-pointer"
-        >
-          <Image
-            alt={""}
-            src={image}
-            onClick={() => toggleVisibility(index)}
-            className="object-cover border border-gray-300"
-          />
-        </div>
-      ))}
+    <div className="flex space-x-20 mt-[25em]">
+      {abilities &&
+        abilitiesImg.map((image, index) => (
+          <div
+            name={`${image}-icon`}
+            // key={`${image}-icon`}
+            className="hover:cursor-pointer transition duration-300 transform hover:scale-110"
+          >
+            <div className="text-3xl text-center mt-[1em] text-[#FFD700] text-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans">
+              {abilities[index]?.abilityName}
+            </div>
+            <div>
+              <Image
+                alt={""}
+                src={abilitiesImg[index]}
+                width={70}
+                height={70}
+                onClick={() => toggleVisibility(index)}
+                className="object-cover border border-gray-300"
+              />
+            </div>
+            <div className="text-white max-w-20 uppercase font-work-sans mt-[1em]">
+              {abilities[index]?.fullName}
+            </div>
+          </div>
+        ))}
     </div>
   );
 };

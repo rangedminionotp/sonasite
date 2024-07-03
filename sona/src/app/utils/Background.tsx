@@ -19,7 +19,7 @@ const Background = () => {
     const savedBg = localStorage.getItem(`curr_bg`);
     const savedRandomNumber = localStorage.getItem(`bg_randomNumber`);
     const savedTimestamp = localStorage.getItem(`bg_timestamp`);
-    const hours = 24;
+    const hours = 1;
     const hour = 60 * 60 * 1000;
     const now = new Date().getTime();
     const oneDayInMilliseconds = hours * hour;

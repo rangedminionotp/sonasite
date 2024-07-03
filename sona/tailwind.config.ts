@@ -14,7 +14,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        sans: ['var(--font-inter)']
+        sans: ['var(--font-inter)'], 
+        'raleway': ['Raleway', 'sans-serif'],
+        'work-sans': ['Work Sans', 'sans-serif'], 
       },
       colors: {
       primary: 'oklch(66.28% 0.24 151.4 / <alpha-value>)',
