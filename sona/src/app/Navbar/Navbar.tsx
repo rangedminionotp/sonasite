@@ -8,7 +8,7 @@ import { Link } from "react-scroll";
 import LoginBtn from "./LoginBtn";
 import UserDashboard from "./UserDashboard/UserDashboard";
 import { Popover } from "@headlessui/react";
-
+import { ScrollPosition } from "./ScrollPosition";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
@@ -90,26 +90,39 @@ const Navbar = () => {
 
   const handleClick = () => setNav(!nav);
 
+  const scrollPosition = ScrollPosition();
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
   return (
-    <div className="fixed flex w-full h-30 bg-[#222222] shadow-gray-300 justify-between items-center px-2 py-2 z-50 text-gray-300">
+    <Popover
+      className={classNames(
+        scrollPosition > 0
+          ? "shadow backdrop-saturate-200 backdrop-blur-sm"
+          : "shadow-none",
+        "sticky top-0 z-20 h-20 flex justify-between items-center px-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] transition-shadow opacity-95 text-white max-w-full text-2xl font-bold"
+      )}
+    >
       <div>
         <Logo />
       </div>
       <ul className="hidden md:flex justify-between items-center">
-        <div className="dark:text-gray-300 px-3 py-2 hover:cursor-pointer">
+        <div className="px-3 py-2 hover:cursor-pointer">
           {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
         </div>
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
+        <li className=" hover:text-blue-500 px-3 py-2 hover:cursor-pointer hover:underline">
           <Link to="intro" smooth={true} duration={200}>
             Intro
           </Link>
         </li>
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
+        <li className=" hover:text-blue-500 px-3 py-2 hover:cursor-pointer hover:underline">
           <Link to="abilities" smooth={true} duration={200}>
             Abilities
           </Link>
         </li>
-        <li className="dark:text-gray-300 text-2xl hover:text-blue-500 px-3 py-2 hover:cursor-pointer">
+        <li className=" hover:text-blue-500 px-3 py-2 hover:cursor-pointer hover:underline">
           <Link to="skins" smooth={true} duration={200}>
             Skins
           </Link>
@@ -150,7 +163,7 @@ const Navbar = () => {
         </li>
         {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
       </ul>
-    </div>
+    </Popover>
   );
 };
 

@@ -7,6 +7,7 @@ import SkinContext from "./SharedContext";
 import DataContext from "../DataContext";
 import SkinsNavbar from "./SkinsNavbar";
 import { SkinOverView } from "./SkinOverView";
+import Background from "@/app/utils/Background";
 const Skins = () => {
   const [skins, setSkins] = React.useState(null);
   const [skin, setSkin] = React.useState(null);
@@ -73,7 +74,8 @@ const Skins = () => {
         setSkinReviews,
       }}
     >
-      <div name="skins" className="w-full h-screen relative">
+      <div name="skins" className="w-full h-screen relative mt-[-50px]">
+        <Background />
         <div>
           <Description />
         </div>

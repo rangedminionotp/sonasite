@@ -3,7 +3,12 @@
 @tailwind utilities; 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
-body {
-    background-color: #5e5e5e;   
-    @apply font-[Raleway]
-}
+html, body {
+    background-color: #101730;   
+    @apply font-[Raleway];
+ }
+
+ html, body {
+    height: 100%;
+    min-height: 100%;
+ }
