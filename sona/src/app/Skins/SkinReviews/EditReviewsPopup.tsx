@@ -17,7 +17,6 @@ const EditReviewsPopup = ({
   setEditReviewOpen,
   activeImgUrl,
   review_id,
-  curr_review,
   editDescription,
   setEditDescription,
   editReviewsRating,

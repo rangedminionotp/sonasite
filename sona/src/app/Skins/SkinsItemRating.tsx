@@ -18,7 +18,6 @@ export default function SkinItemRating({
   readOnlyBoolean,
   // setEditReviewOpen,
 }) {
-  // console.log("rating", rating);
   const handleChange = (event, newValue) => {
     if (newValue !== null && newValue !== rating) {
       setRating(newValue);

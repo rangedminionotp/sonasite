@@ -1,12 +1,9 @@
 import {Pool} from 'pg';
-import * as fs from 'fs';
-import dotenv from 'dotenv';
-dotenv.config();
-
+import * as fs from 'fs'; 
 process.env.POSTGRES_DB='test';
 
 const pool = new Pool({
-  host: process.env.POSTGRES_HOST,
+  host: 'localhost',
   port: 5432,
   database: process.env.POSTGRES_DB,
   user: process.env.POSTGRES_USER,
@@ -15,7 +12,7 @@ const pool = new Pool({
 
 const run = async (file: string) => {
   const content = fs.readFileSync(file, 'utf8');
-  const statements = content.split(/\r?\n/);
+  const statements = content.split(/\r?;/);
   for (const statement of statements) {
     if (statement) {
       await pool.query(statement);

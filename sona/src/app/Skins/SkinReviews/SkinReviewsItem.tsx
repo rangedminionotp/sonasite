@@ -20,7 +20,8 @@ const SkinReviewsItem = ({ reviewed }) => {
   const [editReviewOpen, setEditReviewOpen] = React.useState<boolean>(false);
 
   const [editDescription, setEditDescription] = React.useState<string>("");
-  const [editReviewsRating, setEditReviewsRating] = React.useState(0);
+  const [editReviewsRating, setEditReviewsRating] = React.useState(null);
+
   const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
@@ -78,15 +79,15 @@ const SkinReviewsItem = ({ reviewed }) => {
               </div>
               <div className="text-gray-800">{item.data.description}</div>
 
-              {reviewed && user.id === item.owner_id ? (
+              {reviewed && user?.id === item.owner_id ? (
                 <div className="flex justify-center space-x-1 cursor-pointer">
                   <EditReviewsBtn setEditReviewOpen={setEditReviewOpen} />
+
                   <EditReviewsPopup
                     editReviewOpen={editReviewOpen}
                     setEditReviewOpen={setEditReviewOpen}
                     activeImgUrl={item.imgUrl}
                     review_id={item.id}
-                    curr_review={item}
                     editDescription={item.data.description}
                     setEditDescription={setEditDescription}
                     editReviewsRating={item.rating}
