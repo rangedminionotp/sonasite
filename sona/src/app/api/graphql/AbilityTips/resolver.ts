@@ -138,8 +138,9 @@ export class AbilityTipsResolver {
   }
   @Query(() => [AbilityTipsInfo])
   async searchAbilityTips(
-    @Arg("search") search: string
+    @Arg("search") search: string,
+    @Arg("ability_id") ability_id: string
   ): Promise<AbilityTipsInfo[]> {
-    return new AbilityTipsService().searchAbilityTips(search)
+    return new AbilityTipsService().searchAbilityTips(search, ability_id)
   }
 }
