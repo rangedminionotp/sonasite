@@ -10,15 +10,28 @@ import ArrowRight from "@mui/icons-material/ArrowRight";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import Dropdown from "@mui/joy/Dropdown";
 
-const TipsSortBtnsMenu = () => {
-  const SIZES = [
+const TipsSortBtnsMenu = ({
+  sortByDate,
+  sortByTotalVotes,
+  sortByPopularity,
+  sortByUpvotes,
+  sortByDownvotes,
+}) => {
+  const votesName = [
     "Date Posted",
     "Total Votes",
     "Popularity",
     "Upvotes",
     "Downvotes",
   ];
-  const [size, setSize] = React.useState("Medium");
+  const votesFunc = [
+    sortByDate,
+    sortByTotalVotes,
+    sortByPopularity,
+    sortByUpvotes,
+    sortByDownvotes,
+  ];
+  const [sort, setSort] = React.useState("Date Posted");
 
   return (
     <div>
@@ -27,17 +40,18 @@ const TipsSortBtnsMenu = () => {
         <Menu sx={{ minWidth: 160, "--ListItemDecorator-size": "24px" }}>
           <ListItem nested>
             <List aria-label="Font sizes">
-              {SIZES.map((item: string) => (
+              {votesName.map((item: string, index: number) => (
                 <MenuItem
                   key={item}
                   role="menuitemradio"
-                  aria-checked={item === size ? "true" : "false"}
+                  aria-checked={item === sort ? "true" : "false"}
                   onClick={() => {
-                    setSize(item);
+                    votesFunc[index]();
+                    setSort(item);
                   }}
                 >
                   <ListItemDecorator>
-                    {item === size && <ArrowRight />}
+                    {item === sort && <ArrowRight />}
                   </ListItemDecorator>{" "}
                   {item}
                 </MenuItem>
