@@ -2,6 +2,7 @@ import React from "react";
 import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/joy/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const TipsSearch = ({
   search,
@@ -16,6 +17,14 @@ const TipsSearch = ({
     if (!value) {
       setSearchTips(null);
     }
+  };
+  const handleClear = () => {
+    console.log("handle clear?");
+    console.log(search);
+    setSearch("");
+    console.log(search);
+
+    setSearchTips(null);
   };
 
   const handleSearch = () => {
@@ -65,8 +74,13 @@ const TipsSearch = ({
       >
         <Input
           placeholder="Search"
-          defaultValue={search}
+          value={search}
           onChange={handleChange}
+          endDecorator={
+            <IconButton onClick={handleClear}>
+              <ClearIcon className="cursor-pointer" />
+            </IconButton>
+          }
         />
         <div className={`${search ? "cursor-pointer" : "cursor-not-allowed"}`}>
           <IconButton disabled={!search} onClick={handleSearch}>
