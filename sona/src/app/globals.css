@@ -27,50 +27,24 @@ html, body {
     }
 }
 
-:root {
-    --font-size-xs: 1rem;  /* 18px */
-    --font-size-sm: 1.25rem;   /* 20px */
-    --font-size-md: 1.5rem;    /* 24px */
-    --font-size-lg: 1.875rem;  /* 30px */
-    --font-size-xl: 2.25rem;   /* 36px */
+/* responsive layout classes */
+@layer components {
+  /* general descriptions */
+  .description-header {
+    @apply text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl;
+  }
+  .description-subheader {
+    @apply text-3xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-6xl;
+  }
+  .link-text {
+    @apply text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-2xl;
+  }
+  /* end of general descriptions */ 
+  .ability-btn-shortkey {
+    @apply text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans text-[#FFD700];
+  }
+  .ability-btn-name{
+    @apply text-xs sm:text-xs md:text-base lg:text-lg xl:text-xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] uppercase font-work-sans text-white break-words overflow-hidden whitespace-pre-wrap;
+  } 
 }
-
-@media (min-width: 640px) {  /* sm */
-    :root {
-        --font-size-sm: 1.25rem;  /* 20px */
-    }
-}
-
-@media (min-width: 768px) {  /* md */
-    :root {
-        --font-size-md: 1.5rem;  /* 24px */
-    }
-}
-
-@media (min-width: 1024px) {  /* lg */
-    :root {
-        --font-size-lg: 1.875rem;  /* 30px */
-    }
-}
-
-@media (min-width: 1280px) {  /* xl */
-    :root {
-        --font-size-xl: 2.25rem;  /* 36px */
-    }
-}
-
-.text-lg {
-    font-size: var(--font-size-lg);
-}
-
-.text-sm {
-    font-size: var(--font-size-sm);
-}
-
-.text-md {
-    font-size: var(--font-size-md);
-}
-
-.text-xl {
-    font-size: var(--font-size-xl);
-}
+  

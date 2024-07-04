@@ -28,21 +28,29 @@ const BasicAbilities: FunctionalComponent = () => {
       {abilities &&
         abilitiesImg.map((image, index) => (
           <div
-            name={`${image}-icon`}
-            className="hover:cursor-pointer transition duration-300 transform hover:scale-110"
+            key={`${image}-icon`}
+            className="flex flex-col items-center group hover:cursor-pointer transition duration-300 transform hover:scale-110"
           >
-            <div className="text-center mt-[1em] text-[#FFD700] font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans text-lg  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            <div className="text-center mt-4 ability-btn-shortkey">
               {abilities[index]?.abilityName}
             </div>
-            <div>
+            <div className="relative">
               <Image
-                alt=""
+                alt={abilities[index]?.fullName}
                 src={abilitiesImg[index]}
                 onClick={() => toggleVisibility(index)}
-                className="object-cover border border-gray-300 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 min-w-12 min-h-12"
+                className="drop-shadow-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20"
               />
+              <div className="absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity">
+                <Image
+                  alt={abilities[index]?.fullName}
+                  src={abilitiesImg[index]}
+                  onClick={() => toggleVisibility(index)}
+                  className="drop-shadow-lg blur-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20"
+                />
+              </div>
             </div>
-            <div className="text-white max-w-20 uppercase font-work-sans mt-[1em]">
+            <div className="mt-4 text-center max-w-sm ability-btn-name">
               {abilities[index]?.fullName}
             </div>
           </div>
