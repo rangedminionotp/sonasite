@@ -81,6 +81,7 @@ const TipsSortBtnsMenu = ({ abilityTips, setTipsToUse }) => {
     sortByUpvotes,
     sortByDownvotes,
   ];
+
   return (
     <div>
       <Dropdown>

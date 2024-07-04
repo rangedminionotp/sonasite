@@ -18,7 +18,7 @@ import { format, formatDistanceToNow, parseISO } from "date-fns";
 import TipsEditAndDelete from "./TipsEditAndDelete ";
 import AbilitiesContext from "../SharedContext";
 import Tooltip from "@mui/joy/Tooltip";
-const TipItem = ({ tip }) => {
+const TipItem = ({ tip, search }) => {
   const { fetchedData, abilityTips, setabilityTips } =
     React.useContext(AbilitiesContext);
 
@@ -213,7 +213,6 @@ const TipItem = ({ tip }) => {
       const graphQLClient = createGraphQLClient(bearerToken);
       const voted = await checkIfVoted(graphQLClient, tipId, user.id);
 
-      console.log("in handle downvote", voted);
       // if current vote state of tip is not downvoted
       if (voted !== 0) {
         const updatedTip = await updateDownvotes(
@@ -281,6 +280,12 @@ const TipItem = ({ tip }) => {
     }
   };
 
+  const highlightSearchTerm = (text, searchTerm) => {
+    if (!searchTerm) return text; // Return original text if search term is empty
+    const regex = new RegExp(`(${searchTerm})`, "gi");
+    return text.replace(regex, '<mark class="bg-yellow-100">$1</mark>');
+  };
+
   if (loading) {
     return <p>Loading...</p>; // Render a loading indicator while fetching data
   }
@@ -288,14 +293,28 @@ const TipItem = ({ tip }) => {
     <div className="bg-[#262626] shadow-md p-4 border border-black">
       <div className="flex items-center space-x-2">
         <Avatar>{tip.ownerName.charAt(0)}</Avatar>
-        <p className="text-gray-300 font-bold text-lg">{tip.ownerName}</p>
+        <p
+          className="text-gray-300 font-bold text-lg"
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchTerm(tip.ownerName, search),
+          }}
+        >
+          {/* {tip.ownerName} */}
+        </p>
         <div className="border-l border-gray-300 h-6 mx-2"></div>
         <p className="text-gray-400 text-sm">
           {format(parseISO(tip.date), "MMMM dd, yyyy h:mm a")} (
           {formatDistanceToNow(parseISO(tip.date), { addSuffix: true })})
         </p>
         <div className="border-l border-gray-300 h-6 mx-2"></div>
-        <p className="text-gray-400">Version: {tip.version.slice(0, 5)}</p>
+        <p
+          className="text-gray-400"
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchTerm(tip.version.slice(0, 5), search),
+          }}
+        >
+          {/* Version: {tip.version.slice(0, 5)} */}
+        </p>
       </div>
 
       {/* Conditionally render Textarea or description */}
@@ -336,7 +355,14 @@ const TipItem = ({ tip }) => {
           </Button>
         </>
       ) : (
-        <p className="text-gray-200 font-semibold mt-2">{tip.description}</p>
+        <p
+          className="text-gray-200 font-semibold mt-2"
+          dangerouslySetInnerHTML={{
+            __html: highlightSearchTerm(tip.description, search),
+          }}
+        >
+          {/* {tip.description} */}
+        </p>
       )}
 
       <div className="flex items-center space-x-4 mt-2">
