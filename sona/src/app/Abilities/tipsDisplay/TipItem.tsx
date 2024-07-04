@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Avatar from "@mui/joy/Avatar";
 import Textarea from "@mui/joy/Textarea"; // Assuming you imported JoyUI Textarea component
 import Button from "@mui/joy/Button";
+import Highlighter from "react-highlight-words";
+
 import {
   getUserFromLocalStorage,
   createGraphQLClient,
@@ -293,28 +295,23 @@ const TipItem = ({ tip, search }) => {
     <div className="bg-[#262626] shadow-md p-4 border border-black">
       <div className="flex items-center space-x-2">
         <Avatar>{tip.ownerName.charAt(0)}</Avatar>
-        <p
-          className="text-gray-300 font-bold text-lg"
-          dangerouslySetInnerHTML={{
-            __html: highlightSearchTerm(tip.ownerName, search),
-          }}
-        >
-          {/* {tip.ownerName} */}
-        </p>
+        <Highlighter
+          className="text-gray-300 font-bold ability-tip-ownername"
+          searchWords={[search]}
+          autoEscape={true}
+          textToHighlight={tip.ownerName}
+        />
         <div className="border-l border-gray-300 h-6 mx-2"></div>
         <p className="text-gray-400 text-sm">
           {format(parseISO(tip.date), "MMMM dd, yyyy h:mm a")} (
           {formatDistanceToNow(parseISO(tip.date), { addSuffix: true })})
         </p>
         <div className="border-l border-gray-300 h-6 mx-2"></div>
-        <p
-          className="text-gray-400"
-          dangerouslySetInnerHTML={{
-            __html: highlightSearchTerm(tip.version.slice(0, 5), search),
-          }}
-        >
-          {/* Version: {tip.version.slice(0, 5)} */}
-        </p>
+        <Highlighter
+          searchWords={[search]}
+          autoEscape={true}
+          textToHighlight={tip.version.slice(0, 5)}
+        />
       </div>
 
       {/* Conditionally render Textarea or description */}
@@ -355,14 +352,12 @@ const TipItem = ({ tip, search }) => {
           </Button>
         </>
       ) : (
-        <p
-          className="text-gray-200 font-semibold mt-2"
-          dangerouslySetInnerHTML={{
-            __html: highlightSearchTerm(tip.description, search),
-          }}
-        >
-          {/* {tip.description} */}
-        </p>
+        <Highlighter
+          className="text-gray-200 mt-2"
+          searchWords={[search]}
+          autoEscape={true}
+          textToHighlight={tip.description}
+        />
       )}
 
       <div className="flex items-center space-x-4 mt-2">

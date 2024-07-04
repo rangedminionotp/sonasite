@@ -38,6 +38,7 @@
     "pg": "*",
     "react": "*",
     "react-dom": "*",
+    "react-highlight-words": "^0.20.0",
     "react-scroll": "*",
     "reflect-metadata": "*",
     "require": "*",
