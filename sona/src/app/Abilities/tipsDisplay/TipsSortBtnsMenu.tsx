@@ -36,7 +36,9 @@ const TipsSortBtnsMenu = ({
   return (
     <div>
       <Dropdown>
-        <MenuButton endDecorator={<ArrowDropDown />}>Sort Tips By</MenuButton>
+        <MenuButton variant="soft" endDecorator={<ArrowDropDown />}>
+          Sort Tips By
+        </MenuButton>
         <Menu sx={{ minWidth: 160, "--ListItemDecorator-size": "24px" }}>
           <ListItem nested>
             <List aria-label="Font sizes">

@@ -269,4 +269,30 @@ export class AbilityTipsService {
         } 
         return tipsObj;
     }
+    public async searchAbilityTips(search: string): Promise<AbilityTipsInfo[]>{
+        const select = `SELECT * FROM AbilityTips WHERE data->>'description' ILIKE $1 OR owner_name ILIKE $1 OR data->>'version' ILIKE $1`
+        const query = {
+            text: select,
+            values: [`%${search}%`]
+        }
+        const { rows } = await pool.query(query)
+        const abilityTips:AbilityTipsInfo[]= []
+        for (const item in rows) {
+            const TipsObj = {
+                tip_id: rows[item].id,
+                ability_id: rows[item].ability_id,
+                description: rows[item].data.description,
+                ownerId: rows[item].owner_id,
+                ownerName: rows[item].owner_name,
+                date: rows[item].data.date,
+                version: rows[item].data.version,
+                upvotes: rows[item].upvotes,
+                downvotes: rows[item].downvotes, 
+                edited: false
+
+            }
+            abilityTips.push(TipsObj)
+        }
+        return abilityTips;
+    }
 }
