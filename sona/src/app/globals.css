@@ -3,13 +3,74 @@
 @tailwind utilities; 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 html, body {
     background-color: #101730;   
     @apply font-[Raleway];
- }
+ }  
 
  html, body {
     height: 100%;
     min-height: 100%;
- }
+ } 
+
+ @layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+}
+
+:root {
+    --font-size-xs: 1rem;  /* 18px */
+    --font-size-sm: 1.25rem;   /* 20px */
+    --font-size-md: 1.5rem;    /* 24px */
+    --font-size-lg: 1.875rem;  /* 30px */
+    --font-size-xl: 2.25rem;   /* 36px */
+}
+
+@media (min-width: 640px) {  /* sm */
+    :root {
+        --font-size-sm: 1.25rem;  /* 20px */
+    }
+}
+
+@media (min-width: 768px) {  /* md */
+    :root {
+        --font-size-md: 1.5rem;  /* 24px */
+    }
+}
+
+@media (min-width: 1024px) {  /* lg */
+    :root {
+        --font-size-lg: 1.875rem;  /* 30px */
+    }
+}
+
+@media (min-width: 1280px) {  /* xl */
+    :root {
+        --font-size-xl: 2.25rem;  /* 36px */
+    }
+}
+
+.text-lg {
+    font-size: var(--font-size-lg);
+}
+
+.text-sm {
+    font-size: var(--font-size-sm);
+}
+
+.text-md {
+    font-size: var(--font-size-md);
+}
+
+.text-xl {
+    font-size: var(--font-size-xl);
+}

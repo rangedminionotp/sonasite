@@ -78,7 +78,7 @@ const AbilityDescription = () => {
     fetchedRawDataQ,
   ];
   return (
-    <div name="Overview" className="px-4 md:px-16 lg:px-24">
+    <div name="Overview" className="px-4 md:px-16 lg:px-24 font-inter">
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => (
           <div
@@ -86,7 +86,7 @@ const AbilityDescription = () => {
             className={
               !abilityVisibility[index].active
                 ? "hidden"
-                : "top-0 left-0 w-full h-screen bg-[#0b0e25] bg-opacity-80"
+                : "top-0 left-0 w-full h-screen bg-[#0b0e25]"
             }
           >
             <div className="flex flex-col md:flex-row h-full">

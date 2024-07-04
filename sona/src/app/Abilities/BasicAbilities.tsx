@@ -29,20 +29,17 @@ const BasicAbilities: FunctionalComponent = () => {
         abilitiesImg.map((image, index) => (
           <div
             name={`${image}-icon`}
-            // key={`${image}-icon`}
             className="hover:cursor-pointer transition duration-300 transform hover:scale-110"
           >
-            <div className="text-3xl text-center mt-[1em] text-[#FFD700] text-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans">
+            <div className="text-center mt-[1em] text-[#FFD700] font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans text-lg  sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
               {abilities[index]?.abilityName}
             </div>
             <div>
               <Image
-                alt={""}
+                alt=""
                 src={abilitiesImg[index]}
-                width={70}
-                height={70}
                 onClick={() => toggleVisibility(index)}
-                className="object-cover border border-gray-300"
+                className="object-cover border border-gray-300 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 min-w-12 min-h-12"
               />
             </div>
             <div className="text-white max-w-20 uppercase font-work-sans mt-[1em]">
