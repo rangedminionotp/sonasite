@@ -24,7 +24,10 @@ const BasicAbilities: FunctionalComponent = () => {
   };
 
   return (
-    <div className="flex space-x-20 mt-[25em]">
+    <div
+      className="flex w-full flex-col flex-wrap items-center justify-between gap-4 px-[20%] xs:flex-row"
+      name="basic-abilities-icon"
+    >
       {abilities &&
         abilitiesImg.map((image, index) => (
           <div

@@ -10,6 +10,7 @@ import {
   updateDownvotes,
   createTipVote,
 } from "./utils";
+import TipsSortBtnsMenu from "./TipsSortBtnsMenu";
 import TipItem from "./TipItem";
 import { sortByDateDescending } from "./utils";
 const TipsDisplay = ({ index }) => {
@@ -141,6 +142,7 @@ const TipsDisplay = ({ index }) => {
   };
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
+      <TipsSortBtnsMenu />
       <div className="flex flex-col md:flex-row md:justify-between mb-4">
         <Button
           onClick={sortByDate}
