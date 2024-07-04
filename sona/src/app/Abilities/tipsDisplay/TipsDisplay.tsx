@@ -18,15 +18,10 @@ import { sortByDateDescending } from "./utils";
 const TipsDisplay = ({ index }) => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
-  const [isDateAsc, setIsDateAsc] = useState(true);
-  const [isUpvotesAsc, setIsUpvotesAsc] = useState(true);
-  const [isDownvotesAsc, setIsDownvotesAsc] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const tipsPerPage = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [currentTips, setCurrentTips] = useState([]);
-  const [isPopularityAsc, setIsPopularityAsc] = useState(true);
-  const [isVotesAsc, setIsVotesAsc] = useState(true);
   const [search, setSearch] = useState<string>(null);
   const [searchTips, setSearchTips] = useState(null);
 
@@ -50,7 +45,7 @@ const TipsDisplay = ({ index }) => {
       );
       setCurrentTips(tips);
     }
-  }, [abilityTips, currentPage, searchTips]);
+  }, [abilityTips, currentPage, searchTips, search]);
 
   // Handle page navigation
   const goToNextPage = () => {
@@ -106,68 +101,25 @@ const TipsDisplay = ({ index }) => {
     }
   }, [abilities, index, setabilityTips]);
 
-  const sortByDate = () => {
-    const sorted = [...abilityTips].sort((a, b) => {
-      const dateComparison =
-        new Date(a.date).getTime() - new Date(b.date).getTime();
-      return isDateAsc ? dateComparison : -dateComparison;
-    });
-    setabilityTips(sorted);
-    setIsDateAsc(!isDateAsc);
-  };
+  const abilityTipsToUse = searchTips ? searchTips : abilityTips;
+  const setTipsToUse = searchTips ? setSearchTips : setabilityTips;
 
-  const sortByUpvotes = () => {
-    const sorted = [...abilityTips].sort((a, b) => {
-      const upvoteComparison = b.upvotes - a.upvotes;
-      return isUpvotesAsc ? upvoteComparison : -upvoteComparison;
-    });
-    setabilityTips(sorted);
-    setIsUpvotesAsc(!isUpvotesAsc);
-  };
-
-  const sortByDownvotes = () => {
-    const sorted = [...abilityTips].sort((a, b) => {
-      const downvoteComparison = b.downvotes - a.downvotes;
-      return isDownvotesAsc ? downvoteComparison : -downvoteComparison;
-    });
-    setabilityTips(sorted);
-    setIsDownvotesAsc(!isDownvotesAsc);
-  };
-
-  const sortByPopularity = () => {
-    const sorted = [...abilityTips].sort((a, b) => {
-      const popularityComparison =
-        b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
-      return isPopularityAsc ? popularityComparison : -popularityComparison;
-    });
-    setabilityTips(sorted);
-    setIsPopularityAsc(!isPopularityAsc);
-  };
-
-  const sortByTotalVotes = () => {
-    const sorted = [...abilityTips].sort((a, b) => {
-      const votesComparison =
-        b.upvotes - a.upvotes + (b.downvotes - a.downvotes);
-      return isVotesAsc ? votesComparison : -votesComparison;
-    });
-    setabilityTips(sorted);
-    setIsVotesAsc(!isVotesAsc);
-  };
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
       <div className="flex justify-between items-center">
         <TipsSortBtnsMenu
-          sortByDate={sortByDate}
-          sortByTotalVotes={sortByTotalVotes}
-          sortByPopularity={sortByPopularity}
-          sortByUpvotes={sortByUpvotes}
-          sortByDownvotes={sortByDownvotes}
+          abilityTips={abilityTipsToUse}
+          setTipsToUse={setTipsToUse}
         />
-        <TipsSearch
-          search={search}
-          setSearch={setSearch}
-          setSearchTips={setSearchTips}
-        />
+        {abilities && abilities[index] && (
+          <TipsSearch
+            search={search}
+            setSearch={setSearch}
+            setSearchTips={setSearchTips}
+            searchTips={searchTips}
+            ability_id={abilities[index].abilityId}
+          />
+        )}
       </div>
       {currentTips && currentTips.length > 0 ? (
         currentTips.map((tip, idx) => <TipItem key={idx} tip={tip} />)

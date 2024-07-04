@@ -269,11 +269,11 @@ export class AbilityTipsService {
         } 
         return tipsObj;
     }
-    public async searchAbilityTips(search: string): Promise<AbilityTipsInfo[]>{
-        const select = `SELECT * FROM AbilityTips WHERE data->>'description' ILIKE $1 OR owner_name ILIKE $1 OR data->>'version' ILIKE $1`
+    public async searchAbilityTips(search: string, ability_id: string): Promise<AbilityTipsInfo[]>{
+        const select = `SELECT * FROM AbilityTips WHERE (data->>'description' ILIKE $1 OR owner_name ILIKE $1 OR data->>'version' ILIKE $1) AND ability_id = $2`
         const query = {
             text: select,
-            values: [`%${search}%`]
+            values: [`%${search}%`, ability_id]
         }
         const { rows } = await pool.query(query)
         const abilityTips:AbilityTipsInfo[]= []

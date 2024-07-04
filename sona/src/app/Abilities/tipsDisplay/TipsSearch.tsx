@@ -3,15 +3,25 @@ import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/joy/IconButton";
 
-const TipsSearch = ({ search, setSearch, setSearchTips }) => {
+const TipsSearch = ({
+  search,
+  setSearch,
+  setSearchTips,
+  searchTips,
+  ability_id,
+}) => {
   const handleChange = (event) => {
-    setSearch(event.target.value);
+    const value = event.target.value;
+    setSearch(value);
+    if (!value) {
+      setSearchTips(null);
+    }
   };
 
   const handleSearch = () => {
     const query = {
       query: `query MyQuery {
-  searchAbilityTips(search: "${search}") {
+  searchAbilityTips(search: "${search}", ability_id: "${ability_id}") {
     ability_id
     date
     description
@@ -55,7 +65,6 @@ const TipsSearch = ({ search, setSearch, setSearchTips }) => {
       >
         <Input
           placeholder="Search"
-          required
           defaultValue={search}
           onChange={handleChange}
         />
