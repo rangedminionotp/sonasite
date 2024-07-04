@@ -20,19 +20,25 @@ const SkinsNavbar = () => {
     );
   }
   return (
-    <div name="skins-navbar" className="flex flex-wrap">
+    <div
+      name="skins-navbar"
+      className="flex flex-wrap absolute w-screen overflow-x-hidden"
+    >
       {skins.map((item, index) => (
-        <div key={index} className="w-1/2 fle justify-center">
+        <div
+          key={index}
+          className={`w-1/2 flex ${
+            index % 2 === 0
+              ? "justify-start right-10 hover:right-3"
+              : "justify-end left-10 hover:left-3"
+          } relative`}
+        >
           <Link to={item.name} smooth={true} duration={200}>
             <Tooltip title={item.name}>
               <img
                 src={item.imgURL}
                 alt={item.name}
-                className={`w-full xs:w-[1vw] sm:w-[16vw] lg:w-[8vw] xl:w-[8vw] max-w-xs mb-1 ${
-                  index % 2 === 1
-                    ? "ml-auto scale-x-[-1] -mr-[3vw] hover:-mr-[1vw]"
-                    : "ml-[-3vw] hover:ml-[-1vw]"
-                } hover:cursor-pointer hover:scale-105 transition-transform duration-1000`}
+                className="xs:w-[1vw] grid sm:w-[16vw] lg:w-[8vw] xl:w-[8vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
               />
             </Tooltip>
           </Link>

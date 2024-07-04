@@ -30,7 +30,7 @@ const PassiveAb = () => {
           alt={""}
           src={passive}
           onClick={() => toggleVisibility(4)}
-          className="object-cover border border-gray-300"
+          className="object-cover border border-gray-300 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-26 lg:h-26 xl:w-26 xl:h-26 min-w-16 min-h-16"
         />
         <div className="text-white max-w-20 uppercase font-work-sans mt-[1em]">
           {abilities[4]?.fullName}

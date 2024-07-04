@@ -17,6 +17,7 @@ const config: Config = {
         sans: ['var(--font-inter)'], 
         'raleway': ['Raleway', 'sans-serif'],
         'work-sans': ['Work Sans', 'sans-serif'], 
+        'inter': ['Inter', 'sans-serif'],
       },
       colors: {
       primary: 'oklch(66.28% 0.24 151.4 / <alpha-value>)',
