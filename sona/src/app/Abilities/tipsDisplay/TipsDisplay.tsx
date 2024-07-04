@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import AbilitiesContext from "../SharedContext";
 import Button from "@mui/joy/Button";
+
+import TipsSearch from "./TipsSearch";
 import {
   getUserFromLocalStorage,
   createGraphQLClient,
@@ -25,9 +27,20 @@ const TipsDisplay = ({ index }) => {
   const [currentTips, setCurrentTips] = useState([]);
   const [isPopularityAsc, setIsPopularityAsc] = useState(true);
   const [isVotesAsc, setIsVotesAsc] = useState(true);
+  const [search, setSearch] = useState<string>(null);
+  const [searchTips, setSearchTips] = useState(null);
 
   useEffect(() => {
-    if (abilityTips) {
+    if (searchTips) {
+      const pages = Math.ceil(searchTips.length / tipsPerPage);
+      setTotalPages(pages);
+
+      const tips = searchTips.slice(
+        (currentPage - 1) * tipsPerPage,
+        currentPage * tipsPerPage
+      );
+      setCurrentTips(tips);
+    } else if (abilityTips) {
       const pages = Math.ceil(abilityTips.length / tipsPerPage);
       setTotalPages(pages);
 
@@ -37,7 +50,7 @@ const TipsDisplay = ({ index }) => {
       );
       setCurrentTips(tips);
     }
-  }, [abilityTips, currentPage]);
+  }, [abilityTips, currentPage, searchTips]);
 
   // Handle page navigation
   const goToNextPage = () => {
@@ -124,7 +137,7 @@ const TipsDisplay = ({ index }) => {
   const sortByPopularity = () => {
     const sorted = [...abilityTips].sort((a, b) => {
       const popularityComparison =
-        b.upvotes - a.upvotes + (b.downvotes - a.downvotes);
+        b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
       return isPopularityAsc ? popularityComparison : -popularityComparison;
     });
     setabilityTips(sorted);
@@ -134,7 +147,7 @@ const TipsDisplay = ({ index }) => {
   const sortByTotalVotes = () => {
     const sorted = [...abilityTips].sort((a, b) => {
       const votesComparison =
-        b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
+        b.upvotes - a.upvotes + (b.downvotes - a.downvotes);
       return isVotesAsc ? votesComparison : -votesComparison;
     });
     setabilityTips(sorted);
@@ -142,13 +155,20 @@ const TipsDisplay = ({ index }) => {
   };
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
-      <TipsSortBtnsMenu
-        sortByDate={sortByDate}
-        sortByTotalVotes={sortByTotalVotes}
-        sortByPopularity={sortByPopularity}
-        sortByUpvotes={sortByUpvotes}
-        sortByDownvotes={sortByDownvotes}
-      />
+      <div className="flex justify-between items-center">
+        <TipsSortBtnsMenu
+          sortByDate={sortByDate}
+          sortByTotalVotes={sortByTotalVotes}
+          sortByPopularity={sortByPopularity}
+          sortByUpvotes={sortByUpvotes}
+          sortByDownvotes={sortByDownvotes}
+        />
+        <TipsSearch
+          search={search}
+          setSearch={setSearch}
+          setSearchTips={setSearchTips}
+        />
+      </div>
       {currentTips && currentTips.length > 0 ? (
         currentTips.map((tip, idx) => <TipItem key={idx} tip={tip} />)
       ) : (

@@ -135,5 +135,11 @@ export class AbilityTipsResolver {
         @Arg("ability_tip_id") ability_tip_id: string 
     ): Promise<AbilityTipsInfo> {
       return new AbilityTipsService().deleteAbilityTip(owner_id, ability_tip_id)
-    }
+  }
+  @Query(() => [AbilityTipsInfo])
+  async searchAbilityTips(
+    @Arg("search") search: string
+  ): Promise<AbilityTipsInfo[]> {
+    return new AbilityTipsService().searchAbilityTips(search)
+  }
 }
