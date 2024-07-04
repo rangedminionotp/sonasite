@@ -122,7 +122,9 @@ const TipsDisplay = ({ index }) => {
         )}
       </div>
       {currentTips && currentTips.length > 0 ? (
-        currentTips.map((tip, idx) => <TipItem key={idx} tip={tip} />)
+        currentTips.map((tip, idx) => (
+          <TipItem key={idx} tip={tip} search={search} />
+        ))
       ) : (
         <p className="text-center text-gray-500">No tips available.</p>
       )}
