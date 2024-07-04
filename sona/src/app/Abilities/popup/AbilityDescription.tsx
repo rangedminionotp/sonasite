@@ -94,9 +94,9 @@ const AbilityDescription = () => {
                 <AbilitiesVideo index={index} />
               </div>
               <div className="md:w-1/2 p-4">
-                <div className="text-xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
+                <div className=" font-bold text-[#FFD700] drop-shadow-lg  border-b-2 border-yellow-500 pb-2">
                   {index !== 4 && (
-                    <div className="text-xl w-auto font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-2">
+                    <div className="ability-description-text w-auto font-bold text-white drop-shadow-lg  border border-gray-300 p-2">
                       <div>
                         Cooldown: [
                         {fetchedData &&
@@ -108,7 +108,7 @@ const AbilityDescription = () => {
                     </div>
                   )}
                   {index !== 4 && (
-                    <div className="text-xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-2">
+                    <div className="ability-description-text w-auto font-bold text-white drop-shadow-lg  border border-gray-300 p-2">
                       <div>
                         Mana Cost: [
                         {fetchedData &&
@@ -120,11 +120,11 @@ const AbilityDescription = () => {
                     </div>
                   )}
                 </div>
-                <div className="text-xl text-white drop-shadow-lg sm:text-md border-b-2 font-mono border-gray-300 pb-2">
+                <div className="ability-description-text text-white drop-shadow-lg border-b-2 font-mono border-gray-300 pb-2">
                   {index !== 4 ? fetchedData && ability.description : null}
                 </div>
                 <div
-                  className="text-xl font-bold text-white drop-shadow-lg sm:text-md border border-gray-300 p-2"
+                  className="ability-description-text font-bold text-white drop-shadow-lg border border-gray-300 p-2"
                   dangerouslySetInnerHTML={{
                     __html:
                       fetchedData &&

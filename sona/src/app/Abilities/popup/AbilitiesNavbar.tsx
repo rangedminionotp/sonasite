@@ -19,7 +19,7 @@ const AbilitiesNavbar = ({ index, name }) => {
         <div className="text-center">
           <div className="flex items-center justify-center">
             <div className="flex items-end mr-4">
-              <h1 className="text-4xl font-bold text-[#FFD700] drop-shadow-lg sm:text-md border-b-2 border-yellow-500 pb-2">
+              <h1 className="font-bold text-[#FFD700] drop-shadow-lg border-b-2 border-yellow-500 pb-2 description-subheader">
                 {fetchedData && name}
               </h1>
               <div>

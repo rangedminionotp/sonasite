@@ -170,19 +170,21 @@ const Abilities = () => {
         setActiveIndex,
       }}
     >
-      <div name="abilities" className="w-full h-screen relative  ">
+      <div name="abilities" className="w-full h-screen relative">
         {/* <Background /> */}
         <div className="absolute inset-0 flex justify-center items-center">
           <Description />
         </div>
         <div
           name="abilities-icon"
-          className="absolute inset-0 flex justify-center items-center"
+          className="flex h-[500px] w-full flex-wrap items-center justify-center gap-8"
         >
-          <PassiveAb />
-          <BasicAbilities />
-          <UltAb />
-          <AbilitiesPopup />
+          <div className="flex w-full items-center justify-between px-[10%] py-[70%] md:py-[25%] ">
+            <PassiveAb />
+            <BasicAbilities />
+            <UltAb />
+            <AbilitiesPopup />
+          </div>
         </div>
       </div>
     </AbilitiesContext.Provider>

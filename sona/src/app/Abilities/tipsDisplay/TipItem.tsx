@@ -18,7 +18,6 @@ import { format, formatDistanceToNow, parseISO } from "date-fns";
 import TipsEditAndDelete from "./TipsEditAndDelete ";
 import AbilitiesContext from "../SharedContext";
 import Tooltip from "@mui/joy/Tooltip";
-
 const TipItem = ({ tip }) => {
   const { fetchedData, abilityTips, setabilityTips } =
     React.useContext(AbilitiesContext);
