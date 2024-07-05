@@ -13,6 +13,7 @@ const Skins = () => {
   const [skin, setSkin] = React.useState(null);
   const [skinReviews, setSkinReviews] = React.useState<SkinOverView[]>(null);
   const { fetchedData, setFetchedData } = React.useContext(DataContext);
+  const [activeSkin, setActiveSkin] = React.useState<string>(null);
   React.useEffect(() => {
     const query = {
       query: `
@@ -80,10 +81,10 @@ const Skins = () => {
           <Description />
         </div>
         <div className="absolute inset-0 flex justify-center items-center">
-          <SkinsNavbar />
+          <SkinsNavbar setActiveSkin={setActiveSkin} />
         </div>
         <div>
-          <SkinsItem />
+          <SkinsItem activeSkin={activeSkin} />
         </div>
       </div>
     </SkinContext.Provider>
