@@ -33,12 +33,7 @@ const SkinsNavbar = ({ setActiveSkin }) => {
               : "justify-end left-10 hover:left-3"
           } relative`}
         >
-          <Link
-            to={item.name}
-            smooth={true}
-            duration={200}
-            onClick={() => setActiveSkin(item.info.id)}
-          >
+          <div onClick={() => setActiveSkin(item.info.id)}>
             <Tooltip title={item.name}>
               <Image
                 src={item.imgURL}
@@ -48,7 +43,7 @@ const SkinsNavbar = ({ setActiveSkin }) => {
                 className="w-[10vw] xxxs:w-[30vw] xxs:w-[30vw] xs:w-[20vw] grid sm:w-[8vw] md:w-[18vw] lg:w-[12vw] xl:w-[10vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
               />
             </Tooltip>
-          </Link>
+          </div>
         </div>
       ))}
     </div>

@@ -110,28 +110,34 @@ const SkinReviewsDisplay = ({
         className={
           !open
             ? "hidden"
-            : `top-0 left-0 w-full h-screen ${bgColor} bg-opacity-50 absolute`
+            : `top-0 left-0 w-full h-screen ${bgColor} bg-opacity-50 z-30 absolute`
         }
       >
-        <ReviewsPopupClose setOpen={setOpen} setSkinReviews={setSkinReviews} />
-        {!reviewed ? (
-          <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
-        ) : (
-          <div>
-            {/* name={`${item.skin_id}${user.id}`} */}
-            <Link to={`${skin_id}${user?.id}`} smooth={true} duration={200}>
-              Check your own review
-            </Link>
-          </div>
-        )}
-        {/* <SkinImg imgUrl={activeImgUrl} /> */}
-        <SkinReviewsItem reviewed={reviewed} />
-        <AddReviewsPopup
-          addReviewOpen={addReviewOpen}
-          setAddReviewOpen={setAddReviewOpen}
-          activeImgUrl={activeImgUrl}
-          skin_id={skin_id}
-        />
+        <SkinImg imgUrl={activeImgUrl} />
+        <div className="absolute top-0 left-0 w-full h-full">
+          <ReviewsPopupClose
+            setOpen={setOpen}
+            setSkinReviews={setSkinReviews}
+          />
+          {!reviewed ? (
+            <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+          ) : (
+            <div>
+              {/* name={`${item.skin_id}${user.id}`} */}
+              <Link to={`${skin_id}${user?.id}`} smooth={true} duration={200}>
+                Check your own review
+              </Link>
+            </div>
+          )}
+          {/* <SkinImg imgUrl={activeImgUrl} /> */}
+          <SkinReviewsItem reviewed={reviewed} />
+          <AddReviewsPopup
+            addReviewOpen={addReviewOpen}
+            setAddReviewOpen={setAddReviewOpen}
+            activeImgUrl={activeImgUrl}
+            skin_id={skin_id}
+          />
+        </div>
       </div>
     </React.Fragment>
   );

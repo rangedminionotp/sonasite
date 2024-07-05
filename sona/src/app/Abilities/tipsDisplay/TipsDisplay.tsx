@@ -88,7 +88,7 @@ const TipsDisplay = ({ index }) => {
         .then((res) => res.json())
         .then((json) => {
           if (json.errors) {
-            alert("Error fetching tips, please try again");
+            console.log("Error fetching tips, please try again");
           } else {
             const allTips = json.data.getAbilityTipsByAbilityId;
             const sortedTips = sortByDateDescending(allTips);

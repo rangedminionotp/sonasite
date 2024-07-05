@@ -66,14 +66,13 @@ const Abilities = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.errors) {
-          alert("Error with ability id, please try again");
+          console.log("Error with ability id, please try again");
         } else {
           setAbilities(json.data.getAllAbility);
         }
       })
       .catch((error) => {
         console.error("Error fetching abilities:", error);
-        alert("Failed to fetch abilities. Please try again.");
       });
   }, []); // Empty dependency array to run once
 
