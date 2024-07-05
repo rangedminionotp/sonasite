@@ -32,7 +32,7 @@ const BasicAbilities: FunctionalComponent = () => {
       {abilities &&
         abilitiesImg.map((image, index) => (
           <div
-            key={`${image}-icon`}
+            key={`${abilitiesImg[index]}-icon`}
             className="flex flex-col items-center group hover:cursor-pointer transition duration-300 transform hover:scale-110"
           >
             <div className="text-center mt-4 ability-btn-shortkey">

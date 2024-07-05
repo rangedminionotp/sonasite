@@ -42,7 +42,7 @@ const Display = () => {
       </div>
       {abilities.map((index, image) => (
         <div
-          name={`${image}-icon`}
+          key={`${image}-icon`}
           // key={`${image}-icon`}
           className="mb-10"
         >

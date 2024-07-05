@@ -3,7 +3,7 @@ import SkinContext from "./SharedContext";
 import Skeleton from "@mui/joy/Skeleton";
 import { Link } from "react-scroll";
 import Tooltip from "@mui/joy/Tooltip";
-
+import Image from "next/image";
 const SkinsNavbar = () => {
   const { skins } = React.useContext(SkinContext);
   if (!skins) {
@@ -35,9 +35,11 @@ const SkinsNavbar = () => {
         >
           <Link to={item.name} smooth={true} duration={200}>
             <Tooltip title={item.name}>
-              <img
+              <Image
                 src={item.imgURL}
                 alt={item.name}
+                width={100}
+                height={100}
                 className="w-[10vw] xxxs:w-[30vw] xxs:w-[30vw] xs:w-[20vw] grid sm:w-[8vw] md:w-[18vw] lg:w-[12vw] xl:w-[10vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
               />
             </Tooltip>

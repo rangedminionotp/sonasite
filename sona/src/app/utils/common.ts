@@ -16,3 +16,7 @@ export const generateRandomPassword = (length: number) => {
 
   return password;
 };
+
+export const generateRandomIndex = (length: number) => {
+  return Math.floor(Math.random() * length);
+}

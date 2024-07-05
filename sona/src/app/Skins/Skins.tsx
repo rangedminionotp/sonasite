@@ -64,7 +64,7 @@ const Skins = () => {
       });
       setSkins(skinInfo);
     }
-  });
+  }, [fetchedData, skin]);
   return (
     <SkinContext.Provider
       value={{

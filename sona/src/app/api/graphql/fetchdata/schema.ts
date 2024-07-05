@@ -20,11 +20,10 @@ export class SonaOverview {
 }
 
 
-@ArgsType
+@ArgsType()
 export class SonaSkins {
     @Field()
-    @Matches(uuid)
-
+    @Matches(uuid) 
     id!: string
     @Field()
     num!: number
@@ -51,6 +50,8 @@ export class SonaAbilities{
     description?: string
     @Field()
     passive?: SonaPassive 
+    @Field()
+    imgURL?: string
 }
 
 @ArgsType()
@@ -58,7 +59,9 @@ export class SonaPassive{
     @Field()
     name?: string 
     @Field()
-    description?:string
+    description?: string
+    @Field()
+    imgURL?:string
 }
 
 // maybe not hardcode variable names...? ._.

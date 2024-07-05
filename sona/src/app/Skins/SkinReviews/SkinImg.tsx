@@ -1,9 +1,9 @@
 import React from "react";
-
+import Image from "next/image";
 const SkinImg = ({ imgUrl }) => {
   return (
     <div>
-      <img src={imgUrl} className="w-full mb-4" />
+      <Image src={imgUrl} alt={skinName} width={100} height={100} />
     </div>
   );
 };

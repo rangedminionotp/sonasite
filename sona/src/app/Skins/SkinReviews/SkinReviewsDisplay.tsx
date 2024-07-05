@@ -66,7 +66,7 @@ const SkinReviewsDisplay = ({
         console.error("Error fetching skin reviews:", error);
         alert("Failed to fetching skinreviews. Please try again.");
       });
-  }, [skinReviews]);
+  }, [skinReviews, setSkinReviews, skin_id]);
 
   React.useEffect(() => {
     if (user) {
@@ -102,7 +102,7 @@ const SkinReviewsDisplay = ({
           );
         });
     }
-  }, [skinReviews]);
+  }, [skinReviews, setReviewed, user, skin_id]);
 
   return (
     <React.Fragment>
