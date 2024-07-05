@@ -21,6 +21,7 @@ const BasicAbilities: FunctionalComponent = () => {
       setActiveIndex(divIndex);
       return abilityPrev;
     });
+    document.body.style.overflowY = "hidden";
   };
 
   return (

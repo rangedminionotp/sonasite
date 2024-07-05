@@ -292,7 +292,7 @@ const TipItem = ({ tip, search }) => {
     return <p>Loading...</p>; // Render a loading indicator while fetching data
   }
   return (
-    <div className="bg-[#262626] shadow-md p-4 border border-black">
+    <div className="bg-[#262626] shadow-md p-4 border border-black ">
       <div className="flex items-center space-x-2">
         <Avatar>{tip.ownerName.charAt(0)}</Avatar>
         <Highlighter
@@ -303,7 +303,7 @@ const TipItem = ({ tip, search }) => {
         />
         <div className="border-l border-gray-300 h-6 mx-2"></div>
         <p className="text-gray-400 text-sm">
-          {format(parseISO(tip.date), "MMMM dd, yyyy h:mm a")} (
+          {format(parseISO(tip.date), "MM/dd/yyyy h:mm a")} (
           {formatDistanceToNow(parseISO(tip.date), { addSuffix: true })})
         </p>
         <div className="border-l border-gray-300 h-6 mx-2"></div>
@@ -311,6 +311,7 @@ const TipItem = ({ tip, search }) => {
           searchWords={[search]}
           autoEscape={true}
           textToHighlight={tip.version.slice(0, 5)}
+          className="text-gray-400 ability-tip-version"
         />
       </div>
 

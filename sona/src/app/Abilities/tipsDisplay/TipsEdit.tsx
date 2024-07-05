@@ -10,7 +10,6 @@ const TipsEdit = ({ toggleEditing }) => {
         className="text-gray-500 hover:text-gray-300 hover:underline"
         onClick={toggleEditing}
       >
-        Edit
         <EditIcon />
       </span>
     </div>
