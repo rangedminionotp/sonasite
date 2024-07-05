@@ -1,9 +1,5 @@
 import React from "react";
 import AbilitiesContext from "../SharedContext";
-import Q from "@/assets/abilities/Hymn_of_Valor.webp";
-import W from "@/assets/abilities/Aria_of_Perseverance.webp";
-import E from "@/assets/abilities/Song_of_Celerity.webp";
-import R from "@/assets/abilities/Crescendo.webp";
 import Passive from "@/assets/abilities/Power_Chord.webp";
 import Image from "next/image";
 import AbilitiesVideo from "./AbilitiesVideo";
@@ -58,7 +54,6 @@ const resolveSpellText = (spellText, variables) => {
 };
 
 const AbilityDescription = () => {
-  const abilities = [Q, W, E, R, Passive];
   const {
     abilityVisibility,
     setAbilityVisibility,
@@ -82,7 +77,7 @@ const AbilityDescription = () => {
       {fetchedData &&
         fetchedData.abilities.map((ability, index) => (
           <div
-            key={`${ability}-overview`}
+            key={`${ability.id}-popup-overview`}
             className={
               !abilityVisibility[index].active
                 ? "hidden"
