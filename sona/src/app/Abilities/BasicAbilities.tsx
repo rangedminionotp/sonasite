@@ -1,17 +1,18 @@
 "use client";
 import React from "react";
-import Q from "@/assets/abilities/Hymn_of_Valor.webp";
-import W from "@/assets/abilities/Aria_of_Perseverance.webp";
-import E from "@/assets/abilities/Song_of_Celerity.webp";
-
 import Image from "next/image";
 import AbilitiesContext from "./SharedContext";
 import AbilityDescription from "./AbilityDescription";
 const BasicAbilities: FunctionalComponent = () => {
-  const abilitiesImg = [Q, W, E];
+  const abilitiesImg = ["Q", "W", "E"];
 
-  const { abilities, abilityVisibility, setAbilityVisibility, setActiveIndex } =
-    React.useContext(AbilitiesContext);
+  const {
+    fetchedData,
+    abilities,
+    abilityVisibility,
+    setAbilityVisibility,
+    setActiveIndex,
+  } = React.useContext(AbilitiesContext);
 
   const toggleVisibility = (divIndex) => {
     setAbilityVisibility((prevState) => {
@@ -30,9 +31,10 @@ const BasicAbilities: FunctionalComponent = () => {
       name="basic-abilities-icon"
     >
       {abilities &&
+        fetchedData &&
         abilitiesImg.map((image, index) => (
           <div
-            key={`${abilitiesImg[index]}-icon`}
+            key={`sonaAbility${index}-icon`}
             className="flex flex-col items-center group hover:cursor-pointer transition duration-300 transform hover:scale-110"
           >
             <div className="text-center mt-4 ability-btn-shortkey">
@@ -40,15 +42,19 @@ const BasicAbilities: FunctionalComponent = () => {
             </div>
             <div className="relative">
               <Image
-                alt={abilities[index]?.fullName}
-                src={abilitiesImg[index]}
+                alt={""}
+                src={fetchedData.abilities[index].imgURL}
                 onClick={() => toggleVisibility(index)}
+                width={100}
+                height={100}
                 className="drop-shadow-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-22 xl:h-22"
               />
               <div className="absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity">
                 <Image
-                  alt={abilities[index]?.fullName}
-                  src={abilitiesImg[index]}
+                  alt={""}
+                  width={100}
+                  height={100}
+                  src={fetchedData.abilities[index].imgURL}
                   onClick={() => toggleVisibility(index)}
                   className="drop-shadow-lg blur-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-22 xl:h-22"
                 />

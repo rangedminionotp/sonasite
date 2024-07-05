@@ -33,7 +33,7 @@ const AbilitiesPopup = () => {
         fetchedData.abilities.map((ability, index) => {
           return (
             <div
-              key={ability.abilityId}
+              key={`ability-${ability.id}-popup`}
               className={
                 !abilityVisibility[index].active
                   ? "hidden"
