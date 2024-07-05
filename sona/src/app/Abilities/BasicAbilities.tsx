@@ -26,7 +26,7 @@ const BasicAbilities: FunctionalComponent = () => {
 
   return (
     <div
-      className="flex w-full flex-col flex-wrap items-center justify-between gap-4 px-[20%] xs:flex-row"
+      className="flex w-full flex-col flex-wrap items-center justify-between px-[20%] xl:flex-row xl:py-0 md:flex-row lg:flex-row lg:py-[0] 2xl:py-[0] 3xl:py-[0] 2xl:flex-row 3xl:flex-row"
       name="basic-abilities-icon"
     >
       {abilities &&
@@ -43,18 +43,18 @@ const BasicAbilities: FunctionalComponent = () => {
                 alt={abilities[index]?.fullName}
                 src={abilitiesImg[index]}
                 onClick={() => toggleVisibility(index)}
-                className="drop-shadow-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20"
+                className="drop-shadow-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-22 xl:h-22"
               />
               <div className="absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity">
                 <Image
                   alt={abilities[index]?.fullName}
                   src={abilitiesImg[index]}
                   onClick={() => toggleVisibility(index)}
-                  className="drop-shadow-lg blur-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20"
+                  className="drop-shadow-lg blur-lg object-cover rounded-full w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-22 xl:h-22"
                 />
               </div>
             </div>
-            <div className="mt-4 text-center max-w-sm ability-btn-name">
+            <div className="mt-4 ability-btn-name text-center max-w-20">
               {abilities[index]?.fullName}
             </div>
           </div>

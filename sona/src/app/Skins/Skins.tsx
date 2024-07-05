@@ -74,15 +74,17 @@ const Skins = () => {
         setSkinReviews,
       }}
     >
-      <div name="skins" className="w-full h-screen relative">
+      <div name="skins" className="w-screen h-screen relative mb-4">
         <Background />
-        <div className="absolute inset-0 flex justify-center items-center">
+        {/* <div className="absolute inset-0 flex justify-center items-center">
           <Description />
-        </div>
-        <div className="absolute inset-0 flex justify-center items-center">
+        </div> */}
+        {/* <div className="absolute inset-0 flex justify-center items-center">
           <SkinsNavbar />
         </div>
-        <div>{/* <SkinsItem /> */}</div>
+        <div>
+          <SkinsItem />
+        </div> */}
       </div>
     </SkinContext.Provider>
   );
