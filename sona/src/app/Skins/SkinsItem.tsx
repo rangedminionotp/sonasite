@@ -11,6 +11,8 @@ import AddCustomLore from "./CustomLore/AddCustomLore";
 import AddLorePopup from "./CustomLore/AddLorePopup";
 import CustomLoreDisplay from "./CustomLore/CustomLoreDisplay";
 import ViewCustomLore from "./CustomLore/ViewCustomLore";
+import Button from "@mui/joy/Button";
+
 const SkinsItem = ({ activeSkin }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
@@ -19,10 +21,10 @@ const SkinsItem = ({ activeSkin }) => {
   const [activeImgUrl, setActiveImgUrl] = React.useState<string>(null);
   const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
   const [currItem, setCurrItem] = React.useState<any>(null);
+  const [truncate, setTruncate] = React.useState<boolean>(true);
 
   const { skins } = React.useContext(SkinContext);
 
-  console.log("active skin", activeSkin);
   if (!skins) {
     return (
       <div className="flex flex-wrap">
@@ -37,11 +39,16 @@ const SkinsItem = ({ activeSkin }) => {
     );
   }
 
+  const toggleTruncate = () => {
+    setTruncate(!truncate);
+  };
+
   const toggleVisibility = (skin_id: uuid, index: number, skin_url: string) => {
     setActiveSkinId(skin_id);
     setBgIndex(index);
     setOpen(true);
     setActiveImgUrl(skin_url);
+    document.body.style.overflowY = "hidden";
   };
 
   const parseDate = (dateString) => {
@@ -109,12 +116,12 @@ const SkinsItem = ({ activeSkin }) => {
   ];
 
   return (
-    <div name="skins-container" className="text-center justify-center">
+    <div name="skins-container" className="w-1/2">
       {skins.map((item, index) =>
         item.info.id === activeSkin ? (
           <div
             key={index}
-            className="w-full lg:w-1/2 px-2 mb-8"
+            className="px-2 mb-8 min-w-1/2 max-w-full  max-h-full"
             name={item.name}
           >
             <div
@@ -156,6 +163,7 @@ const SkinsItem = ({ activeSkin }) => {
                   alt={item.name}
                   width={500}
                   height={500}
+                  priority
                   className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
                 />
                 {isHovered && (
@@ -246,12 +254,18 @@ const SkinsItem = ({ activeSkin }) => {
                   />
                 </div>
               </Tooltip>
-              <div className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
-                {item.info.data.lore === "" ? (
-                  <CustomLoreDisplay skin_id={item.info.id} />
-                ) : (
-                  item.info.data.lore
-                )}
+              <div
+                className={`${
+                  truncate ? "line-clamp-3" : ""
+                } text-sm text-gray-300 mb-2 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]`}
+              >
+                <div onClick={toggleTruncate}>
+                  {item.info.data.lore === "" ? (
+                    <CustomLoreDisplay skin_id={item.info.id} />
+                  ) : (
+                    item.info.data.lore
+                  )}
+                </div>
               </div>
 
               <div>

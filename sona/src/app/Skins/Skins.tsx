@@ -49,6 +49,7 @@ const Skins = () => {
           console.log("Error with skin, please try again");
         } else {
           setSkin(json.data.getAllSkins);
+          // setActiveSkin(json.data.getAllSkins[0].id);
         }
       })
       .catch((error) => {
@@ -82,8 +83,6 @@ const Skins = () => {
         </div>
         <div className="absolute inset-0 flex justify-center items-center">
           <SkinsNavbar setActiveSkin={setActiveSkin} />
-        </div>
-        <div>
           <SkinsItem activeSkin={activeSkin} />
         </div>
       </div>

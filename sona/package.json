@@ -20,6 +20,7 @@
     "@mui/joy": "*",
     "@mui/material": "*",
     "@reduxjs/toolkit": "*",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "babel-plugin-require-context-hook": "*",
     "babel-plugin-transform-require-context": "*",
     "bcrypt": "*",

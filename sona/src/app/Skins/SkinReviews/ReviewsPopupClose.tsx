@@ -9,6 +9,7 @@ const ReviewsPopupClose = ({ setOpen, setSkinReviews }) => {
       onClick={() => {
         setOpen(false);
         setSkinReviews([]);
+        document.body.style.overflowY = "auto";
       }}
     >
       <FaTimes className="h-12 w-12" />

@@ -58,12 +58,12 @@ const SkinReviewsItem = ({ reviewed }) => {
             <div
               name={`${item.skin_id}${item.owner_id}`}
               key={item.id}
-              className="p-4 mb-4 bg-gray-700 rounded shadow-md"
+              className="p-4 mb-4 size-1/2 justify-center items-center bg-gray-700 rounded shadow-md"
             >
               <div className="text-lg font-semibold mb-2">
                 {item.owner_name}
               </div>
-              <div className="text-sm text-gray-600 mb-2">
+              <div className="text-sm text-gray-500 mb-2">
                 {format(parseISO(item.data.date), "MMMM dd, yyyy h:mm a")} (
                 {formatDistanceToNow(parseISO(item.data.date), {
                   addSuffix: true,
@@ -77,7 +77,9 @@ const SkinReviewsItem = ({ reviewed }) => {
                   readOnlyBoolean={item.owner_id === user?.id ? false : true}
                 />
               </div>
-              <div className="text-gray-800">{item.data.description}</div>
+              <div className="font-work-sans text-gray-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
+                {item.data.description}
+              </div>
 
               {reviewed && user?.id === item.owner_id ? (
                 <div className="flex justify-center space-x-1 cursor-pointer">
