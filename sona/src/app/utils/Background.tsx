@@ -46,8 +46,9 @@ const Background = () => {
           <Image
             alt=""
             src={customBg ? images[customBg] : images[randomImageKey]}
-            layout="fill"
-            objectFit="cover"
+            // layout="fill"
+            // objectFit="cover"
+            priority
             className="object-cover"
           />
         </div>

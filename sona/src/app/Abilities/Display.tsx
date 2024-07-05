@@ -12,20 +12,6 @@ import R from "@/assets/abilities/Crescendo.webp";
 import Image from "next/image";
 
 const Display = () => {
-  // const imageKeys = Object.keys(images);
-
-  {
-    /* {imageKeys.map((index, image) => (
-        <div>
-          <Image
-            src={index}
-            className="object-cover"
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-      ))} */
-  }
   const abilities = [Q, W, E];
   return (
     <div className="flex space-x-6">
