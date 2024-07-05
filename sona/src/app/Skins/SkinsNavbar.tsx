@@ -38,7 +38,7 @@ const SkinsNavbar = () => {
               <img
                 src={item.imgURL}
                 alt={item.name}
-                className="xs:w-[1vw] grid sm:w-[16vw] lg:w-[8vw] xl:w-[8vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
+                className="w-[30vw] xxxs:w-[30vw] xxs:w-[30vw] xs:w-[20vw] grid sm:w-[8vw] md:w-[18vw] lg:w-[12vw] xl:w-[12vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
               />
             </Tooltip>
           </Link>

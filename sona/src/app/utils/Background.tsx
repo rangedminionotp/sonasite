@@ -41,7 +41,7 @@ const Background = () => {
 
   if (randomImageKey && images[randomImageKey]) {
     return (
-      <div className="absolute top-0 left-0 w-full overflow-hidden bg-cover bg-center h-full flex">
+      <div className="absolute top-0 left-0 bg-cover bg-center flex w-screen h-screen">
         <Image
           alt={""}
           src={customBg ? images[customBg] : images[randomImageKey]}
