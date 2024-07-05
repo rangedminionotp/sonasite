@@ -1,15 +1,9 @@
 import React from "react";
-import Q from "@/assets/abilities/Hymn_of_Valor.webp";
-import W from "@/assets/abilities/Aria_of_Perseverance.webp";
-import E from "@/assets/abilities/Song_of_Celerity.webp";
-import R from "@/assets/abilities/Crescendo.webp";
-import Passive from "@/assets/abilities/Power_Chord.webp";
 import AbilityBreadcrumb from "./AbilityBreadcrumb";
 import Image from "next/image";
 import AbilitiesContext from "../SharedContext";
 
 const AbilitiesNavbar = ({ index, name }) => {
-  const abilities = [Q, W, E, R, Passive];
   const { abilityVisibility, setAbilityVisibility, fetchedData } =
     React.useContext(AbilitiesContext);
 
@@ -25,8 +19,9 @@ const AbilitiesNavbar = ({ index, name }) => {
               <div>
                 <Image
                   alt=""
-                  src={abilities[index]}
-                  layout="responsive"
+                  src={fetchedData.abilities[index].imgURL}
+                  width={100}
+                  height={100}
                   className="object-cover border border-gray-300"
                 />
               </div>

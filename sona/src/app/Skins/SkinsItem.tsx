@@ -110,13 +110,7 @@ const SkinsItem = () => {
   return (
     <div name="skins-container" className="text-center justify-center">
       {skins.map((item, index) => (
-        <div
-          key={index}
-          className="w-full lg:w-1/2 px-2 mb-8"
-          name={item.name}
-          text-center
-          justify-center
-        >
+        <div key={index} className="w-full lg:w-1/2 px-2 mb-8" name={item.name}>
           <div
             className={`p-4 relative rounded-lg shadow-md text-center justify-center bg-primary ${bgGradient[index]} h-full`}
             onMouseEnter={() => setIsHovered(true)}
@@ -139,7 +133,6 @@ const SkinsItem = () => {
                     <Image
                       alt={icons.rp}
                       src={icons.rp}
-                      objectFit="cover"
                       className="object-cover"
                       width={30}
                       height={30}
@@ -204,7 +197,6 @@ const SkinsItem = () => {
                       <Image
                         alt={""}
                         src={icons.voice}
-                        objectFit="cover"
                         className="object-cover"
                         width={20}
                         height={20}
@@ -244,13 +236,13 @@ const SkinsItem = () => {
                 />
               </div>
             </Tooltip>
-            <p className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
+            <div className="text-sm text-gray-300 mb-1 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
               {item.info.data.lore === "" ? (
                 <CustomLoreDisplay skin_id={item.info.id} />
               ) : (
                 item.info.data.lore
               )}
-            </p>
+            </div>
 
             <div>
               {item.info.data.lore === "" ? (
