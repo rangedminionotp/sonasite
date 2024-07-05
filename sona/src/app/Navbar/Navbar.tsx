@@ -101,7 +101,7 @@ const Navbar = () => {
         scrollPosition > 0
           ? "shadow backdrop-saturate-200 backdrop-blur-sm"
           : "shadow-none",
-        "w-full sticky top-0 z-20 h-20 flex justify-between items-center px-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] transition-shadow opacity-95 text-white text-2xl font-bold"
+        "sticky top-0 z-20 h-20 flex justify-between items-center px-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] transition-shadow opacity-95 text-white text-2xl font-bold"
       )}
     >
       <div>

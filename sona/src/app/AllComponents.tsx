@@ -28,9 +28,11 @@ const AllComponents = () => {
     <DataContext.Provider value={{ fetchedData, setFetchedData }}>
       <div>
         <Navbar />
-        <Intro />
-        <Abilities />
-        <Skins />
+        <div>
+          <Intro />
+          <Abilities />
+          <Skins />
+        </div>
       </div>
     </DataContext.Provider>
   );
