@@ -4,7 +4,7 @@ import Skeleton from "@mui/joy/Skeleton";
 import { Link } from "react-scroll";
 import Tooltip from "@mui/joy/Tooltip";
 import Image from "next/image";
-const SkinsNavbar = () => {
+const SkinsNavbar = ({ setActiveSkin }) => {
   const { skins } = React.useContext(SkinContext);
   if (!skins) {
     return (
@@ -33,7 +33,12 @@ const SkinsNavbar = () => {
               : "justify-end left-10 hover:left-3"
           } relative`}
         >
-          <Link to={item.name} smooth={true} duration={200}>
+          <Link
+            to={item.name}
+            smooth={true}
+            duration={200}
+            onClick={() => setActiveSkin(item.info.id)}
+          >
             <Tooltip title={item.name}>
               <Image
                 src={item.imgURL}
