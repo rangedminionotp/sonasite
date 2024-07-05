@@ -114,7 +114,7 @@ const Signup = () => {
           component="p"
           className="text-center text-gray-600 mb-4 text-sm"
         >
-          Welcome to Nanners' Sona website \(￣︶￣*\) not susge at all btw
+          Welcome to Nanners&apos Sona website \(￣︶￣*\) not susge at all btw
         </Typography>
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>

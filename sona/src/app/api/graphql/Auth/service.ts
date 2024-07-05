@@ -32,8 +32,7 @@ return new Promise((resolve, reject) => {
   }
 });
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
   public async check(authHeader?: string, roles?: string[]): Promise<any> {
     return new Promise((resolve, reject) => { 
       if (!authHeader) {

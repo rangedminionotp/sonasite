@@ -16,6 +16,7 @@ const AllComponents = () => {
         const sonaService = new SonaService();
         const data = await sonaService.FetchVersion();
         setFetchedData(data);
+        console.log("ability data", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

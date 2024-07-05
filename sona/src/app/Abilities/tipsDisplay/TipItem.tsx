@@ -54,7 +54,7 @@ const TipItem = ({ tip, search }) => {
     };
     seeVoteStatus();
     setLoading(false);
-  }, [downvote, upvote]);
+  }, [downvote, upvote, tip, user]);
 
   const toggleEditing = () => {
     setIsEditing(!isEditing); // Toggle editing state

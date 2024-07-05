@@ -23,12 +23,14 @@ export class SonaService {
         }
         const version = await response.json()
         let sonaData: SonaAbilities[] = []
+        const ddragon = `https://ddragon.leagueoflegends.com/cdn/${version.version}/img/spell/`
         for (const index of [0, 1, 2, 3]) {
           sonaData.push({
             "id": version.data.Sona.spells[index].id,
             "name": version.data.Sona.spells[index].name,
             "tooltip": version.data.Sona.spells[index].tooltip,
-            "description": version.data.Sona.spells[index].description
+            "description": version.data.Sona.spells[index].description,
+            "imgURL": `${ddragon}${version.data.Sona.spells[index].image.full}`
           })
         }
         let sonaSkins: SonaSkins[] = []
@@ -44,9 +46,11 @@ export class SonaService {
           }
           sonaSkins.push(skinObj)
         } 
+        const ddragonPassive = `https://ddragon.leagueoflegends.com/cdn/${version.version}/img/passive/`
         let sonaPassive: SonaPassive = {
           'name':version.data.Sona.passive.name,
-          'description':version.data.Sona.passive.description
+          'description': version.data.Sona.passive.description,
+          'imgURL': `${ddragonPassive}${version.data.Sona.passive.image.full}`
         }
         sonaData.push(sonaPassive)
           const SonaOverview: SonaOverview = {

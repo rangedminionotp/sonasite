@@ -7,6 +7,7 @@ import Sheet from "@mui/joy/Sheet";
 import Textarea from "@mui/joy/Textarea";
 import SkinImg from "./SkinReviews/SkinImg";
 import { gql } from "graphql-request";
+import Image from "next/image";
 
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 
@@ -83,7 +84,7 @@ const AddLorePopup = ({
             {skinName}
           </Typography>
           <Typography id="modal-desc" textColor="text.tertiary">
-            <img src={skinImgURL} className="w-full mb-4" />
+            <Image src={skinImgURL} alt={skinName} width={100} height={100} />
           </Typography>
           <form onSubmit={handleSubmit}>
             <Textarea

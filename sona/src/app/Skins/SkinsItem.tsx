@@ -150,9 +150,11 @@ const SkinsItem = () => {
                   </p>
                 </div>
               </div>
-              <img
+              <Image
                 src={item.imgURL}
                 alt={item.name}
+                width={100}
+                height={100}
                 className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
               />
               {isHovered && (
