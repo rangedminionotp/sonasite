@@ -9,14 +9,18 @@ import LoginBtn from "./LoginBtn";
 import UserDashboard from "./UserDashboard/UserDashboard";
 import { Popover } from "@headlessui/react";
 import { ScrollPosition } from "@/app/utils/ScrollPosition";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-
+  const router = useRouter();
   const { data: session, status } = useSession();
-  const item = localStorage.getItem("user");
-  const userLogin = JSON.parse(item);
-  const [user, setUser] = useState(userLogin);
+
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
+    const item = localStorage.getItem("user");
+    const userLogin = JSON.parse(item);
+    setUser(userLogin);
     if (status === "authenticated" && session.user) {
       // localStorage.setItem("user", JSON.stringify(data));
       // setUser(data);
@@ -64,6 +68,7 @@ const Navbar = () => {
                   console.log(json.errors);
                 } else {
                   localStorage.setItem("user", JSON.stringify(json.data.login));
+
                   setUser(json.data.login);
                 }
               });
