@@ -14,6 +14,7 @@ const PassiveAb = () => {
       abilityPrev[divIndex].active = true;
       return abilityPrev;
     });
+    document.body.style.overflowY = "hidden";
   };
   return (
     <div

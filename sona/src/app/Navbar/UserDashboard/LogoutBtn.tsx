@@ -17,7 +17,7 @@ const LogoutBtn = ({ setUser }) => {
     await signOut({ redirect: false });
   };
   return (
-    <div>
+    <div className=" text-left">
       <button
         onClick={logout}
         className="w-full hover:bg-gray-300 text-white py-2 px-4 rounded-md flex items-center text-xl"

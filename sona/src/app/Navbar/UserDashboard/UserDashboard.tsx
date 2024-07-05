@@ -12,7 +12,7 @@ const UserDashboard = ({ setUser }) => {
   const item = localStorage.getItem("user");
   const user = JSON.parse(item);
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block">
       <div>
         <IconButton
           // onMouseEnter={() => setIsMenuOpen(true)}
@@ -32,7 +32,7 @@ const UserDashboard = ({ setUser }) => {
           // onMouseLeave={() => setIsMenuOpen(false)}
           className="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 bg-gray-700"
         >
-          <div className="py-1">
+          <div className="py-2">
             <UserInfo user={user} />
             <LogoutBtn setUser={setUser} />
           </div>

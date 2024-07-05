@@ -58,11 +58,10 @@ const TipsDelete = ({ tip }) => {
         className="text-gray-500 hover:text-gray-300 hover:underline cursor-pointer"
         onClick={toggleWarning}
       >
-        Delete
         <DeleteIcon />
       </span>
       {showWarning && (
-        <div className="absolute z-10 top-0 right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="absolute z-10 top-0 justify-center mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-4">
             <p className="text-gray-700">Are you sure?</p>
             <div className="flex justify-end mt-4">

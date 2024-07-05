@@ -29,6 +29,7 @@ const PopupClose = ({ index }) => {
       active: index === 0,
     }));
     setBreadcrumbs(updatedBreadcrumbs);
+    document.body.style.overflowY = "auto";
   };
 
   return (

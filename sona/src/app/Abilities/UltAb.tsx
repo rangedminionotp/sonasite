@@ -15,6 +15,7 @@ const UltAb = () => {
       setActiveIndex(divIndex);
       return abilityPrev;
     });
+    document.body.style.overflowY = "hidden";
   };
   return (
     <div

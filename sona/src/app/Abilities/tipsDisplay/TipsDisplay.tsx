@@ -106,7 +106,7 @@ const TipsDisplay = ({ index }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-1">
         <TipsSortBtnsMenu
           abilityTips={abilityTipsToUse}
           setTipsToUse={setTipsToUse}
@@ -132,7 +132,7 @@ const TipsDisplay = ({ index }) => {
         <Button
           onClick={goToPreviousPage}
           disabled={currentPage === 1}
-          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+          className={`md:w-auto px-4 py-2 rounded-md ${
             currentPage === 1
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -146,7 +146,7 @@ const TipsDisplay = ({ index }) => {
         <Button
           onClick={goToNextPage}
           disabled={currentPage === totalPages}
-          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+          className={`md:w-auto px-4 py-2 rounded-md ${
             currentPage === totalPages
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-600"
