@@ -26,12 +26,12 @@ const AllComponents = () => {
 
   return (
     <DataContext.Provider value={{ fetchedData, setFetchedData }}>
-      <div>
+      <>
         <Navbar />
         <Intro />
         <Abilities />
-        <Skins />
-      </div>
+        {/* <Skins /> */}
+      </>
     </DataContext.Provider>
   );
 };

@@ -41,13 +41,13 @@ const Background = () => {
 
   if (randomImageKey && images[randomImageKey]) {
     return (
-      <div className="absolute top-0 left-0 w-full overflow-hidden bg-cover bg-center h-full flex">
+      <div className="absolute top-0 left-0 overflow-x-hidden bg-cover bg-center  flex">
         <Image
           alt={""}
           src={customBg ? images[customBg] : images[randomImageKey]}
           layout="responsive"
           objectFit="cover"
-          className="object-cover"
+          className="object-cover w-screen h-screen"
         />
       </div>
     );

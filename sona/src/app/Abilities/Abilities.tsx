@@ -170,7 +170,7 @@ const Abilities = () => {
         setActiveIndex,
       }}
     >
-      <div name="abilities" className="w-full h-screen relative">
+      <div name="abilities" className="w-full h-screen relative ">
         {/* <Background /> */}
         <div className="absolute inset-0 flex justify-center items-center">
           <Description />
