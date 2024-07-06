@@ -10,6 +10,8 @@ import AddReviewsBtn from "./AddReviewsBtn";
 import ReviewsPopupClose from "./ReviewsPopupClose";
 import AddReviewsPopup from "./AddReviewsPopup";
 import SkinImg from "./SkinImg";
+import Avatar from "@mui/joy/Avatar";
+import Tooltip from "@mui/joy/Tooltip";
 
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 
@@ -64,7 +66,6 @@ const SkinReviewsDisplay = ({
       })
       .catch((error) => {
         console.error("Error fetching skin reviews:", error);
-        alert("Failed to fetching skinreviews. Please try again.");
       });
   }, [skinReviews, setSkinReviews, skin_id]);
 
@@ -88,7 +89,7 @@ const SkinReviewsDisplay = ({
         .then((res) => res.json())
         .then((json) => {
           if (json.errors) {
-            alert(
+            console.log(
               "Error with checking if skin reviews reviewed, please try again"
             );
           } else {
@@ -97,9 +98,6 @@ const SkinReviewsDisplay = ({
         })
         .catch((error) => {
           console.error("Error with checking if skin reviews reviewed:", error);
-          alert(
-            "Failed with checking if skin reviews reviewed. Please try again."
-          );
         });
     }
   }, [skinReviews, setReviewed, user, skin_id]);
@@ -114,29 +112,39 @@ const SkinReviewsDisplay = ({
         }
       >
         <SkinImg imgUrl={activeImgUrl} />
-        <div className="absolute top-0 left-0 w-full h-full">
-          <ReviewsPopupClose
-            setOpen={setOpen}
-            setSkinReviews={setSkinReviews}
-          />
-          {!reviewed ? (
-            <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
-          ) : (
-            <div>
-              {/* name={`${item.skin_id}${user.id}`} */}
-              <Link to={`${skin_id}${user?.id}`} smooth={true} duration={200}>
-                Check your own review
-              </Link>
+        <div className="absolute top-0 w-full h-full justify-center items-center">
+          <div className=" absolute top-4 left-4">
+            <ReviewsPopupClose
+              setOpen={setOpen}
+              setSkinReviews={setSkinReviews}
+            />
+          </div>
+          <div className="hover:cursor-pointer justify-center flex items-center  ">
+            {/* name={`${item.skin_id}${user.id}`} */}
+            <div className="absolute top-10 justify-center items-center mx-auto">
+              {!reviewed ? (
+                <Tooltip title="Add your review">
+                  <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
+                </Tooltip>
+              ) : (
+                <Link to={`${skin_id}${user?.id}`} smooth={true} duration={200}>
+                  <Tooltip title="Check your review">
+                    <Avatar> {user ? user.name[0] : null}</Avatar>
+                  </Tooltip>
+                </Link>
+              )}{" "}
             </div>
-          )}
-          {/* <SkinImg imgUrl={activeImgUrl} /> */}
-          <SkinReviewsItem reviewed={reviewed} />
-          <AddReviewsPopup
-            addReviewOpen={addReviewOpen}
-            setAddReviewOpen={setAddReviewOpen}
-            activeImgUrl={activeImgUrl}
-            skin_id={skin_id}
-          />
+          </div>
+          <div className="top-10">
+            {/* <SkinImg imgUrl={activeImgUrl} /> */}
+            <SkinReviewsItem reviewed={reviewed} />
+            <AddReviewsPopup
+              addReviewOpen={addReviewOpen}
+              setAddReviewOpen={setAddReviewOpen}
+              activeImgUrl={activeImgUrl}
+              skin_id={skin_id}
+            />
+          </div>
         </div>
       </div>
     </React.Fragment>
