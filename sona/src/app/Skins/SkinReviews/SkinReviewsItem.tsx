@@ -75,6 +75,7 @@ const SkinReviewsItem = ({ reviewed }) => {
                   setRating={setEditReviewsRating}
                   rating={item.rating}
                   readOnlyBoolean={item.owner_id === user?.id ? false : true}
+                  mode="display"
                 />
               </div>
               <div className="font-work-sans flex text-gray-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">

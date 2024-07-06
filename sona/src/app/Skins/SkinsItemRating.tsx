@@ -19,7 +19,7 @@ export default function SkinItemRating({
   setRating,
   rating,
   readOnlyBoolean,
-  // setEditReviewOpen,
+  mode,
 }) {
   const handleChange = (event, newValue) => {
     if (newValue !== null && newValue !== rating) {
@@ -39,7 +39,8 @@ export default function SkinItemRating({
     >
       <div>
         <StyledRating
-          value={rating}
+          defaultValue={mode === "add" ? rating : undefined}
+          value={mode === "edit" || mode === "display" ? rating : undefined}
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`
           }

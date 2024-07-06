@@ -251,6 +251,7 @@ const SkinsItem = ({ activeSkin }) => {
                     setRating={null}
                     rating={item.info.rating}
                     readOnlyBoolean={true}
+                    mode="display"
                   />
                 </div>
               </Tooltip>

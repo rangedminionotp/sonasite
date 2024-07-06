@@ -126,6 +126,7 @@ const AddReviewsPopup = ({
                 setRating={setAddReviewsRating}
                 rating={0}
                 readOnlyBoolean={false}
+                mode="add"
               />
               <SkinImg imgUrl={activeImgUrl} className="mt-4" />
             </Typography>
