@@ -119,9 +119,9 @@ const SkinReviewsDisplay = ({
               setSkinReviews={setSkinReviews}
             />
           </div>
-          <div className="hover:cursor-pointer justify-center flex items-center  ">
+          <div className="hover:cursor-pointer flex flex-col items-center mt-10">
             {/* name={`${item.skin_id}${user.id}`} */}
-            <div className="absolute top-10 justify-center items-center mx-auto">
+            <div className="flex justify-center items-center">
               {!reviewed ? (
                 <Tooltip title="Add your review">
                   <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
@@ -135,7 +135,7 @@ const SkinReviewsDisplay = ({
               )}{" "}
             </div>
           </div>
-          <div className="top-10">
+          <div className="mt-4">
             {/* <SkinImg imgUrl={activeImgUrl} /> */}
             <SkinReviewsItem reviewed={reviewed} />
             <AddReviewsPopup

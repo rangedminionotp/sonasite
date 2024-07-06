@@ -79,54 +79,57 @@ const EditReviewsPopup = ({
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: 2, // Add padding for better spacing
             }}
           >
-            <Sheet className="w-full max-w-4xl bg-neutral-900 p-6 rounded-lg shadow-lg">
+            <Sheet className="w-full max-w-4xl  bg-neutral-900 p-6 rounded-lg shadow-lg">
               <ModalClose variant="plain" className="m-1" />
               <Typography
                 component="h2"
                 id="modal-title"
-                level="h2"
+                level="h4"
                 textColor="#d4d4d8"
                 fontWeight="lg"
-                mb={2} // Add margin-bottom for better spacing
+                mb={2}
               >
                 Edit Skin Review
               </Typography>
-              <div id="modal-desc" className="mb-4">
+              <Typography
+                id="modal-desc"
+                textColor="text.tertiary"
+                className="mb-4"
+              >
                 <SkinItemRating
                   setRating={setEditRating}
                   rating={editRating}
                   readOnlyBoolean={false}
                 />
                 <SkinImg imgUrl={activeImgUrl} className="mt-4" />
-              </div>
+              </Typography>
               <form onSubmit={handleEditReview} className="space-y-4">
                 <Textarea
                   value={description}
                   onChange={handleInputChange}
                   minRows={10}
                   variant="soft"
-                  className="w-full bg-neutral-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500 rounded-lg p-3" // Added padding and rounded corners
+                  className="w-full bg-neutral-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500 rounded-lg p-3"
                   placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
                 />
-                <div className="flex justify-center items-center gap-4">
-                  <Button
-                    type="submit"
-                    onClick={handleEditReview}
-                    className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    onClick={() => setEditReviewOpen(false)}
-                    className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Cancel
-                  </Button>
-                </div>
               </form>
+              <div className="flex justify-center items-center gap-4 mt-4">
+                <Button
+                  type="submit"
+                  onClick={handleEditReview}
+                  className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Submit
+                </Button>
+                <Button
+                  onClick={() => setEditReviewOpen(false)}
+                  className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </Button>
+              </div>
             </Sheet>
           </Modal>
         </div>
