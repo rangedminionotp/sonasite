@@ -39,7 +39,7 @@ export default function SkinItemRating({
     >
       <div>
         <StyledRating
-          defaultValue={rating}
+          value={rating}
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`
           }

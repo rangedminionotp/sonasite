@@ -46,7 +46,7 @@ const EditReviewsPopup = ({
     skin_id
     data {
       date
-      description
+      description 
     }
   }
 }`;
@@ -59,6 +59,7 @@ const EditReviewsPopup = ({
           }
           return review;
         });
+        console.log("updated reviews", updatedReviews);
         setSkinReviews(updatedReviews);
       }
       setEditReviewOpen(false);

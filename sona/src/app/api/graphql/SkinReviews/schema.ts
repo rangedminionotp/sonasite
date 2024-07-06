@@ -11,7 +11,7 @@ export class SkinReviewsData {
         @MaxLength(250)
     description!: string;
     @Field()
-    date!: Date;
+    date!: Date;  
 }
 
 // Define the InputType for SkinReviewsData input
