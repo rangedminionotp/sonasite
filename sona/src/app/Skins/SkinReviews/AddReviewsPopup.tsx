@@ -105,45 +105,58 @@ const AddReviewsPopup = ({
             alignItems: "center",
           }}
         >
-          <Sheet
-            variant="outlined"
-            className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg"
-          >
+          <Sheet className="popup-bg-color-dark">
             <ModalClose variant="plain" className="m-1" />
             <Typography
               component="h2"
               id="modal-title"
-              level="h4"
-              textColor="inherit"
+              level="h2"
+              className="popup-title"
               fontWeight="lg"
-              mb={1}
+              mb={2}
             >
               Add Skin Review
             </Typography>
-            <Typography id="modal-desc" textColor="text.tertiary">
+            <Typography
+              id="modal-desc"
+              textColor="text.tertiary"
+              className="mb-4"
+            >
               <SkinItemRating
                 setRating={setAddReviewsRating}
                 rating={0}
                 readOnlyBoolean={false}
               />
-              <SkinImg imgUrl={activeImgUrl} />
+              <SkinImg imgUrl={activeImgUrl} className="mt-4" />
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="space-y-4">
               <Textarea
                 value={description}
                 onChange={handleInputChange}
                 minRows={10}
                 variant="soft"
-                className="w-full bg-gray-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500"
+                className="popup-textarea-bg-dark"
                 placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
               />
             </form>
             <Typography variant="body2" sx={{ mt: 1, textAlign: "right" }}>
               {description.length} / {maxLength} characters
             </Typography>
-            <Button type="submit" onClick={handleSubmit}>
-              Submit
-            </Button>
+            <div className="flex justify-center items-center gap-4 mt-4">
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                className=" popup-btn"
+              >
+                Submit
+              </Button>
+              <Button
+                onClick={() => setAddReviewOpen(false)}
+                className="popup-btn"
+              >
+                Cancel
+              </Button>
+            </div>
           </Sheet>
         </Modal>
       </div>

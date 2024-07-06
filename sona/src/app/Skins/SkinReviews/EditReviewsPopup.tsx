@@ -26,7 +26,7 @@ const EditReviewsPopup = ({
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [description, setDescription] = React.useState(editDescription);
   const [editRating, setEditRating] = React.useState(editReviewsRating);
-
+  const maxLength = 250;
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
@@ -81,13 +81,13 @@ const EditReviewsPopup = ({
               alignItems: "center",
             }}
           >
-            <Sheet className="w-full max-w-4xl  bg-neutral-900 p-6 rounded-lg shadow-lg">
+            <Sheet className="popup-bg-color-dark">
               <ModalClose variant="plain" className="m-1" />
               <Typography
                 component="h2"
                 id="modal-title"
                 level="h4"
-                textColor="#d4d4d8"
+                className="popup-title"
                 fontWeight="lg"
                 mb={2}
               >
@@ -111,21 +111,24 @@ const EditReviewsPopup = ({
                   onChange={handleInputChange}
                   minRows={10}
                   variant="soft"
-                  className="w-full bg-neutral-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500 rounded-lg p-3"
+                  className="popup-textarea-bg-dark"
                   placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
                 />
               </form>
+              <Typography variant="body2" sx={{ mt: 1, textAlign: "right" }}>
+                {description.length} / {maxLength} characters
+              </Typography>
               <div className="flex justify-center items-center gap-4 mt-4">
                 <Button
                   type="submit"
                   onClick={handleEditReview}
-                  className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className=" popup-btn"
                 >
                   Submit
                 </Button>
                 <Button
                   onClick={() => setEditReviewOpen(false)}
-                  className=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="popup-btn"
                 >
                   Cancel
                 </Button>
