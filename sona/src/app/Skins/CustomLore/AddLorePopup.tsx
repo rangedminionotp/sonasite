@@ -63,45 +63,44 @@ const AddLorePopup = ({
         onClose={() => setOpen(false)}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            borderRadius: "md",
-            p: 3,
-            boxShadow: "lg",
-          }}
-        >
-          <ModalClose variant="plain" sx={{ m: 1 }} />
+        <Sheet className="popup-bg-color-dark">
+          <ModalClose variant="plain" className="m-1" />
           <Typography
             component="h2"
             id="modal-title"
-            level="h4"
-            textColor="inherit"
+            level="h2"
+            className="popup-title"
             fontWeight="lg"
-            mb={1}
+            mb={2}
           >
             {skinName}
           </Typography>
-          <Typography id="modal-desc" textColor="text.tertiary">
-            <Image src={skinImgURL} alt={skinName} width={100} height={100} />
-          </Typography>
-          <form onSubmit={handleSubmit}>
+          <Typography
+            id="modal-desc"
+            textColor="text.tertiary"
+            className="mb-4"
+          ></Typography>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <Textarea
               value={description}
               onChange={handleInputChange}
               minRows={10}
               variant="soft"
-              className="w-full bg-gray-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500"
+              className="popup-textarea-bg-dark"
               placeholder={`Riot was lazy about ${skinName} and there's no background color! We must bs some beautiful and tragic and wacky lores for ${skinName} to make it more interesting!`}
             />
             <Typography variant="body2" sx={{ mt: 1, textAlign: "right" }}>
               {description.length} / {maxLength} characters
             </Typography>
           </form>
-          <Button type="submit" onClick={handleSubmit}>
-            Submit
-          </Button>
+          <div className="flex justify-center items-center gap-4 mt-4">
+            <Button type="submit" onClick={handleSubmit} className=" popup-btn">
+              Submit
+            </Button>
+            <Button onClick={() => setOpen(false)} className="popup-btn">
+              Cancel
+            </Button>
+          </div>
         </Sheet>
       </Modal>
     </React.Fragment>

@@ -11,6 +11,36 @@ const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
   const user = getUserFromLocalStorage();
   const [editLoreBtn, setEditLoreBtn] = React.useState(false);
   const [currLore, setCurrLore] = React.useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const loresPerPage = 4;
+  const [totalPages, setTotalPages] = useState(1);
+
+  React.useEffect(() => {
+    if (userLores) {
+      const pages = Math.ceil(skinReviews.length / tipsPerPage);
+      setTotalPages(pages);
+
+      const reviews = skinReviews.slice(
+        (currentPage - 1) * tipsPerPage,
+        currentPage * tipsPerPage
+      );
+      setCurrentReviews(reviews);
+    }
+  }, [skinReviews, currentPage]);
+
+  // Handle page navigation
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div>
       <React.Fragment>
@@ -18,7 +48,7 @@ const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
           className={
             !open
               ? "hidden"
-              : `top-0 left-0 w-full h-screen ${bgColor} bg-opacity-50 absolute`
+              : `top-0 left-0 w-full h-full z-30 ${bgColor} bg-opacity-50 absolute`
           }
         >
           <div>

@@ -81,6 +81,6 @@ html, body {
     @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
   }
   .popup-title{
-    @apply text-[#d4d4d8]
+    @apply text-[#d4d4d8] mb-2 text-lg
   }
 }
