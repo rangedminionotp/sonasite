@@ -10,6 +10,9 @@ const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
   },
+  "& .MuiRating-iconEmpty": {
+    color: "#d4d4d8",
+  },
 });
 
 export default function SkinItemRating({
@@ -36,7 +39,6 @@ export default function SkinItemRating({
     >
       <div>
         <StyledRating
-          name="customized-color"
           defaultValue={rating}
           getLabelText={(value: number) =>
             `${value} Heart${value !== 1 ? "s" : ""}`

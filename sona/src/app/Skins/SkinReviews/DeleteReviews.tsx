@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SkinContext from "../SharedContext";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import Tooltip from "@mui/joy/Tooltip";
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 import { gql } from "graphql-request";
 const DeleteReviews = ({ skin_id }) => {
@@ -52,13 +52,14 @@ const DeleteReviews = ({ skin_id }) => {
   };
   return (
     <div className="inline-block relative">
-      <span
-        className="text-gray-500 hover:text-gray-300 hover:underline cursor-pointer"
-        onClick={toggleWarning}
-      >
-        Delete
-        <DeleteIcon />
-      </span>
+      <Tooltip title="Delete">
+        <span
+          className="text-gray-500 hover:text-gray-300 hover:underline cursor-pointer"
+          onClick={toggleWarning}
+        >
+          <DeleteIcon />
+        </span>
+      </Tooltip>
       {showWarning && (
         <div className="absolute z-10 top-0 right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-4">

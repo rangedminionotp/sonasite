@@ -52,7 +52,9 @@ const CustomLoreDisplay = ({ skin_id }) => {
         .then((res) => res.json())
         .then((json) => {
           if (json.errors) {
-            alert("Error with fetching custom skin lore, please try again");
+            console.log(
+              "Error with fetching custom skin lore, please try again"
+            );
           } else {
             const lore = json.data?.getLoreBySkinId;
             const randomNum = getRandomNumber(lore.length);

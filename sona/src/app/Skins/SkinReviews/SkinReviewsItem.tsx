@@ -51,16 +51,16 @@ const SkinReviewsItem = ({ reviewed }) => {
   };
 
   return (
-    <div>
-      <div>
+    <div name="skin-reviews-container">
+      <div className="  min-w-1/2 max-w-full w-1/2 mx-auto ">
         {currentReviews && currentReviews.length > 0 ? (
           currentReviews.map((item) => (
             <div
               name={`${item.skin_id}${item.owner_id}`}
               key={item.id}
-              className="p-4 mb-4 size-1/2 justify-center items-center bg-gray-700 rounded shadow-md"
+              className=" justify-center p-4 mb-4 border border-[#121212] bg-[#313131] rounded shadow-md"
             >
-              <div className="text-lg font-semibold mb-2">
+              <div className="text-lg font-semibold text-[#f1f1f1] mb-2">
                 {item.owner_name}
               </div>
               <div className="text-sm text-gray-500 mb-2">
@@ -77,27 +77,25 @@ const SkinReviewsItem = ({ reviewed }) => {
                   readOnlyBoolean={item.owner_id === user?.id ? false : true}
                 />
               </div>
-              <div className="font-work-sans text-gray-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
+              <div className="font-work-sans flex text-gray-300 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]">
                 {item.data.description}
+                {reviewed && user?.id === item.owner_id ? (
+                  <div className="flex justify-end ml-4">
+                    <EditReviewsBtn setEditReviewOpen={setEditReviewOpen} />
+                    <EditReviewsPopup
+                      editReviewOpen={editReviewOpen}
+                      setEditReviewOpen={setEditReviewOpen}
+                      activeImgUrl={item.imgUrl}
+                      review_id={item.id}
+                      editDescription={item.data.description}
+                      setEditDescription={setEditDescription}
+                      editReviewsRating={item.rating}
+                      setEditReviewsRating={setEditReviewsRating}
+                    />
+                    <DeleteReviews skin_id={item.skin_id} />
+                  </div>
+                ) : null}
               </div>
-
-              {reviewed && user?.id === item.owner_id ? (
-                <div className="flex justify-center space-x-1 cursor-pointer">
-                  <EditReviewsBtn setEditReviewOpen={setEditReviewOpen} />
-
-                  <EditReviewsPopup
-                    editReviewOpen={editReviewOpen}
-                    setEditReviewOpen={setEditReviewOpen}
-                    activeImgUrl={item.imgUrl}
-                    review_id={item.id}
-                    editDescription={item.data.description}
-                    setEditDescription={setEditDescription}
-                    editReviewsRating={item.rating}
-                    setEditReviewsRating={setEditReviewsRating}
-                  />
-                  <DeleteReviews skin_id={item.skin_id} />
-                </div>
-              ) : null}
             </div>
           ))
         ) : (
