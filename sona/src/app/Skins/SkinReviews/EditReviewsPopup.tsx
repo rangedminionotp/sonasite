@@ -59,7 +59,6 @@ const EditReviewsPopup = ({
           }
           return review;
         });
-        console.log("updated reviews", updatedReviews);
         setSkinReviews(updatedReviews);
       }
       setEditReviewOpen(false);
@@ -103,6 +102,7 @@ const EditReviewsPopup = ({
                   setRating={setEditRating}
                   rating={editRating}
                   readOnlyBoolean={false}
+                  mode="edit"
                 />
                 <SkinImg imgUrl={activeImgUrl} className="mt-4" />
               </Typography>
