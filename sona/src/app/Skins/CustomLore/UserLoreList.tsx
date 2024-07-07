@@ -15,7 +15,7 @@ const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
   const [editLoreBtn, setEditLoreBtn] = React.useState(false);
   const [currLore, setCurrLore] = React.useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const loresPerPage = 4;
+  const loresPerPage = 3;
   const [totalPages, setTotalPages] = useState(1);
   const [pagedLores, setPagedLores] = useState([]);
   React.useEffect(() => {
@@ -59,7 +59,7 @@ const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
             {userLores.map((lore) => (
               <div
                 key={lore.id}
-                className="rounded-lg p-4 shadow-lg drop-shadow-lg	backdrop-blur-sm bg-white/30	mb-4"
+                className="rounded-lg p-4 shadow-lg drop-shadow-lg	backdrop-blur-sm bg-white/30	mb-4 "
               >
                 <div>
                   <h2 className="font-bold text-[#0c0a09]">{user.name}</h2>
