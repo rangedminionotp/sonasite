@@ -32,7 +32,7 @@ html, body {
 @layer components {
   /* general descriptions */
   .description-header {
-    @apply text-6xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl;
+    @apply text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl;
   }
   .description-subheader {
     @apply text-3xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-6xl;
@@ -45,7 +45,7 @@ html, body {
 @layer components {
   /* end of general descriptions */ 
   .ability-btn-shortkey {
-    @apply text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans text-[#FFD700];
+    @apply text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] font-sans text-[#FFD700];
   }
   .ability-btn-name{
     @apply text-xs sm:text-xs md:text-xs lg:text-sm xl:text-base drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] uppercase font-work-sans text-white break-words overflow-hidden whitespace-pre-wrap;
@@ -88,5 +88,11 @@ html, body {
 @layer components {
   .icon-btns {
     @apply text-gray-500 hover:cursor-pointer hover:text-gray-300 hover:underline
+  }
+} 
+
+@layer components {
+  .skin-item-container {
+    @apply max-md:w-full max-md:h-full max-w-full max-h-full 
   }
 }
