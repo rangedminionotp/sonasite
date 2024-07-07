@@ -178,7 +178,7 @@ const Abilities = () => {
           name="abilities-icon"
           className="flex h-[500px] w-full flex-wrap items-center justify-center gap-8"
         >
-          <div className="flex w-full items-center justify-center px-[15%] py-[85%] xxxs:py-[70%] xxs:py-[75%] xs:py-[40%] sm:py-[40%] md:py-[40%] lg:py-[30%] xl:py-[25%] 2xl:py-[20%] 3xl:py-[25%]">
+          <div className=" flex w-full items-center justify-center px-[15%] py-[85%] xxxs:py-[70%] xxs:py-[75%] xs:py-[40%] sm:py-[40%] md:py-[40%] lg:py-[30%] xl:py-[25%] 2xl:py-[20%] 3xl:py-[25%]">
             <PassiveAb />
             <BasicAbilities />
             <UltAb />

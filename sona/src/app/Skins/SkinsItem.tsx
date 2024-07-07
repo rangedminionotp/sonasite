@@ -12,8 +12,9 @@ import AddLorePopup from "./CustomLore/AddLorePopup";
 import CustomLoreDisplay from "./CustomLore/CustomLoreDisplay";
 import ViewCustomLore from "./CustomLore/ViewCustomLore";
 import Button from "@mui/joy/Button";
-
-const SkinsItem = ({ activeSkin }) => {
+import useWindowSize from "@/app/utils/windowSize";
+import SkinItemsClose from "./SkinItemsClose";
+const SkinsItem = ({ activeSkin, setActiveSkin }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
   const [bgIndex, setBgIndex] = React.useState<number>(null);
@@ -22,6 +23,7 @@ const SkinsItem = ({ activeSkin }) => {
   const [addLoreOpen, setAddLoreOpen] = React.useState<boolean>(false);
   const [currItem, setCurrItem] = React.useState<any>(null);
   const [truncate, setTruncate] = React.useState<boolean>(true);
+  const { width, height } = useWindowSize();
 
   const { skins } = React.useContext(SkinContext);
 
@@ -114,7 +116,7 @@ const SkinsItem = ({ activeSkin }) => {
     // prestiage immortal journey
     "bg-gradient-to-r from-[#393A3E] via-[#92ACC7] to-[#253942]",
   ];
-
+  const isSmallScreen = width <= 768; // all screens smaller than md
   return (
     <div
       name="skins-container"
@@ -124,10 +126,15 @@ const SkinsItem = ({ activeSkin }) => {
         item.info.id === activeSkin ? (
           <div key={index} className="px-2 mb-8 " name={item.name}>
             <div
-              className={`p-4 relative rounded-lg shadow-md text-center justify-center bg-primary ${bgGradient[index]} h-full`}
+              className={
+                isSmallScreen
+                  ? `top-0 left-0 w-full h-screen bg-primary ${bgGradient[index]} bg-opacity-50 z-30 absolute`
+                  : `p-4 relative rounded-lg shadow-md text-center justify-center bg-primary ${bgGradient[index]} h-full}`
+              }
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
+              <SkinItemsClose setActiveSkin={setActiveSkin} />
               <div className="relative overflow-hidden">
                 <div className="absolute top-0 left-0 z-10 px-2 py-1 text-3xl font-semibold">
                   <h1
@@ -267,7 +274,6 @@ const SkinsItem = ({ activeSkin }) => {
                   )}
                 </div>
               </div>
-
               <div>
                 {item.info.data.lore === "" && (
                   <div

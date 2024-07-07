@@ -134,7 +134,7 @@ const Navbar = () => {
       </ul>
       <div
         onClick={handleClick}
-        className="md:hidden z-10 hover:cursor-pointer"
+        className="md:hidden z-50 hover:cursor-pointer"
       >
         {!nav ? <FaBars /> : <FaTimes />}
       </div>
@@ -142,7 +142,7 @@ const Navbar = () => {
         className={
           !nav
             ? "hidden"
-            : "absolute top-0 left-0 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center font-work-sans "
+            : "absolute top-0 left-0 z-40 w-full h-screen bg-[#181818] bg-opacity-90 flex flex-col justify-center items-center font-work-sans "
         }
       >
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">

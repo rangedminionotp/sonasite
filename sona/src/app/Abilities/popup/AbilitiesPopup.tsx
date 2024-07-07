@@ -37,7 +37,7 @@ const AbilitiesPopup = () => {
               className={
                 !abilityVisibility[index].active
                   ? "hidden"
-                  : "top-[80px]  left-0  w-full h-full bg-[#0b0e25] fixed z-50 overflow-y-auto no-scrollbar"
+                  : "top-[80px]  left-0  w-full h-full bg-[#0b0e25] absolute z-20 overflow-y-auto no-scrollbar"
               }
             >
               <PopupClose index={index} />

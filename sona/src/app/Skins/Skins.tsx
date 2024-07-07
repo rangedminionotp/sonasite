@@ -83,7 +83,7 @@ const Skins = () => {
         </div>
         <div className="absolute inset-0 flex justify-center items-center md:flex-col">
           <SkinsNavbar setActiveSkin={setActiveSkin} />
-          <SkinsItem activeSkin={activeSkin} />
+          <SkinsItem activeSkin={activeSkin} setActiveSkin={setActiveSkin} />
         </div>
       </div>
     </SkinContext.Provider>
