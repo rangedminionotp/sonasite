@@ -69,29 +69,21 @@ const EditLoreModal = ({
         }}
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            borderRadius: "md",
-            p: 3,
-            boxShadow: "lg",
-          }}
-        >
+        <Sheet className="popup-bg-color-dark">
           <ModalClose variant="plain" sx={{ m: 1 }} />
           <Typography
             component="h2"
             id="modal-title"
-            level="h4"
-            textColor="inherit"
+            level="h2"
+            className="popup-title"
             fontWeight="lg"
-            mb={1}
+            mb={2}
           >
             Edit lore
           </Typography>
-          <Typography id="modal-desc" textColor="text.tertiary">
-            <div> {user.name}</div>
-            <div>
+          <Typography id="modal-desc" className="mb-4">
+            <h2 className="text-gray-100"> {user.name}</h2>
+            <div className="text-gray-400">
               {format(parseISO(lore.time), "MMMM dd, yyyy h:mm a")} (
               {formatDistanceToNow(parseISO(lore.time), {
                 addSuffix: true,
@@ -105,13 +97,22 @@ const EditLoreModal = ({
               onChange={handleInputChange}
               minRows={10}
               variant="soft"
-              className="w-full bg-gray-800 text-white border border-gray-600 focus:border-blue-400 placeholder-gray-500"
+              className="popup-textarea-bg-dark"
               placeholder="Share your insight on Sona! Help fellow Sona kittens improve and learn! Violation of term of service, offensive language, and explicit content can be deleted without notice."
             />
           </form>
-          <Button type="submit" onClick={handleEditLore}>
-            Submit
-          </Button>
+          <div className="flex justify-center items-center gap-4 mt-4">
+            <Button
+              type="submit"
+              onClick={handleEditLore}
+              className=" popup-btn"
+            >
+              Submit
+            </Button>
+            <Button onClick={() => setOpen(false)} className="popup-btn">
+              Cancel
+            </Button>
+          </div>
         </Sheet>
       </Modal>
     </React.Fragment>
