@@ -85,7 +85,11 @@ const TipsSortBtnsMenu = ({ abilityTips, setTipsToUse }) => {
   return (
     <div>
       <Dropdown>
-        <MenuButton variant="soft" endDecorator={<ArrowDropDown />}>
+        <MenuButton
+          variant="soft"
+          className="popup-textarea-bg-dark hover:text-black"
+          endDecorator={<ArrowDropDown />}
+        >
           Sort Tips By
         </MenuButton>
         <Menu sx={{ minWidth: 160, "--ListItemDecorator-size": "24px" }}>
