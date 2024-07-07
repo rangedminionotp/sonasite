@@ -271,8 +271,11 @@ const SkinsItem = ({ activeSkin }) => {
 
               <div>
                 {item.info.data.lore === "" && (
-                  <div className="flex justify-center">
-                    <div onClick={() => setCurrItem(item)} name="addCustomLore">
+                  <div
+                    className="flex justify-center"
+                    onClick={() => setCurrItem(item)}
+                  >
+                    <div name="addCustomLore">
                       <AddCustomLore
                         skinName={item.name}
                         setAddLoreOpen={setAddLoreOpen}
@@ -288,7 +291,7 @@ const SkinsItem = ({ activeSkin }) => {
                     <div name="seeCustomLore">
                       <ViewCustomLore
                         skin_id={item.info.id}
-                        bgColor={bgGradient[bgIndex]}
+                        bgColor={bgGradient[index]}
                       />
                     </div>
                   </div>
