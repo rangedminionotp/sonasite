@@ -106,11 +106,7 @@ const TipsDisplay = ({ index }) => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 max-h-72" name="TipsDisplay">
-      <div className="flex justify-between items-center mb-1">
-        <TipsSortBtnsMenu
-          abilityTips={abilityTipsToUse}
-          setTipsToUse={setTipsToUse}
-        />
+      <div className="flex justify-between items-center mb-1 flex-col md:flex-row">
         {abilities && abilities[index] && (
           <TipsSearch
             search={search}
@@ -120,6 +116,10 @@ const TipsDisplay = ({ index }) => {
             ability_id={abilities[index].abilityId}
           />
         )}
+        <TipsSortBtnsMenu
+          abilityTips={abilityTipsToUse}
+          setTipsToUse={setTipsToUse}
+        />
       </div>
       {currentTips && currentTips.length > 0 ? (
         currentTips.map((tip, idx) => (
