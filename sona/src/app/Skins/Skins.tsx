@@ -76,12 +76,12 @@ const Skins = () => {
         setSkinReviews,
       }}
     >
-      <div name="skins" className="h-screen w-full relative">
+      <div name="skins" className="h-screen w-full relative overflow-x-hidden">
         <Background />
         <div className="absolute inset-0 flex justify-center ">
           <Description />
         </div>
-        <div className="absolute inset-0 flex justify-center items-center">
+        <div className="absolute inset-0 flex justify-center items-center md:flex-col">
           <SkinsNavbar setActiveSkin={setActiveSkin} />
           <SkinsItem activeSkin={activeSkin} />
         </div>

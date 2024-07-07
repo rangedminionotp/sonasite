@@ -29,8 +29,8 @@ const SkinsNavbar = ({ setActiveSkin }) => {
           key={index}
           className={`w-1/2 flex ${
             index % 2 === 0
-              ? "justify-start right-10 hover:right-3"
-              : "justify-end left-10 hover:left-3"
+              ? "justify-start right-[4%] hover:right-[1%]"
+              : "justify-end left-[4%] hover:left-[1%]"
           } relative`}
         >
           <div onClick={() => setActiveSkin(item.info.id)}>
@@ -40,7 +40,7 @@ const SkinsNavbar = ({ setActiveSkin }) => {
                 alt={item.name}
                 width={100}
                 height={100}
-                className="w-[10vw] xxxs:w-[30vw] xxs:w-[30vw] xs:w-[20vw] grid sm:w-[8vw] md:w-[18vw] lg:w-[12vw] xl:w-[10vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
+                className="w-[30vw] xxxs:w-[30vw] xxs:w-[30vw] xs:w-[20vw] grid sm:w-[8vw] md:w-[18vw] lg:w-[12vw] xl:w-[10vw] max-w-xs mb-1 hover:cursor-pointer hover:scale-105 transition-transform duration-1000"
               />
             </Tooltip>
           </div>

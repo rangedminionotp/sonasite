@@ -49,6 +49,7 @@ const Background = () => {
             // layout="fill"
             // objectFit="cover"
             priority
+            fill
             className="object-cover"
           />
         </div>

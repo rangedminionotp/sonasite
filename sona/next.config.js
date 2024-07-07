@@ -1,6 +1,19 @@
 const nextConfig = {
   images: {
-    domains: ["static.wikia.nocookie.net", "ddragon.leagueoflegends.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static.wikia.nocookie.net",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "ddragon.leagueoflegends.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   // Other Next.js configuration options can be added here
 };

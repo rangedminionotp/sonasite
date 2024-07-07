@@ -116,14 +116,13 @@ const SkinsItem = ({ activeSkin }) => {
   ];
 
   return (
-    <div name="skins-container" className="w-1/2">
+    <div
+      name="skins-container"
+      className="xs:w-full md:w-1/2 w-1/2 max-w-full max-h-full "
+    >
       {skins.map((item, index) =>
         item.info.id === activeSkin ? (
-          <div
-            key={index}
-            className="px-2 mb-8 min-w-1/2 max-w-full  max-h-full"
-            name={item.name}
-          >
+          <div key={index} className="px-2 mb-8 " name={item.name}>
             <div
               className={`p-4 relative rounded-lg shadow-md text-center justify-center bg-primary ${bgGradient[index]} h-full`}
               onMouseEnter={() => setIsHovered(true)}

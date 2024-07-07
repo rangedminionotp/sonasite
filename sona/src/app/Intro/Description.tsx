@@ -10,7 +10,7 @@ const Description = () => {
       <div className="font-bold text-white italic drop-shadow-lg description-subheader">
         {data.title.toUpperCase()}
       </div>
-      <div className=" text-white drop-shadow-xl text-shadow-lg mt-9 link-text">
+      <div className=" text-white drop-shadow-xl text-shadow-lg mt-9 link-text flex flex-col justify-center md:flex-row">
         <a
           href={data.wiki}
           target="_blank"
