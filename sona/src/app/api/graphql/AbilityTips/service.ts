@@ -1,5 +1,6 @@
 import { pool } from '@/db'
 import { AbilityTipsInfo, AbilityTipsData, AbilityTipsVotes } from './schema'
+import LeoProfanity from 'leo-profanity';
 
 export class AbilityTipsService {
     public async getAllTips(): Promise<AbilityTipsInfo[]> {

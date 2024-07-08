@@ -10,6 +10,7 @@ import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 import EditReviewsBtn from "./EditReviewsBtn";
 import DeleteReviews from "./DeleteReviews";
 import EditReviewsPopup from "./EditReviewsPopup";
+import useWindowSize from "@/app/utils/windowSize";
 
 const SkinReviewsItem = ({ reviewed }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
@@ -18,9 +19,11 @@ const SkinReviewsItem = ({ reviewed }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [editReviewOpen, setEditReviewOpen] = React.useState<boolean>(false);
+  const { width, height } = useWindowSize();
 
   const [editDescription, setEditDescription] = React.useState<string>("");
   const [editReviewsRating, setEditReviewsRating] = React.useState(null);
+  const isSmallScreen = width <= 768; // all screens smaller than md
 
   const user = getUserFromLocalStorage();
 
@@ -52,13 +55,17 @@ const SkinReviewsItem = ({ reviewed }) => {
 
   return (
     <div name="skin-reviews-container">
-      <div className="  min-w-1/2 max-w-full w-1/2 mx-auto ">
+      <div
+        className={` ${
+          isSmallScreen ? `w-full` : `w-1/2`
+        }  min-w-1/2 max-w-full mx-auto `}
+      >
         {currentReviews && currentReviews.length > 0 ? (
           currentReviews.map((item) => (
             <div
               name={`${item.skin_id}${item.owner_id}`}
               key={item.id}
-              className=" justify-center p-4 mb-4 border border-[#121212] bg-[#313131] rounded shadow-md"
+              className={`justify-center p-4 mb-4 border border-[#121212] bg-[#313131] rounded shadow-md`}
             >
               <div className="text-lg font-semibold text-[#f1f1f1] mb-2">
                 {item.owner_name}
@@ -107,7 +114,7 @@ const SkinReviewsItem = ({ reviewed }) => {
         <Button
           onClick={goToPreviousPage}
           disabled={currentPage === 1}
-          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+          className={`w-auto px-4 py-2 rounded-md ${
             currentPage === 1
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-600"
@@ -115,13 +122,13 @@ const SkinReviewsItem = ({ reviewed }) => {
         >
           Previous
         </Button>
-        <p className="text-gray-300">
+        <p className="text-gray-700">
           Page {currentPage} of {totalPages}
         </p>
         <Button
           onClick={goToNextPage}
           disabled={currentPage === totalPages}
-          className={`w-full md:w-auto px-4 py-2 rounded-md ${
+          className={` w-auto px-4 py-2 rounded-md ${
             currentPage === totalPages
               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-600"

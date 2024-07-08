@@ -87,7 +87,7 @@ html, body {
 
 @layer components {
   .icon-btns {
-    @apply text-gray-500 hover:cursor-pointer hover:text-gray-300 hover:underline
+    @apply text-gray-500 hover:cursor-pointer hover:text-gray-300 hover:underline w-auto
   }
 } 
 
