@@ -117,6 +117,78 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
     "bg-gradient-to-r from-[#393A3E] via-[#92ACC7] to-[#253942]",
   ];
   const isSmallScreen = width <= 768; // all screens smaller than md
+
+  const SkinDetails = ({ item, index }) => {
+    return (
+      <div>
+        <div
+          className={`absolute left-0 bottom-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50 ${
+            isSmallScreen ? `flex-col` : `flex-row`
+          }`}
+        >
+          <div className="flex">
+            <Tooltip
+              title={`${item.name} was released on ${parseDate(
+                item.info.data.releaseDate
+              )} (
+                          ${daysAgo(item.info.data.releaseDate)})`}
+            >
+              <p className="text-sm text-gray-300 mb-1 font-sans">
+                <CakeIcon style={{ color: "#CEB57C" }} />{" "}
+                {parseDate(item.info.data.releaseDate)} (
+                {daysAgo(item.info.data.releaseDate)})
+              </p>
+            </Tooltip>
+          </div>
+          <div className="flex gap-1 items-center">
+            <Image
+              alt=""
+              src={icons.artist}
+              objectFit="cover"
+              className="object-cover"
+              width={20}
+              height={20}
+            />
+            <Tooltip
+              title={`${item.name} was drawn by ${item.info.data.artist}`}
+            >
+              <p className="text-sm text-gray-300 mb-1 font-sans">
+                {item.info.data.artist}
+              </p>
+            </Tooltip>
+          </div>
+          <div className="flex items-center gap-1">
+            <Image
+              alt=""
+              src={icons.voice}
+              className="object-cover"
+              width={20}
+              height={20}
+            />
+            <Tooltip
+              title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
+            >
+              <p className="text-sm text-gray-300 mb-1 font-sans">
+                {item.info.data.voiceActor}
+              </p>
+            </Tooltip>
+          </div>
+          <div className="flex">
+            <Tooltip title={`${item.name} has a 3D model available`}>
+              <a
+                href={item.info.data.threeDURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 font-bold hover:underline"
+              >
+                3D Model
+              </a>
+            </Tooltip>
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <div
       name="skins-container"
@@ -137,14 +209,7 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
               <SkinItemsClose setActiveSkin={setActiveSkin} />
               <div className="relative overflow-hidden">
                 <div className="absolute top-0 left-0 z-10 px-2 py-1 text-3xl font-semibold">
-                  <h1
-                    style={{
-                      color: "#253942",
-                      textShadow:
-                        "-0.7px -0.7px 0 #CAABCD, 0.7px -0.7px 0 #CAABCD, -0.7px 0.7px 0 #CAABCD, 0.7px 0.7px 0 #CAABCD",
-                    }}
-                    className="text-[#82631a]"
-                  >
+                  <h1 className="text-[#82631a] uppercase drop-shadow-[0_1.3px_1.3px_rgba(0,0,0,0.7)]">
                     {item.name}
                   </h1>
                   <div className="flex gap-1 items-center">
@@ -172,135 +237,92 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
                   priority
                   className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
                 />
-                {isHovered && (
+                {isSmallScreen && (
+                  <div
+                    onClick={() =>
+                      toggleVisibility(item.info.id, index, item.imgURL)
+                    }
+                    className={`absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans ${
+                      isSmallScreen ? `text-base` : `text-lg`
+                    }`}
+                  >
+                    SHOW REVIEWS
+                  </div>
+                )}
+                {/* big screen view */}
+                {isHovered && !isSmallScreen && (
                   <div>
                     <div
                       onClick={() =>
                         toggleVisibility(item.info.id, index, item.imgURL)
                       }
-                      className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans text-xl"
+                      className={`absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans ${
+                        isSmallScreen ? `text-base` : `text-lg`
+                      }`}
                     >
                       SHOW REVIEWS
                     </div>
-
-                    <div className="absolute bottom-0 left-0 w-full flex p-4 gap-3 shadow-md bg-black bg-opacity-50">
-                      <div className="flex">
-                        <Tooltip
-                          title={`${item.name} was released on ${parseDate(
-                            item.info.data.releaseDate
-                          )} (
-                          ${daysAgo(item.info.data.releaseDate)})`}
-                        >
-                          <p className="text-sm text-gray-300 mb-1 font-sans">
-                            <CakeIcon style={{ color: "#CEB57C" }} />{" "}
-                            {parseDate(item.info.data.releaseDate)} (
-                            {daysAgo(item.info.data.releaseDate)})
-                          </p>
-                        </Tooltip>
-                      </div>
-                      <div className="flex gap-1 items-center">
-                        <Image
-                          alt=""
-                          src={icons.artist}
-                          objectFit="cover"
-                          className="object-cover"
-                          width={20}
-                          height={20}
-                        />
-                        <Tooltip
-                          title={`${item.name} was drawn by ${item.info.data.artist}`}
-                        >
-                          <p className="text-sm text-gray-300 mb-1 font-sans">
-                            {item.info.data.artist}
-                          </p>
-                        </Tooltip>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Image
-                          alt=""
-                          src={icons.voice}
-                          className="object-cover"
-                          width={20}
-                          height={20}
-                        />
-                        <Tooltip
-                          title={`${item.name} was voiced by ${item.info.data.voiceActor}`}
-                        >
-                          <p className="text-sm text-gray-300 mb-1 font-sans">
-                            {item.info.data.voiceActor}
-                          </p>
-                        </Tooltip>
-                      </div>
-                      <div className="flex">
-                        <Tooltip
-                          title={`${item.name} has a 3D model available`}
-                        >
-                          <a
-                            href={item.info.data.threeDURL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-300 font-bold hover:underline"
-                          >
-                            3D Model
-                          </a>
-                        </Tooltip>
-                      </div>
-                    </div>
+                    <SkinDetails item={item} index={index} />
                   </div>
                 )}
-              </div>
-              <Tooltip
-                title={`${item.info.rating_count} Sona meows rated ${item.name} (✿◡‿◡)`}
-              >
-                <div>
-                  <SkinItemRating
-                    setRating={null}
-                    rating={item.info.rating}
-                    readOnlyBoolean={true}
-                    mode="display"
-                  />
-                </div>
-              </Tooltip>
-              <div
-                className={`${
-                  truncate ? "line-clamp-3" : ""
-                } text-sm text-gray-300 mb-2 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]`}
-              >
-                <div onClick={toggleTruncate}>
-                  {item.info.data.lore === "" ? (
-                    <CustomLoreDisplay skin_id={item.info.id} />
-                  ) : (
-                    item.info.data.lore
-                  )}
-                </div>
               </div>
               <div>
-                {item.info.data.lore === "" && (
-                  <div
-                    className="flex justify-center"
-                    onClick={() => setCurrItem(item)}
-                  >
-                    <div name="addCustomLore">
-                      <AddCustomLore
-                        skinName={item.name}
-                        setAddLoreOpen={setAddLoreOpen}
-                      />
-                    </div>
-                    <AddLorePopup
-                      open={addLoreOpen}
-                      setOpen={setAddLoreOpen}
-                      skinName={currItem?.name}
-                      skinImgURL={currItem?.imgURL}
-                      skin_id={currItem?.info.id}
+                {isSmallScreen && <SkinDetails item={item} index={index} />}
+
+                <Tooltip
+                  title={`${item.info.rating_count} Sona meows rated ${item.name} (✿◡‿◡)`}
+                >
+                  <div className="justify-center items-center flex">
+                    <SkinItemRating
+                      setRating={null}
+                      rating={item.info.rating}
+                      readOnlyBoolean={true}
+                      mode="display"
                     />
-                    <div name="seeCustomLore">
-                      <ViewCustomLore
-                        skin_id={item.info.id}
-                        bgColor={bgGradient[index]}
-                      />
-                    </div>
                   </div>
-                )}
+                </Tooltip>
+
+                <div
+                  className={`${
+                    truncate ? "line-clamp-3" : ""
+                  } text-sm text-gray-300 mb-2 px-2 font-sans font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)]`}
+                >
+                  <div onClick={toggleTruncate}>
+                    {item.info.data.lore === "" ? (
+                      <CustomLoreDisplay skin_id={item.info.id} />
+                    ) : (
+                      item.info.data.lore
+                    )}
+                  </div>
+                </div>
+                <div>
+                  {item.info.data.lore === "" && (
+                    <div
+                      className="flex justify-center"
+                      onClick={() => setCurrItem(item)}
+                    >
+                      <div name="addCustomLore">
+                        <AddCustomLore
+                          skinName={item.name}
+                          setAddLoreOpen={setAddLoreOpen}
+                        />
+                      </div>
+                      <AddLorePopup
+                        open={addLoreOpen}
+                        setOpen={setAddLoreOpen}
+                        skinName={currItem?.name}
+                        skinImgURL={currItem?.imgURL}
+                        skin_id={currItem?.info.id}
+                      />
+                      <div name="seeCustomLore">
+                        <ViewCustomLore
+                          skin_id={item.info.id}
+                          bgColor={bgGradient[index]}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
