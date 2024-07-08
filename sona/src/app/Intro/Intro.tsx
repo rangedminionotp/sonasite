@@ -1,13 +1,10 @@
-import React from "react";
 import Background from "@/app/utils/Background";
+import React from "react";
 import Description from "./Description";
-import data from "../../../data/data.json";
-import Image from "next/image";
-import { Element } from "react-scroll/modules";
 
 const Intro = () => {
   return (
-    <div id="intro" name="intro" className=" h-screen w-full ">
+    <div id="intro"  className=" h-screen w-full ">
       <Background />
       <div className="absolute inset-0 flex justify-center items-center">
         <Description />

@@ -1,20 +1,16 @@
-import request from 'supertest';
-import { startTestServer } from '../testServer';
+/**
+ * @jest-environment node
+ */
 
-let server: any;
+import GET from "../../../src/app/api/test/index";
+import { mockNextRequest, mockNextResponse } from "../mockNextReqRes";
+describe("API Route Tests", () => {
+  it("should return a successful response", async () => {
+    const req = mockNextRequest();
+    const res = mockNextResponse();
+    await GET(req, res);
 
-beforeAll(async () => {
-  server = await startTestServer();
-});
-
-afterAll(() => {
-  server.close();
-});
-
-describe('API Route Tests', () => {
-  it('should return a successful response', async () => {
-    const res = await request(server).get('/api/example');
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual({ message: 'Hello, world!' });
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({ message: "OK!" });
   });
 });

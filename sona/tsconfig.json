@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES6",
-     "lib": ["ES6", "DOM"],
-     "outDir": "./dist",
-    "rootDir": "./src",
+    "lib": [
+      "ES6",
+      "DOM"
+    ],
+    "outDir": "./dist",
+    "rootDir": "./",
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,17 +22,21 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*",
+        "./src/*"
       ],
-      "@data/*": ["./data/*"],
-      "/*": ["./node_modules/*"]
-     },
+      "@data/*": [
+        "./data/*"
+      ],
+      "/*": [
+        "./node_modules/*"
+      ]
+    },
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "typeRoots": [
-      "./src/types",
-      "./node_modules/@types"
+    "types": [
+      "@testing-library/jest-dom",
+      "@types/jest"
     ],
     "plugins": [
       {
@@ -44,11 +51,9 @@
     "src/middleware.ts.junk",
     ".next/types/**/*.ts",
     "pages/**/*",
-    "src/**/*",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
-  ],
-  
-
+  ]
 }
