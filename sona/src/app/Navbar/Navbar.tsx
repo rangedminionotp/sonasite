@@ -10,6 +10,7 @@ import UserDashboard from "./UserDashboard/UserDashboard";
 import { Popover } from "@headlessui/react";
 import { ScrollPosition } from "@/app/utils/ScrollPosition";
 import { useRouter } from "next/navigation";
+import BadWordSwitcher from "./BadWordSwitcher";
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const router = useRouter();
@@ -109,9 +110,15 @@ const Navbar = () => {
         "sticky top-0 z-20 h-20 flex justify-between items-center px-4 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] transition-shadow opacity-95 text-white text-2xl font-bold"
       )}
     >
-      <div>
-        <Logo />
+      <div className="flex justify-between items-center">
+        <div className="px-3 py-2 ">
+          <Logo />
+        </div>
+        <div className="px-3 py-2 ">
+          <BadWordSwitcher />
+        </div>
       </div>
+
       <ul className="hidden md:flex justify-between items-center font-work-sans ">
         <div className="px-3 py-2 hover:cursor-pointer">
           {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}

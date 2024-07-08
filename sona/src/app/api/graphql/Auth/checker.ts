@@ -9,16 +9,7 @@ async function authChecker(req: NextApiRequest, authHeader: string, roles: strin
     return false;
   }
   return true;
-}
-
-// export const nextAuthChecker: AuthChecker<NextApiRequest> = async (
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   { root, args, context, info }, roles,) => 
-// {
-//   return await authChecker(context, context.req.headers.authorization, roles)
-// };
-
-
+} 
 
 export const nextAuthChecker: AuthChecker<{ req: NextApiRequest }> = async ({ context }, roles) => {
   const authHeader = headers().get('Authorization')

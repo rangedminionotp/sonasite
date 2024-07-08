@@ -91,6 +91,9 @@ const TipsDisplay = ({ index }) => {
             console.log("Error fetching tips, please try again");
           } else {
             const allTips = json.data.getAbilityTipsByAbilityId;
+
+            // add bad word filter to all ability tips
+
             const sortedTips = sortByDateDescending(allTips);
             setabilityTips(sortedTips);
           }

@@ -67,7 +67,7 @@ CREATE TABLE UserSkinLore (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
     owner_id UUID REFERENCES Users(id),
     skin_id UUID REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    lore TEXT,
+    data JSONB,
     time TIMESTAMP DEFAULT now()
 );
 
