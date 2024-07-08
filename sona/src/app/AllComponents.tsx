@@ -1,29 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import Navbar from "./Navbar/Navbar";
-import Intro from "./Intro/Intro";
+import React from "react";
 import Abilities from "./Abilities/Abilities";
 import DataContext from "./DataContext";
-import { SonaService } from "./api/graphql/fetchdata/service";
-import React from "react";
+import Intro from "./Intro/Intro";
+import Navbar from "./Navbar/Navbar";
 import Skins from "./Skins/Skins";
-const AllComponents = () => {
-  const [fetchedData, setFetchedData] = React.useState(null);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const sonaService = new SonaService();
-        const data = await sonaService.FetchVersion();
-        setFetchedData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+import { SonaOverview } from "./api/graphql/fetchdata/schema";
+const AllComponents = ({ data }: { data: SonaOverview }) => {
+  const [fetchedData, setFetchedData] = React.useState(data);
   return (
     <DataContext.Provider value={{ fetchedData, setFetchedData }}>
       <div>

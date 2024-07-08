@@ -1,3 +1,4 @@
+"use server"
 import { GraphQLClient, gql } from "graphql-request";
 
 export const getUserFromLocalStorage = () => {
