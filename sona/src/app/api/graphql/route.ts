@@ -9,6 +9,8 @@ import { nextAuthChecker } from "./Auth/checker";
 import { SkinResolver } from "./Skin/resolver";
 import { SkinReviewsResolver } from "./SkinReviews/resolver";
 import { SkinLoreResolver } from "./SkinLore/resolver";
+import { NextRequest, NextResponse } from "next/server";
+
 // Build the schema with resolvers
 const schema = buildSchemaSync({
   resolvers: [
@@ -25,7 +27,10 @@ const schema = buildSchemaSync({
 });
 
 // Create the Yoga handler with context setup
-export const { handleRequest } = createYoga({
+const { handleRequest } = createYoga<{
+  req: NextRequest;
+  res: NextResponse;
+}>({
   schema,
   graphqlEndpoint: "/api/graphql",
   context: ({ request, params }) => {
@@ -35,8 +40,4 @@ export const { handleRequest } = createYoga({
 });
 
 // Explicitly export handleRequest for different HTTP methods
-export {
-  handleRequest as GET,
-  handleRequest as POST,
-  handleRequest as OPTIONS,
-};
+export { handleRequest as GET, handleRequest as POST };

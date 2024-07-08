@@ -1,20 +1,16 @@
 "use client";
 
 import React from "react";
-import Description from "./Description";
-import Display from "./Display";
-import BasicAbilities from "./BasicAbilities";
-import PassiveAb from "./PassiveAb";
-import UltAb from "./UltAb";
-import AbilitiesContext from "./SharedContext";
 import DataContext from "../DataContext";
 import { SonaService } from "../api/graphql/fetchdata/service";
+import BasicAbilities from "./BasicAbilities";
+import Description from "./Description";
+import PassiveAb from "./PassiveAb";
+import AbilitiesContext from "./SharedContext";
+import UltAb from "./UltAb";
 // import AbilityDescription from "./AbilityDescription";
-import PassiveDes from "./PassiveDes";
-import Background from "@/app/utils/Background";
 
 import AbilitiesPopup from "./popup/AbilitiesPopup";
-import { AbilityService } from "../api/graphql/Ability/service";
 const Abilities = () => {
   // boolean to see if user click on abilities expansion
   const [abilityVisibility, setAbilityVisibility] = React.useState([
