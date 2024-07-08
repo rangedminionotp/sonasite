@@ -1,9 +1,5 @@
-import React from "react";
 import Background from "@/app/utils/Background";
 import Description from "./Description";
-import data from "../../../data/data.json";
-import Image from "next/image";
-import { Element } from "react-scroll/modules";
 
 const Intro = () => {
   return (
