@@ -11,12 +11,15 @@ import { Popover } from "@headlessui/react";
 import { ScrollPosition } from "@/app/utils/ScrollPosition";
 import { useRouter } from "next/navigation";
 import BadWordSwitcher from "./BadWordSwitcher";
+import { useCookies } from "react-cookie";
+
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const [user, setUser] = useState(null);
+  const [cookies, setCookie] = useCookies(["user"]);
 
   // this needs to be local storage..
   const [BadWordSwitcherBool, setBadWordSwitcherBool] = React.useState(
@@ -30,8 +33,8 @@ const Navbar = () => {
   }, [BadWordSwitcherBool]);
 
   useEffect(() => {
-    const item = localStorage.getItem("user");
-    const userLogin = JSON.parse(item);
+    const item = cookies.user;
+    const userLogin = item;
     setUser(userLogin);
     if (status === "authenticated" && session.user) {
       // localStorage.setItem("user", JSON.stringify(data));
@@ -79,7 +82,9 @@ const Navbar = () => {
                 if (json.errors) {
                   console.log(json.errors);
                 } else {
-                  localStorage.setItem("user", JSON.stringify(json.data.login));
+                  setCookie("user", JSON.stringify(json.data.login), {
+                    path: "/",
+                  });
 
                   setUser(json.data.login);
                 }
@@ -90,19 +95,19 @@ const Navbar = () => {
       console.log(
         "User is not authenticated, removing user data from localStorage"
       );
-      const item = localStorage.getItem("user");
-      const userLogin = JSON.parse(item);
+      const item = cookies.user;
+      const userLogin = item;
     }
   }, [status, session]);
 
-  const handleStorageChange = () => {
-    const item = localStorage.getItem("user");
-    if (item) {
-      setUser(JSON.parse(item));
-    } else {
-      setUser(null);
-    }
-  };
+  // const handleStorageChange = () => {
+  //   const item = localStorage.getItem("user");
+  //   if (item) {
+  //     setUser(JSON.parse(item));
+  //   } else {
+  //     setUser(null);
+  //   }
+  // };
 
   const handleClick = () => setNav(!nav);
 

@@ -7,10 +7,12 @@ import Button from "@mui/joy/Button";
 import { IconButton } from "@mui/material";
 import LogoutBtn from "./LogoutBtn";
 import UserInfo from "./UserInfo";
+import { useCookies } from "react-cookie";
+
 const UserDashboard = ({ setUser }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const item = localStorage.getItem("user");
-  const user = JSON.parse(item);
+  const [cookies, setCookie] = useCookies(["user"]);
+  const user = cookies.user;
   return (
     <div className="relative inline-block">
       <div>

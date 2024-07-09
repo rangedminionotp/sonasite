@@ -18,14 +18,16 @@ import GmailLogin from "./GmailLogin";
 import Head from "next/head";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const router = useRouter();
   const [user, setUser] = React.useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   React.useEffect(() => {
-    localStorage.removeItem("user");
+    removeCookie("user");
   }, []);
 
   const handleInputChange = (event) => {
@@ -55,9 +57,8 @@ const Login = () => {
         if (json.errors) {
           alert("Error logging in, please try again");
         } else {
-          localStorage.setItem("user", JSON.stringify(json.data.login));
+          setCookie("user", JSON.stringify(json.data.login), { path: "/" });
           router.push("/");
-          console.log("logged in");
         }
       });
   };
