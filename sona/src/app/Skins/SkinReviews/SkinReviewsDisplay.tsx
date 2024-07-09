@@ -12,6 +12,7 @@ import AddReviewsPopup from "./AddReviewsPopup";
 import SkinImg from "./SkinImg";
 import Avatar from "@mui/joy/Avatar";
 import Tooltip from "@mui/joy/Tooltip";
+import { badWordFilter } from "@/app/utils/badWordFilter";
 
 import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
 
@@ -31,42 +32,60 @@ const SkinReviewsDisplay = ({
   const user = getUserFromLocalStorage();
 
   React.useEffect(() => {
-    const query = {
-      query: `
-        query MyQuery { 
-  getReviewsBySkinId(skin_id: "${skin_id}") {
-    data {
-      date
-      description
-    }
-    id
-    owner_id
-    rating
-    skin_id
-    owner_name
-  }
-}
-      `,
-    };
+    const fetchSkinReviews = async () => {
+      try {
+        const badWordBool = localStorage.getItem("badWord");
 
-    fetch("/api/graphql", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(query),
-    })
-      .then((res) => res.json())
-      .then((json) => {
+        const query = {
+          query: `
+            query MyQuery {
+              getReviewsBySkinId(skin_id: "${skin_id}") {
+                data {
+                  date
+                  description
+                }
+                id
+                owner_id
+                rating
+                skin_id
+                owner_name
+              }
+            }
+          `,
+        };
+
+        const response = await fetch("/api/graphql", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(query),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const json = await response.json();
+
         if (json.errors) {
           alert("Error with fetching skin reviews, please try again");
         } else {
-          setSkinReviews(json.data.getReviewsBySkinId);
+          const reviews = json.data.getReviewsBySkinId;
+
+          if (badWordBool === "true") {
+            const filteredReviews = await badWordFilter(reviews, "skinReviews");
+            setSkinReviews(filteredReviews);
+          } else {
+            setSkinReviews(reviews);
+          }
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching skin reviews:", error);
-      });
+      }
+    };
+
+    fetchSkinReviews();
   }, [skinReviews, setSkinReviews, skin_id]);
 
   React.useEffect(() => {

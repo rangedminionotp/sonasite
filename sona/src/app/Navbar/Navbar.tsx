@@ -18,6 +18,17 @@ const Navbar = () => {
 
   const [user, setUser] = useState(null);
 
+  // this needs to be local storage..
+  const [BadWordSwitcherBool, setBadWordSwitcherBool] = React.useState(
+    localStorage.getItem("badWord") === "true"
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("badWord", BadWordSwitcherBool.toString());
+    }
+  }, [BadWordSwitcherBool]);
+
   useEffect(() => {
     const item = localStorage.getItem("user");
     const userLogin = JSON.parse(item);
@@ -115,7 +126,10 @@ const Navbar = () => {
           <Logo />
         </div>
         <div className="px-3 py-2 ">
-          <BadWordSwitcher />
+          <BadWordSwitcher
+            BadWordSwitcherBool={BadWordSwitcherBool}
+            setBadWordSwitcherBool={setBadWordSwitcherBool}
+          />
         </div>
       </div>
 

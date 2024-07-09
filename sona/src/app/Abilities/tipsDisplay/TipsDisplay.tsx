@@ -15,6 +15,7 @@ import {
 import TipsSortBtnsMenu from "./TipsSortBtnsMenu";
 import TipItem from "./TipItem";
 import { sortByDateDescending } from "./utils";
+import { badWordFilter } from "@/app/utils/badWordFilter";
 const TipsDisplay = ({ index }) => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
@@ -61,47 +62,60 @@ const TipsDisplay = ({ index }) => {
   };
 
   useEffect(() => {
-    if (abilities && abilities[index]) {
-      const query = {
-        query: `query MyQuery {
-          getAbilityTipsByAbilityId(ability_id: "${abilities[index].abilityId}") {
-            ability_id
-            date
-            description
-            ownerId
-            ownerName
-            version
-            upvotes
-            downvotes
-            tip_id
-          }
-        }`,
-      };
+    const badWordBool = localStorage.getItem("badWord");
+    const fetchAbilityTips = async () => {
+      if (abilities && abilities[index]) {
+        const query = {
+          query: `query MyQuery {
+            getAbilityTipsByAbilityId(ability_id: "${abilities[index].abilityId}") {
+              ability_id
+              date
+              description
+              ownerId
+              ownerName
+              version
+              upvotes
+              downvotes
+              tip_id
+            }
+          }`,
+        };
 
-      fetch("/api/graphql", {
-        method: "POST",
-        body: JSON.stringify(query),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
+        try {
+          const response = await fetch("/api/graphql", {
+            method: "POST",
+            body: JSON.stringify(query),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const json = await response.json();
+
           if (json.errors) {
             console.log("Error fetching tips, please try again");
           } else {
             const allTips = json.data.getAbilityTipsByAbilityId;
-
-            // add bad word filter to all ability tips
-
             const sortedTips = sortByDateDescending(allTips);
-            setabilityTips(sortedTips);
+
+            if (badWordBool === "true") {
+              const filteredTips = await badWordFilter(
+                sortedTips,
+                "abilityTips"
+              );
+              setabilityTips(filteredTips);
+            } else {
+              setabilityTips(sortedTips);
+            }
+            return;
           }
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching data:", error);
-        });
-    }
+          return;
+        }
+      }
+    };
+    fetchAbilityTips();
   }, [abilities, index, setabilityTips]);
 
   const abilityTipsToUse = searchTips ? searchTips : abilityTips;
