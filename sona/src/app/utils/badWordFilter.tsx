@@ -1,12 +1,15 @@
-export const badWordFilter = async (tipsList) => {
+export const badWordFilter = async (tipsList, inputType) => {
   try {
-    console.log("ability tips", tipsList);
+    const query = {
+      tipsList: tipsList,
+      inputType: inputType,
+    };
     const response = await fetch("/api/badWordFilter", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(tipsList),
+      body: JSON.stringify(query),
     });
 
     if (!response.ok) {

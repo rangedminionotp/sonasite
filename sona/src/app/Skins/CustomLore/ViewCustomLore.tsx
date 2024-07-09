@@ -7,6 +7,7 @@ import { SkinLore } from "@/SkinLore/schema";
 import { gql } from "graphql-request";
 import UserLoreList from "./UserLoreList";
 import { useRouter } from "next/navigation";
+import { badWordFilter } from "@/app/utils/badWordFilter";
 
 const ViewCustomLore = ({ skin_id, bgColor }) => {
   const user = getUserFromLocalStorage();
@@ -22,6 +23,8 @@ const ViewCustomLore = ({ skin_id, bgColor }) => {
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {
+      const badWordBool = localStorage.getItem("badWord");
+
       const query = gql`
       query MyQuery {
   getLoreByUserId(owner_id: "${user.id}", skin_id: "${skin_id}") {
@@ -34,7 +37,13 @@ const ViewCustomLore = ({ skin_id, bgColor }) => {
 }
       `;
       const response = await graphQLClient.request(query);
-      setUserLores(response.getLoreByUserId);
+      const lores = response.getLoreByUserId;
+      if (badWordBool === "true") {
+        const filteredLores = await badWordFilter(lores, "skinLores");
+        setUserLores(filteredLores);
+      } else {
+        setUserLores(lores);
+      }
       setOpen(true);
     } catch (error) {
       console.log("Error fetching user lores", error);

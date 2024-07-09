@@ -8,6 +8,7 @@ const CustomLoreDisplay = ({ skin_id }) => {
   const [randomNumber, setRandomNumber] = React.useState<number>(0);
   const [customLore, setCustomLore] = React.useState<string>(null);
 
+  const querySkin = async () => {};
   React.useEffect(() => {
     const savedLore = localStorage.getItem(`customLore_${skin_id}`);
     const savedRandomNumber = localStorage.getItem(`randomNumber_${skin_id}`);

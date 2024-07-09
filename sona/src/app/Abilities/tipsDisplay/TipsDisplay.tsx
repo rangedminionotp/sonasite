@@ -62,9 +62,9 @@ const TipsDisplay = ({ index }) => {
   };
 
   useEffect(() => {
-    const badWordBool = localStorage.getItem("badWord");
     const fetchAbilityTips = async () => {
       if (abilities && abilities[index]) {
+        const badWordBool = localStorage.getItem("badWord");
         const query = {
           query: `query MyQuery {
             getAbilityTipsByAbilityId(ability_id: "${abilities[index].abilityId}") {

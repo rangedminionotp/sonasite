@@ -9,7 +9,10 @@ const BadWordSwitcher = ({ BadWordSwitcherBool, setBadWordSwitcherBool }) => {
       endDecorator={
         <Switch
           checked={BadWordSwitcherBool}
-          onChange={() => setBadWordSwitcherBool(!BadWordSwitcherBool)}
+          onChange={() => {
+            setBadWordSwitcherBool(!BadWordSwitcherBool);
+            localStorage.setItem("badWord", !BadWordSwitcherBool);
+          }}
           sx={{ ml: 1 }}
         />
       }
