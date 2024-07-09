@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/joy/Tooltip";
+import { useUser } from "@/app/utils/user";
 
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 import { gql } from "graphql-request";
 const DeleteLore = ({ lore_id, userLores, setUserLores }) => {
-  const user = getUserFromLocalStorage();
+  const user = useUser();
 
   const [showWarning, setShowWarning] = useState(false);
   const toggleWarning = () => {

@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import SkinContext from "../SharedContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/joy/Tooltip";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 import { gql } from "graphql-request";
+import { useUser } from "@/app/utils/user";
+
 const DeleteReviews = ({ skin_id }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [showWarning, setShowWarning] = useState(false);
+  const user = useUser();
   const toggleWarning = () => {
     setShowWarning(!showWarning);
   };
 
   const handleDeleteReview = async (skinId) => {
     const client = createGraphQLClient();
-    const user = getUserFromLocalStorage();
+
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {

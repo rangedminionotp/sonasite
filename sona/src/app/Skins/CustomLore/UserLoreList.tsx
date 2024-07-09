@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
+import { useUser } from "@/app/utils/user";
 
 import DeleteLore from "./DeleteLore";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,7 +12,7 @@ import Tooltip from "@mui/joy/Tooltip";
 import { FaTimes } from "react-icons/fa";
 import UserLoreClose from "./UserLoreClose";
 const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   const [editLoreBtn, setEditLoreBtn] = React.useState(false);
   const [currLore, setCurrLore] = React.useState(null);
   const [currentPage, setCurrentPage] = useState(1);

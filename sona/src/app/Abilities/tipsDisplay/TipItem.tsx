@@ -3,9 +3,8 @@ import Avatar from "@mui/joy/Avatar";
 import Textarea from "@mui/joy/Textarea"; // Assuming you imported JoyUI Textarea component
 import Button from "@mui/joy/Button";
 import Highlighter from "react-highlight-words";
-
+import { useUser } from "@/app/utils/user";
 import {
-  getUserFromLocalStorage,
   createGraphQLClient,
   updateVotes,
   checkIfVoted,
@@ -31,11 +30,12 @@ const TipItem = ({ tip, search }) => {
   // if downvote = false, then current tip is downvoted;
   const [downvote, setDownvote] = React.useState<boolean>(true);
 
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   // const [downvotes, setDownvotes] = React.useState(tip.downvotes);
   const [isEditing, setIsEditing] = React.useState(false); // State to manage editing mode
   const [editDescription, setEditDescription] = React.useState(tip.description);
   const [loading, setLoading] = React.useState(true); // State to track loading status
+
   useEffect(() => {
     const seeVoteStatus = async () => {
       const bearerToken = user?.accessToken;
@@ -65,7 +65,6 @@ const TipItem = ({ tip, search }) => {
 
   // edit tip
   const handleSubmit = async () => {
-    const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {
@@ -121,7 +120,6 @@ const TipItem = ({ tip, search }) => {
   // upvote function
   const handleUpvote = async (tipId, upvotes, downvotes) => {
     try {
-      const user = getUserFromLocalStorage();
       const bearerToken = user?.accessToken;
 
       if (!bearerToken) {
@@ -206,7 +204,6 @@ const TipItem = ({ tip, search }) => {
 
   const handleDownvote = async (tipId, downvotes, upvotes) => {
     try {
-      const user = getUserFromLocalStorage();
       const bearerToken = user?.accessToken;
       if (!bearerToken) {
         throw new Error("User not authenticated");

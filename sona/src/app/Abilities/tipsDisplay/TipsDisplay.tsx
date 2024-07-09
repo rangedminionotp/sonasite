@@ -4,7 +4,6 @@ import Button from "@mui/joy/Button";
 
 import TipsSearch from "./TipsSearch";
 import {
-  getUserFromLocalStorage,
   createGraphQLClient,
   updateVotes,
   checkIfVoted,
@@ -16,6 +15,8 @@ import TipsSortBtnsMenu from "./TipsSortBtnsMenu";
 import TipItem from "./TipItem";
 import { sortByDateDescending } from "./utils";
 import { badWordFilter } from "@/app/utils/badWordFilter";
+import { useUser } from "@/app/utils/user";
+
 const TipsDisplay = ({ index }) => {
   const { abilities, abilityTips, setabilityTips, activeIndex } =
     useContext(AbilitiesContext);
@@ -25,7 +26,7 @@ const TipsDisplay = ({ index }) => {
   const [currentTips, setCurrentTips] = useState([]);
   const [search, setSearch] = useState<string>(null);
   const [searchTips, setSearchTips] = useState(null);
-
+  const user = useUser();
   useEffect(() => {
     if (searchTips) {
       const pages = Math.ceil(searchTips.length / tipsPerPage);

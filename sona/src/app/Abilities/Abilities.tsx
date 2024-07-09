@@ -12,6 +12,7 @@ import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
 import PassiveDes from "./PassiveDes";
 import Background from "@/app/utils/Background";
+import { Link } from "react-scroll";
 
 import AbilitiesPopup from "./popup/AbilitiesPopup";
 import { AbilityService } from "../api/graphql/Ability/service";
@@ -174,17 +175,19 @@ const Abilities = () => {
         <div className="absolute inset-0 flex justify-center items-center">
           <Description />
         </div>
-        <div
-          name="abilities-icon"
-          className="flex h-[500px] w-full flex-wrap items-center justify-center gap-8"
-        >
-          <div className=" flex w-full items-center justify-center px-[15%] py-[85%] xxxs:py-[70%] xxs:py-[75%] xs:py-[40%] sm:py-[40%] md:py-[40%] lg:py-[30%] xl:py-[25%] 2xl:py-[20%] 3xl:py-[25%]">
-            <PassiveAb />
-            <BasicAbilities />
-            <UltAb />
-            <AbilitiesPopup />
+        <Link to="abilities" smooth={true} duration={200}>
+          <div
+            name="abilities-icon"
+            className="flex h-[500px] w-full flex-wrap items-center justify-center gap-8"
+          >
+            <div className=" flex w-full items-center justify-center px-[15%] py-[85%] xxxs:py-[70%] xxs:py-[75%] xs:py-[40%] sm:py-[40%] md:py-[40%] lg:py-[30%] xl:py-[25%] 2xl:py-[20%] 3xl:py-[25%]">
+              <PassiveAb />
+              <BasicAbilities />
+              <UltAb />
+              <AbilitiesPopup />
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </AbilitiesContext.Provider>
   );

@@ -14,9 +14,10 @@ import Avatar from "@mui/joy/Avatar";
 import Tooltip from "@mui/joy/Tooltip";
 import { badWordFilter } from "@/app/utils/badWordFilter";
 
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 
 import { Link } from "react-scroll";
+import { useUser } from "../../utils/user";
 
 const SkinReviewsDisplay = ({
   skin_id,
@@ -29,7 +30,7 @@ const SkinReviewsDisplay = ({
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
   const [reviewed, setReviewed] = React.useState<boolean>(false);
-  const user = getUserFromLocalStorage();
+  const user = useUser();
 
   React.useEffect(() => {
     const fetchSkinReviews = async () => {

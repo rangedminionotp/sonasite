@@ -10,7 +10,8 @@ import SkinContext from "../SharedContext";
 import SkinImg from "./SkinImg";
 import { gql } from "graphql-request";
 
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
+import { useUser } from "@/app/utils/user";
 
 const EditReviewsPopup = ({
   editReviewOpen,
@@ -22,7 +23,7 @@ const EditReviewsPopup = ({
   editReviewsRating,
   setEditReviewsRating,
 }) => {
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [description, setDescription] = React.useState(editDescription);
   const [editRating, setEditRating] = React.useState(editReviewsRating);

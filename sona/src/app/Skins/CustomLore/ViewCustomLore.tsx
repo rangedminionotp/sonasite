@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/joy/Tooltip";
@@ -8,9 +8,10 @@ import { gql } from "graphql-request";
 import UserLoreList from "./UserLoreList";
 import { useRouter } from "next/navigation";
 import { badWordFilter } from "@/app/utils/badWordFilter";
+import { useUser } from "@/app/utils/user";
 
 const ViewCustomLore = ({ skin_id, bgColor }) => {
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   const [userLores, setUserLores] = React.useState<SkinLore[]>([]);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();

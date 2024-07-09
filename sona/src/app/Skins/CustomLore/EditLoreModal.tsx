@@ -5,9 +5,10 @@ import ModalClose from "@mui/joy/ModalClose";
 import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import { gql } from "graphql-request";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import Textarea from "@mui/joy/Textarea";
+import { useUser } from "@/app/utils/user";
 
 const EditLoreModal = ({
   open,
@@ -17,7 +18,7 @@ const EditLoreModal = ({
   setUserLores,
   setCurrLore,
 }) => {
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   const [description, setDescription] = React.useState(lore.lore);
 
   const handleInputChange = (event) => {
@@ -26,7 +27,6 @@ const EditLoreModal = ({
 
   const handleEditLore = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("inside handle edit", description);
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {

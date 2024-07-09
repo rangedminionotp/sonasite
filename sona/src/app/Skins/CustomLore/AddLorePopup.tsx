@@ -9,7 +9,8 @@ import SkinImg from "./SkinReviews/SkinImg";
 import { gql } from "graphql-request";
 import Image from "next/image";
 
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
+import { useUser } from "@/app/utils/user";
 
 const AddLorePopup = ({
   open,
@@ -22,7 +23,7 @@ const AddLorePopup = ({
 }) => {
   const [description, setDescription] = React.useState<string>("");
   const maxLength = 250;
-  const user = getUserFromLocalStorage();
+  const user = useUser();
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
@@ -50,6 +51,7 @@ const AddLorePopup = ({
       `;
       const response = await graphQLClient.request(mutation);
       setOpen(false);
+      setDescription("");
     } catch (error) {
       console.error("error adding skin lores", error);
     }

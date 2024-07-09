@@ -1,6 +1,5 @@
 import React from "react";
 import TipsDelete from "./TipsDelete";
-import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
 import TipsEdit from "./TipsEdit";
 const TipsEditAndDelete = ({ tip, toggleEditing }) => {
   return (

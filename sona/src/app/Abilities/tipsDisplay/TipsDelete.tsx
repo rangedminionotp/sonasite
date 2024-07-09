@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { createGraphQLClient, getUserFromLocalStorage } from "./utils";
+import { createGraphQLClient } from "./utils";
+import { useUser } from "@/app/utils/user";
+
 import { gql } from "graphql-request";
 import AbilitiesContext from "../SharedContext";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -7,13 +9,12 @@ const TipsDelete = ({ tip }) => {
   const { abilityTips, setabilityTips } = React.useContext(AbilitiesContext);
 
   const [showWarning, setShowWarning] = useState(false);
-
+  const user = useUser();
   const toggleWarning = () => {
     setShowWarning(!showWarning);
   };
 
   const handleDelete = async () => {
-    const user = getUserFromLocalStorage();
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     try {

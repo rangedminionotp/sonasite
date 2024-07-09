@@ -14,6 +14,8 @@ import ViewCustomLore from "./CustomLore/ViewCustomLore";
 import Button from "@mui/joy/Button";
 import useWindowSize from "@/app/utils/windowSize";
 import SkinItemsClose from "./SkinItemsClose";
+import { Link } from "react-scroll";
+
 const SkinsItem = ({ activeSkin, setActiveSkin }) => {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const [activeSkinId, setActiveSkinId] = React.useState<uuid>(null);
@@ -238,20 +240,7 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
                   className="w-full mb-4 hover:scale-110 transition-transform duration-300 rounded-md"
                 />
                 {isSmallScreen && (
-                  <div
-                    onClick={() =>
-                      toggleVisibility(item.info.id, index, item.imgURL)
-                    }
-                    className={`absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans ${
-                      isSmallScreen ? `text-base` : `text-lg`
-                    }`}
-                  >
-                    SHOW REVIEWS
-                  </div>
-                )}
-                {/* big screen view */}
-                {isHovered && !isSmallScreen && (
-                  <div>
+                  <Link to="skins" smooth={true} duration={200}>
                     <div
                       onClick={() =>
                         toggleVisibility(item.info.id, index, item.imgURL)
@@ -262,6 +251,23 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
                     >
                       SHOW REVIEWS
                     </div>
+                  </Link>
+                )}
+                {/* big screen view */}
+                {isHovered && !isSmallScreen && (
+                  <div>
+                    <Link to="skins" smooth={true} duration={200}>
+                      <div
+                        onClick={() =>
+                          toggleVisibility(item.info.id, index, item.imgURL)
+                        }
+                        className={`absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-50 rounded-md p-2 hover:cursor-pointer font-semibold font-sans ${
+                          isSmallScreen ? `text-base` : `text-lg`
+                        }`}
+                      >
+                        SHOW REVIEWS
+                      </div>
+                    </Link>
                     <SkinDetails item={item} index={index} />
                   </div>
                 )}

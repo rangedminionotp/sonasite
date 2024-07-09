@@ -10,7 +10,8 @@ import SkinContext from "../SharedContext";
 import SkinImg from "./SkinImg";
 import { gql } from "graphql-request";
 import { SkinReviewsInfo } from "@/app/api/graphql/SkinReviews/schema";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
+import { useUser } from "@/app/utils/user";
 
 const AddReviewsPopup = ({
   addReviewOpen,
@@ -23,13 +24,13 @@ const AddReviewsPopup = ({
 
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const maxLength = 250;
-
+  const user = useUser();
   const handleInputChange = (event) => {
     setDescription(event.target.value);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = getUserFromLocalStorage();
+
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     let newAddId = "";

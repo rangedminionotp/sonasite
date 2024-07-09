@@ -6,11 +6,12 @@ import { gql } from "graphql-request";
 
 import { format, formatDistanceToNow, parseISO } from "date-fns";
 import SkinReviewsItemDisplay from "./SkinReviewsItemDisplay";
-import { getUserFromLocalStorage, createGraphQLClient } from "@/app/utils/api";
+import { createGraphQLClient } from "@/app/utils/api";
 import EditReviewsBtn from "./EditReviewsBtn";
 import DeleteReviews from "./DeleteReviews";
 import EditReviewsPopup from "./EditReviewsPopup";
 import useWindowSize from "@/app/utils/windowSize";
+import { useUser } from "@/app/utils/user";
 
 const SkinReviewsItem = ({ reviewed }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
@@ -25,7 +26,7 @@ const SkinReviewsItem = ({ reviewed }) => {
   const [editReviewsRating, setEditReviewsRating] = React.useState(null);
   const isSmallScreen = width <= 768; // all screens smaller than md
 
-  const user = getUserFromLocalStorage();
+  const user = useUser();
 
   React.useEffect(() => {
     if (skinReviews) {

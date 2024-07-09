@@ -5,17 +5,14 @@ import AbilitiesContext from "../SharedContext";
 import { useRouter } from "next/navigation";
 import { gql } from "graphql-request";
 import Typography from "@mui/joy/Typography";
-
-import {
-  getUserFromLocalStorage,
-  createGraphQLClient,
-} from "../tipsDisplay/utils";
+import { useUser } from "@/app/utils/user";
+import { createGraphQLClient } from "../tipsDisplay/utils";
 const AddTips = ({ ability_id, version }) => {
   const { abilities, abilityTips, setabilityTips } =
     useContext(AbilitiesContext);
   const router = useRouter();
   const maxLength = 250;
-
+  const user = useUser();
   const [description, setDescription] = React.useState("");
   const handleInputChange = (event) => {
     setDescription(event.target.value);
@@ -23,7 +20,7 @@ const AddTips = ({ ability_id, version }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = getUserFromLocalStorage();
+
     const bearerToken = user?.accessToken;
     const graphQLClient = createGraphQLClient(bearerToken);
     if (!user) {
