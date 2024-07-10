@@ -11,7 +11,8 @@ import prestige from "./prestige.jpg";
 import psyops from "./psyops.jpg";
 import sgsona from "./sgsona.jpg";
 import sweetheart from "./sweetheart.jpg";
-export default {"arcade": arcade,
+const res = {
+    "arcade": arcade,
 "classic": classic,
 "combo": combo,
 "crystalrose": crystalrose,
@@ -23,4 +24,7 @@ export default {"arcade": arcade,
 "prestige": prestige,
 "psyops": psyops,
 "sgsona": sgsona,
-"sweetheart": sweetheart};
+    "sweetheart": sweetheart
+};
+
+export default res;

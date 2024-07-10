@@ -28,7 +28,7 @@ const Login = () => {
 
   React.useEffect(() => {
     removeCookie("user");
-  }, []);
+  }, [removeCookie]);
 
   const handleInputChange = (event) => {
     const { value, name } = event.target;

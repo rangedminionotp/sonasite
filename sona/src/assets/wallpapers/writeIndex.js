@@ -4,7 +4,7 @@ const fs = require("fs");
 (async () => {
   const dir = await fs.promises.readdir("./src/assets/wallpapers");
   let importArray = [];
-  let exportDefault = "export default {";
+  let exportDefault = " const res = {";
   for (const img of dir) {
     if (img.endsWith(".js") || img.endsWith(".ts")) continue;
     const imgFileName = img.split(".")[0];
@@ -12,7 +12,7 @@ const fs = require("fs");
     exportDefault += `"${imgFileName}": ${imgFileName},\n`;
   }
   exportDefault = exportDefault.slice(0, exportDefault.length - 2);
-  exportDefault += "};";
+  exportDefault += "}; export default res;";
 
   await fs.promises.writeFile(
     "./src/assets/wallpapers/index.ts",

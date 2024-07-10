@@ -101,7 +101,7 @@ const Navbar = () => {
       const item = cookies.user;
       const userLogin = item;
     }
-  }, [status, session]);
+  }, [status, session, cookies, setCookie]);
 
   // const handleStorageChange = () => {
   //   const item = localStorage.getItem("user");

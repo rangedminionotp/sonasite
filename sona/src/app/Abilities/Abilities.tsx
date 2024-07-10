@@ -10,7 +10,6 @@ import AbilitiesContext from "./SharedContext";
 import DataContext from "../DataContext";
 import { SonaService } from "../api/graphql/fetchdata/service";
 // import AbilityDescription from "./AbilityDescription";
-import PassiveDes from "./PassiveDes";
 import Background from "@/app/utils/Background";
 import { Link } from "react-scroll";
 

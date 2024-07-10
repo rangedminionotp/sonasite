@@ -40,7 +40,7 @@ const Signup = () => {
   React.useEffect(() => {
     removeCookie("user");
     signUpremoveCookie("signup");
-  }, []);
+  }, [removeCookie, signUpremoveCookie]);
 
   const handleChange = (e) => {
     setFormData({
