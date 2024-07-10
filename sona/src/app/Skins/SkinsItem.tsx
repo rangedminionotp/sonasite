@@ -26,6 +26,7 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
   const [currItem, setCurrItem] = React.useState<any>(null);
   const [truncate, setTruncate] = React.useState<boolean>(true);
   const { width, height } = useWindowSize();
+  const [userLores, setUserLores] = React.useState([]);
 
   const { skins } = React.useContext(SkinContext);
 
@@ -319,11 +320,17 @@ const SkinsItem = ({ activeSkin, setActiveSkin }) => {
                         skinName={currItem?.name}
                         skinImgURL={currItem?.imgURL}
                         skin_id={currItem?.info.id}
+                        userLores={userLores}
+                        setUserLores={setUserLores}
                       />
                       <div name="seeCustomLore">
                         <ViewCustomLore
                           skin_id={item.info.id}
                           bgColor={bgGradient[index]}
+                          skinName={item.name}
+                          setAddLoreOpen={setAddLoreOpen}
+                          userLores={userLores}
+                          setUserLores={setUserLores}
                         />
                       </div>
                     </div>

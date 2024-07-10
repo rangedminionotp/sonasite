@@ -11,7 +11,16 @@ import Button from "@mui/joy/Button";
 import Tooltip from "@mui/joy/Tooltip";
 import { FaTimes } from "react-icons/fa";
 import UserLoreClose from "./UserLoreClose";
-const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
+import AddCustomLore from "./AddCustomLore";
+const UserLoreList = ({
+  bgColor,
+  open,
+  setOpen,
+  userLores,
+  setUserLores,
+  skinName,
+  setAddLoreOpen,
+}) => {
   const user = useUser();
   const [editLoreBtn, setEditLoreBtn] = React.useState(false);
   const [currLore, setCurrLore] = React.useState(null);
@@ -56,6 +65,7 @@ const UserLoreList = ({ bgColor, open, setOpen, userLores, setUserLores }) => {
           }
         >
           <UserLoreClose setOpen={setOpen} setUserLores={setUserLores} />
+          <AddCustomLore skinName={skinName} setAddLoreOpen={setAddLoreOpen} />
           <div>
             {userLores.map((lore) => (
               <div

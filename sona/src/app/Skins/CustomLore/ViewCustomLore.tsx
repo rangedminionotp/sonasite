@@ -10,9 +10,15 @@ import { useRouter } from "next/navigation";
 import { badWordFilter } from "@/app/utils/badWordFilter";
 import { useUser } from "@/app/utils/user";
 
-const ViewCustomLore = ({ skin_id, bgColor }) => {
+const ViewCustomLore = ({
+  skin_id,
+  bgColor,
+  skinName,
+  setAddLoreOpen,
+  userLores,
+  setUserLores,
+}) => {
   const user = useUser();
-  const [userLores, setUserLores] = React.useState<SkinLore[]>([]);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -51,6 +57,10 @@ const ViewCustomLore = ({ skin_id, bgColor }) => {
     }
   };
 
+  React.useEffect(() => {
+    handleClick();
+  }, [skin_id]);
+
   return (
     <div>
       {user ? (
@@ -66,6 +76,8 @@ const ViewCustomLore = ({ skin_id, bgColor }) => {
             setOpen={setOpen}
             userLores={userLores}
             setUserLores={setUserLores}
+            skinName={skinName}
+            setAddLoreOpen={setAddLoreOpen}
           />
         </div>
       ) : null}

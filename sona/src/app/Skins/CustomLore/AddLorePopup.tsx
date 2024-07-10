@@ -18,8 +18,8 @@ const AddLorePopup = ({
   skinName,
   skinImgURL,
   skin_id,
-  customLore,
-  setCustomLore,
+  userLores,
+  setUserLores,
 }) => {
   const [description, setDescription] = React.useState<string>("");
   const maxLength = 250;
@@ -50,6 +50,7 @@ const AddLorePopup = ({
         }
       `;
       const response = await graphQLClient.request(mutation);
+      setUserLores([...userLores, response.createLore]);
       setOpen(false);
       setDescription("");
     } catch (error) {
