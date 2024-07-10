@@ -12,14 +12,13 @@ import { ScrollPosition } from "@/app/utils/ScrollPosition";
 import { useRouter } from "next/navigation";
 import BadWordSwitcher from "./BadWordSwitcher";
 import { useCookies } from "react-cookie";
-
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const router = useRouter();
   const { data: session, status } = useSession();
 
   const [user, setUser] = useState(null);
-  const [cookies, setCookie] = useCookies(["user"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   // this needs to be local storage..
   const [BadWordSwitcherBool, setBadWordSwitcherBool] = useState(false);
@@ -37,8 +36,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const item = cookies.user;
-    const userLogin = item;
-    setUser(userLogin);
+    setUser(item);
     if (status === "authenticated" && session.user) {
       // localStorage.setItem("user", JSON.stringify(data));
       // setUser(data);
@@ -88,7 +86,6 @@ const Navbar = () => {
                   setCookie("user", JSON.stringify(json.data.login), {
                     path: "/",
                   });
-
                   setUser(json.data.login);
                 }
               });
@@ -99,9 +96,10 @@ const Navbar = () => {
         "User is not authenticated, removing user data from localStorage"
       );
       const item = cookies.user;
-      const userLogin = item;
+      setUser(item);
+      removeCookie("user");
     }
-  }, [status, session, cookies, setCookie]);
+  }, [status, session, cookies.user, setCookie]);
 
   // const handleStorageChange = () => {
   //   const item = localStorage.getItem("user");
