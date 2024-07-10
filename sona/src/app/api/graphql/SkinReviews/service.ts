@@ -63,6 +63,24 @@ export class SkinReviewsService {
         }
         return SkinReviews;
     } 
+    public async getReviewsByOwnerAndSkinId(owner_id:string, skin_id:string):Promise<SkinReviewsInfo>{
+        const select = `SELECT * FROM SkinReviews WHERE owner_id = $1 AND skin_id = $2`
+        const query = {
+            text: select,
+            values: [owner_id, skin_id]
+        }
+        const { rows } = await pool.query(query)
+        const skinreviews: SkinReviewsInfo = {
+            id: rows[0].id,
+            owner_id: rows[0].owner_id,
+            skin_id: rows[0].skin_id,
+            rating: rows[0].rating,
+            data: rows[0].data,
+            voted: rows[0].voted,
+            owner_name: rows[0].owner_name
+        }
+        return skinreviews;
+    }
     public async createReview(input:SkinReviewsAdd): Promise<SkinReviewsInfo>{
         const { skin_id, rating, data, owner_id, owner_name } = input 
         data.date = new Date().toISOString()

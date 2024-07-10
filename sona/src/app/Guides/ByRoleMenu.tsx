@@ -4,8 +4,46 @@ import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import Stack from "@mui/joy/Stack";
 
+interface GuideRolesType {
+  id: string;
+  role: string;
+}
+
 const ByRoleMenu = () => {
-  const rows: string[] = ["top", "jungle", "mid", "adc", "support", "river"];
+  const [roles, setRoles] = React.useState<GuideRolesType[]>([]);
+
+  React.useEffect(() => {
+    const query = {
+      query: `
+      query {
+        getGuidesRoles {
+          id
+          role
+        }
+      }
+    `,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          console.log("Error with guide roles, please try again");
+        } else {
+          setRoles(json.data.getGuidesRoles);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching guide roles:", error);
+        console.log("Failed to fetch guide roles. Please try again.");
+      });
+  }, []);
+
   return (
     <form
       onSubmit={(event) => {
@@ -18,13 +56,13 @@ const ByRoleMenu = () => {
       <Stack spacing={2} alignItems="flex-start">
         <Select
           placeholder="Select which role"
-          name="foo"
+          name="role"
           required
           sx={{ minWidth: 200 }}
         >
-          {rows.map((row) => (
-            <Option className="uppercase" value={row.toUpperCase()}>
-              {row.toUpperCase()}
+          {roles.map((role) => (
+            <Option className="uppercase" value={role.role}>
+              {role.role.toUpperCase()}
             </Option>
           ))}
         </Select>

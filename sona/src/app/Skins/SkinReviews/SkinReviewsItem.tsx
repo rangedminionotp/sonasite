@@ -13,7 +13,7 @@ import EditReviewsPopup from "./EditReviewsPopup";
 import useWindowSize from "@/app/utils/windowSize";
 import { useUser } from "@/app/utils/user";
 
-const SkinReviewsItem = ({ reviewed }) => {
+const SkinReviewsItem = ({ reviewed, ownerReview, ownReviewOpen }) => {
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [currentPage, setCurrentPage] = useState(1);
   const tipsPerPage = 4;
@@ -29,7 +29,9 @@ const SkinReviewsItem = ({ reviewed }) => {
   const user = useUser();
 
   React.useEffect(() => {
-    if (skinReviews) {
+    if (ownReviewOpen) {
+      setCurrentReviews([ownerReview]);
+    } else if (skinReviews) {
       const pages = Math.ceil(skinReviews.length / tipsPerPage);
       setTotalPages(pages);
 
@@ -39,7 +41,7 @@ const SkinReviewsItem = ({ reviewed }) => {
       );
       setCurrentReviews(reviews);
     }
-  }, [skinReviews, currentPage]);
+  }, [skinReviews, currentPage, ownerReview]);
 
   // Handle page navigation
   const goToNextPage = () => {

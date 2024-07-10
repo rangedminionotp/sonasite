@@ -36,5 +36,10 @@ export class SkinReviewsResolver{
     @Mutation(()=>SkinReviewsInfo)
     async editSkinReview(@Arg('input') input: SkinReviewsEdit): Promise<SkinReviewsInfo>{
         return new SkinReviewsService().editSkinReviews(input)
+    } 
+    
+    @Query(() => SkinReviewsInfo)
+    async getReviewsByOwnerAndSkinId(@Arg('owner_id') owner_id: string, @Arg('skin_id') skin_id: string): Promise<SkinReviewsInfo> {
+        return new SkinReviewsService().getReviewsByOwnerAndSkinId(owner_id, skin_id)
     }
 }

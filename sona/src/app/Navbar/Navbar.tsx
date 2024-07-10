@@ -189,7 +189,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
-          <Link to="guides" smooth={true} duration={200}>
+          <Link to="guides" smooth={true} duration={200} onClick={handleClick}>
             Guides
           </Link>
         </li>

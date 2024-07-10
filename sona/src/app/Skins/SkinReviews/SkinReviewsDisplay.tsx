@@ -30,13 +30,14 @@ const SkinReviewsDisplay = ({
   const { skinReviews, setSkinReviews } = React.useContext(SkinContext);
   const [addReviewOpen, setAddReviewOpen] = React.useState<boolean>(false);
   const [reviewed, setReviewed] = React.useState<boolean>(false);
+  const [ownReview, setOwnReview] = React.useState(null);
+  const [ownReviewOpen, setOwnReviewOpen] = React.useState(false);
   const user = useUser();
 
-  React.useEffect(() => {
-    const fetchSkinReviews = async () => {
-      try {
-        const query = {
-          query: `
+  const fetchAllSkinReviews = async () => {
+    try {
+      const query = {
+        query: `
             query MyQuery {
               getReviewsBySkinId(skin_id: "${skin_id}") {
                 data {
@@ -51,42 +52,92 @@ const SkinReviewsDisplay = ({
               }
             }
           `,
-        };
+      };
 
-        const response = await fetch("/api/graphql", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(query),
-        });
+      const response = await fetch("/api/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(query),
+      });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-        const json = await response.json();
+      const json = await response.json();
 
-        if (json.errors) {
-          alert("Error with fetching skin reviews, please try again");
+      if (json.errors) {
+        console.log("Error with fetching skin reviews, please try again");
+      } else {
+        const reviews = json.data.getReviewsBySkinId;
+        const badWordBool = localStorage.getItem("badWord");
+        if (badWordBool === "true") {
+          const filteredReviews = await badWordFilter(reviews, "skinReviews");
+          setSkinReviews(filteredReviews);
         } else {
-          const reviews = json.data.getReviewsBySkinId;
-          const badWordBool = localStorage.getItem("badWord");
-          if (badWordBool === "true") {
-            const filteredReviews = await badWordFilter(reviews, "skinReviews");
-            setSkinReviews(filteredReviews);
-          } else {
-            setSkinReviews(reviews);
+          setSkinReviews(reviews);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching skin reviews:", error);
+    }
+  };
+
+  const checkOwnReview = async () => {
+    const query = {
+      query: `
+        query MyQuery {
+          getReviewsByOwnerAndSkinId(owner_id: "${user.id}", skin_id: "${skin_id}") {
+            data {
+              date
+              description
+            }
+            id
+            owner_id
+            owner_name
+            rating
+            skin_id
           }
         }
-      } catch (error) {
-        console.error("Error fetching skin reviews:", error);
-      }
+      `,
     };
+    const response = await fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    });
 
-    fetchSkinReviews();
-  }, [skin_id, open]);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
 
+    const json = await response.json();
+
+    if (json.errors) {
+      console.log(
+        "Error with fetching own skin reviews, please try again",
+        json.errors
+      );
+    } else {
+      const reviews = json.data.getReviewsByOwnerAndSkinId;
+      setOwnReview(reviews);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchAllSkinReviews();
+    checkOwnReview();
+  }, [skin_id, open, setSkinReviews, ownReviewOpen]);
+
+  const handleOwnReview = () => {
+    if (ownReviewOpen) {
+      setOwnReview(null);
+    }
+  };
   React.useEffect(() => {
     if (user) {
       const query = {
@@ -145,17 +196,26 @@ const SkinReviewsDisplay = ({
                   <AddReviewsBtn setAddReviewOpen={setAddReviewOpen} />
                 </Tooltip>
               ) : (
-                <Link to={`${skin_id}${user?.id}`} smooth={true} duration={200}>
-                  <Tooltip title="Check your review">
-                    <Avatar> {user ? user.name[0] : null}</Avatar>
-                  </Tooltip>
-                </Link>
+                <Tooltip title="Check your review">
+                  <Avatar
+                    onClick={() => {
+                      checkOwnReview();
+                      setOwnReviewOpen(!ownReviewOpen);
+                    }}
+                  >
+                    {user ? user.name[0] : null}
+                  </Avatar>
+                </Tooltip>
               )}{" "}
             </div>
           </div>
           <div className="mt-4">
             {/* <SkinImg imgUrl={activeImgUrl} /> */}
-            <SkinReviewsItem reviewed={reviewed} />
+            <SkinReviewsItem
+              reviewed={reviewed}
+              ownerReview={ownReview}
+              ownReviewOpen={ownReviewOpen}
+            />
             <AddReviewsPopup
               addReviewOpen={addReviewOpen}
               setAddReviewOpen={setAddReviewOpen}
