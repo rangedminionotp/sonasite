@@ -85,7 +85,7 @@ const SkinReviewsDisplay = ({
     };
 
     fetchSkinReviews();
-  }, [skinReviews, setSkinReviews, skin_id]);
+  }, [skin_id, open]);
 
   React.useEffect(() => {
     if (user) {

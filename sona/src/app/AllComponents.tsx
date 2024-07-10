@@ -32,8 +32,8 @@ const AllComponents = () => {
         <div>
           <Intro />
           <Abilities />
-          {/* <Skins />
-          <Guides /> */}
+          <Skins />
+          <Guides />
         </div>
       </div>
     </DataContext.Provider>
