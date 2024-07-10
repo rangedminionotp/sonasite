@@ -36,6 +36,8 @@ const Background = () => {
       localStorage.setItem(`curr_bg`, randomImageKey);
       localStorage.setItem(`bg_randomNumber`, randomIndex.toString());
       localStorage.setItem(`bg_timestamp`, now.toString());
+      setCustomBg(randomImageKey);
+      setRandomNumber(randomIndex);
     }
   }, [setRandomNumber, setCustomBg]);
 
@@ -45,7 +47,7 @@ const Background = () => {
         <div className="absolute top-0 left-0 bg-cover bg-center flex w-full h-full">
           <Image
             alt=""
-            src={customBg ? images[customBg] : images[randomNumber]}
+            src={customBg ? images[customBg] : images[randomNumber].values}
             // layout="fill"
             // objectFit="cover"
             priority
