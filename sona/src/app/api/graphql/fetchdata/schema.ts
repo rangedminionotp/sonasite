@@ -11,11 +11,11 @@ export class SonaOverview {
     title!: string 
     @Field()
     lore!: string
-    @Field()
+    @Field(()=>[SonaAbilities])
     abilities!: SonaAbilities[] 
     @Field()
     version!: string
-    @Field()
+    @Field(()=>[SonaSkins])
     skins!: SonaSkins[]
 }
 
@@ -33,61 +33,61 @@ export class SonaSkins {
     chromas!: boolean
     @Field()
     imgURL!: string
-    @Field()
-    info?: SkinOverview[]
+    @Field(() => [SkinOverview], { nullable: true })
+info?: SkinOverview[];
+}
+@ArgsType()
+export class SonaPassive{ 
+    @Field({ nullable: true })
+    name?: string 
+    @Field({ nullable: true })
+    description?: string
+    @Field({ nullable: true })
+    imgURL?:string
 }
 
 @ArgsType()
 export class SonaAbilities{
-    @Field()
+    @Field({ nullable: true })
         @Matches(uuid)
     id?:string
-    @Field()
+    @Field({ nullable: true })
     name?: string
     @Field()
     tooltip?: string
     @Field()
     description?: string
-    @Field()
+    @Field({ nullable: true }, ()=>SonaPassive)
     passive?: SonaPassive 
-    @Field()
+    @Field({ nullable: true })
     imgURL?: string
 }
 
-@ArgsType()
-export class SonaPassive{ 
-    @Field()
-    name?: string 
-    @Field()
-    description?: string
-    @Field()
-    imgURL?:string
-}
 
 // maybe not hardcode variable names...? ._.
 // k hardcode for now...
 
 @ArgsType()
 export class SonaRawStatsQ {
-    @Field() 
+    @Field(()=>[string]) 
     totaldamage!: string[]
-    @Field()
+    @Field(()=>[string])
     auraduration!: string[] 
     @Field()
     totalstaccatodamage!:string
-    @Field()
+    @Field(()=>[string])
     onhitduration!: string[] 
-    @Field()
+    @Field(()=>[string])
     damageActive!: string[]
-    @Field()
+    @Field(()=>[string])
     damageMelody!: string[]
-    @Field()
+    @Field(()=>[string])
     manaCost!: string[]
-    @Field()
+    @Field(()=>[string])
     cooldown!: string[]  
     @Field()
     onhitradio!: string
-    @Field()
+    @Field(()=>[string])
     totalonhitdamage!: string[]
     @Field()
     spellmodifierdescriptionappend!: string
@@ -95,28 +95,28 @@ export class SonaRawStatsQ {
 
 @ArgsType()
 export class SonaRawStatsW {
-    @Field()
+    @Field(()=>[string])
     totalheal!: string[]
-    Field()
+    @Field(()=>[string])
     baseHeal!: string[]
     @Field()
     healRatio!: string
-    @Field()
+    @Field(()=>[string])
     totalshield!: string[]
-    @Field()
+    @Field(()=>[string])
     baseShield!: string[]
     @Field()
     shieldRatio!:string 
-    @Field()
+    @Field(()=>[string])
     accelerandoshieldbreakpoint!: string[]
     @Field()
     totaldiminuendoweakenpercent!: string
     @Field()
     diminuendoduration!: string
-    @Field()
+    @Field(()=>[string])
     manaCost!: string[]
     // cant find w cd in raw data json wutttt have to hardcode...
-    @Field()
+    @Field(()=>[string])
     cooldown!: string[]
     @Field()
     auraduration!: string 
@@ -136,7 +136,7 @@ export class SonaRawStatsE {
     selfmovementspeeddurationmin!: string
     @Field()
     selfmovementspeeddurationmax!: string
-    @Field()
+    @Field(()=>[string])
     totalallymovementspeed!: string[]
     @Field()
     allymovementspeedduration!: string
@@ -144,9 +144,9 @@ export class SonaRawStatsE {
     totaltempomovespeedslow!: string
     @Field()
     tempoduration!: string
-    @Field()
+    @Field(()=>[string])
     manaCost!: string[]
-    @Field()
+    @Field(()=>[string])
     cooldown!: string[]
     @Field()
     spellmodifierdescriptionappend!: string
@@ -158,13 +158,13 @@ export class SonaRawStatsE {
 export class SonaRawStatsR {
     @Field()
     stunduration!: string
-    @Field()
+    @Field(()=>[string])
     baseDamage!:string[]
-    @Field()
+    @Field(()=>[string])
     totaldamage!: string[]
-    @Field()
+    @Field(()=>[string])
     manaCost!: string[]
-    @Field()
+    @Field(()=>[string])
     cooldown!: string[]
     @Field()
     spellmodifierdescriptionappend!: string

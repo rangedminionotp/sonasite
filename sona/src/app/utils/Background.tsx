@@ -45,14 +45,16 @@ const Background = () => {
     return (
       <div className="w-full h-screen">
         <div className="absolute top-0 left-0 bg-cover bg-center flex w-full h-full">
-          <Image
-            alt=""
-            src={customBg ? images[customBg] : images[randomNumber].values}
-            // layout="fill"
-            // objectFit="cover"
-            priority
-            className="object-cover"
-          />
+          {customBg && (
+            <Image
+              alt=""
+              src={images[customBg]}
+              // layout="fill"
+              // objectFit="cover"
+              priority
+              className="object-cover"
+            />
+          )}
         </div>
       </div>
     );

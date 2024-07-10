@@ -12,12 +12,9 @@ const handlers = glob
 //   .map((handler) => handler.slice(nextPagesDirectory.length, -3));
 
 const mapping = {};
-console.log("handlers", handlers);
 handlers.forEach((handler) => {
   const handlerPath = handler.replace(/^src\/app/, "").replace(/\/$/, ""); // Normalize the handler path
-  console.log("handler", handler);
-  console.log("handler path", handlerPath);
-  console.log("nextpaged", nextPagesDirectory);
+
   mapping[`${handler}`] = require(`${nextPagesDirectory}${handlerPath}`);
 });
 

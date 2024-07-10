@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "test": "jest --runInBand --forceExit",
+    "test": "jest --runInBand --forceExit --watch",
     "test:silent": "jest --runInBand --forceExit --silent",
     "test:watch": "jest --runInBand --forceExit --watchAll",
     "docker": "docker start sona",
