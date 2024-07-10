@@ -160,6 +160,11 @@ const Navbar = () => {
             Skins
           </Link>
         </li>
+        <li className=" hover:text-blue-500 px-3 py-2 hover:cursor-pointer hover:underline">
+          <Link to="guides" smooth={true} duration={200}>
+            Guides
+          </Link>
+        </li>
       </ul>
       <div
         onClick={handleClick}
@@ -192,6 +197,11 @@ const Navbar = () => {
         <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
           <Link to="skins" smooth={true} duration={200} onClick={handleClick}>
             Skins
+          </Link>
+        </li>
+        <li className="py-6 text-4xl hover:cursor-pointer hover:text-blue-500">
+          <Link to="guides" smooth={true} duration={200}>
+            Guides
           </Link>
         </li>
         {!user ? <LoginBtn /> : <UserDashboard setUser={setUser} />}
