@@ -16,6 +16,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useCookies } from "react-cookie";
 
 const Signup = () => {
   const router = useRouter();
@@ -31,10 +32,14 @@ const Signup = () => {
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [signUpcookies, signUpsetCookie, signUpremoveCookie] = useCookies([
+    "signup",
+  ]);
 
   React.useEffect(() => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("signup");
+    removeCookie("user");
+    signUpremoveCookie("signup");
   }, []);
 
   const handleChange = (e) => {
@@ -77,7 +82,7 @@ const Signup = () => {
         if (json.errors) {
           alert("Error signing up, please try again");
         } else {
-          localStorage.setItem("signup", "true");
+          signUpsetCookie("signup", "true", { path: "/" });
           setSuccess(true);
           setTimeout(() => {
             router.push("/login");

@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import Button from "@mui/joy/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useCookies } from "react-cookie";
 
 const LogoutBtn = ({ setUser }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
-
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const logout = async () => {
-    localStorage.removeItem("user");
+    removeCookie("user");
     router.push("/");
     setUser(null);
     await signOut({ redirect: false });

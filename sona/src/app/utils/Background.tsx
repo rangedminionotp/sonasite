@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import images from "@/assets/wallpapers";
 import { generateRandomIndex } from "./common";
-
 const Background = () => {
   const [randomNumber, setRandomNumber] = React.useState<number | null>(null);
   const [customBg, setCustomBg] = React.useState<string | null>(null);
@@ -19,6 +18,7 @@ const Background = () => {
     const savedBg = localStorage.getItem(`curr_bg`);
     const savedRandomNumber = localStorage.getItem(`bg_randomNumber`);
     const savedTimestamp = localStorage.getItem(`bg_timestamp`);
+
     const hours = 1;
     const hour = 60 * 60 * 1000;
     const now = new Date().getTime();
@@ -45,7 +45,7 @@ const Background = () => {
         <div className="absolute top-0 left-0 bg-cover bg-center flex w-full h-full">
           <Image
             alt=""
-            src={customBg ? images[customBg] : images[randomImageKey]}
+            src={customBg ? images[customBg] : images[randomNumber]}
             // layout="fill"
             // objectFit="cover"
             priority

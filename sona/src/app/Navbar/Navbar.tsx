@@ -22,9 +22,12 @@ const Navbar = () => {
   const [cookies, setCookie] = useCookies(["user"]);
 
   // this needs to be local storage..
-  const [BadWordSwitcherBool, setBadWordSwitcherBool] = React.useState(
-    localStorage.getItem("badWord") === "true"
-  );
+  const [BadWordSwitcherBool, setBadWordSwitcherBool] = useState(false);
+
+  useEffect(() => {
+    const badWordValue = localStorage.getItem("badWord") === "true";
+    setBadWordSwitcherBool(badWordValue);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
