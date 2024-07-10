@@ -153,3 +153,24 @@ VALUES
     ('f883705f-20ff-40e5-af92-0d15b1272472', 0, 0),
     ('5715006a-625d-4efd-9852-b6bdb58d5ed6', 0, 0),
     ('d7c43d66-655d-4d9c-a241-a17fa13e3b15', 0, 0);
+
+DELETE FROM GuidesRoles;
+INSERT INTO GuidesRoles (id, role)
+VALUES
+    ('63031fde-77bb-422b-b1cc-df8c08dd6a80', 'TOP'),
+    ('e24749f8-11b7-4653-94d2-6933f6ec68b5', 'JUNGLE'),
+    ('cb6b3ee1-508f-42c1-a7da-a2a842d3a71d', 'MID'),
+    ('feaa748d-d6ce-464a-b11c-3a8fb6c172a3', 'ADC'),
+    ('54c2ab79-c20a-4921-b246-a05248564bae', 'SUPPORT'),
+    ('e5ad1df8-a147-4b9a-a59f-dc0a28d85cb9', 'river');
+
+DELETE FROM GuidesLabels;
+INSERT INTO GuidesLabels (id, role_id, label)
+VALUES
+    ('a1106a06-926e-4d8a-850f-3b0443632e6e', '63031fde-77bb-422b-b1cc-df8c08dd6a80', 'TOP_LABEL'),
+    ('83465e7d-a424-4a17-8059-39a8fd96bab8', 'e24749f8-11b7-4653-94d2-6933f6ec68b5', 'JUNGLE_LABEL'),
+    ('f1206a9f-a100-43f7-af29-b64eb27fa79a', 'cb6b3ee1-508f-42c1-a7da-a2a842d3a71d', 'MID_LABEL'),
+    ('4ead8adf-57e0-48ed-95a4-f5da12b7d7f5', 'feaa748d-d6ce-464a-b11c-3a8fb6c172a3', 'ADC_LABEL');
+INSERT INTO GuidesLabels(role_id, label) VALUES 
+('54c2ab79-c20a-4921-b246-a05248564bae', 'SUPPORT MOMMY QUEEN'),
+('e5ad1df8-a147-4b9a-a59f-dc0a28d85cb9', '1V9 AP RIVEN SONA');

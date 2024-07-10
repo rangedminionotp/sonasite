@@ -12,14 +12,11 @@ const LogoutBtn = ({ setUser }) => {
   const { data: session, status } = useSession();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const logout = async () => {
-    try {
-      await signOut({ redirect: false }); // Sign out server-side first
-      removeCookie("user"); // Remove user cookie
-      setUser(null); // Clear user state
-      router.push("/"); // Redirect to home page
-    } catch (error) {
-      console.error("Error during logout:", error);
-    }
+    setUser(null); // Clear user state
+    removeCookie("user"); // Remove user cookie
+    await signOut({ redirect: false });
+    router.push("/"); // Redirect to home page
+    // Sign out server-side first
   };
   return (
     <div className="text-left">

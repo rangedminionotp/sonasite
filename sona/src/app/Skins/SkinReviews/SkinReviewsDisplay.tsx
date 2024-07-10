@@ -35,8 +35,6 @@ const SkinReviewsDisplay = ({
   React.useEffect(() => {
     const fetchSkinReviews = async () => {
       try {
-        const badWordBool = localStorage.getItem("badWord");
-
         const query = {
           query: `
             query MyQuery {
@@ -73,7 +71,7 @@ const SkinReviewsDisplay = ({
           alert("Error with fetching skin reviews, please try again");
         } else {
           const reviews = json.data.getReviewsBySkinId;
-
+          const badWordBool = localStorage.getItem("badWord");
           if (badWordBool === "true") {
             const filteredReviews = await badWordFilter(reviews, "skinReviews");
             setSkinReviews(filteredReviews);

@@ -21,17 +21,12 @@ const Navbar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   // this needs to be local storage..
-  const [BadWordSwitcherBool, setBadWordSwitcherBool] = useState(false);
+  const [BadWordSwitcherBool, setBadWordSwitcherBool] = useState(() => {
+    return localStorage.getItem("badWord") === "true";
+  });
 
   useEffect(() => {
-    const badWordValue = localStorage.getItem("badWord") === "true";
-    setBadWordSwitcherBool(badWordValue);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("badWord", BadWordSwitcherBool.toString());
-    }
+    localStorage.setItem("badWord", BadWordSwitcherBool.toString());
   }, [BadWordSwitcherBool]);
 
   useEffect(() => {
@@ -91,15 +86,11 @@ const Navbar = () => {
               });
           }
         });
-    } else if (status === "unauthenticated") {
-      console.log(
-        "User is not authenticated, removing user data from localStorage"
-      );
+    } else if (status === "unauthenticated" && cookies.user && !session) {
       const item = cookies.user;
       setUser(item);
-      removeCookie("user");
     }
-  }, [status, session, cookies.user, setCookie]);
+  }, [status, session]);
 
   // const handleStorageChange = () => {
   //   const item = localStorage.getItem("user");

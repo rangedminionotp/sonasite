@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS SkinReviews;
 DROP TABLE IF EXISTS SkinReviewsReviewed;
 DROP TABLE IF EXISTS UserSkinLore;
 DROP TABLE IF EXISTS SkinRating;
+DROP TABLE IF EXISTS GuidesRoles;
+DROP TABLE IF EXISTS GuidesLabels;
 
 -- -- Create Users table
 CREATE TABLE Users (id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),data JSONB);
@@ -75,4 +77,15 @@ CREATE TABLE SkinRating (
     skin_id UUID PRIMARY KEY REFERENCES SkinItem(id) ON DELETE CASCADE ON UPDATE CASCADE,
     rating DOUBLE PRECISION,
     rating_count INTEGER
+);
+
+CREATE TABLE GuidesRoles (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    role VARCHAR(30) NOT NULL UNIQUE 
+);
+
+CREATE TABLE GuidesLabels (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    role_id UUID REFERENCES GuidesRoles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    label VARCHAR(30) NOT NULL UNIQUE 
 );

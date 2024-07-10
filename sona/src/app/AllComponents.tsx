@@ -8,6 +8,7 @@ import DataContext from "./DataContext";
 import { SonaService } from "./api/graphql/fetchdata/service";
 import React from "react";
 import Skins from "./Skins/Skins";
+import Guides from "./Guides/Guides";
 const AllComponents = () => {
   const [fetchedData, setFetchedData] = React.useState(null);
   React.useEffect(() => {
@@ -31,7 +32,8 @@ const AllComponents = () => {
         <div>
           <Intro />
           <Abilities />
-          <Skins />
+          {/* <Skins />
+          <Guides /> */}
         </div>
       </div>
     </DataContext.Provider>
