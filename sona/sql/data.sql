@@ -155,15 +155,15 @@ VALUES
     ('d7c43d66-655d-4d9c-a241-a17fa13e3b15', 0, 0);
 
 DELETE FROM GuidesRoles;
-INSERT INTO GuidesRoles (id, role)
+INSERT INTO GuidesRoles (id, role, data)
 VALUES
-    ('63031fde-77bb-422b-b1cc-df8c08dd6a80', 'TOP'),
-    ('e24749f8-11b7-4653-94d2-6933f6ec68b5', 'JUNGLE'),
-    ('cb6b3ee1-508f-42c1-a7da-a2a842d3a71d', 'MID'),
-    ('feaa748d-d6ce-464a-b11c-3a8fb6c172a3', 'ADC'),
-    ('54c2ab79-c20a-4921-b246-a05248564bae', 'SUPPORT'),
-    ('86eb060d-80db-4bce-a2fa-9b7958f3c422', 'aram'),
-    ('e5ad1df8-a147-4b9a-a59f-dc0a28d85cb9', 'river');
+    ('63031fde-77bb-422b-b1cc-df8c08dd6a80', 'TOP', '{"imgurl": "https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-top.png"}'),
+    ('e24749f8-11b7-4653-94d2-6933f6ec68b5', 'JUNGLE', '{"imgurl":"https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-jungle.png"}'),
+    ('cb6b3ee1-508f-42c1-a7da-a2a842d3a71d', 'MID', '{"imgurl":"https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-middle.png"}'),
+    ('feaa748d-d6ce-464a-b11c-3a8fb6c172a3', 'ADC', '{"imgurl":"https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-bottom.png"}'),
+    ('54c2ab79-c20a-4921-b246-a05248564bae', 'SUPPORT', '{"imgurl":"https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-utility.png"}'),
+    ('86eb060d-80db-4bce-a2fa-9b7958f3c422', 'aram', '{"imgurl":"https://static.wikia.nocookie.net/leagueoflegends/images/0/02/Howling_Abyss_icon.png/revision/latest/scale-to-width-down/40?cb=20171101151627"}'),
+    ('e5ad1df8-a147-4b9a-a59f-dc0a28d85cb9', 'river', '{"imgurl":"https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-unselected.png"}');
 
 DELETE FROM GuidesLabels;
 INSERT INTO GuidesLabels (id, role_id, label)

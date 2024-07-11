@@ -19,6 +19,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "raw.communitydragon.org",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "mobafire.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone",

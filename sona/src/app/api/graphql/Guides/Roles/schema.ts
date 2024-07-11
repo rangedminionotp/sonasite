@@ -3,6 +3,12 @@ import { Matches, Length } from "class-validator";
 import { uuid } from "../../../../types/custom";
 
 @ObjectType()
+export class dataType {
+  @Field()
+  imgurl!: string;
+}
+
+@ObjectType()
 export class GuidesRolesType {
   @Field()
   @Matches(uuid)
@@ -10,5 +16,8 @@ export class GuidesRolesType {
   @Field()
   @Length(1, 30)
   role!: string; 
+  @Field()
+  data!: dataType;
 }
+
 

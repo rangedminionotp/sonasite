@@ -81,11 +81,19 @@ CREATE TABLE SkinRating (
 
 CREATE TABLE GuidesRoles (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
-    role VARCHAR(30) NOT NULL UNIQUE 
+    role VARCHAR(30) NOT NULL UNIQUE,
+    data JSONB
 );
 
 CREATE TABLE GuidesLabels (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
     role_id UUID REFERENCES GuidesRoles(id) ON DELETE CASCADE ON UPDATE CASCADE,
     label VARCHAR(30) NOT NULL UNIQUE 
+);
+
+CREATE TABLE Guides (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    role_id UUID REFERENCES GuidesRoles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    label_id UUID REFERENCES GuidesLabels(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    data JSONB
 );

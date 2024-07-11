@@ -12,9 +12,13 @@ export class GuideRolesService {
         const { rows } = await pool.query(query);
         let roles: GuidesRolesType[] = [];
         for (const row of rows) {
+            let data = {
+                imgurl: row.data.imgurl,
+            }
             roles.push({
                 id: row.id,
                 role: row.role,
+                data: data,
             });
         }
         return roles;

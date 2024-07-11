@@ -5,15 +5,14 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ByRoleMenu from "../data/ByRoleMenu";
-import ByLabelMenu from "../data/ByLabelMenu";
+
+import AddRoleAndLabels from "./Steps/Step1/AddRoleAndLabels";
 import SummonersList from "../data/SummonersList";
 import RunesList from "../data/RunesList";
 import ItemsList from "../data/ItemsList";
 
 const steps = [
-  "Select a role",
-  "Select labels",
+  "Select Roles and Labels",
   "Select Summoner Spells",
   "Select Runes",
   "Select Items",
@@ -25,8 +24,7 @@ export default function FormStepper({ summonerData, runesData, itemsData }) {
     [k: number]: boolean;
   }>({});
   const components = [
-    <ByRoleMenu />,
-    <ByLabelMenu />,
+    <AddRoleAndLabels />,
     <SummonersList summonerData={summonerData} />,
     <RunesList runeData={runesData} />,
     <ItemsList itemData={itemsData} summonerData={summonerData} />,
