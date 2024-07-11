@@ -12,7 +12,7 @@ export class GuideLabelsResolver {
     
     @Authorized('member')
     @Mutation(() => GuidesLabelsType)
-    async addCustomGuideLabel(@Arg("label") label: string): Promise<GuidesLabelsType> {
-        return new GuideLabelsService().addCustomGuideLabel(label);
+    async addCustomGuideLabel(@Arg("label") label: string, @Ctx() request: NextApiRequest): Promise<GuidesLabelsType> {
+        return new GuideLabelsService().addCustomGuideLabel(label, request.request.user.id);
     }
 }

@@ -57,7 +57,9 @@ const LabelsMenu = ({
 
   return (
     <div className="w-full">
-      <div className="description-subheader text-gray-200">Select Labels</div>
+      <div className="description-subheader text-gray-200">
+        Select Labels (max 5)
+      </div>
       <div className="grid grid-cols-7 max-w-full gap-4">
         {labels.map((label) => (
           <div

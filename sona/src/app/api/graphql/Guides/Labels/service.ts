@@ -19,11 +19,11 @@ export class GuideLabelsService {
         }
         return labels;
     };
-    public async addCustomGuideLabel(label: string): Promise<GuidesLabelsType>{
-        const insert = `INSERT INTO GuidesLabels (label) VALUES ($1) RETURNING *`;
+    public async addCustomGuideLabel(label: string, userId: string): Promise<GuidesLabelsType>{
+        const insert = `INSERT INTO GuidesCustomLabels (label, owner_id) VALUES ($1, $2) RETURNING *`;
         const query = {
             text: insert,
-            values: [label],
+            values: [label, userId],
         };
         const { rows } = await pool.query(query);
         const customLabel = {

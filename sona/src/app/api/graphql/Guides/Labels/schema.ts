@@ -12,3 +12,15 @@ export class GuidesLabelsType {
   label!: string; 
 }
 
+@ObjectType()
+export class GuidesCustomLabelsType {
+  @Field()
+  @Matches(uuid)
+    id!: string; 
+  @Field()
+  @Length(1, 30)
+  label!: string; 
+  @Field()
+  @Matches(uuid)
+  owner_id!: string;
+}
