@@ -162,6 +162,7 @@ VALUES
     ('cb6b3ee1-508f-42c1-a7da-a2a842d3a71d', 'MID'),
     ('feaa748d-d6ce-464a-b11c-3a8fb6c172a3', 'ADC'),
     ('54c2ab79-c20a-4921-b246-a05248564bae', 'SUPPORT'),
+    ('86eb060d-80db-4bce-a2fa-9b7958f3c422', 'aram'),
     ('e5ad1df8-a147-4b9a-a59f-dc0a28d85cb9', 'river');
 
 DELETE FROM GuidesLabels;

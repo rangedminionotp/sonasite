@@ -11,6 +11,7 @@ interface GuideRolesType {
 
 const ByRoleMenu = () => {
   const [roles, setRoles] = React.useState<GuideRolesType[]>([]);
+  const [selectedRole, setSelectedRole] = React.useState<string>("");
 
   React.useEffect(() => {
     const query = {

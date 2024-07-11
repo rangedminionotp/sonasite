@@ -3,7 +3,7 @@ import { NextResponse} from "next/server"
 export async function GET(request) {
   // Do whatever you want
   const res = await fetch('https://raw.communitydragon.org/latest/game/data/characters/sona/sona.bin.json', {
-    next: { revalidate: 100000}, 
+    next: { revalidate: 86400}, 
   })
   const data = await res.json()   
   return Response.json(data)

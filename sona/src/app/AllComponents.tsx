@@ -11,18 +11,59 @@ import Skins from "./Skins/Skins";
 import Guides from "./Guides/Guides";
 const AllComponents = () => {
   const [fetchedData, setFetchedData] = React.useState(null);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const sonaService = new SonaService();
-        const data = await sonaService.FetchVersion();
-        setFetchedData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const [summonerData, setSummonerData] = React.useState(null);
+  const fetchData = async () => {
+    try {
+      const sonaService = new SonaService();
+      const data = await sonaService.FetchVersion();
+      setFetchedData(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchSummonerData = () => {
+    const query = {
+      query: `query {
+      fetchSummonerData {
+        version
+        id
+        name
+        description
+        cooldown
+        imageURL
       }
+    }`,
     };
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          console.log("Error with skin, please try again");
+        } else {
+          setSummonerData(json.data.fetchSummonerData);
+          console.log("summoner data", json.data.fetchSummonerData);
+        }
+      });
+  };
 
+  const fetchItemData = () => {
+    fetch("/api/fetchItemData")
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("item data", json);
+      });
+  };
+
+  React.useEffect(() => {
     fetchData();
+    fetchSummonerData();
+    fetchItemData();
   }, []);
 
   return (
@@ -33,7 +74,7 @@ const AllComponents = () => {
           <Intro />
           <Abilities />
           <Skins />
-          <Guides />
+          <Guides summonerData={summonerData} />
         </div>
       </div>
     </DataContext.Provider>

@@ -3,8 +3,8 @@ import { Query, Resolver, Args } from "type-graphql"
 import { SonaService } from "./service"
 
 import { SonaOverview, SonaRawStatsQ, SonaRawStatsW, SonaRawStatsE, SonaRawStatsR } from "../schema"
-@Resolver()
 
+@Resolver()
 export class SonaResolver {
     async fetchData(
     ): Promise<SonaOverview> {

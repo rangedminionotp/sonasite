@@ -11,6 +11,10 @@ import { SkinReviewsResolver } from './SkinReviews/resolver';
 import { SkinLoreResolver } from './SkinLore/resolver';
 
 import { GuideRowsResolver } from './Guides/Roles/resolver';
+import { GuideLabelsResolver } from './Guides/Labels/resolver';
+import { SummonersDataResolver } from './Guides/SummonersData/resolver';
+import { ItemDataResolver } from './Guides/ItemsData/resolver';
+
 // Build the schema with resolvers
 const schema = buildSchemaSync({
   resolvers: [
@@ -21,7 +25,10 @@ const schema = buildSchemaSync({
     SkinResolver,
     SkinReviewsResolver,
     SkinLoreResolver,
-    GuideRowsResolver
+    GuideRowsResolver,
+    GuideLabelsResolver,
+    SummonersDataResolver,
+    ItemDataResolver
   ],
   validate: true,
   authChecker: nextAuthChecker,

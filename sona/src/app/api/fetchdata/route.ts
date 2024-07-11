@@ -3,14 +3,17 @@ import { NextResponse} from "next/server"
 export async function GET(request) {
   // Do whatever you want
   const res = await fetch('https://ddragon.leagueoflegends.com/api/versions.json', {
-    next: { revalidate: 100000}, 
+    next: { revalidate: 86400}, 
   })
   const data = await res.json()
-  const champURL = `https://ddragon.leagueoflegends.com/cdn/${data[0]}/data/en_US/champion/Sona.json`
-  const champRES = await fetch(champURL)
+  const version = data[0]
+  const champURL = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/Sona.json`
+  const champRES = await fetch(champURL, {
+    next: { revalidate: 86400},
+  })
   const endData = await champRES.json()
 
-  const irl = 'https://leagueoflegends.fandom.com/wiki/Sona/LoL'
-  const something = await fetch(irl) 
+  // const irl = 'https://leagueoflegends.fandom.com/wiki/Sona/LoL'
+  // const something = await fetch(irl) 
   return Response.json(endData)
 }
