@@ -18,13 +18,26 @@ const steps = [
   "Select Items",
 ];
 
-export default function FormStepper({ summonerData, runesData, itemsData }) {
+export default function FormStepper({
+  summonerData,
+  runesData,
+  itemsData,
+  selectedRoles,
+  setSelectedRoles,
+  selectedLabels,
+  setSelectedLabels,
+}) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
   }>({});
   const components = [
-    <AddRoleAndLabels />,
+    <AddRoleAndLabels
+      selectedRoles={selectedRoles}
+      setSelectedRoles={setSelectedRoles}
+      selectedLabels={selectedLabels}
+      setSelectedLabels={setSelectedLabels}
+    />,
     <SummonersList summonerData={summonerData} />,
     <RunesList runeData={runesData} />,
     <ItemsList itemData={itemsData} summonerData={summonerData} />,

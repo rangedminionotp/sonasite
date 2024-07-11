@@ -87,13 +87,20 @@ CREATE TABLE GuidesRoles (
 
 CREATE TABLE GuidesLabels (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
-    role_id UUID REFERENCES GuidesRoles(id) ON DELETE CASCADE ON UPDATE CASCADE,
     label VARCHAR(30) NOT NULL UNIQUE 
 );
 
+CREATE TABLE GuidesCustomLabels (
+    id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
+    label VARCHAR(30) NOT NULL UNIQUE,
+    owner_id UUID REFERENCES Users(id)
+);
+
+
 CREATE TABLE Guides (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
-    role_id UUID REFERENCES GuidesRoles(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    label_id UUID REFERENCES GuidesLabels(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    owner_id UUID REFERENCES Users(id),
+    role_id UUID REFERENCES GuidesRoles(id),
+    label_id UUID REFERENCES GuidesLabels(id),
     data JSONB
 );

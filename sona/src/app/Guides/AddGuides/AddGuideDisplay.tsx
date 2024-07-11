@@ -9,6 +9,9 @@ const AddGuideDisplay = ({
   runesData,
   itemsData,
 }) => {
+  const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
+  const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
+
   return (
     <React.Fragment>
       <div
@@ -26,6 +29,10 @@ const AddGuideDisplay = ({
               summonerData={summonerData}
               runesData={runesData}
               itemsData={itemsData}
+              selectedRoles={selectedRoles}
+              setSelectedRoles={setSelectedRoles}
+              selectedLabels={selectedLabels}
+              setSelectedLabels={setSelectedLabels}
             />
           </div>
         </div>

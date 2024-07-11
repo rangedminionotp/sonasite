@@ -6,10 +6,7 @@ import { uuid } from "../../../../types/custom";
 export class GuidesLabelsType {
   @Field()
   @Matches(uuid)
-    id!: string;
-     @Field()
-  @Matches(uuid)
-    role_id!: string
+    id!: string; 
   @Field()
   @Length(1, 30)
   label!: string; 

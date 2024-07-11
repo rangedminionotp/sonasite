@@ -13,11 +13,23 @@ export class GuideLabelsService {
         let labels: GuidesLabelsType[] = [];
         for (const row of rows) {
             labels.push({
-                id: row.id,
-                role_id: row.role_id,
+                id: row.id, 
                 label: row.label,
             });
         }
         return labels;
     };
+    public async addCustomGuideLabel(label: string): Promise<GuidesLabelsType>{
+        const insert = `INSERT INTO GuidesLabels (label) VALUES ($1) RETURNING *`;
+        const query = {
+            text: insert,
+            values: [label],
+        };
+        const { rows } = await pool.query(query);
+        const customLabel = {
+            id: rows[0].id,
+            label: rows[0].label,
+        };
+        return customLabel;
+    }
 }

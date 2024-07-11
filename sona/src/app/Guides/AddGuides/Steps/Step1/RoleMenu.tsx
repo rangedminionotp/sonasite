@@ -7,10 +7,16 @@ interface GuideRolesType {
   img?: string | null;
 }
 
-const RoleMenu = () => {
+const RoleMenu = ({ selectedRoles, setSelectedRoles }) => {
   const [roles, setRoles] = React.useState<GuideRolesType[]>([]);
-  const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
 
+  const handleSelect = (role: string) => {
+    if (selectedRoles.includes(role)) {
+      setSelectedRoles(selectedRoles.filter((r) => r !== role));
+    } else {
+      setSelectedRoles((prevRoles) => [...prevRoles, role]);
+    }
+  };
   React.useEffect(() => {
     const query = {
       query: `
@@ -46,18 +52,32 @@ const RoleMenu = () => {
       });
   }, []);
   return (
-    <div>
-      {roles.map((role) => (
-        <div className="uppercase">
-          <Image
-            src={role.data.imgurl}
-            alt={role.role}
-            width={50}
-            height={50}
-          />
-          {role.role.toUpperCase()}
-        </div>
-      ))}
+    <div className="w-full">
+      <div className="description-subheader text-gray-200">Select Roles</div>
+      <div className="grid grid-cols-7 max-w-full gap-4">
+        {roles.map((role) => (
+          <div
+            className="justify-center items-center text-center"
+            onClick={() => handleSelect(role.role)}
+          >
+            <div
+              className={`flex items-center justify-center w-28 h-28 rounded-full bg-gray-700 mx-auto ${
+                selectedRoles.includes(role.role)
+                  ? "border-2 border-blue-500"
+                  : ""
+              }`}
+            >
+              <Image
+                src={role.data.imgurl}
+                alt={role.role}
+                width={70}
+                height={70}
+              />
+            </div>
+            <div className=" role-item-name ">{role.role}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

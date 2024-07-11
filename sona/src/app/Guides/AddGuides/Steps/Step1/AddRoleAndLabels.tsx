@@ -1,9 +1,22 @@
 import React from "react";
 import RoleMenu from "./RoleMenu";
-const AddRoleAndLabels = () => {
+import LabelsMenu from "./LabelsMenu";
+const AddRoleAndLabels = ({
+  selectedRoles,
+  setSelectedRoles,
+  selectedLabels,
+  setSelectedLabels,
+}) => {
   return (
     <div>
-      <RoleMenu />
+      <RoleMenu
+        selectedRoles={selectedRoles}
+        setSelectedRoles={setSelectedRoles}
+      />
+      <LabelsMenu
+        selectedLabels={selectedLabels}
+        setSelectedLabels={setSelectedLabels}
+      />
     </div>
   );
 };

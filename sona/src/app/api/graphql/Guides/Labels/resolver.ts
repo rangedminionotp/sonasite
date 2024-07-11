@@ -9,4 +9,10 @@ export class GuideLabelsResolver {
     async getGuidesLabels(): Promise<GuidesLabelsType[]> {
         return new GuideLabelsService().getGuidesLabels();
     }
+    
+    @Authorized('member')
+    @Mutation(() => GuidesLabelsType)
+    async addCustomGuideLabel(@Arg("label") label: string): Promise<GuidesLabelsType> {
+        return new GuideLabelsService().addCustomGuideLabel(label);
+    }
 }
