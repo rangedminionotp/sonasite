@@ -1,6 +1,5 @@
 import React from "react";
 import { createGraphQLClient } from "@/app/utils/api";
-import SlideshowIcon from "@mui/icons-material/Slideshow";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/joy/Tooltip";
 import { SkinLore } from "@/SkinLore/schema";
@@ -9,7 +8,7 @@ import UserLoreList from "./UserLoreList";
 import { useRouter } from "next/navigation";
 import { badWordFilter } from "@/app/utils/badWordFilter";
 import { useUser } from "@/app/utils/user";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
 const ViewCustomLore = ({
   skin_id,
   bgColor,
@@ -65,7 +64,7 @@ const ViewCustomLore = ({
         <div>
           <Tooltip title="View your lores">
             <IconButton onClick={handleClick}>
-              <SlideshowIcon />
+              <VisibilityIcon />
             </IconButton>
           </Tooltip>
           <UserLoreList

@@ -6,7 +6,7 @@ const SummonersList = ({ summonerData }) => {
       {summonerData &&
         summonerData.map((summoner) => (
           <div key={summoner.id}>
-            <h1>{summoner.name}</h1>
+            <h1 className="text-gray-200">{summoner.name}</h1>
             <Image
               src={`${summoner.imageURL}`}
               alt={summoner.name}
