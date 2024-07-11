@@ -18,20 +18,29 @@ export class goldType {
 export class ItemDataType {
     @Field()
     name!: string
-    @Field({nullable: true})
-    description?: string | null
+    
+    @Field()
+    image!: string
     @Field()
     plaintext!: string
+    @Field(() => goldType, {nullable: true})
+    gold?: goldType | null
+    @Field(() => [String], {nullable: true})
+        tags?: string[] | null
+
+
+    // @Field({ nullable: true })
+    // description?: string | null
     @Field(() => [String], {nullable: true})
     buildInto?: string[] | null
     @Field(() => [String], {nullable: true})
     buildFrom?: string[] | null
-    @Field()
-    image!: string
-    @Field(() => goldType, {nullable: true})
-    gold?: goldType | null
-    @Field(() => [String], {nullable: true})
-    tags?: string[] | null
+    
+    
+    
+
+
+
     // @Field(() => GraphQLJSONObject, {nullable: true})
     // maps?: Record<string, number> | null
     // @Field(() => GraphQLJSONObject, { nullable: true })

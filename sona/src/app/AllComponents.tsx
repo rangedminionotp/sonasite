@@ -12,6 +12,7 @@ import Guides from "./Guides/Guides";
 const AllComponents = () => {
   const [fetchedData, setFetchedData] = React.useState(null);
   const [summonerData, setSummonerData] = React.useState(null);
+  const [itemData, setItemData] = React.useState(null);
   const fetchData = async () => {
     try {
       const sonaService = new SonaService();
@@ -47,16 +48,43 @@ const AllComponents = () => {
           console.log("Error with skin, please try again");
         } else {
           setSummonerData(json.data.fetchSummonerData);
-          console.log("summoner data", json.data.fetchSummonerData);
         }
       });
   };
 
   const fetchItemData = () => {
-    fetch("/api/fetchItemData")
+    const query = {
+      query: `query { fetchItemData {
+    image
+    name
+    plaintext
+    gold {
+      base
+      purchasable
+      sell
+      total
+    }
+    tags
+    buildInto
+    buildFrom
+  }
+    }`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
       .then((res) => res.json())
       .then((json) => {
-        console.log("item data", json);
+        if (json.errors) {
+          console.log("Error with skin, please try again");
+        } else {
+          setItemData(json.data.fetchItemData);
+          console.log("item data", json.data.fetchItemData);
+        }
       });
   };
 
@@ -74,7 +102,7 @@ const AllComponents = () => {
           <Intro />
           <Abilities />
           <Skins />
-          <Guides summonerData={summonerData} />
+          <Guides summonerData={summonerData} itemData={itemData} />
         </div>
       </div>
     </DataContext.Provider>

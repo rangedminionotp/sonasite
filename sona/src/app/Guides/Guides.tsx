@@ -5,7 +5,8 @@ import ByRoleMenu from "./ByRoleMenu";
 import ByLabelMenu from "./ByLabelMenu";
 
 import SummonersList from "./SummonersList";
-const Guides = ({ summonerData }) => {
+import ItemsList from "./ItemsList";
+const Guides = ({ summonerData, itemData }) => {
   return (
     <div name="guides" className="h-screen w-full relative overflow-x-hidden">
       <div className="absolute inset-0 flex justify-center items-center">
@@ -16,6 +17,7 @@ const Guides = ({ summonerData }) => {
         <ByLabelMenu />
       </div>
       <SummonersList summonerData={summonerData} />
+      <ItemsList itemData={itemData} summonerData={summonerData} />
     </div>
   );
 };

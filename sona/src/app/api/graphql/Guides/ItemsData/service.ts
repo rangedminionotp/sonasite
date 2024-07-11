@@ -11,11 +11,11 @@ export class ItemDataService {
         for (let item in items) {
             const itemData: ItemDataType = {
                 name: items[item].name,
-                description: items[item].description || null,
+                // description: items[item].description || null,
                 plaintext: items[item].plaintext,
-                image: items[item].image,
-                buildInto: items[item].buildInto || null,
-                buildFrom: items[item].buildFrom || null,
+                image: items[item].image.full,
+                buildInto: items[item].into || null,
+                buildFrom: items[item].from || null,
                 tags: items[item].tags || null,
                 gold: items[item].gold || null,
                 // stats: items[item].stats || null,

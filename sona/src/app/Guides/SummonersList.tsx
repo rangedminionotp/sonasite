@@ -10,8 +10,8 @@ const SummonersList = ({ summonerData }) => {
             <Image
               src={`https://ddragon.leagueoflegends.com/cdn/${summoner.version}/img/spell/${summoner.imageURL}`}
               alt={summoner.name}
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
           </div>
         ))}

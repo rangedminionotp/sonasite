@@ -9,4 +9,4 @@ export class ItemDataResolver {
         const itemDataService = new ItemDataService()
         return itemDataService.fetchData()
     }
-}
+} 
