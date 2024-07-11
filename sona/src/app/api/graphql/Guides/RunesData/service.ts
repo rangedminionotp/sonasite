@@ -16,7 +16,7 @@ export class RuneDataService {
                     let runeData: Rune = {
                         id: rune.id,
                         key: rune.key,
-                        icon: rune.icon,
+                        icon: `https://ddragon.canisback.com/img/${rune.icon}`,
                         name: rune.name,
                         shortDesc: rune.shortDesc,
                         longDesc: rune.longDesc
@@ -28,7 +28,7 @@ export class RuneDataService {
             let runeTree: RuneTree = {
                 id: item.id,
                 key: item.key,
-                icon: item.icon,
+                icon: `https://ddragon.canisback.com/img/${item.icon}`,
                 name: item.name,
                 slots: runeSlots
             }

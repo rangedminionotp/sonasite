@@ -13,6 +13,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ddragon.canisback.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone",

@@ -13,6 +13,7 @@ const AllComponents = () => {
   const [fetchedData, setFetchedData] = React.useState(null);
   const [summonerData, setSummonerData] = React.useState(null);
   const [itemData, setItemData] = React.useState(null);
+  const [runeData, setRuneData] = React.useState(null);
   const fetchData = async () => {
     try {
       const sonaService = new SonaService();
@@ -88,16 +89,40 @@ const AllComponents = () => {
   };
 
   const fetchRuneData = async () => {
-    const res = await fetch("/api/fetchRuneData");
-    const data = await res.json();
-
-    for (const item of data) {
-      for (const slot of item.slots) {
-        for (const rune of slot.runes) {
-          console.log("rune", rune);
-        }
+    const query = {
+      query: `query { fetchRuneData {
+    icon
+    id
+    key
+    name
+    slots {
+      runes {
+        icon
+        id
+        key
+        longDesc
+        name
+        shortDesc
       }
     }
+  }
+    }`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          console.log("Error with skin, please try again");
+        } else {
+          setRuneData(json.data.fetchRuneData);
+        }
+      });
   };
 
   React.useEffect(() => {
@@ -115,7 +140,11 @@ const AllComponents = () => {
           <Intro />
           <Abilities />
           <Skins />
-          <Guides summonerData={summonerData} itemData={itemData} />
+          <Guides
+            summonerData={summonerData}
+            itemData={itemData}
+            runeData={runeData}
+          />
         </div>
       </div>
     </DataContext.Provider>
