@@ -57,9 +57,7 @@ const ViewCustomLore = ({
     }
   };
 
-  React.useEffect(() => {
-    handleClick();
-  }, [skin_id]);
+  // React.useEffect(() => {}, [skin_id]);
 
   return (
     <div>
