@@ -8,11 +8,11 @@ export async function GET(request) {
   const data = await res.json()
   const version = data[0]
 
-    const url = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/item.json`
+    const url = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/runesReforged.json`
   res = await fetch(url, {
     next: { revalidate: 86400}, 
   })
   const endData = await res.json()
- 
+  
   return NextResponse.json(endData);
 }

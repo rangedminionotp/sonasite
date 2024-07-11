@@ -8,8 +8,9 @@ export class ItemDataService {
         const data = await res.json() 
         let itemDataList: ItemDataType[] = []
         let items = data.data
-        for (let item in items) {
+        for (let item in items) { 
             const itemData: ItemDataType = {
+                id: item,
                 name: items[item].name,
                 // description: items[item].description || null,
                 plaintext: items[item].plaintext,

@@ -8,7 +8,7 @@ const SummonersList = ({ summonerData }) => {
           <div key={summoner.id}>
             <h1>{summoner.name}</h1>
             <Image
-              src={`https://ddragon.leagueoflegends.com/cdn/${summoner.version}/img/spell/${summoner.imageURL}`}
+              src={`${summoner.imageURL}`}
               alt={summoner.name}
               width={50}
               height={50}

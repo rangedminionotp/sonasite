@@ -17,7 +17,7 @@ export class SummonersDataService {
                     name: summoner[item].name,
                     description: summoner[item].description,
                     cooldown: summoner[item].cooldownBurn,
-                    imageURL: summoner[item].image.full
+                    imageURL: `https://ddragon.leagueoflegends.com/cdn/${data.version}/img/spell/${summoner[item].image.full}`
                 }
                 summonerData.push(ssummonerData)
             }

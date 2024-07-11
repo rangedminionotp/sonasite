@@ -17,6 +17,9 @@ export class goldType {
 @ObjectType()
 export class ItemDataType {
     @Field()
+    id!: string
+
+    @Field()
     name!: string
     
     @Field()

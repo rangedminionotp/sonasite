@@ -16,8 +16,8 @@ const Guides = ({ summonerData, itemData }) => {
         <ByRoleMenu />
         <ByLabelMenu />
       </div>
-      <SummonersList summonerData={summonerData} />
-      <ItemsList itemData={itemData} summonerData={summonerData} />
+      {/* <SummonersList summonerData={summonerData} />
+      <ItemsList itemData={itemData} summonerData={summonerData} /> */}
     </div>
   );
 };

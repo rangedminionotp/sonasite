@@ -14,7 +14,7 @@ import { GuideRowsResolver } from './Guides/Roles/resolver';
 import { GuideLabelsResolver } from './Guides/Labels/resolver';
 import { SummonersDataResolver } from './Guides/SummonersData/resolver';
 import { ItemDataResolver } from './Guides/ItemsData/resolver';
-
+import { RuneDataResolver } from './Guides/RunesData/resolver';
 // Build the schema with resolvers
 const schema = buildSchemaSync({
   resolvers: [
@@ -28,7 +28,8 @@ const schema = buildSchemaSync({
     GuideRowsResolver,
     GuideLabelsResolver,
     SummonersDataResolver,
-    ItemDataResolver
+    ItemDataResolver,
+    RuneDataResolver
   ],
   validate: true,
   authChecker: nextAuthChecker,

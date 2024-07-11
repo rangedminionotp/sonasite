@@ -83,15 +83,28 @@ const AllComponents = () => {
           console.log("Error with skin, please try again");
         } else {
           setItemData(json.data.fetchItemData);
-          console.log("item data", json.data.fetchItemData);
         }
       });
+  };
+
+  const fetchRuneData = async () => {
+    const res = await fetch("/api/fetchRuneData");
+    const data = await res.json();
+
+    for (const item of data) {
+      for (const slot of item.slots) {
+        for (const rune of slot.runes) {
+          console.log("rune", rune);
+        }
+      }
+    }
   };
 
   React.useEffect(() => {
     fetchData();
     fetchSummonerData();
     fetchItemData();
+    fetchRuneData();
   }, []);
 
   return (
