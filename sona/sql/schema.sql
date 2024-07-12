@@ -8,7 +8,8 @@ DROP TABLE IF EXISTS UserSkinLore;
 DROP TABLE IF EXISTS SkinRating;
 DROP TABLE IF EXISTS GuidesRoles;
 DROP TABLE IF EXISTS GuidesLabels;
-
+DROP TABLE IF EXISTS GuidesCustomLabels;
+DROP TABLE IF EXISTS Guides;
 -- -- Create Users table
 CREATE TABLE Users (id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),data JSONB);
 

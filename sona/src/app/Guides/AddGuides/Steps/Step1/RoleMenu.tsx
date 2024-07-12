@@ -61,7 +61,7 @@ const RoleMenu = ({ selectedRoles, setSelectedRoles }) => {
             onClick={() => handleSelect(role.role)}
           >
             <div
-              className={`flex items-center justify-center w-28 h-28 rounded-full bg-gray-700 mx-auto ${
+              className={`flex items-center justify-center w-28 h-28 rounded-full role-item mx-auto ${
                 selectedRoles.includes(role.role)
                   ? "border-2 border-blue-500"
                   : ""

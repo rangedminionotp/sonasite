@@ -1,9 +1,20 @@
 import React from "react";
 import AddCustomLabel from "./AddCustomLabel";
-
+import { uuid } from "@/app/types/custom";
+import { useUser } from "@/app/utils/User";
+import { createGraphQLClient } from "@/app/utils/api";
+import { gql } from "graphql-request";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 interface GuideLabelsType {
-  id: string;
+  id: uuid;
   label: string;
+}
+
+interface GuideCustomLabelsType {
+  id: uuid;
+  label: string;
+  owner_id: uuid;
 }
 
 const LabelsMenu = ({
@@ -14,12 +25,65 @@ const LabelsMenu = ({
   setSelectedLabels: React.Dispatch<React.SetStateAction<GuideLabelsType[]>>;
 }) => {
   const [labels, setLabels] = React.useState<GuideLabelsType[]>([]);
+  const [customLabels, setCustomLabels] = React.useState<
+    GuideCustomLabelsType[]
+  >([]);
+
+  const [label, setLabel] = React.useState("");
+
+  const user = useUser();
+  const bearerToken = user?.accessToken;
+  const graphQLClient = createGraphQLClient(bearerToken);
 
   const handleSelect = (label: string) => {
     if (selectedLabels.includes(label)) {
       setSelectedLabels(selectedLabels.filter((l) => l !== label));
     } else {
       setSelectedLabels((prevLabels) => [...prevLabels, label]);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const removeLabel = gql`
+        mutation MyMutation {
+          deleteCustomGuideLabel(labelId: "${id}") {
+            id
+            label
+            owner_id
+          }
+        }
+      `;
+      const response = await graphQLClient.request(removeLabel);
+      setLabel(response.deleteCustomGuideLabel);
+      setCustomLabels(customLabels.filter((label) => label.id !== id));
+    } catch (error) {
+      console.error("Error deleting custom label:", error);
+      console.log("Failed to delete custom label. Please try again.");
+    }
+  };
+
+  const handleEdit = async (id: string, label: string) => {
+    try {
+      const mutation = gql`
+        mutation MyMutation {
+          updateCustomGuideLabel(label: "${label}", labelId: "${id}") {
+            id
+            label
+            owner_id
+          }
+        }
+      `;
+      const response = await graphQLClient.request(mutation);
+      setLabel(response.updateCustomGuideLabel);
+      setCustomLabels(
+        customLabels.map((label) =>
+          label.id === id ? response.updateCustomGuideLabel : label
+        )
+      );
+    } catch (error) {
+      console.error("Error editing custom label:", error);
+      console.log("Failed to edit custom label. Please try again.");
     }
   };
 
@@ -53,21 +117,44 @@ const LabelsMenu = ({
         console.error("Error fetching guide labels:", error);
         console.log("Failed to fetch guide labels. Please try again.");
       });
-  }, [selectedLabels, setSelectedLabels]);
+  }, []);
+
+  const fetchCustomLabels = async () => {
+    try {
+      const query = gql`
+        query {
+          getGuidesCustomLabels {
+            id
+            label
+            owner_id
+          }
+        }
+      `;
+      const response = await graphQLClient.request(query);
+      setCustomLabels(response.getGuidesCustomLabels);
+    } catch (error) {
+      console.error("Error fetching custom guide labels:", error);
+      console.log("Failed to fetch custom guide labels. Please try again.");
+    }
+  };
+  React.useEffect(() => {
+    fetchCustomLabels();
+  }, [label]);
 
   return (
     <div className="w-full">
       <div className="description-subheader text-gray-200">
-        Select Labels (max 5)
+        Select Labels (max 8)
       </div>
       <div className="grid grid-cols-7 max-w-full gap-4">
+        <div>General Labels</div>
         {labels.map((label) => (
           <div
             className="justify-center items-center text-center"
             onClick={() => handleSelect(label.label)}
           >
             <div
-              className={`flex items-center justify-center w-28 h-28 rounded-full bg-gray-700 mx-auto ${
+              className={`flex items-center justify-center w-28 h-28 rounded-full label-item mx-auto ${
                 selectedLabels.includes(label.label)
                   ? "border-2 border-blue-500"
                   : ""
@@ -77,7 +164,34 @@ const LabelsMenu = ({
             </div>
           </div>
         ))}
-        <AddCustomLabel labels={labels} setLabels={setLabels} />
+      </div>
+      <div className="grid grid-cols-10 max-w-full gap-4">
+        <div>Custom Labels</div>
+        {customLabels.map((label) => (
+          <div className="justify-center items-center text-center">
+            <EditIcon className="edit-icon" />
+            <DeleteIcon
+              className="delete-icon"
+              onClick={() => handleDelete(label.id)}
+            />
+            <div
+              onClick={() => handleSelect(label.label)}
+              className={`flex items-center justify-center w-28 h-28 rounded-full label-item mx-auto ${
+                selectedLabels.includes(label.label)
+                  ? "border-2 border-blue-500"
+                  : ""
+              }`}
+            >
+              <div className=" role-item-name ">{label.label}</div>
+            </div>
+          </div>
+        ))}
+        <AddCustomLabel
+          customLabels={customLabels}
+          setCustomLabels={setCustomLabels}
+          label={label}
+          setLabel={setLabel}
+        />
       </div>
     </div>
   );

@@ -104,4 +104,19 @@ html, body {
   .role-item-name {
 @apply text-gray-300 text-xs sm:text-xs md:text-xs lg:text-sm xl:text-base drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.5)] uppercase font-work-sans  
   }
+  .role-item {
+    @apply bg-gray-700 hover:cursor-pointer hover:bg-gray-500   
+  }
+  .label-item {
+    @apply bg-gray-700 hover:cursor-pointer hover:bg-gray-500   
+  }
+}
+
+@layer components{
+  .edit-icon{
+    @apply text-gray-500 hover:cursor-pointer hover:text-gray-300 hover:underline
+  }
+  .delete-icon{
+    @apply text-gray-500 hover:cursor-pointer hover:text-gray-300 hover:underline
+  }
 }
