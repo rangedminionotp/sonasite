@@ -37,6 +37,9 @@ const LabelsMenu = ({
   const graphQLClient = createGraphQLClient(bearerToken);
 
   const handleSelect = (label: string) => {
+    if (selectedLabels.length >= 8) {
+      return;
+    }
     if (selectedLabels.includes(label)) {
       setSelectedLabels(selectedLabels.filter((l) => l !== label));
     } else {
