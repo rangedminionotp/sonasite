@@ -30,6 +30,7 @@ const LabelsMenu = ({
   >([]);
 
   const [label, setLabel] = React.useState("");
+  const [editbtn, setEditbtn] = React.useState(false);
 
   const user = useUser();
   const bearerToken = user?.accessToken;
@@ -147,43 +148,42 @@ const LabelsMenu = ({
         Select Labels (max 8)
       </div>
       <div className="grid grid-cols-7 max-w-full gap-4">
-        <div>General Labels</div>
         {labels.map((label) => (
           <div
             className="justify-center items-center text-center"
+            key={label.id}
             onClick={() => handleSelect(label.label)}
           >
             <div
-              className={`flex items-center justify-center w-28 h-28 rounded-full label-item mx-auto ${
+              className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
                 selectedLabels.includes(label.label)
-                  ? "border-2 border-blue-500"
-                  : ""
+                  ? "border-2 border-blue-500 bg-olive-500 text-white"
+                  : "bg-olive-200 text-gray-700"
               }`}
             >
-              <div className=" role-item-name ">{label.label}</div>
+              <div className="role-item-name">{label.label}</div>
             </div>
           </div>
         ))}
-      </div>
-      <div className="grid grid-cols-10 max-w-full gap-4">
-        <div>Custom Labels</div>
         {customLabels.map((label) => (
-          <div className="justify-center items-center text-center">
-            <EditIcon className="edit-icon" />
+          <div
+            className="justify-center items-center text-center"
+            key={label.id}
+          >
+            <div
+              onClick={() => handleSelect(label.label)}
+              className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
+                selectedLabels.includes(label.label)
+                  ? "border-2 border-blue-500 bg-olive-500 text-white"
+                  : "bg-olive-200 text-gray-700"
+              }`}
+            >
+              <div className="role-item-name">{label.label}</div>
+            </div>{" "}
             <DeleteIcon
               className="delete-icon"
               onClick={() => handleDelete(label.id)}
             />
-            <div
-              onClick={() => handleSelect(label.label)}
-              className={`flex items-center justify-center w-28 h-28 rounded-full label-item mx-auto ${
-                selectedLabels.includes(label.label)
-                  ? "border-2 border-blue-500"
-                  : ""
-              }`}
-            >
-              <div className=" role-item-name ">{label.label}</div>
-            </div>
           </div>
         ))}
         <AddCustomLabel

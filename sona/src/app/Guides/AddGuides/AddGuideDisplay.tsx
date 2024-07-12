@@ -11,7 +11,7 @@ const AddGuideDisplay = ({
 }) => {
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
-
+  const [title, setTitle] = React.useState("");
   return (
     <React.Fragment>
       <div
@@ -33,6 +33,8 @@ const AddGuideDisplay = ({
               setSelectedRoles={setSelectedRoles}
               selectedLabels={selectedLabels}
               setSelectedLabels={setSelectedLabels}
+              title={title}
+              setTitle={setTitle}
             />
           </div>
         </div>
