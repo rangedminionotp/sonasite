@@ -12,6 +12,8 @@ const AddGuideDisplay = ({
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
   const [title, setTitle] = React.useState("");
+
+  const [firstStep, setFirstStep] = React.useState(true);
   return (
     <React.Fragment>
       <div

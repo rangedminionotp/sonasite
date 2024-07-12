@@ -35,6 +35,10 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+   session: {
+    strategy: 'jwt',
+    maxAge: 72 * 60 * 60 // 72 hours
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       return true;

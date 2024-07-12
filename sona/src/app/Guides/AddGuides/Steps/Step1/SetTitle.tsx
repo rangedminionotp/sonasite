@@ -2,7 +2,7 @@ import React from "react";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 
-const SetDescriptions = ({ title, setTitle }) => {
+const SetTitle = ({ title, setTitle }) => {
   return (
     <div>
       <div>
@@ -16,4 +16,4 @@ const SetDescriptions = ({ title, setTitle }) => {
   );
 };
 
-export default SetDescriptions;
+export default SetTitle;

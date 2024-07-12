@@ -1,7 +1,7 @@
 import React from "react";
 import RoleMenu from "./RoleMenu";
 import LabelsMenu from "./LabelsMenu";
-import SetDescriptions from "./SetDescriptions";
+import SetTitle from "./SetTitle";
 const AddRoleAndLabels = ({
   selectedRoles,
   setSelectedRoles,
@@ -12,7 +12,7 @@ const AddRoleAndLabels = ({
 }) => {
   return (
     <div>
-      <SetDescriptions title={title} setTitle={setTitle} />
+      <SetTitle title={title} setTitle={setTitle} />
       <RoleMenu
         selectedRoles={selectedRoles}
         setSelectedRoles={setSelectedRoles}
