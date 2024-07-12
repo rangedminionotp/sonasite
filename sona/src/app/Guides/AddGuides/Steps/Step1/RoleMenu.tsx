@@ -52,31 +52,36 @@ const RoleMenu = ({ selectedRoles, setSelectedRoles }) => {
       });
   }, []);
   return (
-    <div className="w-full">
-      <div className="description-subheader text-gray-200">Select Roles</div>
-      <div className="grid grid-cols-7 max-w-full gap-4">
-        {roles.map((role) => (
-          <div
-            className="justify-center items-center text-center"
-            onClick={() => handleSelect(role.role)}
-          >
+    <div className="w-full container mx-auto ">
+      <div className="p-2">
+        <div className="steps-description-header text-gray-200">
+          3. Select Roles
+        </div>
+        <div className="grid grid-cols-7 max-w-full gap-4">
+          {roles.map((role) => (
             <div
-              className={`flex items-center justify-center w-28 h-28 rounded-full role-item mx-auto ${
-                selectedRoles.includes(role.role)
-                  ? "border-2 border-blue-500"
-                  : ""
-              }`}
+              className="justify-center items-center text-center"
+              onClick={() => handleSelect(role.role)}
             >
-              <Image
-                src={role.data.imgurl}
-                alt={role.role}
-                width={70}
-                height={70}
-              />
+              <div
+                className={`flex items-center justify-center w-20 h-20 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 rounded-full role-item mx-auto ${
+                  selectedRoles.includes(role.role)
+                    ? "border-2 border-blue-500"
+                    : ""
+                }`}
+              >
+                <Image
+                  src={role.data.imgurl}
+                  alt={role.role}
+                  width={40}
+                  height={40}
+                  className="drop-shadow-lg object-cover rounded-full w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-12 xl:h-12"
+                />
+              </div>
+              <div className=" role-item-name ">{role.role}</div>
             </div>
-            <div className=" role-item-name ">{role.role}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

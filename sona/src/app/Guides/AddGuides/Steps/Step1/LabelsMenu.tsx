@@ -146,55 +146,57 @@ const LabelsMenu = ({
   }, [label]);
 
   return (
-    <div className="w-full">
-      <div className="description-subheader text-gray-200">
-        Select Labels (max 8)
-      </div>
-      <div className="grid grid-cols-7 max-w-full gap-4">
-        {labels.map((label) => (
-          <div
-            className="justify-center items-center text-center"
-            key={label.id}
-            onClick={() => handleSelect(label.label)}
-          >
+    <div className="container mx-auto  w-full">
+      <div className="p-2">
+        <div className="steps-description-header text-gray-200">
+          4. Select Labels (max 8)
+        </div>
+        <div className="grid grid-cols-7 max-w-full gap-4">
+          {labels.map((label) => (
             <div
-              className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
-                selectedLabels.includes(label.label)
-                  ? "border-2 border-blue-500 bg-olive-500 text-white"
-                  : "bg-olive-200 text-gray-700"
-              }`}
-            >
-              <div className="role-item-name">{label.label}</div>
-            </div>
-          </div>
-        ))}
-        {customLabels.map((label) => (
-          <div
-            className="justify-center items-center text-center"
-            key={label.id}
-          >
-            <div
+              className="justify-center items-center text-center"
+              key={label.id}
               onClick={() => handleSelect(label.label)}
-              className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
-                selectedLabels.includes(label.label)
-                  ? "border-2 border-blue-500 bg-olive-500 text-white"
-                  : "bg-olive-200 text-gray-700"
-              }`}
             >
-              <div className="role-item-name">{label.label}</div>
-            </div>{" "}
-            <DeleteIcon
-              className="delete-icon"
-              onClick={() => handleDelete(label.id)}
-            />
-          </div>
-        ))}
-        <AddCustomLabel
-          customLabels={customLabels}
-          setCustomLabels={setCustomLabels}
-          label={label}
-          setLabel={setLabel}
-        />
+              <div
+                className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
+                  selectedLabels.includes(label.label)
+                    ? "border-2 border-blue-500 bg-olive-500 text-white"
+                    : "bg-olive-200 text-gray-700"
+                }`}
+              >
+                <div className="role-item-name">{label.label}</div>
+              </div>
+            </div>
+          ))}
+          {customLabels.map((label) => (
+            <div
+              className="justify-center items-center text-center"
+              key={label.id}
+            >
+              <div
+                onClick={() => handleSelect(label.label)}
+                className={`flex items-center justify-center w-28 h-28 rounded-[50%] label-item mx-auto ${
+                  selectedLabels.includes(label.label)
+                    ? "border-2 border-blue-500 bg-olive-500 text-white"
+                    : "bg-olive-200 text-gray-700"
+                }`}
+              >
+                <div className="role-item-name">{label.label}</div>
+              </div>{" "}
+              <DeleteIcon
+                className="delete-icon"
+                onClick={() => handleDelete(label.id)}
+              />
+            </div>
+          ))}
+          <AddCustomLabel
+            customLabels={customLabels}
+            setCustomLabels={setCustomLabels}
+            label={label}
+            setLabel={setLabel}
+          />
+        </div>
       </div>
     </div>
   );

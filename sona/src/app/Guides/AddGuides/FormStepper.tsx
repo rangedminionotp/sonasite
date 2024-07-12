@@ -28,6 +28,8 @@ export default function FormStepper({
   setSelectedLabels,
   title,
   setTitle,
+  description,
+  setDescription,
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
@@ -41,6 +43,8 @@ export default function FormStepper({
       setSelectedLabels={setSelectedLabels}
       title={title}
       setTitle={setTitle}
+      description={description}
+      setDescription={setDescription}
     />,
     <SummonersList summonerData={summonerData} />,
     <RunesList runeData={runesData} />,

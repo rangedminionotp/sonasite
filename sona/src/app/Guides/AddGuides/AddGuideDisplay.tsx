@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AddGuideClose from "./AddGuideClose";
 import FormStepper from "./FormStepper";
 import SummonerRiftBg from "../../utils/SummonerRiftBg";
+import { setCookie, getCookie } from "cookies-next";
+
 const AddGuideDisplay = ({
   open,
   setOpen,
@@ -12,8 +14,49 @@ const AddGuideDisplay = ({
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
   const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  // const [step1formState, setStep1formState] = useState({
+  //   title: "",
+  //   description: "",
+  //   selectedRoles: [],
+  //   selectedLabels: [],
+  // });
+  // useEffect(() => {
+  //   if (title && description && selectedRoles && selectedLabels) {
+  //     setStep1formState({
+  //       title,
+  //       description,
+  //       selectedRoles,
+  //       selectedLabels,
+  //     });
+  //   }
+  // }, [title, description, selectedRoles, selectedLabels]);
 
-  const [firstStep, setFirstStep] = React.useState(true);
+  // useEffect(() => {
+  //   // Load state from cookies when the component mounts
+  //   // const savedState = getCookie("step1formState");
+  //   const savedState = localStorage.getItem("step1formState");
+  //   if (savedState) {
+  //     const parsedState = JSON.parse(savedState);
+  //     setTitle(parsedState.title);
+  //     setDescription(parsedState.description);
+  //     setSelectedRoles(parsedState.selectedRoles);
+  //     setSelectedLabels(parsedState.selectedLabels);
+  //     setStep1formState(parsedState);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   // Save state to cookies whenever it changes
+
+  //   // setCookie("step1formState", JSON.stringify(step1formState), {
+  //   //   maxAge: 60 * 6 * 24,
+  //   // });
+  //   localStorage.setItem("step1formState", JSON.stringify(step1formState));
+  // }, [step1formState]);
+
+  // and when we submit the guide we clear current guide cookie sessions
+
   return (
     <React.Fragment>
       <div
@@ -37,6 +80,8 @@ const AddGuideDisplay = ({
               setSelectedLabels={setSelectedLabels}
               title={title}
               setTitle={setTitle}
+              description={description}
+              setDescription={setDescription}
             />
           </div>
         </div>
