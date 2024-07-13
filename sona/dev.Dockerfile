@@ -21,6 +21,7 @@ COPY postcss.config.js .
 COPY data ./data
 COPY sql ./sql 
 COPY webpack.config.js .
+COPY .env .
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
