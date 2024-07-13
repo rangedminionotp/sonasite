@@ -8,4 +8,7 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
+pool.on("connect", () => { console.log("CONNECTED TO DB"); });
+pool.on("error", (err) => { console.error(err); });
+
 export { pool };
