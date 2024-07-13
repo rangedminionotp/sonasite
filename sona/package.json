@@ -12,9 +12,12 @@
     "test:watch": "jest --runInBand --forceExit --watchAll",
     "docker": "docker start sona",
     "postdocker": "npm run dev",
-    "docker:build": "docker compose down && docker compose up -d && npm run dev"
+    "docker:build": "docker compose down && docker compose up -d && npm run dev",
+    "init docker db": "cat sona/sql/schema.sql | docker exec -i psql -U postgres -d sonadb && cat sona/sql/data.sql | docker exec -i psql -U postgres -d sonadb"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@headlessui/react": "^2.1.2",
     "@mui/icons-material": "^5.16.0",
     "@mui/joy": "^5.0.0-beta.47",
@@ -27,6 +30,7 @@
     "class-validator": "^0.14.1",
     "classnames": "^2.5.1",
     "cookies-next": "^4.2.1",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "graphql-request": "^7.1.0",
     "graphql-yoga": "^5.6.0",
@@ -40,8 +44,10 @@
     "react-cookie": "^7.1.4",
     "react-dom": "^18.3.1",
     "react-highlight-words": "^0.20.0",
+    "react-icons": "^5.2.1",
     "react-scroll": "^1.9.0",
     "reflect-metadata": "^0.2.2",
+    "sharp": "^0.33.4",
     "type-graphql": "^2.0.0-rc.1",
     "web-vitals": "^4.2.1"
   },

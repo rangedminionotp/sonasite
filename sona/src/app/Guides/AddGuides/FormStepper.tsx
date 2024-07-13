@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import AddRoleAndLabels from "./Steps/Step1/AddRoleAndLabels";
-import SummonersList from "../data/SummonersList";
+import AddSummoners from "./Steps/Step2/AddSummoners";
+
 import RunesList from "../data/RunesList";
 import ItemsList from "../data/ItemsList";
 
@@ -46,7 +47,7 @@ export default function FormStepper({
       description={description}
       setDescription={setDescription}
     />,
-    <SummonersList summonerData={summonerData} />,
+    <AddSummoners summonerData={summonerData} />,
     <RunesList runeData={runesData} />,
     <ItemsList itemData={itemsData} summonerData={summonerData} />,
   ];
