@@ -22,8 +22,7 @@ services:
 
     restart: always
     ports:
-      - 3000:3000
-   
+      - 3000:3000  
    
   postgres:
     container_name: sonadb
@@ -34,9 +33,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
-    volumes:
-      # - ./sona/postgresData:/var/lib/postgresql/data
-
-      - ./sona/sql/data.sql:/docker-entrypoint-initdb.d/1.data.sql
-      - ./sona/sql/schema.sql:/docker-entrypoint-initdb.d/2.schema.sql
+    volumes: 
+      - ./sona/sql/schema.sql:/docker-entrypoint-initdb.d/1.schema.sql
+      - ./sona/sql/data.sql:/docker-entrypoint-initdb.d/2.data.sql
+      
       #- ./sona/sql/databases.sql:/docker-entrypoint-initdb.d/3.databases.sql
+ 
