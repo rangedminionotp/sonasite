@@ -126,5 +126,4 @@ html, body {
   .steps-description-header {
     @apply text-2xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl;
   }
-}
-
+}  

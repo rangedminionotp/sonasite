@@ -23,5 +23,5 @@ export class SummonersDataService {
             }
         }
             return summonerData  
-    }
+    } 
 }
