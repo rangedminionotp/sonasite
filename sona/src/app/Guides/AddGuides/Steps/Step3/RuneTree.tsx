@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import RunePrimaryTreeSelection from "./RunePrimaryTreeSelection";
+import PrimaryRuneList from "./PrimaryRuneList";
+import RuneSecondaryTreeSelection from "./RuneSecondaryTreeSelection";
+import SecondaryRuneList from "./SecondaryRuneList";
 
-const RunesList = ({ runeData }) => {
+const RuneTree = ({ runeData }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
+
+  const handleSelectPrimaryRune = (rune) => {
+    setPrimaryRune(rune);
+  };
+
   return (
     <div className="container mx-auto w-full">
       <div className="p-2">
@@ -15,7 +24,8 @@ const RunesList = ({ runeData }) => {
             runeData.map((rune) => (
               <div
                 key={rune.id}
-                className="mb-6 p-4 backdrop-blur-lg bg-white/30 shadow rounded-lg"
+                onClick={() => handleSelectPrimaryRune(rune)}
+                className="mb-6 p-4 backdrop-blur-lg bg-white/30 grayscale hover:filter-none hover:cursor-pointer shadow rounded-lg"
               >
                 <div className="items-center justify-center mb-4">
                   <Image
@@ -23,7 +33,7 @@ const RunesList = ({ runeData }) => {
                     alt={rune.name}
                     width={50}
                     height={50}
-                    className="mr-4"
+                    className="mr-4 hover:scale-110 transition-all duration-300"
                   />
                   <div className="grid grid-cols-3 items-center gap-4 mb-2 p-2 rounded">
                     {rune.slots.map((slot) =>
@@ -33,34 +43,38 @@ const RunesList = ({ runeData }) => {
                           alt={keystone.name}
                           width={50}
                           height={50}
+                          className="hover:scale-110 transition-all duration-300"
                         />
                       ))
                     )}
                   </div>
                   <div className="text-lg font-semibold">{rune.name}</div>
                 </div>
-                {/* {rune.slots.map((slot) => (
-                  <div
-                    key={rune.id}
-                    className="grid grid-cols-3 items-center gap-4 mb-2 p-2 bg-gray-100 rounded"
-                  >
-                    {slot.runes.map((rune) => (
-                      <Image
-                        src={rune.icon}
-                        alt={rune.name}
-                        width={50}
-                        height={50}
-                        className="grid grid-cols-3"
-                      />
-                    ))}
-                  </div>
-                ))} */}
               </div>
             ))}
         </div>
+        {primaryRune && (
+          <div>
+            <RunePrimaryTreeSelection
+              runeData={runeData}
+              primaryRune={primaryRune}
+              setPrimaryRune={setPrimaryRune}
+              secondaryRune={secondaryRune}
+              setSecondaryRune={setSecondaryRune}
+            />
+            <PrimaryRuneList primaryRune={primaryRune} />
+            <RuneSecondaryTreeSelection
+              runeData={runeData}
+              secondaryRune={secondaryRune}
+              setSecondaryRune={setSecondaryRune}
+              primaryRune={primaryRune}
+            />
+            <SecondaryRuneList secondaryRune={secondaryRune} />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default RunesList;
+export default RuneTree;

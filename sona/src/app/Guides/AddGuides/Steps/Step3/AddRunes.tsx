@@ -1,7 +1,9 @@
 import { useState } from "react";
-import RunesList from "./RunesList";
+import RuneTree from "./RuneTree";
 export default function AddRunes({ runesData }) {
-  const [runes, setRunes] = useState([]);
-
-  return <RunesList runesData={runesData} />;
+  return (
+    <div>
+      <RuneTree runeData={runesData} />
+    </div>
+  );
 }
