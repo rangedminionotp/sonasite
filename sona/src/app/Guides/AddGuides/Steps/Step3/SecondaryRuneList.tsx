@@ -25,9 +25,7 @@ const SecondaryRuneList = ({ secondaryRune }) => {
         ))}
       </div>
     </div>
-  ) : (
-    <div className="text-lg font-semibold"> </div>
-  );
+  ) : null;
 };
 
 export default SecondaryRuneList;

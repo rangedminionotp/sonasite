@@ -23,7 +23,7 @@ const RunePrimaryTreeSelection = ({
             alt={rune.name}
             width={50}
             height={50}
-            onClick={() => setPrimaryRune(rune)}
+            onClick={() => handleRuneSelection(rune)}
             className={`${
               rune.name === primaryRune.name
                 ? "border-2 border-blue-500 rounded-full"
