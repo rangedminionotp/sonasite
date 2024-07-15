@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography";
 import AddRoleAndLabels from "./Steps/Step1/AddRoleAndLabels";
 import AddSummoners from "./Steps/Step2/AddSummoners";
 
-import RunesList from "../data/RunesList";
-import ItemsList from "../data/ItemsList";
+import RunesList from "./Steps/Step3/RunesList";
+// import ItemsList from "./Steps/Step4/ItemsList";
 
 const steps = [
   "Select Roles and Labels",
@@ -49,7 +49,7 @@ export default function FormStepper({
     />,
     <AddSummoners summonerData={summonerData} />,
     <RunesList runeData={runesData} />,
-    <ItemsList itemData={itemsData} summonerData={summonerData} />,
+    // <ItemsList itemData={itemsData} summonerData={summonerData} />,
   ];
   const totalSteps = () => {
     return steps.length;
