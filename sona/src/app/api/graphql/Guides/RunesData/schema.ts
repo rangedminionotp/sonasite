@@ -22,7 +22,9 @@ export class Rune{
 @ObjectType()
 export class RuneSlot{
     @Field(() => [Rune])
-    runes!: Rune[]
+    keystone!: Rune[]
+    @Field(() => [Rune])
+    normalRunes!: Rune[] 
 }
 
 

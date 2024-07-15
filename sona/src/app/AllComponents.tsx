@@ -90,13 +90,22 @@ const AllComponents = () => {
 
   const fetchRuneData = async () => {
     const query = {
-      query: `query { fetchRuneData {
+      query: `query MyQuery {
+  fetchRuneData {
     icon
     id
     key
     name
     slots {
-      runes {
+      keystone {
+        icon
+        id
+        longDesc
+        name
+        shortDesc
+        key
+      }
+      normalRunes {
         icon
         id
         key
@@ -106,7 +115,7 @@ const AllComponents = () => {
       }
     }
   }
-    }`,
+}`,
     };
     fetch("/api/graphql", {
       method: "POST",
