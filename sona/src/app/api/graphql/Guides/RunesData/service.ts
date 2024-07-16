@@ -10,8 +10,10 @@ export class RuneDataService {
 
         for (const item of data) {
             let runeSlots: RuneSlot[] = []
-            let keystone: Rune[] = []
-                let normalRunes: Rune[] = []
+            let rowOne: Rune[] = []
+            let rowTwo: Rune[] = []
+            let rowThree: Rune[] = []
+            let rowFour: Rune[] = []
             let count = 0
             for (const slot of item.slots) {
                 
@@ -23,17 +25,21 @@ export class RuneDataService {
                         name: rune.name,
                         shortDesc: rune.shortDesc,
                         longDesc: rune.longDesc
-                    } 
+                    }   
                     if (count < 3) {
-                        keystone.push(runeData);
-                    } else {    
-                        normalRunes.push(runeData);
+                        rowOne.push(runeData);
+                    } else if (count < 6) {
+                        rowTwo.push(runeData);
+                    } else if (count < 9) {
+                        rowThree.push(runeData);
+                    } else {
+                        rowFour.push(runeData);
                     }
                     count += 1
                 } 
                 
             }
-            runeSlots.push({ keystone, normalRunes })
+            runeSlots.push({ rowOne, rowTwo, rowThree, rowFour })
             let runeTree: RuneTree = {
                 id: item.id,
                 key: item.key,

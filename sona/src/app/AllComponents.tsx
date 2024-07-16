@@ -97,20 +97,36 @@ const AllComponents = () => {
     key
     name
     slots {
-      keystone {
+      rowFour {
+        name
         icon
         id
+        key
         longDesc
-        name
         shortDesc
-        key
       }
-      normalRunes {
+      rowOne {
+        name
         icon
         id
         key
         longDesc
+        shortDesc
+      }
+      rowTwo {
         name
+        icon
+        id
+        key
+        longDesc
+        shortDesc
+      }
+      rowThree {
+        name
+        icon
+        id
+        key
+        longDesc
         shortDesc
       }
     }

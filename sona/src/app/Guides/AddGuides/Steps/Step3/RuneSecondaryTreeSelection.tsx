@@ -7,22 +7,22 @@ const RuneSecondaryTreeSelection = ({
   primaryRune,
 }) => {
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div className="flex flex-wrap gap-1">
       {runeData.map((rune) =>
         rune.name === primaryRune.name ? null : (
-          <div key={rune.id}>
+          <div
+            className={`flex items-center justify-center w-10 h-10 rounded-full role-item bg-transparent ${
+              secondaryRune && rune.name === secondaryRune.name
+                ? "border-2 border-blue-500"
+                : ""
+            }`}
+          >
             <Image
               src={rune.icon}
               alt={rune.name}
-              width={50}
-              height={50}
+              width={25}
+              height={25}
               onClick={() => setSecondaryRune(rune)}
-              className={`${
-                secondaryRune && rune.name === secondaryRune.name
-                  ? "border-2 border-blue-500 rounded-full"
-                  : ""
-              }
-              }`}
             />
           </div>
         )
