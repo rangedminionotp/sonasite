@@ -1,6 +1,6 @@
 import { Query, Resolver, Args } from "type-graphql"
 import { ItemDataService } from "./service"
-import { ItemDataType } from "./schema"
+import { ItemDataType, ItemTree } from "./schema"
 
 @Resolver()
 export class ItemDataResolver {
@@ -8,5 +8,11 @@ export class ItemDataResolver {
     async fetchItemData(): Promise<ItemDataType[]> {
         const itemDataService = new ItemDataService()
         return itemDataService.fetchData()
+    }
+
+    @Query(() => [ItemTree])
+    async fetchItemTree(): Promise<ItemTree[]> {
+        const itemDataService = new ItemDataService()
+        return itemDataService.fetchItemTree()
     }
 } 

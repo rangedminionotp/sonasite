@@ -6,7 +6,7 @@ import ViewGuidesBtn from "./ViewGuidesBtn";
 import AddGuideDisplay from "./AddGuides/AddGuideDisplay";
 import { Link } from "react-scroll";
 
-const Guides = ({ summonerData, itemData, runeData }) => {
+const Guides = ({ summonerData, itemData, runeData, itemTree }) => {
   const [addGuideOpen, setAddGuideOpen] = React.useState(false);
   return (
     <div name="guides" className="h-screen w-full relative overflow-x-hidden">
@@ -24,6 +24,7 @@ const Guides = ({ summonerData, itemData, runeData }) => {
           summonerData={summonerData}
           runesData={runeData}
           itemsData={itemData}
+          itemTree={itemTree}
         />
       </div>
     </div>

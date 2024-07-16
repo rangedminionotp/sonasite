@@ -18,10 +18,8 @@ export class goldType {
 export class ItemDataType {
     @Field()
     id!: string
-
     @Field()
     name!: string
-    
     @Field()
     image!: string
     @Field()
@@ -29,24 +27,24 @@ export class ItemDataType {
     @Field(() => goldType, {nullable: true})
     gold?: goldType | null
     @Field(() => [String], {nullable: true})
-        tags?: string[] | null
-
-
+    tags?: string[] | null  
+     
     // @Field({ nullable: true })
     // description?: string | null
     @Field(() => [String], {nullable: true})
     buildInto?: string[] | null
     @Field(() => [String], {nullable: true})
-    buildFrom?: string[] | null
-    
-    
-    
-
-
-
+    buildFrom?: string[] | null 
     // @Field(() => GraphQLJSONObject, {nullable: true})
     // maps?: Record<string, number> | null
     // @Field(() => GraphQLJSONObject, { nullable: true })
     // stats?: Record<string, number> | null; // Assuming stats is a JSON object with key-value pairs
 }
 
+@ObjectType()
+export class ItemTree {
+    @Field()
+    header!: string
+    @Field(()=>[String] )
+    tags!: string[] 
+}

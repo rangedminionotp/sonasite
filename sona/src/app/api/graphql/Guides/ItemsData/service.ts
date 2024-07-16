@@ -25,4 +25,18 @@ export class ItemDataService {
         }
         return itemDataList
     }
+    async fetchItemTree(): Promise<ItemTree[]> {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`) 
+        const data = await res.json()
+        let itemTreeList: ItemTree[] = [] 
+        let items = data.tree
+        for (let item in items) {
+            const itemTree: ItemTree = {
+                header: items[item].header,
+                tags: items[item].tags
+            }
+            itemTreeList.push(itemTree)
+        }
+        return itemTreeList
+    }
 }

@@ -14,6 +14,7 @@ const AllComponents = () => {
   const [summonerData, setSummonerData] = React.useState(null);
   const [itemData, setItemData] = React.useState(null);
   const [runeData, setRuneData] = React.useState(null);
+  const [itemTree, setItemTree] = React.useState(null);
   const fetchData = async () => {
     try {
       const sonaService = new SonaService();
@@ -81,9 +82,30 @@ const AllComponents = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.errors) {
-          console.log("Error with skin, please try again");
+          console.log("Error with fetching item data, please try again");
         } else {
           setItemData(json.data.fetchItemData);
+        }
+      });
+  };
+
+  const fetchItemTree = () => {
+    const query = {
+      query: `query { fetchItemTree { header tags } }`,
+    };
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.errors) {
+          console.log("Error with fetching item tree, please try again");
+        } else {
+          setItemTree(json.data.fetchItemTree);
         }
       });
   };
@@ -159,6 +181,7 @@ const AllComponents = () => {
     fetchSummonerData();
     fetchItemData();
     fetchRuneData();
+    fetchItemTree();
   }, []);
 
   return (
@@ -166,13 +189,14 @@ const AllComponents = () => {
       <div>
         <Navbar />
         <div>
-          <Intro />
+          {/* <Intro />
           <Abilities />
-          <Skins />
+          <Skins /> */}
           <Guides
             summonerData={summonerData}
             itemData={itemData}
             runeData={runeData}
+            itemTree={itemTree}
           />
         </div>
       </div>

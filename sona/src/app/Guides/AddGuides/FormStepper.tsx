@@ -10,6 +10,7 @@ import AddRoleAndLabels from "./Steps/Step1/AddRoleAndLabels";
 import AddSummoners from "./Steps/Step2/AddSummoners";
 
 import AddRunes from "./Steps/Step3/AddRunes";
+import AddItems from "./Steps/Step4/AddItems";
 // import ItemsList from "./Steps/Step4/ItemsList";
 
 const steps = [
@@ -23,6 +24,7 @@ export default function FormStepper({
   summonerData,
   runesData,
   itemsData,
+  itemTree,
   selectedRoles,
   setSelectedRoles,
   selectedLabels,
@@ -49,7 +51,11 @@ export default function FormStepper({
     />,
     <AddSummoners summonerData={summonerData} />,
     <AddRunes runesData={runesData} />,
-    // <ItemsList itemData={itemsData} summonerData={summonerData} />,
+    <AddItems
+      itemData={itemsData}
+      summonerData={summonerData}
+      itemTree={itemTree}
+    />,
   ];
   const totalSteps = () => {
     return steps.length;

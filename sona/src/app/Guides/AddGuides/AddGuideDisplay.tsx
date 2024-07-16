@@ -10,6 +10,7 @@ const AddGuideDisplay = ({
   summonerData,
   runesData,
   itemsData,
+  itemTree,
 }) => {
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
@@ -74,6 +75,7 @@ const AddGuideDisplay = ({
               summonerData={summonerData}
               runesData={runesData}
               itemsData={itemsData}
+              itemTree={itemTree}
               selectedRoles={selectedRoles}
               setSelectedRoles={setSelectedRoles}
               selectedLabels={selectedLabels}
