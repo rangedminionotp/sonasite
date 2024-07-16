@@ -21,7 +21,7 @@ export class RuneDataService {
                     let runeData: Rune = {
                         id: rune.id,
                         key: rune.key,
-                        icon: `https://ddragon.canisback.com/img/${rune.icon}`,
+                        icon: `https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`,
                         name: rune.name,
                         shortDesc: rune.shortDesc,
                         longDesc: rune.longDesc

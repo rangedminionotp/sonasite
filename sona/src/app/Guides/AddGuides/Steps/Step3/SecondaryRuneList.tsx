@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import RuneRow from "./RuneRow";
 
 const SecondaryRuneList = ({ secondaryRune }) => {
-  const [selectedRowTwo, setSelectedRowTwo] = useState(null);
-  const [selectedRowThree, setSelectedRowThree] = useState(null);
-  const [selectedRowFour, setSelectedRowFour] = useState(null);
+  const [selectedOne, setSelectedOne] = useState([]);
 
   return secondaryRune ? (
     <div>
@@ -13,24 +11,27 @@ const SecondaryRuneList = ({ secondaryRune }) => {
           <div>
             <RuneRow
               runes={slot.rowTwo}
-              selectedRune={selectedRowTwo}
-              setSelectedRune={setSelectedRowTwo}
+              selectedRune={selectedOne}
+              setSelectedRune={setSelectedOne}
               iconWidth={30}
               iconHeight={30}
+              mode="secondary"
             />
             <RuneRow
               runes={slot.rowThree}
-              selectedRune={selectedRowThree}
-              setSelectedRune={setSelectedRowThree}
+              selectedRune={selectedOne}
+              setSelectedRune={setSelectedOne}
               iconWidth={30}
               iconHeight={30}
+              mode="secondary"
             />
             <RuneRow
               runes={slot.rowFour}
-              selectedRune={selectedRowFour}
-              setSelectedRune={setSelectedRowFour}
+              selectedRune={selectedOne}
+              setSelectedRune={setSelectedOne}
               iconWidth={30}
               iconHeight={30}
+              mode="secondary"
             />
           </div>
         ))}

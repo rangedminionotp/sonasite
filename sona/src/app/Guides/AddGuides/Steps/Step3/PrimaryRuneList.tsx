@@ -17,6 +17,7 @@ const PrimaryRuneList = ({ primaryRune }) => {
             setSelectedRune={setSelectedRowOne}
             iconWidth={35}
             iconHeight={35}
+            mode="primary"
           />
           <RuneRow
             runes={slot.rowTwo}
@@ -24,6 +25,7 @@ const PrimaryRuneList = ({ primaryRune }) => {
             setSelectedRune={setSelectedRowTwo}
             iconWidth={35}
             iconHeight={35}
+            mode="primary"
           />
           <RuneRow
             runes={slot.rowThree}
@@ -31,6 +33,7 @@ const PrimaryRuneList = ({ primaryRune }) => {
             setSelectedRune={setSelectedRowThree}
             iconWidth={35}
             iconHeight={35}
+            mode="primary"
           />
           <RuneRow
             runes={slot.rowFour}
@@ -38,6 +41,7 @@ const PrimaryRuneList = ({ primaryRune }) => {
             setSelectedRune={setSelectedRowFour}
             iconWidth={35}
             iconHeight={35}
+            mode="primary"
           />
         </div>
       ))}
