@@ -3,11 +3,10 @@ import RuneRow from "./RuneRow";
 
 const SecondaryRuneList = ({ secondaryRune }) => {
   const [selectedOne, setSelectedOne] = useState([]);
-
   return secondaryRune ? (
     <div>
       <div className="flex flex-wrap gap-1">
-        {secondaryRune.slots.map((slot) => (
+        {secondaryRune.slots.map((slot, index) => (
           <div>
             <RuneRow
               runes={slot.rowTwo}

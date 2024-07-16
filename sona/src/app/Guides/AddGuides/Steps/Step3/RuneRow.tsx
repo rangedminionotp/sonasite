@@ -10,6 +10,14 @@ const RuneRow = ({
   mode,
 }) => {
   const handleClick = (rune) => {
+    const rowone = [3, 4, 5];
+    const rowtwo = [6, 7, 8];
+    const rowthree = [9, 10, 11];
+    const rows = [rowone, rowtwo, rowthree];
+    const currIndex = rune.index;
+
+    // check if selectedrune.index and currindex is in the same row
+
     if (selectedRune.length < 2) {
       setSelectedRune([rune, ...selectedRune]);
     } else {

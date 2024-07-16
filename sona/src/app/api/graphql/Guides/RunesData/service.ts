@@ -24,7 +24,8 @@ export class RuneDataService {
                         icon: `https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`,
                         name: rune.name,
                         shortDesc: rune.shortDesc,
-                        longDesc: rune.longDesc
+                        longDesc: rune.longDesc,
+                        index: count
                     }   
                     if (count < 3) {
                         rowOne.push(runeData);

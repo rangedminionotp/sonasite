@@ -17,6 +17,8 @@ export class Rune{
     shortDesc!: string
     @Field()
     longDesc!: string
+    @Field()
+    index!: number
 }
 
 @ObjectType()

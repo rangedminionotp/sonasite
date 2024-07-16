@@ -104,6 +104,7 @@ const AllComponents = () => {
         key
         longDesc
         shortDesc
+        index
       }
       rowOne {
         name
@@ -112,6 +113,7 @@ const AllComponents = () => {
         key
         longDesc
         shortDesc
+        index
       }
       rowTwo {
         name
@@ -120,6 +122,7 @@ const AllComponents = () => {
         key
         longDesc
         shortDesc
+        index
       }
       rowThree {
         name
@@ -128,6 +131,7 @@ const AllComponents = () => {
         key
         longDesc
         shortDesc
+        index
       }
     }
   }
