@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/joy/Tooltip";
 import IconButton from "@mui/joy/IconButton";
 import Input from "@mui/joy/Input";
-import { useUser } from "@/app/utils/User";
+import { useUser } from "@/app/utils/user";
 import { createGraphQLClient } from "@/app/utils/api";
 import { gql } from "graphql-request";
 import CheckIcon from "@mui/icons-material/Check";

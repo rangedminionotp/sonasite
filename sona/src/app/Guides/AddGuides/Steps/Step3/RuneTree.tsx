@@ -6,10 +6,12 @@ import RuneSecondaryTreeSelection from "./RuneSecondaryTreeSelection";
 import SecondaryRuneList from "./SecondaryRuneList";
 import RunesBG from "@/assets/runeWallpaper";
 import domination from "@/assets/runeWallpaper/Domination.webp";
+import FlatRunes from "./FlatRunes";
+import RuneDescription from "./RuneDescription";
 const RuneTree = ({ runeData }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
-
+  const [description, setDescription] = useState("");
   const handleSelectPrimaryRune = (rune) => {
     setPrimaryRune(rune);
   };
@@ -60,25 +62,34 @@ const RuneTree = ({ runeData }) => {
           </div>
         </div>
       ) : (
-        <div className="flex">
-          <div>
-            <RunePrimaryTreeSelection
-              runeData={runeData}
-              primaryRune={primaryRune}
-              setPrimaryRune={setPrimaryRune}
-              secondaryRune={secondaryRune}
-              setSecondaryRune={setSecondaryRune}
-            />
-            <PrimaryRuneList primaryRune={primaryRune} />
+        <div>
+          <div className="flex gap-12">
+            <div>
+              <RunePrimaryTreeSelection
+                runeData={runeData}
+                primaryRune={primaryRune}
+                setPrimaryRune={setPrimaryRune}
+                secondaryRune={secondaryRune}
+                setSecondaryRune={setSecondaryRune}
+              />
+              <PrimaryRuneList primaryRune={primaryRune} />
+            </div>
+            <div>
+              <RuneSecondaryTreeSelection
+                runeData={runeData}
+                secondaryRune={secondaryRune}
+                setSecondaryRune={setSecondaryRune}
+                primaryRune={primaryRune}
+              />
+              <SecondaryRuneList secondaryRune={secondaryRune} />
+            </div>
+            <FlatRunes />
           </div>
-          <div>
-            <RuneSecondaryTreeSelection
-              runeData={runeData}
-              secondaryRune={secondaryRune}
-              setSecondaryRune={setSecondaryRune}
-              primaryRune={primaryRune}
+          <div className="mt-4">
+            <RuneDescription
+              description={description}
+              setDescription={setDescription}
             />
-            <SecondaryRuneList secondaryRune={secondaryRune} />
           </div>
         </div>
       )}

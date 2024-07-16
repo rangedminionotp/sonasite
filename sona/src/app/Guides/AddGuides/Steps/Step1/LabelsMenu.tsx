@@ -1,7 +1,7 @@
 import React from "react";
 import AddCustomLabel from "./AddCustomLabel";
 import { uuid } from "@/app/types/custom";
-import { useUser } from "@/app/utils/User";
+import { useUser } from "@/app/utils/user";
 import { createGraphQLClient } from "@/app/utils/api";
 import { gql } from "graphql-request";
 import EditIcon from "@mui/icons-material/Edit";

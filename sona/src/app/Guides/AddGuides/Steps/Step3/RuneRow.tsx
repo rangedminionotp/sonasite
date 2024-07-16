@@ -11,23 +11,6 @@ const RuneRow = ({
   row,
 }) => {
   const handleClick = (rune) => {
-    const currIndex = rune.index;
-    // if (!bool) {
-    //   if (selectedRune.length < 2) {
-    //     setSelectedRune([rune, ...selectedRune]);
-    //   } else {
-    //     setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
-    //   }
-    //   setBool(true);
-    // } else {
-    //   const indexOne = selectedRune[0].index;
-    //   const indexTwo = selectedRune[1].index;
-    //   if (row.includes(indexOne)) {
-    //     setSelectedRune([rune, ...selectedRune.slice(1)]);
-    //   } else if (row.includes(indexTwo)) {
-    //     setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
-    //   }
-    // }
     if (selectedRune.length === 0) {
       setSelectedRune([rune]);
     } else if (selectedRune.length < 2) {
@@ -63,8 +46,10 @@ const RuneRow = ({
             alt={rune.name}
             width={iconWidth}
             height={iconHeight}
-            className={`hover:scale-110 transition-all duration-300 ${
-              selectedRune && selectedRune.id !== rune.id ? "grayscale" : ""
+            className={`hover:scale-110 hover:cursor-pointer transition-all duration-300 ${
+              selectedRune && selectedRune.id !== rune.id
+                ? "grayscale"
+                : "ring-2 ring-[#CDBD82] rounded-full hover:ring-offset-4"
             }`}
           />
         </div>
@@ -83,11 +68,11 @@ const RuneRow = ({
             alt={rune.name}
             width={iconWidth}
             height={iconHeight}
-            className={`hover:scale-110 transition-all duration-300 ${
+            className={`hover:scale-110 hover:cursor-pointer transition-all duration-300 ${
               selectedRune.length >= 1 &&
               (selectedRune[0].id === rune.id ||
                 (selectedRune[1] && selectedRune[1].id === rune.id))
-                ? ""
+                ? "ring-2 ring-[#CDBD82] rounded-full hover:ring-offset-4"
                 : "grayscale"
             }`}
           />
