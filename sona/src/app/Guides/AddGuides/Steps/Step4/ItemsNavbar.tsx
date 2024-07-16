@@ -13,6 +13,8 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 interface ItemsNavbarProps {
   itemTree: ItemTree[];
+  selectedCategories: string[] | null;
+  setSelectedCategories: (categories: string[]) => void;
 }
 
 interface ItemTree {
@@ -22,11 +24,11 @@ interface ItemTree {
 
 const otherTrees = ["epic", "legendary"];
 
-const ItemsNavbar = ({ itemTree }: ItemsNavbarProps) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
-    null
-  );
-
+const ItemsNavbar = ({
+  itemTree,
+  selectedCategories,
+  setSelectedCategories,
+}: ItemsNavbarProps) => {
   const handleCategorySelect = (category: string) => {
     if (selectedCategories === null) {
       setSelectedCategories([category.toLowerCase()]);
