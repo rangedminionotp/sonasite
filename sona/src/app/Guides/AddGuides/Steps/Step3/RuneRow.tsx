@@ -8,20 +8,45 @@ const RuneRow = ({
   iconWidth,
   iconHeight,
   mode,
+  row,
 }) => {
   const handleClick = (rune) => {
-    const rowone = [3, 4, 5];
-    const rowtwo = [6, 7, 8];
-    const rowthree = [9, 10, 11];
-    const rows = [rowone, rowtwo, rowthree];
     const currIndex = rune.index;
-
-    // check if selectedrune.index and currindex is in the same row
-
-    if (selectedRune.length < 2) {
-      setSelectedRune([rune, ...selectedRune]);
+    // if (!bool) {
+    //   if (selectedRune.length < 2) {
+    //     setSelectedRune([rune, ...selectedRune]);
+    //   } else {
+    //     setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
+    //   }
+    //   setBool(true);
+    // } else {
+    //   const indexOne = selectedRune[0].index;
+    //   const indexTwo = selectedRune[1].index;
+    //   if (row.includes(indexOne)) {
+    //     setSelectedRune([rune, ...selectedRune.slice(1)]);
+    //   } else if (row.includes(indexTwo)) {
+    //     setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
+    //   }
+    // }
+    if (selectedRune.length === 0) {
+      setSelectedRune([rune]);
+    } else if (selectedRune.length < 2) {
+      const indexOne = selectedRune[0].index;
+      if (row.includes(indexOne)) {
+        setSelectedRune([rune, ...selectedRune.slice(1)]);
+      } else {
+        setSelectedRune([rune, ...selectedRune]);
+      }
     } else {
-      setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
+      const indexOne = selectedRune[0].index;
+      const indexTwo = selectedRune[1].index;
+      if (row.includes(indexOne)) {
+        setSelectedRune([rune, ...selectedRune.slice(1)]);
+      } else if (row.includes(indexTwo)) {
+        setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
+      } else {
+        setSelectedRune([rune, ...selectedRune.slice(0, 1)]);
+      }
     }
   };
 
