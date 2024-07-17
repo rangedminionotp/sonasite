@@ -9,11 +9,11 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
 
   return (
     <div>
-      <ItemsNavbar
+      {/* <ItemsNavbar
         itemTree={itemTree}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
-      />
+      /> */}
       <ItemsList
         itemData={itemData}
         summonerData={summonerData}

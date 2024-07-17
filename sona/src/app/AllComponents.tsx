@@ -56,21 +56,70 @@ const AllComponents = () => {
 
   const fetchItemData = () => {
     const query = {
-      query: `query { fetchItemData {
-    image
-    name
-    plaintext
-    gold {
-      base
-      purchasable
-      sell
-      total
+      query: `query MyQuery {
+  fetchItemData {
+    epic {
+      name
+      tags
+      buildFrom
+      buildInto
+      gold {
+        base
+        sell
+        purchasable
+        total
+      }
+      id
+      image
+      plaintext
     }
-    tags
-    buildInto
-    buildFrom
+    basic {
+      tags
+      name
+      buildFrom
+      buildInto
+      gold {
+        base
+        purchasable
+        sell
+        total
+      }
+      image
+      id
+      plaintext
+    }
+    legendary {
+      name
+      tags
+      buildFrom
+      buildInto
+      id
+      image
+      plaintext
+      gold {
+        base
+        purchasable
+        sell
+        total
+      }
+    }
+    starter {
+      name
+      tags
+      buildFrom
+      buildInto
+      image
+      plaintext
+      id
+      gold {
+        base
+        purchasable
+        sell
+        total
+      }
+    }
   }
-    }`,
+}`,
     };
     fetch("/api/graphql", {
       method: "POST",

@@ -30,7 +30,7 @@ const ItemsNavbar = ({
   setSelectedCategories,
 }: ItemsNavbarProps) => {
   const handleCategorySelect = (category: string) => {
-    if (selectedCategories === null) {
+    if (!selectedCategories) {
       setSelectedCategories([category.toLowerCase()]);
     } else if (selectedCategories.includes(category.toLowerCase())) {
       setSelectedCategories((prev) =>
@@ -45,29 +45,15 @@ const ItemsNavbar = ({
     return (
       <Box className="items-center gap-2 border border-gray-100 rounded-md p-2">
         <Dropdown>
-          <Checkbox
-            label={item.header}
-            className="  font-bold text-gray-200 hover:scale-x-110 uppercase"
-            sx={{
-              fontSize: "14px",
-              fontWeight: "600",
-              color: "white",
-            }}
-            checked={
-              selectedCategories === null
-                ? false
-                : selectedCategories.includes(item.header)
-            }
-            onChange={() => handleCategorySelect(item.header)}
-          />
           <MenuButton
             variant="neutral"
             sx={{
               backgroundColor: "var(--primary-bg)",
               color: "white",
             }}
+            endDecorator={<ArrowDropDownCircleIcon />}
           >
-            <ArrowDropDownCircleIcon className="hover:scale-x-110" />
+            {item.header}
           </MenuButton>
           <Menu>
             {item.tags.map((tag) => {

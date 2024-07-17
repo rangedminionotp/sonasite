@@ -47,4 +47,17 @@ export class ItemTree {
     header!: string
     @Field(()=>[String] )
     tags!: string[] 
+}         
+
+
+@ObjectType()
+export class ItemsType {
+    @Field(() => [ItemDataType])
+    starter!: ItemDataType[]
+    @Field(() => [ItemDataType])
+    basic!: ItemDataType[]
+    @Field(() => [ItemDataType])
+    epic!: ItemDataType[]
+    @Field(() => [ItemDataType])
+    legendary!: ItemDataType[]
 }
