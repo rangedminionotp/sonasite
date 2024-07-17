@@ -13,14 +13,14 @@ export class ItemDataService {
         let basic: ItemDataType[] = []
         let epic: ItemDataType[] = []
         let legendary: ItemDataType[] = []
-
+        let boots: ItemDataType[] = []
         for (let item in items) {
             if (items[item].tags.includes('Jungle') || items[item].tags.includes('Lane')) {
                 items[item].tags.push('starter')
             } 
             const excludeJGBoots = !items[item].tags.includes('Boots') && !items[item].tags.includes('Jungle')
             // exclude boots and jg starter items as legendary since they are not 
-            if (!items[item].into && items[item].from && !excludeJGBoots || !items[item].into && !excludeJGBoots) {
+            if (!items[item].into && items[item].from && excludeJGBoots || !items[item].into && excludeJGBoots) {
                 items[item].tags.push('legendary')
             }
             // epic items are those that can be made into other items 
@@ -46,9 +46,14 @@ export class ItemDataService {
                 buildFrom: items[item].from || null,
                 tags: lowerCaseArray,
                 gold: items[item].gold || null,
+                inStore: items[item].inStore || null,
                 // stats: items[item].stats || null,
             }
-            if (items[item].tags.includes('starter')) {
+            if (items[item].inStore === false || items[item].maps[11] === false) { 
+            } else {
+           if (items[item].tags.includes('Boots')){
+                boots.push(itemData)
+            } else if (items[item].tags.includes('starter')) {
                 starter.push(itemData)
             } else if (items[item].tags.includes('basic')) {
                 basic.push(itemData)
@@ -56,12 +61,14 @@ export class ItemDataService {
                 epic.push(itemData)
             } else if (items[item].tags.includes('legendary')) {
                 legendary.push(itemData)
+            } 
             }
         }
-        itemDataList.starter = starter
-        itemDataList.basic = basic
-        itemDataList.epic = epic
-        itemDataList.legendary = legendary
+        itemDataList.starter = starter.sort((a,b) => a.gold.total - b.gold.total);
+        itemDataList.basic = basic.sort((a,b) => a.gold.total - b.gold.total);
+        itemDataList.epic = epic.sort((a,b) => a.gold.total - b.gold.total);
+        itemDataList.legendary = legendary.sort((a,b) => a.gold.total - b.gold.total);
+        itemDataList.boots = boots.sort((a,b) => a.gold.total - b.gold.total);
         return itemDataList
     }
     async fetchItemTree(): Promise<ItemTree[]> {

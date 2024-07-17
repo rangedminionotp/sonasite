@@ -35,6 +35,8 @@ export class ItemDataType {
     buildInto?: string[] | null
     @Field(() => [String], {nullable: true})
     buildFrom?: string[] | null 
+    @Field({nullable: true})
+    inStore?: boolean
     // @Field(() => GraphQLJSONObject, {nullable: true})
     // maps?: Record<string, number> | null
     // @Field(() => GraphQLJSONObject, { nullable: true })
@@ -60,4 +62,6 @@ export class ItemsType {
     epic!: ItemDataType[]
     @Field(() => [ItemDataType])
     legendary!: ItemDataType[]
+    @Field(() => [ItemDataType])
+    boots!: ItemDataType[]
 }

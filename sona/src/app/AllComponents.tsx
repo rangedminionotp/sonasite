@@ -118,6 +118,22 @@ const AllComponents = () => {
         total
       }
     }
+      boots {
+      name
+      tags
+      buildFrom
+      buildInto
+      gold {
+        base
+        purchasable
+        sell
+        total
+      }
+      id
+      inStore
+      image
+      plaintext
+    }
   }
 }`,
     };
