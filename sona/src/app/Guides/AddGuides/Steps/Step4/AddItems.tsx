@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ItemsList from "./ItemsList";
 import ItemsNavbar from "./ItemsNavbar";
+import ItemsCategoryTopBar from "./ItemsCategoryTopBar";
+
 const AddItems = ({ itemData, summonerData, itemTree }) => {
   // return <ItemsList itemData={itemData} summonerData={summonerData} />
   const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
@@ -9,6 +11,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
 
   return (
     <div>
+      <ItemsCategoryTopBar />
       {/* <ItemsNavbar
         itemTree={itemTree}
         selectedCategories={selectedCategories}

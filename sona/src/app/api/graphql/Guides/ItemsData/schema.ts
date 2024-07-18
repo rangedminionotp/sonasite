@@ -64,4 +64,6 @@ export class ItemsType {
     legendary!: ItemDataType[]
     @Field(() => [ItemDataType])
     boots!: ItemDataType[]
+    @Field(() => [ItemDataType])
+    consumablesTrinkets!: ItemDataType[]
 }

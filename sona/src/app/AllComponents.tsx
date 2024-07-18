@@ -134,6 +134,22 @@ const AllComponents = () => {
       image
       plaintext
     }
+    consumablesTrinkets {
+      tags
+      name
+      buildFrom
+      buildInto
+      id
+      image
+      inStore
+      gold {
+        base
+        purchasable
+        sell
+        total
+      }
+      plaintext
+    }
   }
 }`,
     };

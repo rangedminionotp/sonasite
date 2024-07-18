@@ -8,6 +8,7 @@ interface ItemsType {
   epic: ItemDataType[];
   legendary: ItemDataType[];
   boots: ItemDataType[];
+  consumablesTrinkets: ItemDataType[];
 }
 
 interface GoldType {

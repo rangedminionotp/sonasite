@@ -8,16 +8,20 @@ const ItemsList = ({ itemData, summonerData }) => {
   const [epicVisible, setEpicVisible] = useState(true);
   const [legendaryVisible, setLegendaryVisible] = useState(true);
   const [bootsVisible, setBootsVisible] = useState(true);
+  const [consumablesTrinketsVisible, setConsumablesTrinketsVisible] =
+    useState(true);
   const ItemByGroup = ({
     items,
     groupName,
     visible,
     setVisible,
+    name,
   }: {
     items: ItemDataType;
     groupName: string;
     visible: boolean;
     setVisible: (visible: boolean) => void;
+    name: string;
   }) => {
     return (
       <div className="flex flex-wrap ">
@@ -25,7 +29,7 @@ const ItemsList = ({ itemData, summonerData }) => {
           onClick={() => setVisible(!visible)}
           className="w-full text-3xl font-bold mb-4 hover:cursor-pointer uppercase text-[#f4f3f0]"
         >
-          {groupName}
+          {name}
         </div>
         {itemData &&
           summonerData &&
@@ -55,27 +59,38 @@ const ItemsList = ({ itemData, summonerData }) => {
     <div className="">
       <ItemByGroup
         items={itemData}
+        groupName="consumablesTrinkets"
+        visible={consumablesTrinketsVisible}
+        setVisible={setConsumablesTrinketsVisible}
+        name="Consumables&Trinkets&Others"
+      />
+      <ItemByGroup
+        items={itemData}
         groupName="starter"
         visible={starterVisible}
         setVisible={setStarterVisible}
+        name="Starter"
       />
       <ItemByGroup
         items={itemData}
         groupName="basic"
         visible={basicVisible}
         setVisible={setBasicVisible}
+        name="Basic"
       />
       <ItemByGroup
         items={itemData}
         groupName="epic"
         visible={epicVisible}
         setVisible={setEpicVisible}
+        name="Epic"
       />
       <ItemByGroup
         items={itemData}
         groupName="legendary"
         visible={legendaryVisible}
         setVisible={setLegendaryVisible}
+        name="Legendary"
       />
       <ItemByGroup
         items={itemData}
