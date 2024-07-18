@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ItemByGroupProps } from "./types";
 
-const ItemsList = ({ itemData, summonerData }) => {
+const ItemsList = ({ itemData, summonerData, category }) => {
   const [starterVisible, setStarterVisible] = useState(true);
   const [basicVisible, setBasicVisible] = useState(true);
   const [epicVisible, setEpicVisible] = useState(true);

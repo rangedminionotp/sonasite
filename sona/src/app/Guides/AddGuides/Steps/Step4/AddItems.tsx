@@ -8,10 +8,10 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
     null
   );
-
+  const [category, setCategory] = useState<string | null>(null);
   return (
     <div>
-      <ItemsCategoryTopBar />
+      <ItemsCategoryTopBar setCategory={setCategory} />
       {/* <ItemsNavbar
         itemTree={itemTree}
         selectedCategories={selectedCategories}
@@ -20,7 +20,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
       <ItemsList
         itemData={itemData}
         summonerData={summonerData}
-        selectedCategories={selectedCategories}
+        category={category}
       />
     </div>
   );

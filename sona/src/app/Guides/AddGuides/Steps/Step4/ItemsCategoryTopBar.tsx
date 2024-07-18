@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ItemsCategoryTopBar = () => {
+const ItemsCategoryTopBar = ({ setCategory }) => {
   const topbarLabels = [
     "All Items",
     "Fighter",
@@ -80,6 +80,7 @@ const ItemsCategoryTopBar = () => {
       {/* topbar labels */}
       {topbarLabels.map((label, index) => (
         <div
+          onClick={() => setCategory(label)}
           key={index}
           className="cursor-pointer text-[#f4f3f0]/80  text-2xl px-5 hover:text-[#f4f3f0] font-sans  "
         >

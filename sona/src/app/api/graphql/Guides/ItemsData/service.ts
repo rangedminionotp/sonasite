@@ -17,34 +17,59 @@ export class ItemDataService {
         let consumablesTrinkets: ItemDataType[] = []
         for (let item in items) {  
             items[item].tags = items[item].tags.map(element => element.toLowerCase());  
-            const excludeJGBoots = !items[item].tags.includes('boots') && !items[item].tags.includes('jungle') 
-            const buildInto = items[item].into
-            const buildFrom = items[item].from
-            const includesJg = items[item].tags.includes('jungle')
-            const includesLane = items[item].tags.includes('lane')
-            const consumable = items[item].tags.includes('consumable')
-            const depth = items[item].depth 
-            const tear = items[item].name === 'Tear of the Goddess' 
-            const darkseal = items[item].name === 'Dark Seal'
-            const trinket = items[item].tags.includes('trinket')
-            const watchful = items[item].name === 'Watchful Wardstone'
-            const armguard = items[item].name === 'Shattered Armguard'
-            // exclude boots and jg starter items as legendary since they are not  
-            if (!buildInto && buildFrom && excludeJGBoots ) {
-                items[item].tags.push('legendary')
+            const { tags, into: buildInto, from: buildFrom, depth, name } = items[item];
+
+            // Flag definitions
+            const excludeJGBoots = !tags.includes('boots') && !tags.includes('jungle');
+            const includesJg = tags.includes('jungle');
+            const includesLane = tags.includes('lane');
+            const consumable = tags.includes('consumable');
+            const trinket = tags.includes('trinket');
+            const tear = name === 'Tear of the Goddess';
+            const darkseal = name === 'Dark Seal';
+            const watchful = name === 'Watchful Wardstone';
+            const armguard = name === 'Shattered Armguard';
+            const mage = tags.includes('mana') || tags.includes('spelldamage') || tags.includes('cooldownreduction') || tags.includes('manaregen'); 
+            const marksman = tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal');
+            const tank = tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen');
+            const assassin = tags.includes('armorpenetration') || tags.includes('damage') || tags.includes('attackspeed') || tags.includes('criticalstrike');
+            const support = tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana');
+            //const fighter = 
+            // Classifications
+            if (!buildInto && buildFrom && excludeJGBoots) {
+                tags.push('legendary');
             }
-            const excludeLegendary = !items[item].tags.includes('legendary')
-            if ((includesJg && excludeLegendary && !consumable && !trinket) || (  includesLane && excludeLegendary && !consumable && !trinket) || tear || darkseal ) {
-                items[item].tags.push('starter')
-            } 
-            // epic items are those that can be made into other items 
-            if (buildFrom && buildInto ||  watchful) {
-                items[item].tags.push('epic')
+            const isLegendary = tags.includes('legendary');
+            const excludeLegendary = !isLegendary;
+            if ((includesJg && excludeLegendary && !consumable && !trinket) || 
+                (includesLane && excludeLegendary && !consumable && !trinket) || 
+                tear || darkseal) {
+                tags.push('starter');
             }
-            // basic items are those that cannot be made from other items 
+
+            if ((buildFrom && buildInto) || watchful) {
+                tags.push('epic');
+            }
+
             if (buildInto && !buildFrom && !tear && !darkseal && !watchful) {
-                items[item].tags.push('basic')
-            } 
+                tags.push('basic');
+            }
+            if (mage) {
+                tags.push('mage');
+            }
+            if (marksman) {
+                tags.push('marksman');
+            }
+            if (tank) {
+                tags.push('tank');
+            }
+            if (assassin) {
+                tags.push('assassin');
+            }
+            if (support) {
+                tags.push('support');
+            }
+
             const itemData: ItemDataType = {
                 id: item,
                 name: items[item].name,
@@ -62,7 +87,9 @@ export class ItemDataService {
             } else {
            if (items[item].tags.includes('boots')){
                 boots.push(itemData)
-            } else if (items[item].tags.includes('basic')) {
+            } else if (items[item].tags.includes('consumable') || items[item].tags.includes('trinket')) {
+                consumablesTrinkets.push(itemData)
+            }else if (items[item].tags.includes('basic')) {
                 basic.push(itemData)
             } else if (items[item].tags.includes('epic')) {
                 epic.push(itemData)
@@ -70,9 +97,7 @@ export class ItemDataService {
                 starter.push(itemData)
             } else if (items[item].tags.includes('legendary')) {
                 legendary.push(itemData)
-            } else if (items[item].tags.includes('consumable') || items[item].tags.includes('trinket')) {
-                consumablesTrinkets.push(itemData)
-            }
+            } 
             }
         }
         itemDataList.starter = starter.sort((a,b) => a.gold.total - b.gold.total);
