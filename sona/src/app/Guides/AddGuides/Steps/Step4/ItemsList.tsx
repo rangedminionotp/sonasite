@@ -30,7 +30,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
       keys.forEach((key) => {
         tempArr[key] = [];
         itemData[key].map((item) => {
-          if (item.tags.some((tag) => tag.includes(category))) {
+          if (item.tags.some((tag) => tag === category)) {
             tempArr[key].push(item);
           }
         });

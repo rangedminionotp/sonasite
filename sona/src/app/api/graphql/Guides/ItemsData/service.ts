@@ -3,11 +3,37 @@ import { pool } from "@/db";
 import {ItemDataType, ItemsType, ItemTree } from "./schema"
  
 export class ItemDataService {
+    public recursiveBuildChildren(itemId: string, items: any, category: string) {
+        const item = items[itemId];
+        if (item.from) {
+            item.from.map(element => {
+                console.log('element', items[element].name)
+                if (!items[element].tags.includes(category)) {
+                    items[element].tags.push(category);
+                }
+                this.recursiveBuildChildren(element, items, category);
+            });
+            
+        }
+    }
     async fetchData(): Promise<ItemsType> { 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`)
         const data = await res.json() 
         let itemDataList: ItemsType = {}
         let items = data.data
+       
+
+        // data tree 
+        let itemTreeList: ItemTree[] = [] 
+        let items = data.tree
+        for (let item in items) {
+            const itemTree: ItemTree = {
+                header: items[item].header.toLowerCase(),
+                tags: items[item].tags.map(element => element.toLowerCase())
+            }
+            itemTreeList.push(itemTree)
+        }
+
 
         let starter: ItemDataType[] = []
         let basic: ItemDataType[] = []
@@ -17,7 +43,7 @@ export class ItemDataService {
         let consumablesTrinkets: ItemDataType[] = []
         for (let item in items) {  
             items[item].tags = items[item].tags.map(element => element.toLowerCase());  
-            const { tags, into: buildInto, from: buildFrom, depth, name } = items[item];
+            const { tags, into: buildInto, from: buildFrom, depth, name, maps } = items[item];
 
             // Flag definitions
             const excludeJGBoots = !tags.includes('boots') && !tags.includes('jungle');
@@ -29,18 +55,25 @@ export class ItemDataService {
             const darkseal = name === 'Dark Seal';
             const watchful = name === 'Watchful Wardstone';
             const armguard = name === 'Shattered Armguard';
-            const mage = tags.includes('mana') || tags.includes('spelldamage') || tags.includes('cooldownreduction') || tags.includes('manaregen'); 
-            const marksman = tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal');
-            const tank = tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen');
-            const assassin = tags.includes('armorpenetration') && tags.includes('damage') || tags.includes('damage') || tags.includes('criticalstrike');
-            const support = tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana');
+            const consumables = consumable || trinket;
+            // const mage = (tags.includes('mana') || tags.includes('spelldamage') || tags.includes('cooldownreduction') || tags.includes('manaregen')) && !tags.includes('damage');
+            // const marksman = tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal');
+            // const tank = tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen');
+            // const assassin = tags.includes('armorpenetration') && tags.includes('damage') || tags.includes('damage') || tags.includes('criticalstrike');
+            // const support = tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana');
             //const fighter = 
+            
+            
             // Classifications
             if (!buildInto && buildFrom && excludeJGBoots) {
                 tags.push('legendary');
             }
+            
             const isLegendary = tags.includes('legendary');
+
             const excludeLegendary = !isLegendary;
+            
+            // add custom groups 
             if ((includesJg && excludeLegendary && !consumable && !trinket) || 
                 (includesLane && excludeLegendary && !consumable && !trinket) || 
                 tear || darkseal) {
@@ -53,22 +86,43 @@ export class ItemDataService {
 
             if (buildInto && !buildFrom && !tear && !darkseal && !watchful) {
                 tags.push('basic');
-            }
+            } 
+
+            // add custom top bar category labels 
+            const mage = (tags.includes('legendary') && tags.includes('spelldamage') || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true  
             if (mage) {
-                tags.push('mage');
-            }
+                tags.push('mage')
+                // console.log('wat', item, items[item].name)
+                this.recursiveBuildChildren(item, items, 'mage')
+            } 
+            const marksman = (tags.includes('legendary') && (tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal') ) || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true
             if (marksman) {
-                tags.push('marksman');
+                tags.push('marksman')
+                this.recursiveBuildChildren(item, items, 'marksman')
             }
+            const tank = (tags.includes('legendary') && (tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen')) || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true
             if (tank) {
                 tags.push('tank');
+                this.recursiveBuildChildren(item, items, 'tank')
             }
+            const assassin = (tags.includes('legendary') && (tags.includes('armorpenetration') && tags.includes('damage') || tags.includes('damage') || tags.includes('criticalstrike')) || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true
             if (assassin) {
                 tags.push('assassin');
+                this.recursiveBuildChildren(item, items, 'assassin')
             }
+            const support = (tags.includes('legendary') && (tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana')) || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true
             if (support) {
                 tags.push('support');
+                this.recursiveBuildChildren(item, items, 'support')
             }
+            const fighter = (tags.includes('legendary') && (tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen')) || tags.includes('starter') || tags.includes('boots') || consumables) && maps[11] === true
+            if (fighter) {
+                tags.push('fighter');
+                this.recursiveBuildChildren(item, items, 'fighter')
+            }
+            // if (support) {
+            //     tags.push('support');
+            // }
 
             const itemData: ItemDataType = {
                 id: item,
@@ -87,7 +141,7 @@ export class ItemDataService {
             } else {
            if (items[item].tags.includes('boots')){
                 boots.push(itemData)
-            } else if (items[item].tags.includes('consumable') || items[item].tags.includes('trinket')) {
+            } else if (consumables) {
                 consumablesTrinkets.push(itemData)
             }else if (items[item].tags.includes('basic')) {
                 basic.push(itemData)
