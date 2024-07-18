@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { CookiesProvider } from "react-cookie";
+import Head from "next/head";
 
 // export const metadata: Metadata = {
 //   title: "Sona Buvelle",

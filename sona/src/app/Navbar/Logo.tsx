@@ -3,7 +3,7 @@ import pic from "@/assets/thuglife.png";
 import Image from "next/image";
 
 const Logo = () => {
-  return <Image src={pic} alt="Logo Image" width={50} height={50} />;
+  return <Image src={pic} alt="Logo Image" width={50} height={50} priority />;
 };
 
 export default Logo;

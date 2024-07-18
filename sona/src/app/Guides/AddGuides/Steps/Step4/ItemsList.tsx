@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ItemByGroupProps } from "./types";
+import { ItemsType } from "./types";
 
-const ItemsList = ({ itemData, summonerData, category }) => {
+const ItemsList = ({
+  itemData,
+  summonerData,
+  category,
+  categoriedItems,
+  setCategoriedItems,
+}) => {
   const [starterVisible, setStarterVisible] = useState(true);
   const [basicVisible, setBasicVisible] = useState(true);
   const [epicVisible, setEpicVisible] = useState(true);
@@ -10,6 +17,26 @@ const ItemsList = ({ itemData, summonerData, category }) => {
   const [bootsVisible, setBootsVisible] = useState(true);
   const [consumablesTrinketsVisible, setConsumablesTrinketsVisible] =
     useState(true);
+
+  React.useEffect(() => {
+    console.log("category", category);
+    if (itemData === null) {
+      return;
+    }
+    if (category === "" || category === "all items") {
+      setCategoriedItems(itemData);
+    } else {
+      const keys = Object.keys(itemData);
+      const copy = itemData;
+      keys.map((key) => {
+        categoriedItems[key] = copy[key].filter((item) =>
+          item.tags.some((tag) => tag.includes(category))
+        );
+      });
+      setCategoriedItems(categoriedItems);
+    }
+  }, [category, itemData]);
+
   const ItemByGroup = ({
     items,
     groupName,
@@ -31,9 +58,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
         >
           {name}
         </div>
-        {itemData &&
-          summonerData &&
-          visible &&
+        {visible &&
           items[groupName].map((item) => (
             <div className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer">
               <div key={item.id}>
@@ -43,8 +68,10 @@ const ItemsList = ({ itemData, summonerData, category }) => {
                   alt={item.name}
                   width={50}
                   height={50}
+                  priority={false}
                   className=" ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
                 />
+                {item.name}
                 <div className="text-gray-300 font-sans text-center items-center">
                   {item.gold.total}
                 </div>
@@ -57,47 +84,51 @@ const ItemsList = ({ itemData, summonerData, category }) => {
 
   return (
     <div className="">
-      <ItemByGroup
-        items={itemData}
-        groupName="consumablesTrinkets"
-        visible={consumablesTrinketsVisible}
-        setVisible={setConsumablesTrinketsVisible}
-        name="Consumables&Trinkets&Others"
-      />
-      <ItemByGroup
-        items={itemData}
-        groupName="starter"
-        visible={starterVisible}
-        setVisible={setStarterVisible}
-        name="Starter"
-      />
-      <ItemByGroup
-        items={itemData}
-        groupName="basic"
-        visible={basicVisible}
-        setVisible={setBasicVisible}
-        name="Basic"
-      />
-      <ItemByGroup
-        items={itemData}
-        groupName="epic"
-        visible={epicVisible}
-        setVisible={setEpicVisible}
-        name="Epic"
-      />
-      <ItemByGroup
-        items={itemData}
-        groupName="legendary"
-        visible={legendaryVisible}
-        setVisible={setLegendaryVisible}
-        name="Legendary"
-      />
-      <ItemByGroup
-        items={itemData}
-        groupName="boots"
-        visible={bootsVisible}
-        setVisible={setBootsVisible}
-      />
+      {categoriedItems && (
+        <>
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="consumablesTrinkets"
+            visible={consumablesTrinketsVisible}
+            setVisible={setConsumablesTrinketsVisible}
+            name="Consumables&Trinkets&Others"
+          />
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="starter"
+            visible={starterVisible}
+            setVisible={setStarterVisible}
+            name="Starter"
+          />
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="basic"
+            visible={basicVisible}
+            setVisible={setBasicVisible}
+            name="Basic"
+          />
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="epic"
+            visible={epicVisible}
+            setVisible={setEpicVisible}
+            name="Epic"
+          />
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="legendary"
+            visible={legendaryVisible}
+            setVisible={setLegendaryVisible}
+            name="Legendary"
+          />
+          <ItemByGroup
+            items={categoriedItems}
+            groupName="boots"
+            visible={bootsVisible}
+            setVisible={setBootsVisible}
+          />
+        </>
+      )}
     </div>
   );
 };

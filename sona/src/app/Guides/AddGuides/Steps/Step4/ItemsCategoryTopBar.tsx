@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ItemsCategoryTopBar = ({ setCategory }) => {
+const ItemsCategoryTopBar = ({ setCategory, category }) => {
   const topbarLabels = [
     "All Items",
     "Fighter",
@@ -19,6 +19,11 @@ const ItemsCategoryTopBar = ({ setCategory }) => {
 
   const handleSearch = () => {
     console.log(search);
+  };
+
+  const handleClickCategory = (category: string) => {
+    setCategory(category);
+    // setCategoriedItems(filterCategories(itemData, category));
   };
   //   const topbarIcons = [
   //     <svg viewBox="0 0 28 28" fill="none">
@@ -80,9 +85,13 @@ const ItemsCategoryTopBar = ({ setCategory }) => {
       {/* topbar labels */}
       {topbarLabels.map((label, index) => (
         <div
-          onClick={() => setCategory(label)}
+          onClick={() => {
+            setCategory(label.toLowerCase());
+          }}
           key={index}
-          className="cursor-pointer text-[#f4f3f0]/80  text-2xl px-5 hover:text-[#f4f3f0] font-sans  "
+          className={`cursor-pointer text-[#f4f3f0]/80  text-2xl px-5 hover:text-[#f4f3f0] font-sans  ${
+            category === label.toLowerCase() ? "bg-[#888888]" : ""
+          }`}
         >
           {label}
         </div>

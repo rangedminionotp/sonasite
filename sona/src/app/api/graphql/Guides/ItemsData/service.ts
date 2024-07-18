@@ -32,7 +32,7 @@ export class ItemDataService {
             const mage = tags.includes('mana') || tags.includes('spelldamage') || tags.includes('cooldownreduction') || tags.includes('manaregen'); 
             const marksman = tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal');
             const tank = tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen');
-            const assassin = tags.includes('armorpenetration') || tags.includes('damage') || tags.includes('attackspeed') || tags.includes('criticalstrike');
+            const assassin = tags.includes('armorpenetration') && tags.includes('damage') || tags.includes('damage') || tags.includes('criticalstrike');
             const support = tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana');
             //const fighter = 
             // Classifications
