@@ -3,13 +3,7 @@ import Image from "next/image";
 import { ItemByGroupProps } from "./types";
 import { ItemsType } from "./types";
 
-const ItemsList = ({
-  itemData,
-  summonerData,
-  category,
-  categoriedItems,
-  setCategoriedItems,
-}) => {
+const ItemsList = ({ itemData, summonerData, category }) => {
   const [starterVisible, setStarterVisible] = useState(true);
   const [basicVisible, setBasicVisible] = useState(true);
   const [epicVisible, setEpicVisible] = useState(true);
@@ -17,9 +11,14 @@ const ItemsList = ({
   const [bootsVisible, setBootsVisible] = useState(true);
   const [consumablesTrinketsVisible, setConsumablesTrinketsVisible] =
     useState(true);
+  const [categoriedItems, setCategoriedItems] = useState<ItemsType | null>(
+    null
+  );
 
   React.useEffect(() => {
     console.log("category", category);
+    console.log("itemData", itemData);
+    console.log("categoriedItems", categoriedItems);
     if (itemData === null) {
       return;
     }
@@ -27,13 +26,16 @@ const ItemsList = ({
       setCategoriedItems(itemData);
     } else {
       const keys = Object.keys(itemData);
-      const copy = itemData;
-      keys.map((key) => {
-        categoriedItems[key] = copy[key].filter((item) =>
-          item.tags.some((tag) => tag.includes(category))
-        );
+      const tempArr = {};
+      keys.forEach((key) => {
+        tempArr[key] = [];
+        itemData[key].map((item) => {
+          if (item.tags.some((tag) => tag.includes(category))) {
+            tempArr[key].push(item);
+          }
+        });
       });
-      setCategoriedItems(categoriedItems);
+      setCategoriedItems(tempArr);
     }
   }, [category, itemData]);
 
@@ -60,8 +62,11 @@ const ItemsList = ({
         </div>
         {visible &&
           items[groupName].map((item) => (
-            <div className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer">
-              <div key={item.id}>
+            <div
+              key={item.id}
+              className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer"
+            >
+              <div>
                 {/* <h1 className="text-xl font-bold mb-2">{item.name}</h1> */}
                 <Image
                   src={`https://ddragon.leagueoflegends.com/cdn/${summonerData[0].version}/img/item/${item.image}`}
@@ -71,7 +76,6 @@ const ItemsList = ({
                   priority={false}
                   className=" ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
                 />
-                {item.name}
                 <div className="text-gray-300 font-sans text-center items-center">
                   {item.gold.total}
                 </div>

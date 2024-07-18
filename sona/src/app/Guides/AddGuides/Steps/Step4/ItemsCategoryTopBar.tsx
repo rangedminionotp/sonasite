@@ -21,10 +21,6 @@ const ItemsCategoryTopBar = ({ setCategory, category }) => {
     console.log(search);
   };
 
-  const handleClickCategory = (category: string) => {
-    setCategory(category);
-    // setCategoriedItems(filterCategories(itemData, category));
-  };
   //   const topbarIcons = [
   //     <svg viewBox="0 0 28 28" fill="none">
   //       <rect x="4.5" y="4.5" width="5" height="5"></rect>

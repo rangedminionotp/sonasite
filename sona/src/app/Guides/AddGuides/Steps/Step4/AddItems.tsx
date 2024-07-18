@@ -10,9 +10,9 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
     null
   );
   const [category, setCategory] = useState<string>("");
-  const [categoriedItems, setCategoriedItems] = useState<ItemsType | null>(
-    null
-  );
+  // const [categoriedItems, setCategoriedItems] = useState<ItemsType | null>(
+  //   null
+  // );
   return (
     <div>
       {itemData && summonerData && (
@@ -22,8 +22,8 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
             itemData={itemData}
             summonerData={summonerData}
             category={category}
-            categoriedItems={categoriedItems}
-            setCategoriedItems={setCategoriedItems}
+            // categoriedItems={categoriedItems}
+            // setCategoriedItems={setCategoriedItems}
           />
         </>
       )}
