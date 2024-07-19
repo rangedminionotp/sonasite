@@ -3,7 +3,7 @@ import ItemsList from "./ItemsList";
 import ItemsNavbar from "./ItemsNavbar";
 import ItemsCategoryTopBar from "./ItemsCategoryTopBar";
 import { ItemsType } from "./types";
-
+import ItemsSidebar from "./ItemsSidebar";
 const AddItems = ({ itemData, summonerData, itemTree }) => {
   // return <ItemsList itemData={itemData} summonerData={summonerData} />
   const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
@@ -17,14 +17,13 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
     <div>
       {itemData && summonerData && (
         <>
-          <ItemsCategoryTopBar setCategory={setCategory} category={category} />
-          <ItemsList
+          <ItemsCategoryTopBar
             itemData={itemData}
             summonerData={summonerData}
+            setCategory={setCategory}
             category={category}
-            // categoriedItems={categoriedItems}
-            // setCategoriedItems={setCategoriedItems}
           />
+          <ItemsSidebar />
         </>
       )}
       {/* <ItemsNavbar

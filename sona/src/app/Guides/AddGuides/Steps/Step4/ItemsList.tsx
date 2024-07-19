@@ -16,9 +16,6 @@ const ItemsList = ({ itemData, summonerData, category }) => {
   );
 
   React.useEffect(() => {
-    console.log("category", category);
-    console.log("itemData", itemData);
-    console.log("categoriedItems", categoriedItems);
     if (itemData === null) {
       return;
     }
