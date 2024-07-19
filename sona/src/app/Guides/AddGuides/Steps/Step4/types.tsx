@@ -29,3 +29,40 @@ interface ItemDataType {
   buildFrom?: string[] | null;
   inStore?: boolean | null;
 }
+
+export const ItemSideBarNames = [
+  "Attack Damage",
+  "Crit Chance",
+  "Attack Speed",
+  "Armor Penetration",
+  "On-Hit",
+  "Life Steal",
+  "Ability Power",
+  "Mana",
+  "Magic Penetration",
+  "Health",
+  "Armor",
+  "Magic Resist",
+  "Ability Haste",
+  "Movement Speed",
+  "Omni-Vamp",
+  "Mana Regen",
+];
+export const ItemSideBarTags = [
+  "damage",
+  "criticalstrike",
+  "attackspeed",
+  "armorpenetration",
+  "onhit",
+  "lifesteal",
+  "spelldamage",
+  "mana",
+  "magicpenetration",
+  "health",
+  "armor",
+  "spellblock",
+  "cooldownreduction",
+  ["boots", "nonbootsmovement"],
+  "spellvamp",
+  "manaregen",
+];

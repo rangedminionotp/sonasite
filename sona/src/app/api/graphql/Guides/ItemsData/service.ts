@@ -20,20 +20,7 @@ export class ItemDataService {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`)
         const data = await res.json() 
         let itemDataList: ItemsType = {}
-        let items = data.data
-       
-
-        // data tree 
-        let itemTreeList: ItemTree[] = [] 
-        let items = data.tree
-        for (let item in items) {
-            const itemTree: ItemTree = {
-                header: items[item].header.toLowerCase(),
-                tags: items[item].tags.map(element => element.toLowerCase())
-            }
-            itemTreeList.push(itemTree)
-        }
-
+        let items = data.data 
 
         let starter: ItemDataType[] = []
         let basic: ItemDataType[] = []
@@ -55,14 +42,7 @@ export class ItemDataService {
             const darkseal = name === 'Dark Seal';
             const watchful = name === 'Watchful Wardstone';
             const armguard = name === 'Shattered Armguard';
-            const consumables = consumable || trinket;
-            // const mage = (tags.includes('mana') || tags.includes('spelldamage') || tags.includes('cooldownreduction') || tags.includes('manaregen')) && !tags.includes('damage');
-            // const marksman = tags.includes('attackspeed') || tags.includes('criticalstrike') || tags.includes('damage') || tags.includes('lifesteal');
-            // const tank = tags.includes('health') || tags.includes('spellblock') || tags.includes('armor') || tags.includes('healthregen');
-            // const assassin = tags.includes('armorpenetration') && tags.includes('damage') || tags.includes('damage') || tags.includes('criticalstrike');
-            // const support = tags.includes('healthregen') || tags.includes('manaregen') || tags.includes('cooldownreduction') || tags.includes('mana');
-            //const fighter = 
-            
+            const consumables = consumable || trinket; 
             
             // Classifications
             if (!buildInto && buildFrom && excludeJGBoots) {
@@ -162,18 +142,19 @@ export class ItemDataService {
         itemDataList.consumablesTrinkets = consumablesTrinkets.sort((a,b) => a.gold.total - b.gold.total);
         return itemDataList
     }
-    async fetchItemTree(): Promise<ItemTree[]> {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`) 
-        const data = await res.json()
-        let itemTreeList: ItemTree[] = [] 
-        let items = data.tree
-        for (let item in items) {
-            const itemTree: ItemTree = {
-                header: items[item].header.toLowerCase(),
-                tags: items[item].tags.map(element => element.toLowerCase())
-            }
-            itemTreeList.push(itemTree)
-        }
-        return itemTreeList
-    }
-}
+    // async fetchItemTree(): Promise<ItemTree[]> {
+    //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`) 
+    //     const data = await res.json()
+    //     let itemTreeList: ItemTree[] = [] 
+    //     let items = data.tree
+    //     for (let item in items) {
+    //         const itemTree: ItemTree = {
+    //             header: items[item].header.toLowerCase(),
+    //             tags: items[item].tags.map(element => element.toLowerCase())
+    //         }
+    //         itemTreeList.push(itemTree)
+    //     }
+    //     return itemTreeList
+    // }
+} 
+

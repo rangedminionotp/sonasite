@@ -130,6 +130,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
             groupName="boots"
             visible={bootsVisible}
             setVisible={setBootsVisible}
+            name="Boots"
           />
         </>
       )}
