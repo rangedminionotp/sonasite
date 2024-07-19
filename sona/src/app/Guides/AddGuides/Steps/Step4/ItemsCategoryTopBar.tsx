@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import ItemsList from "./ItemsList";
 import Image from "next/image";
+import SearchIcon from "@mui/icons-material/Search";
+import { Input, InputAdornment } from "@mui/joy";
+
 const ItemsCategoryTopBar = ({
   itemData,
   summonerData,
@@ -37,45 +40,63 @@ const ItemsCategoryTopBar = ({
     console.log(search);
   };
   return (
-    <div className="gap-2">
-      {/* search component */}
+    <nav className=" text-white p-4 flex justify-center items-center left-0 w-full ">
+      <div className="flex items-center justify-center gap-2">
+        {/* search component */}
+        <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center relative w-full max-w-xs">
+            {/* Input field */}
 
-      <div className="flex items-center justify-center gap-2"></div>
-
-      {/* topbar labels */}
-      {topbarLabels.map((label, index) => (
-        <div
-          onClick={() => {
-            if (!category) {
-              setCategory(label.toLowerCase());
-            } else {
-              setCategory("");
-            }
-          }}
-          key={index}
-          className={`cursor-pointer text-[#f4f3f0]/80  text-2xl px-5 hover:text-[#f4f3f0] font-sans  ${
-            category === label.toLowerCase() ? "bg-[#888888]" : ""
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            <Image
-              src={topbarIcons[index]}
-              className="hover:brightness-150 transition-all duration-100"
-              width={30}
-              height={30}
+            <Input
+              placeholder="Search..."
+              sx={{
+                bgcolor: "transparent", // Transparent background
+                color: "white", // Text color
+                border: "1px solid transparent", // No visible border
+                "& .MuiInputAdornment-root": {
+                  color: "white", // Icon color
+                },
+                "&:hover": {
+                  bgcolor: "rgba(255, 255, 255, 0.1)", // Slight background on hover
+                },
+                "& .MuiInputBase-root": {
+                  paddingLeft: 3, // Padding to make space for the icon
+                },
+              }}
+              endDecorator={<SearchIcon />}
             />
-            {label}
           </div>
         </div>
-      ))}
-      <ItemsList
-        itemData={itemData}
-        summonerData={summonerData}
-        category={category}
-        // categoriedItems={categoriedItems}
-        // setCategoriedItems={setCategoriedItems}
-      />
-    </div>
+
+        {/* topbar labels */}
+        {topbarLabels.map((label, index) => (
+          <div
+            onClick={() => {
+              if (!category) {
+                setCategory(label.toLowerCase());
+              } else {
+                setCategory("");
+              }
+            }}
+            key={index}
+            className={`cursor-pointer text-[#f4f3f0]/80  text-xl px-5 hover:text-[#f4f3f0] font-sans  ${
+              category === label.toLowerCase() ? "bg-[#888888]" : ""
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Image
+                src={topbarIcons[index]}
+                className="hover:brightness-150 transition-all duration-100"
+                width={30}
+                height={30}
+              />
+              {label}
+            </div>
+          </div>
+        ))}
+        {/*   */}
+      </div>
+    </nav>
   );
 };
 
