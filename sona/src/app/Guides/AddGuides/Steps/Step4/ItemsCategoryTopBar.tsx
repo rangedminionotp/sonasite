@@ -73,7 +73,7 @@ const ItemsCategoryTopBar = ({
           <div
             onClick={() => {
               if (category === label.toLowerCase()) {
-                setCategory("");
+                setCategory("all items");
               } else {
                 setCategory(label.toLowerCase());
               }

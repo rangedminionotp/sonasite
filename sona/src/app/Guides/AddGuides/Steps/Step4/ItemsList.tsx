@@ -22,49 +22,42 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
   );
 
   useEffect(() => {
-    console.log(category, subCategories);
     if (itemData === null) {
       return;
     }
-    // handle top category filter
-    if (category === "" || category === "all items") {
-      setCategoriedItems(itemData);
-    } else {
-      const keys = Object.keys(itemData);
-      const tempArr = {};
-      keys.forEach((key) => {
-        tempArr[key] = [];
-        itemData[key].forEach((item) => {
-          if (item.tags.some((tag) => tag === category)) {
-            tempArr[key].push(item);
-          }
-        });
-      });
-      setCategoriedItems(tempArr);
-    }
-    // handle sidebar subcategories filter
-    if (subCategories && subCategories.length > 0) {
-      const keys = Object.keys(itemData);
-      const tempArr = {};
-      keys.forEach((key) => {
-        tempArr[key] = [];
-        let temp;
-        itemData[key].forEach((item) => {
+
+    const keys = Object.keys(itemData);
+    const tempArr = {};
+
+    // Iterate over each key in itemData
+    keys.forEach((key) => {
+      tempArr[key] = itemData[key].filter((item) => {
+        // Check if the item matches the selected category
+        const categoryMatch =
+          category === "all items" || item.tags.includes(category);
+
+        // Handle special case for "boots" and "nonbootsmovement" subcategory
+        let subCategoryMatch = true;
+        if (subCategories && subCategories.length > 0) {
+          let tempSubCategories;
           if (key === "boots" && subCategories.includes("nonbootsmovement")) {
-            temp = subCategories.filter(
+            tempSubCategories = subCategories.filter(
               (subCategory) => subCategory !== "nonbootsmovement"
             );
-            temp.push("boots");
+            tempSubCategories.push("boots");
           } else {
-            temp = subCategories;
+            tempSubCategories = subCategories;
           }
-          if (checkSubset(item.tags, temp)) {
-            tempArr[key].push(item);
-          }
-        });
+          subCategoryMatch = checkSubset(item.tags, tempSubCategories);
+        }
+
+        // Return true only if both category and subcategory conditions are met
+        return categoryMatch && subCategoryMatch;
       });
-      setCategoriedItems(tempArr);
-    }
+    });
+
+    // Update the state with the filtered items
+    setCategoriedItems(tempArr);
   }, [category, itemData, subCategories]);
 
   const ItemByGroup = ({
