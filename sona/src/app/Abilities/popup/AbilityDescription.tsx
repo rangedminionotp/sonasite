@@ -3,6 +3,7 @@ import AbilitiesContext from "../SharedContext";
 import Passive from "@/assets/abilities/Power_Chord.webp";
 import Image from "next/image";
 import AbilitiesVideo from "./AbilitiesVideo";
+import ReactHtmlParser from "react-html-parser";
 
 const parseSpellText = (spellText) => {
   const regexReplacements = [
@@ -118,20 +119,18 @@ const AbilityDescription = () => {
                 <div className="ability-description-text text-white drop-shadow-lg border-b-2 font-mono border-gray-300 pb-2">
                   {index !== 4 ? fetchedData && ability.description : null}
                 </div>
-                <div
-                  className="ability-description-text font-bold text-white drop-shadow-lg border border-gray-300 p-2"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      fetchedData &&
+                <div className="ability-description-text font-bold text-white drop-shadow-lg border border-gray-300 p-2">
+                  {ReactHtmlParser(
+                    fetchedData &&
                       rawData[index] &&
                       parseSpellText(
                         resolveSpellText(
                           index !== 4 ? ability.tooltip : ability.description,
                           rawData[index]
                         )
-                      ),
-                  }}
-                />
+                      )
+                  )}
+                </div>
               </div>
             </div>
           </div>

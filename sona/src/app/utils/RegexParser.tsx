@@ -1,59 +1,8 @@
-// const regexReplacements = [
-//   {
-//     regex: /<mainText>(.*?)<\/mainText>/g,
-//     replacement: { text: "$1", style: "text-lg font-bold" },
-//   },
-//   {
-//     regex: /<stats>(.*?)<\/stats>/g,
-//     replacement: { text: "$1", style: "flex flex-col space-y-2" },
-//   },
-//   {
-//     regex: /<attention>(.*?)<\/attention>/g,
-//     replacement: { text: "$1", style: "text-red-500 font-bold" },
-//   },
-//   {
-//     regex: /<passive>(.*?)<\/passive>/g,
-//     replacement: { text: "$1", style: "italic" },
-//   },
-//   {
-//     regex: /<li>(.*?)<\/li>/g,
-//     replacement: { text: "$1", style: "list-disc pl-5" },
-//   },
-//   {
-//     regex: /<physicalDamage>(.*?)<\/physicalDamage>/g,
-//     replacement: { text: "$1", style: "text-blue-400 font-bold" },
-//   },
-//   {
-//     regex: /<healing>(.*?)<\/healing>/g,
-//     replacement: { text: "$1", style: "text-green-500 font-bold" },
-//   },
-// ];
-
-// export const parseTextWithComponents = (inputText) => {
-//   let parsedData = [];
-
-//   regexReplacements.forEach(({ regex, replacement }) => {
-//     const matches = [...inputText.matchAll(regex)].map((match) => ({
-//       text: match[1],
-//       style: replacement.style,
-//     }));
-//     console.log("matches", matches);
-//     parsedData.push(matches);
-//   });
-//   console.log("parsedData", parsedData.text);
-//   // Flatten the array and join the text segments
-//   const flattenedData = parsedData
-//     .flat()
-//     .map((data) => data.text)
-//     .join(" ");
-
-//   return flattenedData;
-// };
 export const parseTextWithComponents = (spellText) => {
   const regexReplacements = [
     {
       regex: /<mainText>(.*?)<\/mainText>/g,
-      replacement: '<div class="text-lg font-bold">$1</div>',
+      replacement: '<div class="text-md">$1</div>',
     },
     {
       regex: /<stats>(.*?)<\/stats>/g,
@@ -65,7 +14,11 @@ export const parseTextWithComponents = (spellText) => {
     },
     {
       regex: /<passive>(.*?)<\/passive>/g,
-      replacement: '<span class="italic">$1</span>',
+      replacement: '<span class="italic text-[#9d883b] font-bold">$1</span>',
+    },
+    {
+      regex: /<active>(.*?)<\/active>/g,
+      replacement: '<span class="italic text-[#9d883b] font-bold">$1</span>',
     },
     {
       regex: /<li>(.*?)<\/li>/g,
@@ -73,16 +26,32 @@ export const parseTextWithComponents = (spellText) => {
     },
     {
       regex: /<physicalDamage>(.*?)<\/physicalDamage>/g,
-      replacement: '<span class="text-blue-400 font-bold">$1</span>',
+      replacement: '<span class= text-blue-400 font-semibold">$1</span>',
     },
     {
       regex: /<healing>(.*?)<\/healing>/g,
-      replacement: '<span class="text-green-500 font-bold">$1</span>',
+      replacement: '<span class= "text-green-500" font-semibold">$1</span>',
     },
-    // {
-    //   regex: /<br>/g,
-    //   replacement: "<div></div>",
-    // },
+    {
+      regex: /<magicDamage>(.*?)<\/magicDamage>/g,
+      replacement: '<span class="text-[#5E55C8] font-semibold">$1</span>',
+    },
+    {
+      regex: /<speed>(.*?)<\/speed>/g,
+      replacement: '<span class="text-[#C8C0B2] font-semibold">$1</span>',
+    },
+    {
+      regex: /<scaleMR>(.*?)<\/scaleMR>/g,
+      replacement: '<span class="text-[#5E55C8] font-semibold">$1</span>',
+    },
+    {
+      regex: /<attention>(.*?)<\/attention>/g,
+      replacement: '<span class="text-[#C8C0B2] font-semibold">$1</span>',
+    },
+    {
+      regex: /<br><br>/g,
+      replacement: "<br>",
+    },
   ];
 
   let parsedText = spellText;

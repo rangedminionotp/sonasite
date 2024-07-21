@@ -141,7 +141,7 @@ const ItemsList = ({
                         </div>
                       </div>
                     </div>
-                    <div className="text-gray-200 font-sans text-base">
+                    <div className="text-gray-500 font-sans mt-3">
                       {ReactHtmlParser(
                         parseTextWithComponents(item.description)
                       )}
