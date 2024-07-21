@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ItemByGroupProps } from "./types";
 import { ItemsType } from "./types";
+import { ItemSideBarMap } from "./types";
 
-const ItemsList = ({ itemData, summonerData, category }) => {
+let checkSubset = (parentArray, subsetArray) => {
+  return subsetArray.every((el) => {
+    return parentArray.includes(el);
+  });
+};
+
+const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
   const [starterVisible, setStarterVisible] = useState(true);
   const [basicVisible, setBasicVisible] = useState(true);
   const [epicVisible, setEpicVisible] = useState(true);
@@ -15,10 +21,12 @@ const ItemsList = ({ itemData, summonerData, category }) => {
     null
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (itemData === null) {
       return;
     }
+
+    // handle top category filter
     if (category === "" || category === "all items") {
       setCategoriedItems(itemData);
     } else {
@@ -26,7 +34,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
       const tempArr = {};
       keys.forEach((key) => {
         tempArr[key] = [];
-        itemData[key].map((item) => {
+        itemData[key].forEach((item) => {
           if (item.tags.some((tag) => tag === category)) {
             tempArr[key].push(item);
           }
@@ -34,7 +42,26 @@ const ItemsList = ({ itemData, summonerData, category }) => {
       });
       setCategoriedItems(tempArr);
     }
-  }, [category, itemData]);
+    // handle sidebar subcategories filter
+    if (subCategories) {
+      const keys = Object.keys(itemData);
+      const tempArr = {};
+      console.log(itemData["boots"]);
+
+      keys.forEach((key) => {
+        tempArr[key] = [];
+        if (key === "boots" && subCategories.includes("nonbootsmovement")) {
+          tempArr["boots"] = itemData["boots"];
+        }
+        itemData[key].forEach((item) => {
+          if (checkSubset(item.tags, subCategories)) {
+            tempArr[key].push(item);
+          }
+        });
+      });
+      setCategoriedItems(tempArr);
+    }
+  }, [category, itemData, subCategories]);
 
   const ItemByGroup = ({
     items,
@@ -43,14 +70,14 @@ const ItemsList = ({ itemData, summonerData, category }) => {
     setVisible,
     name,
   }: {
-    items: ItemDataType;
+    items: ItemsType[keyof ItemsType];
     groupName: string;
     visible: boolean;
     setVisible: (visible: boolean) => void;
     name: string;
   }) => {
     return (
-      <div className="flex flex-wrap ">
+      <div className="flex flex-wrap w-full">
         <div
           onClick={() => setVisible(!visible)}
           className="w-full text-3xl font-bold mb-4 hover:cursor-pointer uppercase text-[#f4f3f0]"
@@ -64,14 +91,13 @@ const ItemsList = ({ itemData, summonerData, category }) => {
               className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer"
             >
               <div>
-                {/* <h1 className="text-xl font-bold mb-2">{item.name}</h1> */}
                 <Image
                   src={`https://ddragon.leagueoflegends.com/cdn/${summonerData[0].version}/img/item/${item.image}`}
                   alt={item.name}
                   width={50}
                   height={50}
                   priority={false}
-                  className=" ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
+                  className="ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
                 />
                 <div className="text-gray-300 font-sans text-center items-center">
                   {item.gold.total}
@@ -84,7 +110,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
   };
 
   return (
-    <div className="">
+    <div className="w-full ">
       {categoriedItems && (
         <>
           <ItemByGroup
@@ -92,7 +118,7 @@ const ItemsList = ({ itemData, summonerData, category }) => {
             groupName="consumablesTrinkets"
             visible={consumablesTrinketsVisible}
             setVisible={setConsumablesTrinketsVisible}
-            name="Consumables&Trinkets&Others"
+            name="Consumables & Trinkets & Others"
           />
           <ItemByGroup
             items={categoriedItems}

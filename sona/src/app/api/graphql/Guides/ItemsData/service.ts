@@ -142,19 +142,19 @@ export class ItemDataService {
         itemDataList.consumablesTrinkets = consumablesTrinkets.sort((a,b) => a.gold.total - b.gold.total);
         return itemDataList
     }
-    // async fetchItemTree(): Promise<ItemTree[]> {
-    //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`) 
-    //     const data = await res.json()
-    //     let itemTreeList: ItemTree[] = [] 
-    //     let items = data.tree
-    //     for (let item in items) {
-    //         const itemTree: ItemTree = {
-    //             header: items[item].header.toLowerCase(),
-    //             tags: items[item].tags.map(element => element.toLowerCase())
-    //         }
-    //         itemTreeList.push(itemTree)
-    //     }
-    //     return itemTreeList
-    // }
+    async fetchItemTree(): Promise<ItemTree[]> {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/fetchItemData`) 
+        const data = await res.json()
+        let itemTreeList: ItemTree[] = [] 
+        let items = data.tree
+        for (let item in items) {
+            const itemTree: ItemTree = {
+                header: items[item].header.toLowerCase(),
+                tags: items[item].tags.map(element => element.toLowerCase())
+            }
+            itemTreeList.push(itemTree)
+        }
+        return itemTreeList
+    }
 } 
 

@@ -54,10 +54,22 @@ export const ItemSideBarTags = [
   ],
   ["spelldamage", "mana", "magicpenetration"],
   ["health", "armor", "spellblock"],
-  [
-    "cooldownreduction",
-    ["boots", "nonbootsmovement"],
-    "spellvamp",
-    "manaregen",
-  ],
+  ["cooldownreduction", "nonbootsmovement", "spellvamp", "manaregen"],
 ];
+
+// Create a function to generate the key-value pairs
+const createItemSidebarMap = (names, tags) => {
+  const map = {};
+  for (let i = 0; i < names.length; i++) {
+    for (let j = 0; j < names[i].length; j++) {
+      map[names[i][j]] = tags[i][j];
+    }
+  }
+  return map;
+};
+
+// Generate the map
+export const ItemSideBarMap = createItemSidebarMap(
+  ItemSideBarNames,
+  ItemSideBarTags
+);

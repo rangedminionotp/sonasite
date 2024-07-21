@@ -17,38 +17,41 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
   const [subCategories, setSubCategories] = useState<string[] | null>(null);
   return (
     <div className="flex flex-col h-screen">
-      {" "}
-      {/* Ensure full height */}
       {itemData && summonerData && (
         <>
           {/* Top Bar */}
-          <div className=" text-white p-4 fixed top-0 left-0 w-full z-10">
+          <div className="text-white p-4 fixed top-0 left-0 w-full z-10">
             <ItemsCategoryTopBar
               itemData={itemData}
               summonerData={summonerData}
               setCategory={setCategory}
               category={category}
             />
+            <Divider className="bg-gray-600" />
           </div>
 
           {/* Content and Sidebar */}
           <div className="flex flex-grow pt-16">
-            {" "}
-            {/* Added pt-16 to account for fixed top bar */}
-            <aside className=" text-white w-64 p-4 fixed top-16 left-0 h-full z-20">
+            {/* Sidebar */}
+            <aside className="text-white w-80 p-4 fixed top-20 left-0 h-full z-20 items-center justify-center">
               <ItemsSidebar
                 subCategories={subCategories}
                 setSubCategories={setSubCategories}
               />
-              {/* Divider below sidebar */}
+              <Divider
+                orientation="vertical"
+                flexItem
+                className="bg-gray-600 ml-80"
+              />
             </aside>
-            <main className="flex-grow ml-64 md:ml-0 p-4 overflow-auto ">
-              {/* Divider above main content */}
-              {/* Main content goes here */}
+
+            {/* Main content */}
+            <main className="flex-grow ml-80 overflow-auto">
               <ItemsList
                 itemData={itemData}
                 summonerData={summonerData}
                 category={category}
+                subCategories={subCategories}
               />
             </main>
           </div>

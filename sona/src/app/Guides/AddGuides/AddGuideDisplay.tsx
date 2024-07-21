@@ -64,12 +64,12 @@ const AddGuideDisplay = ({
         className={
           !open
             ? "hidden"
-            : `top-0 left-0 w-full h-screen bg-[#101730] z-30 absolute`
+            : `top-0 left-0 w-full h-screen bg-[#101730] z-40 absolute`
         }
       >
         <SummonerRiftBg />
         <div className="absolute top-0 w-full h-full justify-center items-center">
-          <div className=" absolute top-4 left-4">
+          <div className=" absolute top-4 left-4 z-30">
             <AddGuideClose setOpen={setOpen} />
             <FormStepper
               summonerData={summonerData}

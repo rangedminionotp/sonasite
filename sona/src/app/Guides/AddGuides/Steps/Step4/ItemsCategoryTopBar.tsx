@@ -40,7 +40,7 @@ const ItemsCategoryTopBar = ({
     console.log(search);
   };
   return (
-    <nav className=" text-white p-4 flex justify-center items-center left-0 w-full ">
+    <nav className=" text-white p-4 flex justify-center items-center left-0 w-full   ">
       <div className="flex items-center justify-center gap-2">
         {/* search component */}
         <div className="flex items-center justify-center gap-2">
@@ -72,21 +72,25 @@ const ItemsCategoryTopBar = ({
         {topbarLabels.map((label, index) => (
           <div
             onClick={() => {
-              if (!category) {
-                setCategory(label.toLowerCase());
-              } else {
+              if (category === label.toLowerCase()) {
                 setCategory("");
+              } else {
+                setCategory(label.toLowerCase());
               }
             }}
             key={index}
-            className={`cursor-pointer text-[#f4f3f0]/80  text-xl px-5 hover:text-[#f4f3f0] font-sans  ${
-              category === label.toLowerCase() ? "bg-[#888888]" : ""
+            className={`cursor-pointer text-[#f4f3f0]/80  text-xl px-5 hover:text-[#f4f3f0] group font-sans transition-all duration-100 ${
+              category === label.toLowerCase()
+                ? "bg-[#888888] text-[#f4f3f0]"
+                : ""
             }`}
           >
             <div className="flex items-center gap-2">
               <Image
                 src={topbarIcons[index]}
-                className="hover:brightness-150 transition-all duration-100"
+                className={` group-hover:brightness-150 transition-all duration-100 ${
+                  category === label.toLowerCase() ? "brightness-150" : ""
+                }`}
                 width={30}
                 height={30}
               />

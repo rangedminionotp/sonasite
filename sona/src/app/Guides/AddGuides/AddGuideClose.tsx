@@ -5,7 +5,7 @@ const AddGuideClose = ({ setOpen }) => {
   return (
     <div
       name="popup-close"
-      className="text-6xl text-white hover:cursor-pointer"
+      className="text-6xl text-white hover:cursor-pointer z-30 absolute"
       onClick={() => {
         setOpen(false);
         document.body.style.overflowY = "auto";
