@@ -15,6 +15,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
   //   null
   // );
   const [subCategories, setSubCategories] = useState<string[] | null>(null);
+  const [find, setFind] = useState<string>("");
   return (
     <div className="flex flex-col h-screen">
       {itemData && summonerData && (
@@ -26,6 +27,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
               summonerData={summonerData}
               setCategory={setCategory}
               category={category}
+              setFind={setFind}
             />
             <Divider className="bg-gray-600" />
           </div>
@@ -52,6 +54,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
                 summonerData={summonerData}
                 category={category}
                 subCategories={subCategories}
+                find={find}
               />
             </main>
           </div>

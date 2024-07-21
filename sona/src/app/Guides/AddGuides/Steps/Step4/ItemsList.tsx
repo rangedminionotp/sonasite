@@ -9,7 +9,13 @@ let checkSubset = (parentArray, subsetArray) => {
   });
 };
 
-const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
+const ItemsList = ({
+  itemData,
+  summonerData,
+  category,
+  subCategories,
+  find,
+}) => {
   const [starterVisible, setStarterVisible] = useState(true);
   const [basicVisible, setBasicVisible] = useState(true);
   const [epicVisible, setEpicVisible] = useState(true);
@@ -28,7 +34,7 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
 
     const keys = Object.keys(itemData);
     const tempArr = {};
-
+    console.log("find", find);
     // Iterate over each key in itemData
     keys.forEach((key) => {
       tempArr[key] = itemData[key].filter((item) => {
@@ -36,6 +42,7 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
         const categoryMatch =
           category === "all items" || item.tags.includes(category);
 
+        const findMatch = item.name.toLowerCase().includes(find.toLowerCase());
         // Handle special case for "boots" and "nonbootsmovement" subcategory
         let subCategoryMatch = true;
         if (subCategories && subCategories.length > 0) {
@@ -52,13 +59,13 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
         }
 
         // Return true only if both category and subcategory conditions are met
-        return categoryMatch && subCategoryMatch;
+        return categoryMatch && subCategoryMatch && findMatch;
       });
     });
 
     // Update the state with the filtered items
     setCategoriedItems(tempArr);
-  }, [category, itemData, subCategories]);
+  }, [category, itemData, subCategories, find]);
 
   const ItemByGroup = ({
     items,

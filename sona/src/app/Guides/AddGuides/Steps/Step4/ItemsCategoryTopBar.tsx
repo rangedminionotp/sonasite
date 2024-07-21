@@ -9,6 +9,7 @@ const ItemsCategoryTopBar = ({
   summonerData,
   setCategory,
   category,
+  setFind,
 }) => {
   const topbarLabels = [
     "All Items",
@@ -33,11 +34,14 @@ const ItemsCategoryTopBar = ({
   const [search, setSearch] = useState("");
 
   const handleChange = (event) => {
+    console.log("in find handle change", event.target.value);
     setSearch(event.target.value);
+    setFind(event.target.value);
   };
 
   const handleSearch = () => {
-    console.log(search);
+    console.log("in handle search");
+    setFind(search);
   };
   return (
     <nav className=" text-white p-4 flex justify-center items-center left-0 w-full   ">
@@ -63,7 +67,9 @@ const ItemsCategoryTopBar = ({
                   paddingLeft: 3, // Padding to make space for the icon
                 },
               }}
+              onChange={handleChange}
               endDecorator={<SearchIcon />}
+              value={search}
             />
           </div>
         </div>
