@@ -22,8 +22,11 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
   );
 
   useEffect(() => {
+    console.log(category, subCategories);
     if (itemData === null) {
       return;
+    } else {
+      setCategoriedItems(itemData);
     }
 
     // handle top category filter
@@ -34,7 +37,7 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
       const tempArr = {};
       keys.forEach((key) => {
         tempArr[key] = [];
-        itemData[key].forEach((item) => {
+        categoriedItems[key].forEach((item) => {
           if (item.tags.some((tag) => tag === category)) {
             tempArr[key].push(item);
           }
@@ -43,17 +46,15 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
       setCategoriedItems(tempArr);
     }
     // handle sidebar subcategories filter
-    if (subCategories) {
+    if (subCategories && subCategories.length > 0) {
       const keys = Object.keys(itemData);
       const tempArr = {};
-      console.log(itemData["boots"]);
-
       keys.forEach((key) => {
         tempArr[key] = [];
         if (key === "boots" && subCategories.includes("nonbootsmovement")) {
           tempArr["boots"] = itemData["boots"];
         }
-        itemData[key].forEach((item) => {
+        categoriedItems[key].forEach((item) => {
           if (checkSubset(item.tags, subCategories)) {
             tempArr[key].push(item);
           }

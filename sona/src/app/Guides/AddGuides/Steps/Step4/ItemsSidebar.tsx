@@ -14,8 +14,6 @@ const ItemsSidebar = ({ subCategories, setSubCategories }) => {
     } else {
       setSubCategories([ItemSideBarMap[subCategory]]);
     }
-    console.log("subCategories", subCategories);
-    // console.log("ItemSideBarMap", ItemSideBarMap[subCategory]);
   };
   return (
     <div>
