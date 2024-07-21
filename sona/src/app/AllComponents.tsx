@@ -63,6 +63,7 @@ const AllComponents = () => {
       tags
       buildFrom
       buildInto
+      description
       gold {
         base
         sell
@@ -84,6 +85,7 @@ const AllComponents = () => {
         sell
         total
       }
+      description
       image
       id
       plaintext
@@ -96,6 +98,7 @@ const AllComponents = () => {
       id
       image
       plaintext
+      description
       gold {
         base
         purchasable
@@ -111,6 +114,7 @@ const AllComponents = () => {
       image
       plaintext
       id
+      description
       gold {
         base
         purchasable
@@ -123,6 +127,7 @@ const AllComponents = () => {
       tags
       buildFrom
       buildInto
+      description
       gold {
         base
         purchasable
@@ -139,6 +144,7 @@ const AllComponents = () => {
       name
       buildFrom
       buildInto
+      description
       id
       image
       inStore

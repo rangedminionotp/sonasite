@@ -37,6 +37,10 @@ export class ItemDataType {
     buildFrom?: string[] | null 
     @Field({nullable: true})
     inStore?: boolean
+
+    @Field()
+    description!: string
+    
     // @Field(() => GraphQLJSONObject, {nullable: true})
     // maps?: Record<string, number> | null
     // @Field(() => GraphQLJSONObject, { nullable: true })

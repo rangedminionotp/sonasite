@@ -2,13 +2,22 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ItemsType } from "./types";
 import { ItemSideBarMap } from "./types";
+import ReactHtmlParser from "react-html-parser";
 
+import { parseTextWithComponents } from "@/app/utils/RegexParser";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/app/components/ui/hover-card";
 let checkSubset = (parentArray, subsetArray) => {
   return subsetArray.every((el) => {
     return parentArray.includes(el);
   });
 };
-
+const StyledText = ({ text, style }) => {
+  return <p className={style}>{text}</p>; // Correctly accessing the `text` property
+};
 const ItemsList = ({
   itemData,
   summonerData,
@@ -89,26 +98,59 @@ const ItemsList = ({
           {name}
         </div>
         {visible &&
-          items[groupName].map((item) => (
-            <div
-              key={item.id}
-              className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer"
-            >
-              <div>
-                <Image
-                  src={`https://ddragon.leagueoflegends.com/cdn/${summonerData[0].version}/img/item/${item.image}`}
-                  alt={item.name}
-                  width={50}
-                  height={50}
-                  priority={false}
-                  className="ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
-                />
-                <div className="text-gray-300 font-sans text-center items-center">
-                  {item.gold.total}
-                </div>
-              </div>
-            </div>
-          ))}
+          items[groupName].map((item) => {
+            return (
+              <HoverCard>
+                <HoverCardTrigger>
+                  <div
+                    key={item.id}
+                    className="hover:bg-[#4d4c4b] hover:bg-opacity-50 p-3 group hover:cursor-pointer"
+                  >
+                    <div>
+                      <Image
+                        src={`https://ddragon.leagueoflegends.com/cdn/${summonerData[0].version}/img/item/${item.image}`}
+                        alt={item.name}
+                        width={50}
+                        height={50}
+                        priority={false}
+                        className="ring-1 ring-[#7e7e7e] group-hover:ring-offset-4 group-hover:ring-[#CDBD82]"
+                      />
+                      <div className="text-gray-300 font-sans text-center items-center">
+                        {item.gold.total}
+                      </div>
+                    </div>
+                  </div>
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  <div>
+                    <div className="flex flex-wrap gap-3">
+                      <Image
+                        src={`https://ddragon.leagueoflegends.com/cdn/${summonerData[0].version}/img/item/${item.image}`}
+                        alt={item.name}
+                        width={50}
+                        height={50}
+                        priority={false}
+                        className="ring-1 ring-[#7e7e7e] object-cover "
+                      />
+                      <div>
+                        <div className="text-gray-200 font-sans text-lg font-semibold">
+                          {item.name}
+                        </div>
+                        <div className="text-[#CDBD82] font-sans text-lg font-semibold">
+                          {item.gold.total} gold
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-gray-200 font-sans text-base">
+                      {ReactHtmlParser(
+                        parseTextWithComponents(item.description)
+                      )}
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            );
+          })}
       </div>
     );
   };

@@ -116,6 +116,7 @@ export class ItemDataService {
                 gold: items[item].gold || null,
                 inStore: items[item].inStore || null,
                 // stats: items[item].stats || null,
+                description: items[item].description,
             } 
             if (items[item].inStore === false || items[item].maps[11] === false || items[item].name === 'Obsidian Edge' || armguard) { 
             } else {
