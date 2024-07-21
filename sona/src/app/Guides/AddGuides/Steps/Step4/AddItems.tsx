@@ -10,7 +10,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[] | null>(
     null
   );
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>("all items");
   // const [categoriedItems, setCategoriedItems] = useState<ItemsType | null>(
   //   null
   // );

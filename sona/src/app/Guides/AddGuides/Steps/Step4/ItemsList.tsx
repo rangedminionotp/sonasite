@@ -25,10 +25,7 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
     console.log(category, subCategories);
     if (itemData === null) {
       return;
-    } else {
-      setCategoriedItems(itemData);
     }
-
     // handle top category filter
     if (category === "" || category === "all items") {
       setCategoriedItems(itemData);
@@ -37,7 +34,7 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
       const tempArr = {};
       keys.forEach((key) => {
         tempArr[key] = [];
-        categoriedItems[key].forEach((item) => {
+        itemData[key].forEach((item) => {
           if (item.tags.some((tag) => tag === category)) {
             tempArr[key].push(item);
           }
@@ -51,11 +48,17 @@ const ItemsList = ({ itemData, summonerData, category, subCategories }) => {
       const tempArr = {};
       keys.forEach((key) => {
         tempArr[key] = [];
-        if (key === "boots" && subCategories.includes("nonbootsmovement")) {
-          tempArr["boots"] = itemData["boots"];
-        }
-        categoriedItems[key].forEach((item) => {
-          if (checkSubset(item.tags, subCategories)) {
+        let temp;
+        itemData[key].forEach((item) => {
+          if (key === "boots" && subCategories.includes("nonbootsmovement")) {
+            temp = subCategories.filter(
+              (subCategory) => subCategory !== "nonbootsmovement"
+            );
+            temp.push("boots");
+          } else {
+            temp = subCategories;
+          }
+          if (checkSubset(item.tags, temp)) {
             tempArr[key].push(item);
           }
         });
