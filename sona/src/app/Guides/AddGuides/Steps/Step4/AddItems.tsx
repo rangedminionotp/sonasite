@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ItemsList from "./ItemsList";
-import ItemsNavbar from "./ItemsNavbar";
 import ItemsCategoryTopBar from "./ItemsCategoryTopBar";
 import { ItemsType } from "./types";
 import ItemsSidebar from "./ItemsSidebar";
@@ -17,7 +16,7 @@ const AddItems = ({ itemData, summonerData, itemTree }) => {
   const [subCategories, setSubCategories] = useState<string[] | null>(null);
   const [find, setFind] = useState<string>("");
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-2/3">
       {itemData && summonerData && (
         <>
           {/* Top Bar */}

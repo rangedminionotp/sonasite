@@ -71,20 +71,22 @@ const AddGuideDisplay = ({
         <div className="absolute top-0 w-full h-full justify-center items-center">
           <div className=" absolute top-4 left-4 z-30">
             <AddGuideClose setOpen={setOpen} />
-            <FormStepper
-              summonerData={summonerData}
-              runesData={runesData}
-              itemsData={itemsData}
-              itemTree={itemTree}
-              selectedRoles={selectedRoles}
-              setSelectedRoles={setSelectedRoles}
-              selectedLabels={selectedLabels}
-              setSelectedLabels={setSelectedLabels}
-              title={title}
-              setTitle={setTitle}
-              description={description}
-              setDescription={setDescription}
-            />
+            <div>
+              <FormStepper
+                summonerData={summonerData}
+                runesData={runesData}
+                itemsData={itemsData}
+                itemTree={itemTree}
+                selectedRoles={selectedRoles}
+                setSelectedRoles={setSelectedRoles}
+                selectedLabels={selectedLabels}
+                setSelectedLabels={setSelectedLabels}
+                title={title}
+                setTitle={setTitle}
+                description={description}
+                setDescription={setDescription}
+              />
+            </div>
           </div>
         </div>
       </div>
