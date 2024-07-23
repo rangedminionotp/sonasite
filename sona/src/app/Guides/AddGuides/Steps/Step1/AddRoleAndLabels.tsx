@@ -3,31 +3,26 @@ import RoleMenu from "./RoleMenu";
 import LabelsMenu from "./LabelsMenu";
 import SetTitle from "./SetTitle";
 import SetDescription from "./SetDescription";
-
-const AddRoleAndLabels = ({
-  selectedRoles,
-  setSelectedRoles,
-  selectedLabels,
-  setSelectedLabels,
-  title,
-  setTitle,
-  description,
-  setDescription,
-}) => {
+import { StepOneContext } from "../../types";
+const AddRoleAndLabels = () => {
+  const stepOneContext = React.useContext(StepOneContext);
   return (
     <div>
-      <SetTitle title={title} setTitle={setTitle} />
+      <SetTitle
+        title={stepOneContext.title}
+        setTitle={stepOneContext.setTitle}
+      />
       <SetDescription
-        description={description}
-        setDescription={setDescription}
+        description={stepOneContext.description}
+        setDescription={stepOneContext.setDescription}
       />
       <RoleMenu
-        selectedRoles={selectedRoles}
-        setSelectedRoles={setSelectedRoles}
+        selectedRoles={stepOneContext.selectedRoles}
+        setSelectedRoles={stepOneContext.setSelectedRoles}
       />
       <LabelsMenu
-        selectedLabels={selectedLabels}
-        setSelectedLabels={setSelectedLabels}
+        selectedLabels={stepOneContext.selectedLabels}
+        setSelectedLabels={stepOneContext.setSelectedLabels}
       />
     </div>
   );

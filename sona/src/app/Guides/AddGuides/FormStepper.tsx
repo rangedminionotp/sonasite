@@ -5,6 +5,7 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import StepLabel from "@mui/material/StepLabel";
 
 import AddRoleAndLabels from "./Steps/Step1/AddRoleAndLabels";
 import AddSummoners from "./Steps/Step2/AddSummoners";
@@ -25,30 +26,13 @@ export default function FormStepper({
   runesData,
   itemsData,
   itemTree,
-  selectedRoles,
-  setSelectedRoles,
-  selectedLabels,
-  setSelectedLabels,
-  title,
-  setTitle,
-  description,
-  setDescription,
 }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
   }>({});
   const components = [
-    <AddRoleAndLabels
-      selectedRoles={selectedRoles}
-      setSelectedRoles={setSelectedRoles}
-      selectedLabels={selectedLabels}
-      setSelectedLabels={setSelectedLabels}
-      title={title}
-      setTitle={setTitle}
-      description={description}
-      setDescription={setDescription}
-    />,
+    <AddRoleAndLabels />,
     <AddSummoners summonerData={summonerData} />,
     <AddRunes runesData={runesData} />,
     <AddItems
@@ -109,26 +93,19 @@ export default function FormStepper({
         <Box sx={{ mt: 2 }}>{components[activeStep]}</Box>
       </Box>
       <div className="fixed bottom-0 w-full text-gray-200">
-        <Stepper nonLinear activeStep={activeStep}>
+        <Stepper nonLinear activeStep={activeStep} alternativeLabel>
           {steps.map((label, index) => (
             <Step
               key={label}
-              className="text-gray-200"
               completed={completed[index]}
               sx={{
                 "& .MuiStepLabel-label": {
                   color: "gray", // Default color
                 },
-                "& .Mui-completed .MuiStepLabel-label": {
-                  color: "green", // Color for completed steps
-                },
-                "& .Mui-active .MuiStepLabel-label": {
-                  color: "blue", // Color for active step
-                },
               }}
             >
               <StepButton className="text-gray-200" onClick={handleStep(index)}>
-                {label}
+                <StepLabel>{label}</StepLabel>
               </StepButton>
             </Step>
           ))}

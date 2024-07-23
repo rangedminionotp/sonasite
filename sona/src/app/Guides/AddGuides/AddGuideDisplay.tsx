@@ -12,10 +12,7 @@ const AddGuideDisplay = ({
   itemsData,
   itemTree,
 }) => {
-  const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
-  const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [stepOne, setStepOne] = React.useState("");
   // const [step1formState, setStep1formState] = useState({
   //   title: "",
   //   description: "",
@@ -77,14 +74,6 @@ const AddGuideDisplay = ({
                 runesData={runesData}
                 itemsData={itemsData}
                 itemTree={itemTree}
-                selectedRoles={selectedRoles}
-                setSelectedRoles={setSelectedRoles}
-                selectedLabels={selectedLabels}
-                setSelectedLabels={setSelectedLabels}
-                title={title}
-                setTitle={setTitle}
-                description={description}
-                setDescription={setDescription}
               />
             </div>
           </div>
