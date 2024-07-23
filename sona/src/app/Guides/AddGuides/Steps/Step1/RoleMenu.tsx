@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import Image from "next/image";
-
 interface GuideRolesType {
   id: string;
   role: string;
   img?: string | null;
 }
 
-const RoleMenu = ({ selectedRoles, setSelectedRoles }) => {
+const RoleMenu = ({
+  selectedRoles,
+  setSelectedRoles,
+}: {
+  selectedRoles: string[];
+  setSelectedRoles: (roles: string[]) => void;
+}) => {
   const [roles, setRoles] = React.useState<GuideRolesType[]>([]);
 
   const handleSelect = (role: string) => {
     if (selectedRoles.includes(role)) {
       setSelectedRoles(selectedRoles.filter((r) => r !== role));
     } else {
-      setSelectedRoles((prevRoles) => [...prevRoles, role]);
+      setSelectedRoles([...selectedRoles, role]);
     }
   };
+
   React.useEffect(() => {
     const query = {
       query: `

@@ -17,13 +17,4 @@ export interface StepOneContextType {
   description: string;
   setSelectedDescription: (description: string) => void;
 }
-export const StepOneContext = createContext<StepOneContextType>({
-  selectedRoles: [],
-  setSelectedRoles: () => {},
-  selectedLabels: [],
-  setSelectedLabels: () => {},
-  title: "",
-  setSelectedTitle: () => {},
-  description: "",
-  setSelectedDescription: () => {},
-});
+export const StepOneContext = createContext<StepOneContextType | null>(null);
