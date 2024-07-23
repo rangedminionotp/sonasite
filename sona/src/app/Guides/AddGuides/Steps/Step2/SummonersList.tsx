@@ -4,6 +4,9 @@ import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import SummonersDescription from "./SummonersDescription";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import Button from "@mui/joy/Button";
 import {
   HoverCard,
@@ -101,6 +104,39 @@ const SummonersList = ({ summonerData }) => {
     console.log("pairs", pairs);
   };
 
+  const handleAdd = (summoner) => {
+    setDroppedItems((prevItems) => {
+      const updatedItems = { ...prevItems }; // Create a shallow copy of prevItems
+
+      if (prevItems.D === null) {
+        updatedItems.D = (
+          <Image
+            src={summoner.imageURL}
+            alt={summoner.name}
+            width={50}
+            height={50}
+          />
+        );
+        updatedItems.DId = summoner.id;
+      } else if (prevItems.F === null) {
+        updatedItems.F = (
+          <Image
+            src={summoner.imageURL}
+            alt={summoner.name}
+            width={50}
+            height={50}
+          />
+        );
+        updatedItems.FId = summoner.id;
+      }
+
+      return updatedItems; // Return the updated object
+    });
+  };
+
+  const handleDeletePair = (index) => {
+    setPairs((prevPairs) => prevPairs.filter((_, i) => i !== index));
+  };
   return (
     <div className="container mx-auto w-full">
       <div className="p-2">
@@ -121,7 +157,8 @@ const SummonersList = ({ summonerData }) => {
                           alt={summoner.name}
                           width={50}
                           height={50}
-                          className="hover:cursor-grab"
+                          className="hover:cursor-pointer"
+                          onClick={() => handleAdd(summoner)}
                         />
                       }
                       index={index}
@@ -140,6 +177,7 @@ const SummonersList = ({ summonerData }) => {
                           width={50}
                           height={50}
                           className="hover:cursor-grab"
+                          onClick
                         />
                         <h1 className="text-gray-200 uppercase font-work-sans">
                           {summoner.name}
@@ -161,11 +199,15 @@ const SummonersList = ({ summonerData }) => {
         {pairs.map((pair, index) => (
           <div
             key={index}
-            className="p-4 flex border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
+            className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
           >
-            <div>{pair.D}</div>
-            <div>{pair.F}</div>
+            <div>
+              {pair.D} {pair.F}
+            </div>
             <div className="text-md text-gray-700">{pair.description}</div>
+            <div className="hover:cursor-pointer justify-end">
+              <DeleteIcon onClick={() => handleDeletePair(index)} />
+            </div>
           </div>
         ))}
         <div>
