@@ -5,6 +5,11 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import SummonersDescription from "./SummonersDescription";
 import Button from "@mui/joy/Button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/app/components/ui/hover-card";
 
 const DraggableItem = ({ item, index, onDragStart }) => (
   <div draggable onDragStart={(e) => onDragStart(e, index)}>
@@ -105,32 +110,50 @@ const SummonersList = ({ summonerData }) => {
         <div className="grid grid-cols-7 max-w-full gap-4">
           {summonerData &&
             summonerData.map((summoner, index) => (
-              // <Tooltip
-              //   title={
-              //     <span>
-              //       {summoner.cooldown}s
-              //       <br />
-              //       {summoner.description}
-              //     </span>
-              //   }
-              //   key={summoner.id + index}
-              // >
               <div>
-                <DraggableItem
-                  key={index}
-                  item={
-                    <Image
-                      src={summoner.imageURL}
-                      alt={summoner.name}
-                      width={50}
-                      height={50}
-                      className="hover:cursor-grab"
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <DraggableItem
+                      key={index}
+                      item={
+                        <Image
+                          src={summoner.imageURL}
+                          alt={summoner.name}
+                          width={50}
+                          height={50}
+                          className="hover:cursor-grab"
+                        />
+                      }
+                      index={index}
+                      onDragStart={handleDragStart}
                     />
-                  }
-                  index={index}
-                  onDragStart={handleDragStart}
-                />
-                <h1 className="text-gray-200 uppercase">{summoner.name}</h1>
+                    <h1 className="text-gray-200 uppercase font-work-sans">
+                      {summoner.name}
+                    </h1>{" "}
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={summoner.imageURL}
+                          alt={summoner.name}
+                          width={50}
+                          height={50}
+                          className="hover:cursor-grab"
+                        />
+                        <h1 className="text-gray-200 uppercase font-work-sans">
+                          {summoner.name}
+                        </h1>
+                      </div>
+                      <div className="text-[#CDBD82] font-semibold text-xl">
+                        {summoner.cooldown}s
+                      </div>
+                      <div className="text-gray-200 text-base font-sans">
+                        {summoner.description}
+                      </div>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               </div>
               // </Tooltip>
             ))}

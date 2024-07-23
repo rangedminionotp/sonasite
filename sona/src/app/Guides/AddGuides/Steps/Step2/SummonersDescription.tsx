@@ -13,7 +13,7 @@ const SummonersDescription = ({ description, setDescription }) => {
             value={description}
             placeholder={`why is this summoner pair good...`}
             onChange={(e) => setDescription(e.target.value)}
-            className="  text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="  text-black p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             sx={{
               backgroundColor: "var(--primary-bg)",
               color: "white",

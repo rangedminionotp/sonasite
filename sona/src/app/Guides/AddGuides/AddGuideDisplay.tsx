@@ -3,7 +3,13 @@ import AddGuideClose from "./AddGuideClose";
 import FormStepper from "./FormStepper";
 import SummonerRiftBg from "../../utils/SummonerRiftBg";
 import { setCookie, getCookie } from "cookies-next";
-import { StepOneContext, StepOneProps } from "./types";
+import {
+  StepOneContext,
+  StepOneProps,
+  SummonerPair,
+  StepTwoContext,
+  StepTwoProps,
+} from "./types";
 
 const AddGuideDisplay = ({
   open,
@@ -18,6 +24,10 @@ const AddGuideDisplay = ({
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
+
+  // steptwo context values
+  const [summonerPairs, setSummonerPairs] = React.useState<SummonerPair[]>([]);
+
   // const [step1formState, setStep1formState] = useState({
   //   title: "",
   //   description: "",
@@ -74,28 +84,35 @@ const AddGuideDisplay = ({
           setDescription,
         }}
       >
-        <div
-          className={
-            !open
-              ? "hidden"
-              : `top-0 left-0 w-full h-screen bg-[#101730] z-40 absolute`
-          }
+        <StepTwoContext.Provider
+          value={{
+            summonerPairs,
+            setSummonerPairs,
+          }}
         >
-          <SummonerRiftBg />
-          <div className="absolute top-0 w-full h-full justify-center items-center">
-            <div className=" absolute top-4 left-4 z-30">
-              <AddGuideClose setOpen={setOpen} />
-              <div>
-                <FormStepper
-                  summonerData={summonerData}
-                  runesData={runesData}
-                  itemsData={itemsData}
-                  itemTree={itemTree}
-                />
+          <div
+            className={
+              !open
+                ? "hidden"
+                : `top-0 left-0 w-full h-screen bg-[#101730] z-40 absolute`
+            }
+          >
+            <SummonerRiftBg />
+            <div className="absolute top-0 w-full h-full justify-center items-center">
+              <div className=" absolute top-4 left-4 z-30">
+                <AddGuideClose setOpen={setOpen} />
+                <div>
+                  <FormStepper
+                    summonerData={summonerData}
+                    runesData={runesData}
+                    itemsData={itemsData}
+                    itemTree={itemTree}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </StepTwoContext.Provider>
       </StepOneContext.Provider>
     </React.Fragment>
   );

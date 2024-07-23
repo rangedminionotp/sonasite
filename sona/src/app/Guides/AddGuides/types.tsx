@@ -5,6 +5,7 @@ export interface User {
   name: string;
 }
 
+// step one context
 export interface StepOneProps {
   title: string;
   description: string;
@@ -23,6 +24,29 @@ export interface StepOneContextType {
   setSelectedDescription: (description: string) => void;
 }
 export const StepOneContext = createContext<StepOneContextType | null>(null);
+
+// step two context
+export interface Summoner {
+  summonerName: string;
+  summonerId: string;
+  summonerImg: string;
+}
+export interface SummonerPair {
+  summonerOne: Summoner;
+  summonerTwo: Summoner;
+  description: string;
+}
+
+export interface StepTwoProps {
+  summonerPair: SummonerPair;
+  setSummonerPair: (summonerPair: SummonerPair) => void;
+}
+
+export interface StepTwoContextType {
+  summonerPairs: SummonerPair[];
+  setSummonerPairs: (summonerPairs: SummonerPair[]) => void;
+}
+export const StepTwoContext = createContext<StepTwoContextType | null>(null);
 
 export interface GuideContextType {
   guideID: string;
