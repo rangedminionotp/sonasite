@@ -12,7 +12,8 @@ import AddSummoners from "./Steps/Step2/AddSummoners";
 
 import AddRunes from "./Steps/Step3/AddRunes";
 import AddItems from "./Steps/Step4/AddItems";
-// import ItemsList from "./Steps/Step4/ItemsList";
+
+import { StepOneContext, StepOneProps } from "./types";
 
 const steps = [
   "Select Roles and Labels",
@@ -31,6 +32,7 @@ export default function FormStepper({
   const [completed, setCompleted] = React.useState<{
     [k: number]: boolean;
   }>({});
+
   const components = [
     <AddRoleAndLabels />,
     <AddSummoners summonerData={summonerData} />,
@@ -41,6 +43,41 @@ export default function FormStepper({
       itemTree={itemTree}
     />,
   ];
+
+  const stepOneCtx = React.useContext(StepOneContext);
+
+  const [stepOne, setStepOne] = React.useState<StepOneProps>({
+    selectedRoles: [],
+    selectedLabels: [],
+    title: "",
+    description: "",
+  });
+
+  const handleSaveGuide = (currentStep: string) => {
+    if (currentStep === "stepOne") {
+      setStepOne({
+        title: stepOneCtx.title,
+        description: stepOneCtx.description,
+        selectedRoles: stepOneCtx.selectedRoles,
+        selectedLabels: stepOneCtx.selectedLabels,
+      });
+    }
+    console.log("stepOne", stepOne);
+  };
+
+  React.useEffect(
+    () => {
+      handleSaveGuide("stepOne");
+    },
+    [
+      stepOneCtx.title,
+      stepOneCtx.description,
+      stepOneCtx.selectedRoles,
+      stepOneCtx.selectedLabels,
+    ],
+    [stepOneCtx]
+  );
+
   const totalSteps = () => {
     return steps.length;
   };

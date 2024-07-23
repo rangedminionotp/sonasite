@@ -13,7 +13,6 @@ const AddGuideDisplay = ({
   itemsData,
   itemTree,
 }) => {
-  const [stepOne, setStepOne] = React.useState("");
   // stepone context values
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([]);
   const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);

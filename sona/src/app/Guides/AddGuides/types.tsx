@@ -1,5 +1,10 @@
 import { createContext } from "react";
 
+export interface User {
+  id: string;
+  name: string;
+}
+
 export interface StepOneProps {
   title: string;
   description: string;
@@ -18,3 +23,15 @@ export interface StepOneContextType {
   setSelectedDescription: (description: string) => void;
 }
 export const StepOneContext = createContext<StepOneContextType | null>(null);
+
+export interface GuideContextType {
+  guideID: string;
+  setGuideID: (guideID: string) => void;
+  user: User;
+  setUser: (user: User) => void;
+  completed: boolean;
+  setCompleted: (completed: boolean) => void;
+  stepOne: StepOneProps;
+  setStepOne: (stepOne: StepOneProps) => void;
+}
+export const GuideContext = createContext<GuideContextType | null>(null);
