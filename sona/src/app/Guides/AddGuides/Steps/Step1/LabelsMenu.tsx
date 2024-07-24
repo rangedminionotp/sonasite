@@ -144,7 +144,7 @@ const LabelsMenu = ({
     };
 
     fetchCustomLabels();
-  }, [label, graphQLClient]);
+  }, [label]);
   return (
     <div className="container mx-auto  w-full">
       <div className="p-2">
