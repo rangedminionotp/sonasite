@@ -9,9 +9,15 @@ export default function AddRunes({ runesData }) {
   return (
     <div>
       <Title />
-      <AddBtn addRunes={addRunes} setAddRunes={setAddRunes} />
-      {addRunes && <RuneTree runeData={runesData} setAddRunes={setAddRunes} />}
+      {addRunes && (
+        <RuneTree
+          runeData={runesData}
+          setAddRunes={setAddRunes}
+          addRunes={addRunes}
+        />
+      )}
       <AddedRuneListDisplay />
+      {!addRunes && <AddBtn addRunes={addRunes} setAddRunes={setAddRunes} />}
     </div>
   );
 }

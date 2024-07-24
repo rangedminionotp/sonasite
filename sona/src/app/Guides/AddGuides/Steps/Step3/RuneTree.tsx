@@ -14,7 +14,7 @@ import Button from "@mui/joy/Button";
 import { StepThreeContext } from "../../types";
 import { v4 as uuidv4 } from "uuid";
 
-const RuneTree = ({ runeData, setAddRunes }) => {
+const RuneTree = ({ runeData, setAddRunes, addRunes }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
   const [title, setTitle] = useState("");
@@ -62,7 +62,7 @@ const RuneTree = ({ runeData, setAddRunes }) => {
     } else {
       StepThreeCtx.setRuneSets([...StepThreeCtx.runeSets, runeSet]);
     }
-    setAddRunes(false);
+    setAddRunes(!addRunes);
   };
 
   return (
