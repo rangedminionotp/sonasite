@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddCustomLabel from "./AddCustomLabel";
 import { uuid } from "@/app/types/custom";
 import { useUser } from "@/app/utils/user";
@@ -123,28 +123,28 @@ const LabelsMenu = ({
       });
   }, []);
 
-  const fetchCustomLabels = async () => {
-    try {
-      const query = gql`
-        query {
-          getGuidesCustomLabels {
-            id
-            label
-            owner_id
+  useEffect(() => {
+    const fetchCustomLabels = async () => {
+      try {
+        const query = gql`
+          query {
+            getGuidesCustomLabels {
+              id
+              label
+              owner_id
+            }
           }
-        }
-      `;
-      const response = await graphQLClient.request(query);
-      setCustomLabels(response.getGuidesCustomLabels);
-    } catch (error) {
-      console.error("Error fetching custom guide labels:", error);
-      console.log("Failed to fetch custom guide labels. Please try again.");
-    }
-  };
-  React.useEffect(() => {
-    fetchCustomLabels();
-  }, [label]);
+        `;
+        const response = await graphQLClient.request(query);
+        setCustomLabels(response.getGuidesCustomLabels);
+      } catch (error) {
+        console.error("Error fetching custom guide labels:", error);
+        console.log("Failed to fetch custom guide labels. Please try again.");
+      }
+    };
 
+    fetchCustomLabels();
+  }, [label, graphQLClient]);
   return (
     <div className="container mx-auto  w-full">
       <div className="p-2">

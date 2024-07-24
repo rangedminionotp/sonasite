@@ -153,7 +153,9 @@ const SummonersList = ({ summonerData }) => {
   };
 
   const handleDeletePair = (index) => {
-    setPairs((prevPairs) => prevPairs.filter((_, i) => i !== index));
+    StepTwoCtx.setSummonerPairs((prevPairs) =>
+      prevPairs.filter((_, i) => i !== index)
+    );
   };
   return (
     <div className="container mx-auto w-full">
@@ -164,7 +166,7 @@ const SummonersList = ({ summonerData }) => {
         <div className="grid grid-cols-7 max-w-full gap-4">
           {summonerData &&
             summonerData.map((summoner, index) => (
-              <div>
+              <div key={summoner.id}>
                 <HoverCard>
                   <HoverCardTrigger>
                     <DraggableItem

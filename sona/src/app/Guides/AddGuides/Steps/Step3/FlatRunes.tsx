@@ -33,6 +33,7 @@ const FlatRunes = ({
       <div className="flex flex-wrap justify-center items-center gap-8 mt-3">
         {row.map((rune) => (
           <Image
+            key={rune.id}
             onClick={() => setSelectedRune(rune)}
             src={rune}
             alt="rune"

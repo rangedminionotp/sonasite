@@ -18,6 +18,7 @@ const RunePrimaryTreeSelection = ({
     <div className="flex flex-wrap gap-1">
       {runeData.map((rune) => (
         <div
+          key={rune.id}
           className={`flex items-center justify-center w-10 h-10 rounded-full role-item bg-transparent ${
             rune.name === primaryRune.name ? "border-2 border-blue-500" : ""
           }`}

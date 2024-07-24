@@ -34,13 +34,14 @@ export default function FormStepper({
   }>({});
 
   const components = [
-    <AddRoleAndLabels />,
-    <AddSummoners summonerData={summonerData} />,
-    <AddRunes runesData={runesData} />,
+    <AddRoleAndLabels key="StepOneComponent" />,
+    <AddSummoners summonerData={summonerData} key="StepTwoComponent" />,
+    <AddRunes runesData={runesData} key="StepThreeComponent" />,
     <AddItems
       itemData={itemsData}
       summonerData={summonerData}
       itemTree={itemTree}
+      key="StepFourComponent"
     />,
   ];
 
@@ -53,30 +54,30 @@ export default function FormStepper({
     description: "",
   });
 
-  const handleSaveGuide = (currentStep: string) => {
-    if (currentStep === "stepOne") {
-      setStepOne({
-        title: stepOneCtx.title,
-        description: stepOneCtx.description,
-        selectedRoles: stepOneCtx.selectedRoles,
-        selectedLabels: stepOneCtx.selectedLabels,
-      });
-    }
-    console.log("stepOne", stepOne);
-  };
+  // const handleSaveGuide = (currentStep: string) => {
+  //   if (currentStep === "stepOne") {
+  //     setStepOne({
+  //       title: stepOneCtx.title,
+  //       description: stepOneCtx.description,
+  //       selectedRoles: stepOneCtx.selectedRoles,
+  //       selectedLabels: stepOneCtx.selectedLabels,
+  //     });
+  //   }
+  // };
 
-  React.useEffect(
-    () => {
-      handleSaveGuide("stepOne");
-    },
-    [
-      stepOneCtx.title,
-      stepOneCtx.description,
-      stepOneCtx.selectedRoles,
-      stepOneCtx.selectedLabels,
-    ],
-    [stepOneCtx]
-  );
+  // React.useEffect(
+  //   () => {
+  //     handleSaveGuide("stepOne");
+  //   },
+  //   [
+  //     stepOneCtx.title,
+  //     stepOneCtx.description,
+  //     stepOneCtx.selectedRoles,
+  //     stepOneCtx.selectedLabels,
+  //     handleSaveGuide,
+  //   ],
+  //   [handleSaveGuide, stepOneCtx]
+  // );
 
   const totalSteps = () => {
     return steps.length;

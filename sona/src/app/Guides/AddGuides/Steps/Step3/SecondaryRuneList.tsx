@@ -11,7 +11,7 @@ const SecondaryRuneList = ({ secondaryRune, selectedOne, setSelectedOne }) => {
     <div>
       <div className="flex flex-wrap gap-1">
         {secondaryRune.slots.map((slot, index) => (
-          <div>
+          <div key="">
             <RuneRow
               runes={slot.rowTwo}
               selectedRune={selectedOne}

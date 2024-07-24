@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import RunePrimaryTreeSelection from "./RunePrimaryTreeSelection";
 import PrimaryRuneList from "./PrimaryRuneList";
 import RuneSecondaryTreeSelection from "./RuneSecondaryTreeSelection";
 import SecondaryRuneList from "./SecondaryRuneList";
-import RunesBG from "@/assets/runeWallpaper";
-import domination from "@/assets/runeWallpaper/Domination.webp";
+// import RunesBG from "@/assets/runeWallpaper";
+// import domination from "@/assets/runeWallpaper/Domination.webp";
+import Textarea from "@mui/joy/Textarea";
+
 import FlatRunes from "./FlatRunes";
 import RuneDescription from "./RuneDescription";
-import { Button } from "@mui/material";
+import Button from "@mui/joy/Button";
 import { StepThreeContext } from "../../types";
+import { v4 as uuidv4 } from "uuid";
 
-const RuneTree = ({ runeData }) => {
+const RuneTree = ({ runeData, setAddRunes }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   // primary rune selection
@@ -32,12 +36,33 @@ const RuneTree = ({ runeData }) => {
     null
   );
 
+  const StepThreeCtx = useContext(StepThreeContext);
   const handleSelectPrimaryRune = (rune) => {
     setPrimaryRune(rune);
   };
 
   const handleAddRunes = () => {
-    console.log(selectedOne);
+    const runeSet: RuneSet = {
+      primaryRune: primaryRune,
+      secondaryRune: secondaryRune,
+      description: description,
+      primaryRunes: [
+        selectedRowOne,
+        selectedRowTwo,
+        selectedRowThree,
+        selectedRowFour,
+      ],
+      id: uuidv4(),
+      title: title,
+      secondaryRunes: selectedOne,
+      flatRunes: [selectedRuneOne, selectedRuneTwo, selectedRuneThree],
+    };
+    if (!StepThreeCtx.runeSets) {
+      StepThreeCtx.setRuneSets(runeSet);
+    } else {
+      StepThreeCtx.setRuneSets([...StepThreeCtx.runeSets, runeSet]);
+    }
+    setAddRunes(false);
   };
 
   return (
@@ -65,6 +90,7 @@ const RuneTree = ({ runeData }) => {
                         {rune.slots.map((slot) =>
                           slot.rowOne.map((keystone) => (
                             <Image
+                              key={keystone.id}
                               src={keystone.icon}
                               alt={keystone.name}
                               width={50}
@@ -85,6 +111,18 @@ const RuneTree = ({ runeData }) => {
         </div>
       ) : (
         <div>
+          <div className="mt-5">
+            <Textarea
+              value={title}
+              placeholder="Enter title..."
+              onChange={(e) => setTitle(e.target.value)}
+              sx={{
+                backgroundColor: "var(--primary-bg)",
+                color: "white",
+              }}
+              className="  text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <div className="flex gap-12">
             <div>
               <RunePrimaryTreeSelection
@@ -134,9 +172,18 @@ const RuneTree = ({ runeData }) => {
               setDescription={setDescription}
             />
             <Button
-              variant="contained"
-              color="primary"
               onClick={handleAddRunes}
+              disabled={
+                !title ||
+                !selectedRowOne ||
+                !selectedRowTwo ||
+                !selectedRowThree ||
+                !selectedRowFour ||
+                selectedOne.length < 2 ||
+                !selectedRuneOne ||
+                !selectedRuneTwo ||
+                !selectedRuneThree
+              }
             >
               Add
             </Button>

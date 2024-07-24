@@ -54,6 +54,9 @@ export interface RuneSet {
   description: string;
   primaryRunes: Rune[];
   secondaryRunes: Rune[];
+  flatRunes: Runes[];
+  id: string;
+  title: string;
 }
 
 export interface StepThreeContextType {
@@ -65,6 +68,8 @@ export const StepThreeContext = createContext<StepThreeContextType | null>(
 );
 
 export interface GuideContextType {
+  version: string;
+  setVersion: (version: string) => void;
   guideID: string;
   setGuideID: (guideID: string) => void;
   user: User;

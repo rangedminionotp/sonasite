@@ -66,6 +66,7 @@ const RoleMenu = ({
         <div className="grid grid-cols-7 max-w-full gap-4">
           {roles.map((role) => (
             <div
+              key={role.id}
               className="justify-center items-center text-center"
               onClick={() => handleSelect(role.role)}
             >

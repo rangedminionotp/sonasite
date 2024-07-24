@@ -11,6 +11,7 @@ const RuneSecondaryTreeSelection = ({
       {runeData.map((rune) =>
         rune.name === primaryRune.name ? null : (
           <div
+            key={rune.id}
             className={`flex items-center justify-center w-10 h-10 rounded-full role-item bg-transparent ${
               secondaryRune && rune.name === secondaryRune.name
                 ? "border-2 border-blue-500"
