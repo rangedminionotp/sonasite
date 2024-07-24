@@ -8,16 +8,17 @@ import healthScaling from "@/assets/flatRunes/healthScaling.webp";
 import movementSpeed from "@/assets/flatRunes/movementSpeed.webp";
 import tenacityAndSlowResist from "@/assets/flatRunes/tenacityAndSlowResist.webp";
 
-const FlatRunes = () => {
+const FlatRunes = ({
+  selectedRuneOne,
+  setSelectedRuneOne,
+  selectedRuneTwo,
+  setSelectedRuneTwo,
+  selectedRuneThree,
+  setSelectedRuneThree,
+}) => {
   const rowOne = [adaptiveForce, attackSpeed, abilityHaste];
   const rowTwo = [adaptiveForce, movementSpeed, healthScaling];
   const rowThree = [flatHealth, tenacityAndSlowResist, healthScaling];
-
-  const [selectedRuneOne, setSelectedRuneOne] = useState<string | null>(null);
-  const [selectedRuneTwo, setSelectedRuneTwo] = useState<string | null>(null);
-  const [selectedRuneThree, setSelectedRuneThree] = useState<string | null>(
-    null
-  );
 
   const FlatRuneRow = ({
     row,

@@ -9,6 +9,7 @@ import domination from "@/assets/runeWallpaper/Domination.webp";
 import FlatRunes from "./FlatRunes";
 import RuneDescription from "./RuneDescription";
 import { Button } from "@mui/material";
+import { StepThreeContext } from "../../types";
 
 const RuneTree = ({ runeData }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
@@ -24,9 +25,21 @@ const RuneTree = ({ runeData }) => {
   // secondary rune selection
   const [selectedOne, setSelectedOne] = useState<Rune[]>([]);
 
+  // flat runes
+  const [selectedRuneOne, setSelectedRuneOne] = useState<string | null>(null);
+  const [selectedRuneTwo, setSelectedRuneTwo] = useState<string | null>(null);
+  const [selectedRuneThree, setSelectedRuneThree] = useState<string | null>(
+    null
+  );
+
   const handleSelectPrimaryRune = (rune) => {
     setPrimaryRune(rune);
   };
+
+  const handleAddRunes = () => {
+    console.log(selectedOne);
+  };
+
   return (
     <div>
       {!primaryRune ? (
@@ -106,14 +119,25 @@ const RuneTree = ({ runeData }) => {
                 setSelectedOne={setSelectedOne}
               />
             </div>
-            <FlatRunes />
+            <FlatRunes
+              selectedRuneOne={selectedRuneOne}
+              setSelectedRuneOne={setSelectedRuneOne}
+              selectedRuneTwo={selectedRuneTwo}
+              setSelectedRuneTwo={setSelectedRuneTwo}
+              selectedRuneThree={selectedRuneThree}
+              setSelectedRuneThree={setSelectedRuneThree}
+            />
           </div>
           <div className="mt-4">
             <RuneDescription
               description={description}
               setDescription={setDescription}
             />
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddRunes}
+            >
               Add
             </Button>
           </div>
