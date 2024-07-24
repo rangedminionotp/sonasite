@@ -101,7 +101,10 @@ CREATE TABLE GuidesCustomLabels (
 CREATE TABLE Guides (
     id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(),
     owner_id UUID REFERENCES Users(id),
-    role_id UUID REFERENCES GuidesRoles(id),
-    label_id UUID REFERENCES GuidesLabels(id),
-    data JSONB
+    step1 JSONB,
+    step2 JSONB,
+    step3 JSONB,
+    step4 JSONB,
+    completed BOOLEAN DEFAULT FALSE
 );
+  

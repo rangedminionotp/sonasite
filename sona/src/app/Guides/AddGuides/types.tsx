@@ -27,7 +27,6 @@ export const StepOneContext = createContext<StepOneContextType | null>(null);
 
 // step two context
 export interface Summoner {
-  summonerName: string;
   summonerId: string;
   summonerImg: string;
 }

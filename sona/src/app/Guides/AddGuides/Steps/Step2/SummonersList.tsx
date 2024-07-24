@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
@@ -6,7 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import SummonersDescription from "./SummonersDescription";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { StepTwoContext } from "../../types";
 import Button from "@mui/joy/Button";
 import {
   HoverCard,
@@ -48,6 +48,8 @@ const SummonersList = ({ summonerData }) => {
   });
   const [description, setDescription] = useState("");
   const [pairs, setPairs] = useState([]);
+  const StepTwoCtx = useContext(StepTwoContext);
+
   const handleDragStart = (e, index) => {
     setDraggingItem({
       item: (
@@ -87,7 +89,7 @@ const SummonersList = ({ summonerData }) => {
     }));
   };
 
-  const handleAddPair = () => {
+  const handleAddPair = (e) => {
     setPairs((prevPairs) => [
       ...prevPairs,
       {
@@ -101,7 +103,23 @@ const SummonersList = ({ summonerData }) => {
     setDroppedItems({ D: null, F: null, DId: null, FId: null });
     setDescription("");
     setAddPair(false);
-    console.log("pairs", pairs);
+
+    const newPairs = {
+      summonerOne: {
+        summonerImg: droppedItems.D,
+        summonerId: droppedItems.DId,
+      },
+      summonerTwo: {
+        summonerImg: droppedItems.F,
+        summonerId: droppedItems.FId,
+      },
+      description: description,
+    };
+    if (pairs.length > 0) {
+      StepTwoCtx.setSummonerPairs((prevPairs) => [...prevPairs, newPairs]);
+    } else {
+      StepTwoCtx.setSummonerPairs([newPairs]);
+    }
   };
 
   const handleAdd = (summoner) => {
@@ -166,7 +184,7 @@ const SummonersList = ({ summonerData }) => {
                     />
                     <h1 className="text-gray-200 uppercase font-work-sans">
                       {summoner.name}
-                    </h1>{" "}
+                    </h1>
                   </HoverCardTrigger>
                   <HoverCardContent>
                     <div>
@@ -196,13 +214,13 @@ const SummonersList = ({ summonerData }) => {
               // </Tooltip>
             ))}
         </div>
-        {pairs.map((pair, index) => (
+        {StepTwoCtx.summonerPairs.map((pair, index) => (
           <div
             key={index}
             className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
           >
             <div>
-              {pair.D} {pair.F}
+              {pair.summonerOne.summonerImg} {pair.summonerTwo.summonerImg}
             </div>
             <div className="text-md text-gray-700">{pair.description}</div>
             <div className="hover:cursor-pointer justify-end">
@@ -240,7 +258,12 @@ const SummonersList = ({ summonerData }) => {
               description={description}
               setDescription={setDescription}
             />
-            <Button onClick={handleAddPair}>Add</Button>
+            <Button
+              onClick={handleAddPair}
+              disabled={!droppedItems.D || !droppedItems.F}
+            >
+              Add
+            </Button>
           </div>
         )}
       </div>
