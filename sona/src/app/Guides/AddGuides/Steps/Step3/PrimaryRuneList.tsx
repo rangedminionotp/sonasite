@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import RuneRow from "./RuneRow";
 
-const PrimaryRuneList = ({ primaryRune }) => {
-  const [selectedRowOne, setSelectedRowOne] = useState(null);
-  const [selectedRowTwo, setSelectedRowTwo] = useState(null);
-  const [selectedRowThree, setSelectedRowThree] = useState(null);
-  const [selectedRowFour, setSelectedRowFour] = useState(null);
-
+const PrimaryRuneList = ({
+  selectedRowOne,
+  setSelectedRowOne,
+  selectedRowTwo,
+  setSelectedRowTwo,
+  selectedRowThree,
+  setSelectedRowThree,
+  selectedRowFour,
+  setSelectedRowFour,
+  primaryRune,
+  secondaryRune,
+}) => {
   return (
     <div className="flex flex-wrap gap-1">
       {primaryRune.slots.map((slot) => (

@@ -8,18 +8,27 @@ import RunesBG from "@/assets/runeWallpaper";
 import domination from "@/assets/runeWallpaper/Domination.webp";
 import FlatRunes from "./FlatRunes";
 import RuneDescription from "./RuneDescription";
+import { Button } from "@mui/material";
+
 const RuneTree = ({ runeData }) => {
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
   const [description, setDescription] = useState("");
+
+  // primary rune selection
+  const [selectedRowOne, setSelectedRowOne] = useState(null);
+  const [selectedRowTwo, setSelectedRowTwo] = useState(null);
+  const [selectedRowThree, setSelectedRowThree] = useState(null);
+  const [selectedRowFour, setSelectedRowFour] = useState(null);
+
+  // secondary rune selection
+  const [selectedOne, setSelectedOne] = useState<Rune[]>([]);
+
   const handleSelectPrimaryRune = (rune) => {
     setPrimaryRune(rune);
   };
   return (
     <div>
-      <div className="steps-description-header text-gray-200">
-        6. Select Runes
-      </div>
       {!primaryRune ? (
         <div className="container">
           <div className="p-2">
@@ -72,7 +81,17 @@ const RuneTree = ({ runeData }) => {
                 secondaryRune={secondaryRune}
                 setSecondaryRune={setSecondaryRune}
               />
-              <PrimaryRuneList primaryRune={primaryRune} />
+              <PrimaryRuneList
+                primaryRune={primaryRune}
+                selectedRowOne={selectedRowOne}
+                setSelectedRowOne={setSelectedRowOne}
+                selectedRowTwo={selectedRowTwo}
+                setSelectedRowTwo={setSelectedRowTwo}
+                selectedRowThree={selectedRowThree}
+                setSelectedRowThree={setSelectedRowThree}
+                selectedRowFour={selectedRowFour}
+                setSelectedRowFour={setSelectedRowFour}
+              />
             </div>
             <div>
               <RuneSecondaryTreeSelection
@@ -81,7 +100,11 @@ const RuneTree = ({ runeData }) => {
                 setSecondaryRune={setSecondaryRune}
                 primaryRune={primaryRune}
               />
-              <SecondaryRuneList secondaryRune={secondaryRune} />
+              <SecondaryRuneList
+                secondaryRune={secondaryRune}
+                selectedOne={selectedOne}
+                setSelectedOne={setSelectedOne}
+              />
             </div>
             <FlatRunes />
           </div>
@@ -90,6 +113,9 @@ const RuneTree = ({ runeData }) => {
               description={description}
               setDescription={setDescription}
             />
+            <Button variant="contained" color="primary">
+              Add
+            </Button>
           </div>
         </div>
       )}

@@ -158,7 +158,7 @@ const SummonersList = ({ summonerData }) => {
   return (
     <div className="container mx-auto w-full">
       <div className="p-2">
-        <div className="steps-description-header text-gray-200">
+        <div className="steps-description-header text-gray-200 p-8">
           5. Select Summoners
         </div>
         <div className="grid grid-cols-7 max-w-full gap-4">

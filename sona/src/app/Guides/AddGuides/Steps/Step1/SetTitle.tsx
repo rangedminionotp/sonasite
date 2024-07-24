@@ -6,7 +6,7 @@ const SetTitle = ({ title, setTitle }) => {
   return (
     <div className="container mx-auto  shadow-lg">
       <div className="p-2">
-        <div className="steps-description-header text-gray-200  mb-2">
+        <div className="steps-description-header text-gray-200  p-8">
           1. Set Title
         </div>
         <div className="flex flex-col gap-4">

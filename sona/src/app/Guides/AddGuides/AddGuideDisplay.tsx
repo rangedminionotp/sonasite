@@ -9,6 +9,8 @@ import {
   SummonerPair,
   StepTwoContext,
   StepTwoProps,
+  StepThreeContext,
+  RuneSet,
 } from "./types";
 
 const AddGuideDisplay = ({
@@ -27,6 +29,9 @@ const AddGuideDisplay = ({
 
   // steptwo context values
   const [summonerPairs, setSummonerPairs] = React.useState<SummonerPair[]>([]);
+
+  // stepthree context values
+  const [runeSets, setRuneSets] = React.useState<RuneSet[]>([]);
 
   // const [step1formState, setStep1formState] = useState({
   //   title: "",
@@ -90,28 +95,35 @@ const AddGuideDisplay = ({
             setSummonerPairs,
           }}
         >
-          <div
-            className={
-              !open
-                ? "hidden"
-                : `top-0 left-0 w-full h-screen bg-[#101730] z-40 absolute`
-            }
+          <StepThreeContext.Provider
+            value={{
+              runeSets,
+              setRuneSets,
+            }}
           >
-            <SummonerRiftBg />
-            <div className="absolute top-0 w-full h-full justify-center items-center">
-              <div className=" absolute top-4 left-4 z-30">
-                <AddGuideClose setOpen={setOpen} />
-                <div>
-                  <FormStepper
-                    summonerData={summonerData}
-                    runesData={runesData}
-                    itemsData={itemsData}
-                    itemTree={itemTree}
-                  />
+            <div
+              className={
+                !open
+                  ? "hidden"
+                  : `top-0 left-0 w-full h-screen bg-[#101730] z-40 absolute`
+              }
+            >
+              <SummonerRiftBg />
+              <div className="absolute top-0 w-full h-full justify-center items-center">
+                <div className=" absolute top-4 left-4 z-30">
+                  <AddGuideClose setOpen={setOpen} />
+                  <div>
+                    <FormStepper
+                      summonerData={summonerData}
+                      runesData={runesData}
+                      itemsData={itemsData}
+                      itemTree={itemTree}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </StepThreeContext.Provider>
         </StepTwoContext.Provider>
       </StepOneContext.Provider>
     </React.Fragment>

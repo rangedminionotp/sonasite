@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { Rune } from "./Step3/types";
 
 export interface User {
   id: string;
@@ -46,6 +47,22 @@ export interface StepTwoContextType {
   setSummonerPairs: (summonerPairs: SummonerPair[]) => void;
 }
 export const StepTwoContext = createContext<StepTwoContextType | null>(null);
+
+export interface RuneSet {
+  primaryRune: Rune;
+  secondaryRune: Rune;
+  description: string;
+  primaryRunes: Rune[];
+  secondaryRunes: Rune[];
+}
+
+export interface StepThreeContextType {
+  runeSets: RuneSet[];
+  setRuneSets: (runeSets: RuneSet[]) => void;
+}
+export const StepThreeContext = createContext<StepThreeContextType | null>(
+  null
+);
 
 export interface GuideContextType {
   guideID: string;

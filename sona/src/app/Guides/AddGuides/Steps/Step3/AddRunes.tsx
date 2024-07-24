@@ -1,9 +1,14 @@
 import { useState } from "react";
 import RuneTree from "./RuneTree";
+import { AddBtn } from "./AddBtn";
+import Title from "./Title";
 export default function AddRunes({ runesData }) {
+  const [addRunes, setAddRunes] = useState(false);
   return (
     <div>
-      <RuneTree runeData={runesData} />
+      <Title />
+      <AddBtn addRunes={addRunes} setAddRunes={setAddRunes} />
+      {addRunes && <RuneTree runeData={runesData} />}
     </div>
   );
 }

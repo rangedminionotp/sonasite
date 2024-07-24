@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import RuneRow from "./RuneRow";
 import { Rune } from "./types";
 
-const SecondaryRuneList = ({ secondaryRune }) => {
-  const [selectedOne, setSelectedOne] = useState<Rune[]>([]);
+const SecondaryRuneList = ({ secondaryRune, selectedOne, setSelectedOne }) => {
   const rowone = [3, 4, 5];
   const rowtwo = [6, 7, 8];
   const rowthree = [9, 10, 11];
