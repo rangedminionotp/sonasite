@@ -6,7 +6,7 @@ import RuneListsDisplay from "./RuneListsDisplay";
 
 const AddedRuneListDisplay = ({ runeData }) => {
   const StepThreeCtx = useContext(StepThreeContext);
-  const [editVisibility, setEditVisibility] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(null);
 
   const [primaryRune, setPrimaryRune] = useState(null);
   const [secondaryRune, setSecondaryRune] = useState(null);
@@ -14,6 +14,15 @@ const AddedRuneListDisplay = ({ runeData }) => {
   const [description, setDescription] = useState("");
 
   // primary rune selection
+
+  // could also do something like...
+  // const [primaryRuneList, setPrimaryRuneList] = useState<Rune[]>({
+  //   runeOne: null,
+  //   runeTwo: null,
+  //   runeThree: null,
+  //   runeFour: null,
+  // });
+  // but we were doing this method and the code all works... so im not touching it xd
   const [selectedRowOne, setSelectedRowOne] = useState(null);
   const [selectedRowTwo, setSelectedRowTwo] = useState(null);
   const [selectedRowThree, setSelectedRowThree] = useState(null);
@@ -29,52 +38,50 @@ const AddedRuneListDisplay = ({ runeData }) => {
     null
   );
 
-  useEffect(() => {
-    if (StepThreeCtx.runeSets.length > 0) {
-      setTitle(StepThreeCtx.runeSets[0].title);
-      setDescription(StepThreeCtx.runeSets[0].description);
-      setPrimaryRune(StepThreeCtx.runeSets[0].primaryRune);
-      setSecondaryRune(StepThreeCtx.runeSets[0].secondaryRune);
-      setSelectedRowOne(StepThreeCtx.runeSets[0].primaryRunes[0]);
-      setSelectedRowTwo(StepThreeCtx.runeSets[0].primaryRunes[1]);
-      setSelectedRowThree(StepThreeCtx.runeSets[0].primaryRunes[2]);
-      setSelectedRowFour(StepThreeCtx.runeSets[0].primaryRunes[3]);
-      setSelectedOne(StepThreeCtx.runeSets[0].secondaryRunes);
-      setSelectedRuneOne(StepThreeCtx.runeSets[0].flatRunes[0]);
-      setSelectedRuneTwo(StepThreeCtx.runeSets[0].flatRunes[1]);
-      setSelectedRuneThree(StepThreeCtx.runeSets[0].flatRunes[2]);
-      setSelectedRuneOne(StepThreeCtx.runeSets[0].secondaryRunes[0]);
-    }
-  }, [StepThreeCtx.runeSets]);
-
   const handleDeleteRune = (index) => {
     StepThreeCtx.setRuneSets((prevRuneSets) =>
       prevRuneSets.filter((_, i) => i !== index)
     );
   };
-  const toggleEditVisibility = () => {
-    if (editVisibility) {
-      setEditVisibility(false);
-      const EditedRuneSets = StepThreeCtx.runeSets.map((runeSet) => {
-        return {
-          ...runeSet,
-          title: title,
-          description: description,
-          primaryRune: primaryRune,
-          secondaryRune: secondaryRune,
-          primaryRunes: [
-            selectedRowOne,
-            selectedRowTwo,
-            selectedRowThree,
-            selectedRowFour,
-          ],
-          secondaryRunes: selectedOne,
-          flatRunes: [selectedRuneOne, selectedRuneTwo, selectedRuneThree],
-        };
-      });
+  const toggleEditVisibility = (index) => {
+    console.log("index", index);
+    if (editingIndex === index) {
+      setEditingIndex(null);
+      const EditedRuneSets = StepThreeCtx.runeSets.map((runeSet, i) =>
+        i === index
+          ? {
+              ...runeSet,
+              title: title,
+              description: description,
+              primaryRune: primaryRune,
+              secondaryRune: secondaryRune,
+              primaryRunes: [
+                selectedRowOne,
+                selectedRowTwo,
+                selectedRowThree,
+                selectedRowFour,
+              ],
+              secondaryRunes: selectedOne,
+              flatRunes: [selectedRuneOne, selectedRuneTwo, selectedRuneThree],
+            }
+          : runeSet
+      );
       StepThreeCtx.setRuneSets(EditedRuneSets);
     } else {
-      setEditVisibility(true);
+      setEditingIndex(index);
+      setTitle(StepThreeCtx.runeSets[index].title);
+      setDescription(StepThreeCtx.runeSets[index].description);
+      setPrimaryRune(StepThreeCtx.runeSets[index].primaryRune);
+      setSecondaryRune(StepThreeCtx.runeSets[index].secondaryRune);
+      setSelectedRowOne(StepThreeCtx.runeSets[index].primaryRunes[0]);
+      setSelectedRowTwo(StepThreeCtx.runeSets[index].primaryRunes[1]);
+      setSelectedRowThree(StepThreeCtx.runeSets[index].primaryRunes[2]);
+      setSelectedRowFour(StepThreeCtx.runeSets[index].primaryRunes[3]);
+      setSelectedOne(StepThreeCtx.runeSets[index].secondaryRunes);
+      setSelectedRuneOne(StepThreeCtx.runeSets[index].flatRunes[0]);
+      setSelectedRuneTwo(StepThreeCtx.runeSets[index].flatRunes[1]);
+      setSelectedRuneThree(StepThreeCtx.runeSets[index].flatRunes[2]);
+      setSelectedRuneOne(StepThreeCtx.runeSets[index].secondaryRunes[0]);
     }
   };
   return (
@@ -83,7 +90,7 @@ const AddedRuneListDisplay = ({ runeData }) => {
         <div>
           <div
             key={runeSet.id}
-            onClick={toggleEditVisibility}
+            onClick={() => toggleEditVisibility(index)}
             className="p-4 flex hover:cursor-pointer justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
           >
             <div className="flex flex-wrap gap-2">
@@ -135,7 +142,7 @@ const AddedRuneListDisplay = ({ runeData }) => {
               </div>
             </div>
           </div>
-          {editVisibility && (
+          {editingIndex === index && (
             <div>
               <RuneListsDisplay
                 title={title}

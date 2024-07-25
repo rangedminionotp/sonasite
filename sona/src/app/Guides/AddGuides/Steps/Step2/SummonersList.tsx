@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import AddIcon from "@mui/icons-material/Add";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import SummonersDescription from "./SummonersDescription";
+// import SummonersDescription from "./SummonersDescription";
 import Textarea from "@mui/joy/Textarea";
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import { StepTwoContext } from "../../types";
 import Button from "@mui/joy/Button";
@@ -40,7 +38,6 @@ const DropArea = ({ onDrop, onDragOver, children, id }) => (
 
 const SummonersList = ({ summonerData }) => {
   const [addPair, setAddPair] = useState(false);
-  const [editVisibility, setEditVisibility] = useState(false);
   const [draggingItem, setDraggingItem] = useState({ item: null, id: null });
   const [droppedItems, setDroppedItems] = useState({
     D: null,
@@ -50,6 +47,7 @@ const SummonersList = ({ summonerData }) => {
   });
   const [description, setDescription] = useState("");
   const [pairs, setPairs] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null); // Track the index of the pair being edited
   const StepTwoCtx = useContext(StepTwoContext);
 
   const handleDragStart = (e, index) => {
@@ -117,40 +115,43 @@ const SummonersList = ({ summonerData }) => {
       },
       description: description,
     };
-    if (pairs.length > 0) {
-      StepTwoCtx.setSummonerPairs((prevPairs) => [...prevPairs, newPairs]);
-    } else {
-      StepTwoCtx.setSummonerPairs([newPairs]);
-    }
+    StepTwoCtx.setSummonerPairs((prevPairs) => [...prevPairs, newPairs]);
   };
 
   const handleAdd = (summoner) => {
     setDroppedItems((prevItems) => {
-      const updatedItems = { ...prevItems }; // Create a shallow copy of prevItems
-
+      const updatedItems = { ...prevItems };
       if (prevItems.D === null) {
-        updatedItems.D = (
-          <Image
-            src={summoner.imageURL}
-            alt={summoner.name}
-            width={50}
-            height={50}
-          />
-        );
-        updatedItems.DId = summoner.id;
+        if (prevItems.DId === summoner.id && droppedItems.FId !== null) {
+          return prevItems;
+        } else {
+          updatedItems.D = (
+            <Image
+              src={summoner.imageURL}
+              alt={summoner.name}
+              width={50}
+              height={50}
+            />
+          );
+          updatedItems.DId = summoner.id;
+        }
       } else if (prevItems.F === null) {
-        updatedItems.F = (
-          <Image
-            src={summoner.imageURL}
-            alt={summoner.name}
-            width={50}
-            height={50}
-          />
-        );
-        updatedItems.FId = summoner.id;
+        if (prevItems.DId === summoner.id && droppedItems.FId !== null) {
+          return prevItems;
+        } else {
+          updatedItems.F = (
+            <Image
+              src={summoner.imageURL}
+              alt={summoner.name}
+              width={50}
+              height={50}
+            />
+          );
+          updatedItems.FId = summoner.id;
+        }
       }
 
-      return updatedItems; // Return the updated object
+      return updatedItems;
     });
   };
 
@@ -161,23 +162,27 @@ const SummonersList = ({ summonerData }) => {
   };
 
   const toggleEditVisibility = (index) => {
-    if (editVisibility) {
-      setEditVisibility(false);
-      const newPairs = StepTwoCtx.summonerPairs.map((pair) => ({
-        ...pair,
-        description: description,
-        summonerOne: {
-          summonerImg: droppedItems.D,
-          summonerId: droppedItems.DId,
-        },
-        summonerTwo: {
-          summonerImg: droppedItems.F,
-          summonerId: droppedItems.FId,
-        },
-      }));
-      StepTwoCtx.setSummonerPairs(newPairs);
+    if (editingIndex === index) {
+      setEditingIndex(null);
+      const updatedPairs = StepTwoCtx.summonerPairs.map((pair, i) =>
+        i === index
+          ? {
+              ...pair,
+              description: description,
+              summonerOne: {
+                summonerImg: droppedItems.D,
+                summonerId: droppedItems.DId,
+              },
+              summonerTwo: {
+                summonerImg: droppedItems.F,
+                summonerId: droppedItems.FId,
+              },
+            }
+          : pair
+      );
+      StepTwoCtx.setSummonerPairs(updatedPairs);
     } else {
-      setEditVisibility(true);
+      setEditingIndex(index);
       setDescription(StepTwoCtx.summonerPairs[index].description);
       setDroppedItems({
         D: StepTwoCtx.summonerPairs[index].summonerOne.summonerImg,
@@ -193,7 +198,7 @@ const SummonersList = ({ summonerData }) => {
       <>
         <div
           onClick={() => handleClearDropArea("D")}
-          className="hover:cursor-pointerw-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
+          className="hover:cursor-pointer w-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
         >
           <DropArea onDrop={handleDrop} onDragOver={handleDragOver} id="D">
             {!droppedItems.D ? "D" : droppedItems.D}
@@ -207,13 +212,10 @@ const SummonersList = ({ summonerData }) => {
             {!droppedItems.F ? "F" : droppedItems.F}
           </DropArea>
         </div>
-        <SummonersDescription
-          description={description}
-          setDescription={setDescription}
-        />
       </>
     );
   };
+
   return (
     <div className="container mx-auto w-full">
       <div className="p-2">
@@ -254,7 +256,6 @@ const SummonersList = ({ summonerData }) => {
                           width={50}
                           height={50}
                           className="hover:cursor-grab"
-                          onClick
                         />
                         <h1 className="text-gray-200 uppercase font-work-sans">
                           {summoner.name}
@@ -270,14 +271,12 @@ const SummonersList = ({ summonerData }) => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              // </Tooltip>
             ))}
         </div>
         {StepTwoCtx.summonerPairs.map((pair, index) => (
-          <div>
+          <div key={index}>
             <div
               onClick={() => toggleEditVisibility(index)}
-              key={index}
               className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
             >
               <div>
@@ -288,9 +287,25 @@ const SummonersList = ({ summonerData }) => {
                 <DeleteIcon onClick={() => handleDeletePair(index)} />
               </div>
             </div>
-            {editVisibility && (
+            {editingIndex === index && (
               <div className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4">
                 <SummonersSelection />
+                <div className="container mx-auto shadow-lg">
+                  <div className="p-2">
+                    <div>
+                      <Textarea
+                        minRows={5}
+                        value={description}
+                        placeholder={`why is this summoner pair good...`}
+                        onChange={(e) => setDescription(e.target.value)}
+                        sx={{
+                          backgroundColor: "var(--primary-bg)",
+                          color: "white",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -306,6 +321,22 @@ const SummonersList = ({ summonerData }) => {
         {addPair && (
           <div className="flex gap-2 mt-4">
             <SummonersSelection />
+            <div className="container mx-auto shadow-lg">
+              <div className="p-2">
+                <div>
+                  <Textarea
+                    minRows={5}
+                    value={description}
+                    placeholder={`why is this summoner pair good...`}
+                    onChange={(e) => setDescription(e.target.value)}
+                    sx={{
+                      backgroundColor: "var(--primary-bg)",
+                      color: "white",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
             <Button
               onClick={handleAddPair}
               disabled={!droppedItems.D || !droppedItems.F}
