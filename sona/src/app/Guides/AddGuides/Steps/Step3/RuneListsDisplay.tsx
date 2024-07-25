@@ -5,7 +5,7 @@ import PrimaryRuneList from "./PrimaryRuneList";
 import SecondaryRuneList from "./SecondaryRuneList";
 import FlatRunes from "./FlatRunes";
 import RuneDescription from "./RuneDescription";
-import { Textarea } from "@mui/material";
+import Textarea from "@mui/joy/Textarea";
 
 const RuneListsDisplay = ({
   title,

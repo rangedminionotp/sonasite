@@ -16,7 +16,7 @@ export default function AddRunes({ runesData }) {
           addRunes={addRunes}
         />
       )}
-      <AddedRuneListDisplay />
+      <AddedRuneListDisplay runeData={runesData} />
       {!addRunes && <AddBtn addRunes={addRunes} setAddRunes={setAddRunes} />}
     </div>
   );
