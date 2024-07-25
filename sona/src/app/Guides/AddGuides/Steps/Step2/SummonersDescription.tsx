@@ -8,12 +8,12 @@ const SummonersDescription = ({ description, setDescription }) => {
     <div className="container mx-auto  shadow-lg">
       <div className="p-2">
         <div>
+          {/* #todo somehow textarea is inputting very slow, need to fix */}
           <Textarea
             minRows={5}
             value={description}
             placeholder={`why is this summoner pair good...`}
             onChange={(e) => setDescription(e.target.value)}
-            className="  text-black p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             sx={{
               backgroundColor: "var(--primary-bg)",
               color: "white",

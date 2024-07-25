@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import SummonersDescription from "./SummonersDescription";
+import Textarea from "@mui/joy/Textarea";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { StepTwoContext } from "../../types";
@@ -39,6 +40,7 @@ const DropArea = ({ onDrop, onDragOver, children, id }) => (
 
 const SummonersList = ({ summonerData }) => {
   const [addPair, setAddPair] = useState(false);
+  const [editVisibility, setEditVisibility] = useState(false);
   const [draggingItem, setDraggingItem] = useState({ item: null, id: null });
   const [droppedItems, setDroppedItems] = useState({
     D: null,
@@ -157,6 +159,61 @@ const SummonersList = ({ summonerData }) => {
       prevPairs.filter((_, i) => i !== index)
     );
   };
+
+  const toggleEditVisibility = (index) => {
+    if (editVisibility) {
+      setEditVisibility(false);
+      const newPairs = StepTwoCtx.summonerPairs.map((pair) => ({
+        ...pair,
+        description: description,
+        summonerOne: {
+          summonerImg: droppedItems.D,
+          summonerId: droppedItems.DId,
+        },
+        summonerTwo: {
+          summonerImg: droppedItems.F,
+          summonerId: droppedItems.FId,
+        },
+      }));
+      StepTwoCtx.setSummonerPairs(newPairs);
+    } else {
+      setEditVisibility(true);
+      setDescription(StepTwoCtx.summonerPairs[index].description);
+      setDroppedItems({
+        D: StepTwoCtx.summonerPairs[index].summonerOne.summonerImg,
+        DId: StepTwoCtx.summonerPairs[index].summonerOne.summonerId,
+        F: StepTwoCtx.summonerPairs[index].summonerTwo.summonerImg,
+        FId: StepTwoCtx.summonerPairs[index].summonerTwo.summonerId,
+      });
+    }
+  };
+
+  const SummonersSelection = () => {
+    return (
+      <>
+        <div
+          onClick={() => handleClearDropArea("D")}
+          className="hover:cursor-pointerw-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
+        >
+          <DropArea onDrop={handleDrop} onDragOver={handleDragOver} id="D">
+            {!droppedItems.D ? "D" : droppedItems.D}
+          </DropArea>
+        </div>
+        <div
+          className="hover:cursor-pointer w-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
+          onClick={() => handleClearDropArea("F")}
+        >
+          <DropArea onDrop={handleDrop} onDragOver={handleDragOver} id="F">
+            {!droppedItems.F ? "F" : droppedItems.F}
+          </DropArea>
+        </div>
+        <SummonersDescription
+          description={description}
+          setDescription={setDescription}
+        />
+      </>
+    );
+  };
   return (
     <div className="container mx-auto w-full">
       <div className="p-2">
@@ -217,17 +274,25 @@ const SummonersList = ({ summonerData }) => {
             ))}
         </div>
         {StepTwoCtx.summonerPairs.map((pair, index) => (
-          <div
-            key={index}
-            className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
-          >
-            <div>
-              {pair.summonerOne.summonerImg} {pair.summonerTwo.summonerImg}
+          <div>
+            <div
+              onClick={() => toggleEditVisibility(index)}
+              key={index}
+              className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4"
+            >
+              <div>
+                {pair.summonerOne.summonerImg} {pair.summonerTwo.summonerImg}
+              </div>
+              <div className="text-md text-gray-700">{pair.description}</div>
+              <div className="hover:cursor-pointer justify-end">
+                <DeleteIcon onClick={() => handleDeletePair(index)} />
+              </div>
             </div>
-            <div className="text-md text-gray-700">{pair.description}</div>
-            <div className="hover:cursor-pointer justify-end">
-              <DeleteIcon onClick={() => handleDeletePair(index)} />
-            </div>
+            {editVisibility && (
+              <div className="p-4 flex justify-between border backdrop-blur-lg bg-white/30 border-gray-800 shadow-md mb-4">
+                <SummonersSelection />
+              </div>
+            )}
           </div>
         ))}
         <div>
@@ -240,26 +305,7 @@ const SummonersList = ({ summonerData }) => {
         </div>
         {addPair && (
           <div className="flex gap-2 mt-4">
-            <div
-              onClick={() => handleClearDropArea("D")}
-              className="hover:cursor-pointerw-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
-            >
-              <DropArea onDrop={handleDrop} onDragOver={handleDragOver} id="D">
-                {!droppedItems.D ? "D" : droppedItems.D}
-              </DropArea>
-            </div>
-            <div
-              className="hover:cursor-pointer w-16 h-16 bg-gray-200 p-2 rounded-lg border-2 border-gray-800 shadow-lg flex text-center justify-center items-center relative"
-              onClick={() => handleClearDropArea("F")}
-            >
-              <DropArea onDrop={handleDrop} onDragOver={handleDragOver} id="F">
-                {!droppedItems.F ? "F" : droppedItems.F}
-              </DropArea>
-            </div>
-            <SummonersDescription
-              description={description}
-              setDescription={setDescription}
-            />
+            <SummonersSelection />
             <Button
               onClick={handleAddPair}
               disabled={!droppedItems.D || !droppedItems.F}
