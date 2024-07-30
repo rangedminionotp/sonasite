@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { Rune } from "./Step3/types";
-
+import { ItemDataType, GoldType } from "@/app/Guides/AddGuides/Step1/types";
 export interface User {
   id: string;
   name: string;
@@ -66,6 +66,18 @@ export interface StepThreeContextType {
 export const StepThreeContext = createContext<StepThreeContextType | null>(
   null
 );
+
+export interface ItemSet {
+  name: string;
+  items: ItemDataType[];
+  description: string;
+}
+
+export interface StepFourContextType {
+  itemSets: ItemSet[];
+  setItemSets: (itemSets: ItemSet[]) => void;
+}
+export const StepFourContext = createContext<StepFourContextType | null>(null);
 
 export interface GuideContextType {
   version: string;
